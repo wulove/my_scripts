@@ -13,7 +13,7 @@ on:
 jobs:
   repo-sync:
     env:
-      PAT: ${{ secrets.WPAT }} #此处PAT需要申请，教程详见：https://www.jianshu.com/p/bb82b3ad1d11
+      PAT: ${{ secrets.PAT }} #此处PAT需要申请，教程详见：https://www.jianshu.com/p/bb82b3ad1d11
     runs-on: ubuntu-latest
     if: github.event.repository.owner.id == github.event.sender.id
     steps:
@@ -28,4 +28,4 @@ jobs:
           source_repo: "https://gitee.com/lxk0301/jd_scripts.git"
           source_branch: "master"
           destination_branch: "master"
-          github_token: ${{ secrets.WPAT }}
+          github_token: ${{ secrets.PAT }}
