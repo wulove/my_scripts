@@ -229,6 +229,14 @@ function checkLogin() {
             console.log(`当前体力：${$.strength}`)
             // console.log(JSON.stringify(data))
             $.curLevel = data.role.gameInfo.levelId || 40103
+            $.not3Star = []
+            for(let level of data.role.allLevels){
+              if(level.maxStar!==3){
+                $.not3Star.push(level.id)
+              }
+            }
+            if($.not3Star.length)
+              console.log(`当前尚未三星的关卡为：${$.not3Star.join(',')}`)
             // SecrectUtil.InitEncryptInfo($.gameToken, $.gameId)
           }
         }
@@ -263,6 +271,14 @@ function getTaskList() {
                   console.log(`当前关卡：${$.level}`)
                   while ($.strength >= 5 && $.level <= 240) {
                     await beginLevel()
+                  }
+                  if($.not3Star.length && $.strength >= 5){
+                    console.log(`去完成尚未三星的关卡`)
+                    for(let level of $.not3Star){
+                      $.level = parseInt(level)
+                      await beginLevel()
+                      if($.strength<5) break
+                    }
                   }
                 } else if (task.res.sName === "逛逛店铺") {
                   if (task.state.iFreshTimes < task.res.iFreshTimes)
