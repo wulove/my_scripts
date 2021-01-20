@@ -198,9 +198,30 @@ function getExchangeRewards() {
 }
 function exchange(saleInfoId, orderSource) {
   return new Promise((resolve) => {
+    const body = {
+      "buyParam": { saleInfoId, orderSource },
+      "deviceInfo": {
+        "eid": "",
+        "fp": "",
+        "deviceType": "",
+        "macAddress": "",
+        "imei": "",
+        "os": "",
+        "osVersion": "",
+        "ip": "",
+        "appId": "",
+        "openUUID": "",
+        "idfa": "",
+        "uuid": "",
+        "clientVersion": "",
+        "networkType": "",
+        "appType": "",
+        "sdkToken": ""
+      }
+    }
     const option = {
-      url: `${JD_API_HOST}/gift/exchange`,
-      body: `${JSON.stringify({ saleInfoId, orderSource })}`,
+      url: `${JD_API_HOST}/gift/new/exchange?reqSource=h5`,
+      body: `${JSON.stringify(body)}`,
       headers: {
         "Host": "jdjoy.jd.com",
         "Accept": "*/*",
