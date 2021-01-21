@@ -105,20 +105,20 @@ function unsubscribeGoods() {
         if (followGoods.totalNum > 0) {
           for (let item of followGoods.data) {
 
-            console.log(`关注商品---${item.commTitle}n`)
+            console.log(`是否匹配：：${item.commTitle.indexOf(stopGoods.replace(/\ufffc|\s*/g, ''))}`)
 
             if (stopGoods && item.commTitle.indexOf(stopGoods.replace(/\ufffc|\s*/g, '')) > -1) {
               console.log(`匹配到了您设定的商品--${stopGoods}，不在进行取消关注商品`)
               break;
             }
-            /*let res = await unsubscribeGoodsFun(item.commId);
+            let res = await unsubscribeGoodsFun(item.commId);
             // console.log('取消关注商品结果', res);
             if (res.iRet === 0 && res.errMsg === 'success') {
               console.log(`取消关注商品---${item.commTitle.substring(0, 20).concat('...')}---成功\n`)
               count ++;
             } else {
               console.log(`取消关注商品---${item.commTitle.substring(0, 20).concat('...')}---失败\n`)
-            }*/
+            }
           }
           $.unsubscribeGoodsCount = count;
           resolve(count)
