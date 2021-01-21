@@ -91,14 +91,14 @@ async function unsubscribeCards() {
       continue;
     }
     console.log(`去注销会员卡【${item.brandName}】`)
-    let res = await unsubscribeCard(item.brandId);
+    /*let res = await unsubscribeCard(item.brandId);
     if (res['success']) {
       if (res['busiCode'] === '200') {
         count++;
         $.unsubscribeCount ++
       }
     }
-    await $.wait(1000)
+    await $.wait(1000)*/
   }
 }
 function showMsg() {
