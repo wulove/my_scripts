@@ -87,7 +87,7 @@ const ACT_ID = 'dzvm210168869301'
   })
 async function jdNh() {
   $.score = 0
-  await getShareCode()
+  //await getShareCode()
   await getIsvToken()
   await getIsvToken2()
   await getActCk()
