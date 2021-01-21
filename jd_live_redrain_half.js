@@ -82,7 +82,7 @@ let ids = {}
     }
   } else {
     $.log(`远程红包雨配置获取成功`)
-  }
+  }console.log(`\n******开始【京东账`);
   for (let i = 0; i < cookiesArr.length; i++) {
     if (cookiesArr[i]) {
       cookie = cookiesArr[i];
