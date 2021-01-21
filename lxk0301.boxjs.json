@@ -13,7 +13,7 @@
         "请勿随意在输入框修改内容，建议通过脚本去获取cookie，若要修改，请按照JSON 格式修改。",
         "脚本地址【<a href=\"https://raw.githubusercontent.com/LXK9301/jd_scripts/master/JD_extra_cookie.js\">京东多 CK获取</a>】,并按照此脚本注释进行配置",
         "使用方式【<a href=\"https://home.m.jd.com/myJd/newhome.action\">个人中心</a>】获取对应的数据Code",
-        "注：如与NobyDa的京东cookie出现重复，建议在此处删除重复的cookie"
+        "注：如与NobyDa的京东cookie重复，建议在此处删除重复的cookie"
       ],
       "settings": [
         {
@@ -897,6 +897,33 @@
       "icons": [
         "https://raw.githubusercontent.com/58xinian/icon/master/jd_factory_mini.png",
         "https://raw.githubusercontent.com/58xinian/icon/master/jd_factory.png"
+      ]
+    },
+    {
+      "id": "jd_immortal",
+      "name": "神仙书院",
+      "keys": [
+        "IMMORTAL_LATLON"
+      ],
+      "descs_html": [
+        "地理位置示例如下",
+        "{\"lat\":33.1, \"lng\":118.1}"
+      ],
+      "settings": [
+        {
+          "id": "IMMORTAL_LATLON",
+          "name": "地理位置",
+          "val": "",
+          "type": "text",
+          "desc": "示例：{\"lat\":33.1, \"lng\":118.1}"
+        }
+      ],
+      "author": "@LXK9301",
+      "repo": "https://github.com/LXK9301/jd_scripts",
+      "script": "https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_immortal.js",
+      "icons": [
+        "https://m.360buyimg.com/babel/jfs/t1/165970/14/3741/2184/600585feE6fb250f8/77db4ca560e006be.png",
+        "https://m.360buyimg.com/babel/jfs/t1/165970/14/3741/2184/600585feE6fb250f8/77db4ca560e006be.png"
       ]
     }
   ]
