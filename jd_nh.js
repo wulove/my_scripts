@@ -330,7 +330,7 @@ function getActContent(info=false, shareUuid = '') {
                         await $.wait(500)
                       }
                     }
-                  } else if(task.taskName ==='一键关注店铺' || task.taskName ==='一键开卡' // || task.taskName ==='一键加购'
+                  } else if(task.taskName ==='一键关注店铺'// || task.taskName ==='一键开卡' // || task.taskName ==='一键加购'
                   ){
                     if (task.count < task.taskMax){
                       console.log(`去做${task.taskName}任务`)
