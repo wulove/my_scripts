@@ -71,7 +71,7 @@ function obj2param(obj) {
     return;
   }
   await requireConfig()
-  console.log(`\n******开始【京东账号*********\n`);
+
   $.shareCodesArr = []
   for (let i = 0; i < cookiesArr.length; i++) {
     if (cookiesArr[i]) {
