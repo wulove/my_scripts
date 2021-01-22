@@ -95,7 +95,7 @@ function obj2param(obj) {
       }
       await shareCodesFormat()
       await jdGy()
-      //await getAuthorShareCode()
+      await getAuthorShareCode()
     }
   }
 })()
