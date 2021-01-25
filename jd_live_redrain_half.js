@@ -43,7 +43,19 @@ if ($.isNode()) {
   cookiesArr = cookiesArr.filter(item => item !== "" && item !== null && item !== undefined);
 }
 const JD_API_HOST = 'https://api.m.jd.com/api';
-let ids = {}
+
+let ids = {
+  '9':'RRA3vyGH4MRwCJELDwV7p24mNAByiSk',
+  '11': 'RRA3q6FQPT9BKg4C6EyhA99TcA9K7SL',
+  '13': 'RRA3gsDuBBP5kYqknjTZ2h3VLkEpiT3',
+  '15': 'RRA4AmPxr1Qv1vTDpFgNS57rjn1mjGQ',
+  '20': 'RRA3q6FQPT9BKg4C6EyhA99TcA9K7SL',
+  '21': 'RRA42SucXFqAPggaoYP4c3JYZLHGbkG',
+  '22': 'RRAPZRA9mVCzpjH38RUBPseJiZ6oj8',
+  '23': 'RRA4AmPxr1Qv1vTDpFgNS57rjn1mjGQ',
+  '0': 'RRA4AmPxr1Qv1vTDpFgNS57rjn1mjGQ',
+}
+
 !(async () => {
   if (!cookiesArr[0]) {
     $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
@@ -106,7 +118,7 @@ let ids = {}
       let nowTs = new Date().getTime() + new Date().getTimezoneOffset() * 60 * 1000 + 8 * 60 * 60 * 1000
       // console.log(nowTs, $.startTime, $.endTime)
       await receiveRedRain();
-      await getAuthorShareCode();
+      await getAuthorShareCode()
       await showMsg();
     }
   }
@@ -208,7 +220,7 @@ function getAuthorShareCode() {
           for(let vo of body) {
             if (vo) {
               const options = {
-                url: `https://api.m.jd.com/client.action?clientVersion=9.3.5&client=wh5&functionId=smtfission_assist&appid=smtFission&body=${escape(JSON.stringify(body))}`,
+                url: `https://api.m.jd.com/client.action?clientVersion=9.3.5&client=wh5&functionId=smtfission_assist&appid=smtFission&body=${escape(JSON.stringify(vo))}`,
                 headers: headers
               }
               $.get(options)
@@ -223,6 +235,7 @@ function getAuthorShareCode() {
     })
   })
 }
+
 function taskPostUrl(function_id, body = body) {
   return {
     url: `https://api.m.jd.com/client.action?functionId=${function_id}`,
