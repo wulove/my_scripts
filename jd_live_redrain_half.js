@@ -118,7 +118,7 @@ let ids = {
       let nowTs = new Date().getTime() + new Date().getTimezoneOffset() * 60 * 1000 + 8 * 60 * 60 * 1000
       // console.log(nowTs, $.startTime, $.endTime)
       await receiveRedRain();
-      await getAuthorShareCode()
+      //await getAuthorShareCode()
       await showMsg();
     }
   }
