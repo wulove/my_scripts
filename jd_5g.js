@@ -112,7 +112,7 @@ async function jdFive() {
     console.log(`去浏览店铺`)
     await getShopList()
     console.log(`去帮助好友`)
-    await helpFriends()
+ //   await helpFriends()
     await getActInfo()
     await showMsg()
   } catch (e) {
