@@ -43,6 +43,7 @@ let prize =
 
 !(async () => {
   if (!cookiesArr[0]) {
+    console.log(`\n****************\n`);
     $.msg($.name, '提示：请先获取cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
     return;
   }
