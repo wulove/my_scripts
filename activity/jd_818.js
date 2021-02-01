@@ -22,12 +22,12 @@
 // quantumultx
 [task_local]
 #京东手机狂欢城
-1 0-18/6 * * * https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_818.js, tag=京东手机狂欢城, enabled=true
+1 0-18/6 * * * https://gitee.com/lxk0301/jd_scripts/raw/master/jd_818.js, tag=京东手机狂欢城, enabled=true
 // Loon
 [Script]
-cron "1 0-18/6 * * *" script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_818.js,tag=京东手机狂欢城
+cron "1 0-18/6 * * *" script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_818.js,tag=京东手机狂欢城
 // Surge
-京东手机狂欢城 = type=cron,cronexp=1 0-18/6 * * *,wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_818.js
+京东手机狂欢城 = type=cron,cronexp=1 0-18/6 * * *,wake-system=1,timeout=3600,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_818.js
  */
 const $ = new Env('京东手机狂欢城');
 
@@ -55,9 +55,9 @@ if ($.isNode()) {
 }
 
 const JD_API_HOST = 'https://rdcseason.m.jd.com/api/';
-const activeEndTime = '2020/11/11 23:59:59+08:00';
+const activeEndTime = '2021/2/5 23:59:59+08:00';
 const addUrl = 'http://jd.turinglabs.net/helpcode/create/';
-const printUrl = `http://jd.turinglabs.net/helpcode/print/20/`;
+const printUrl = `http://jd.turinglabs.net/api/v2/jd/5g/read/20/`;
 let helpCode = []
 !(async () => {
   if (!cookiesArr[0]) {
@@ -144,7 +144,7 @@ function listMeeting() {
       'Accept': 'application/json, text/plain, */*',
       'Connection':' keep-alive',
       'Cookie': cookie,
-      'User-Agent': $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0"),
+      'User-Agent': "Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.2 Mobile/15E148 Safari/604.1",
       'Accept-Language': 'zh-cn',
       'Referer': `https://rdcseason.m.jd.com/?reloadWQPage=t_${Date.now()}`,
       'Accept-Encoding': 'gzip, deflate, br'
@@ -191,7 +191,7 @@ function listGoods() {
       'Accept': 'application/json, text/plain, */*',
       'Connection':' keep-alive',
       'Cookie': cookie,
-      'User-Agent': $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0"),
+      'User-Agent': "Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.2 Mobile/15E148 Safari/604.1",
       'Accept-Language': 'zh-cn',
       'Referer': `https://rdcseason.m.jd.com/?reloadWQPage=t_${Date.now()}`,
       'Accept-Encoding': 'gzip, deflate, br'
@@ -237,7 +237,7 @@ function shopInfo() {
       'Accept': 'application/json, text/plain, */*',
       'Connection':' keep-alive',
       'Cookie': cookie,
-      'User-Agent': $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0"),
+      'User-Agent': "Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.2 Mobile/15E148 Safari/604.1",
       'Accept-Language': 'zh-cn',
       'Referer': `https://rdcseason.m.jd.com/?reloadWQPage=t_${Date.now()}`,
       'Accept-Encoding': 'gzip, deflate, br'
@@ -290,7 +290,7 @@ function browseGoods(id) {
       "Accept": "application/json, text/plain, */*",
       "Connection": "keep-alive",
       "Cookie": cookie,
-      "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0"),
+      "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.2 Mobile/15E148 Safari/604.1",
       "Accept-Language": "zh-cn",
       "Referer": "https://rdcseason.m.jd.com/",
       "Accept-Encoding": "gzip, deflate, br"
@@ -324,7 +324,7 @@ function getGoodsPrize(id) {
       "Accept": "application/json, text/plain, */*",
       "Connection": "keep-alive",
       "Cookie": cookie,
-      "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0"),
+      "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.2 Mobile/15E148 Safari/604.1",
       "Accept-Language": "zh-cn",
       "Referer": "https://rdcseason.m.jd.com/",
       "Accept-Encoding": "gzip, deflate, br"
@@ -357,7 +357,7 @@ function browseShop(id) {
       "Accept": "application/json, text/plain, */*",
       "Connection": "keep-alive",
       "Cookie": cookie,
-      "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0"),
+      "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.2 Mobile/15E148 Safari/604.1",
       "Accept-Language": "zh-cn",
       "Referer": "https://rdcseason.m.jd.com/",
       "Accept-Encoding": "gzip, deflate, br"
@@ -390,7 +390,7 @@ function getShopPrize(id) {
       "Accept": "application/json, text/plain, */*",
       "Connection": "keep-alive",
       "Cookie": cookie,
-      "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0"),
+      "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.2 Mobile/15E148 Safari/604.1",
       "Accept-Language": "zh-cn",
       "Referer": "https://rdcseason.m.jd.com/",
       "Accept-Encoding": "gzip, deflate, br"
@@ -424,7 +424,7 @@ function browseMeeting(id) {
       "Accept": "application/json, text/plain, */*",
       "Connection": "keep-alive",
       "Cookie": cookie,
-      "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0"),
+      "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.2 Mobile/15E148 Safari/604.1",
       "Accept-Language": "zh-cn",
       "Referer": "https://rdcseason.m.jd.com/",
       "Accept-Encoding": "gzip, deflate, br"
@@ -457,7 +457,7 @@ function getMeetingPrize(id) {
       "Accept": "application/json, text/plain, */*",
       "Connection": "keep-alive",
       "Cookie": cookie,
-      "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0"),
+      "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.2 Mobile/15E148 Safari/604.1",
       "Accept-Language": "zh-cn",
       "Referer": "https://rdcseason.m.jd.com/",
       "Accept-Encoding": "gzip, deflate, br"
@@ -490,7 +490,7 @@ function myRank() {
         "Accept": "application/json, text/plain, */*",
         "Connection": "keep-alive",
         "Cookie": cookie,
-        "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0"),
+        "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.2 Mobile/15E148 Safari/604.1",
         "Accept-Language": "zh-cn",
         "Referer": "https://rdcseason.m.jd.com/",
         "Accept-Encoding": "gzip, deflate, br"
@@ -553,7 +553,7 @@ function saveJbean(id) {
         "Accept": "application/json, text/plain, */*",
         "Connection": "keep-alive",
         "Cookie": cookie,
-        "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0"),
+        "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.2 Mobile/15E148 Safari/604.1",
         "Accept-Language": "zh-cn",
         "Referer": "https://rdcseason.m.jd.com/",
         "Accept-Encoding": "gzip, deflate, br"
@@ -583,15 +583,17 @@ async function doHelp() {
   if (zone === 0) {
     nowTime += 28800000;//UTC-0时区加上8个小时
   }
-  await updateShareCodes();
-  if (!$.updatePkActivityIdRes) await updateShareCodesCDN();
-  tempCode = $.updatePkActivityIdRes.shareCodes;
+  // await updateShareCodes();
+  // if (!$.updatePkActivityIdRes) await updateShareCodesCDN();
+  // tempCode = $.updatePkActivityIdRes.shareCodes;
   console.log(`是否大于当天九点🕘:${nowTime > new Date(nowTime).setHours(9, 0, 0, 0)}`)
   //当天大于9:00才从API里面取收集的助力码
-  if (nowTime > new Date(nowTime).setHours(9, 0, 0, 0)) body = await printAPI();//访问收集的互助码
+  //if (nowTime > new Date(nowTime).setHours(9, 0, 0, 0)) body = await printAPI();//访问收集的互助码
+  body = await printAPI();//访问收集的互助码
   if (body) {
-    console.log(`printAPI返回助力码数量:${body.replace(/"/g, '').split(',').length}`)
-    tempCode = tempCode.concat(body.replace(/"/g, '').split(','))
+    // console.log(`printAPI返回助力码数量:${body.replace(/"/g, '').split(',').length}`)
+    // tempCode = tempCode.concat(body.replace(/"/g, '').split(','))
+    tempCode = [...tempCode, ...body['data']]
   }
   console.log(`累计助力码数量:${tempCode.length}`)
   //去掉重复的
@@ -608,13 +610,13 @@ async function doHelp() {
 }
 function printAPI() {
   return new Promise(resolve => {
-    $.get({url: `${printUrl}`}, (err, resp, data) => {
+    $.get({url: `${printUrl}`, 'timeout': 10000}, (err, resp, data) => {
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
           console.log(`${$.name} API请求失败，请检查网路重试`)
         } else {
-          // data = JSON.parse(data);
+          data = JSON.parse(data);
         }
       } catch (e) {
         $.logErr(e, resp)
@@ -637,7 +639,7 @@ function toHelp(code) {
         "Cookie": cookie,
         "Connection": "keep-alive",
         "Accept": "application/json, text/plain, */*",
-        "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0"),
+        "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.2 Mobile/15E148 Safari/604.1",
         "Referer": "https://rdcseason.m.jd.com/",
         "Content-Length": "44",
         "Accept-Language": "zh-cn"
@@ -669,7 +671,7 @@ function getHelp() {
         "Accept": "application/json, text/plain, */*",
         "Connection": "keep-alive",
         "Cookie": cookie,
-        "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0"),
+        "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.2 Mobile/15E148 Safari/604.1",
         "Accept-Language": "zh-cn",
         "Referer": "https://rdcseason.m.jd.com",
         "Accept-Encoding": "gzip, deflate, br"
@@ -684,7 +686,7 @@ function getHelp() {
           data = JSON.parse(data);
           if (data.code === 200) {
             console.log(`\n您的助力码shareId(互助码每天都是变化的)\n\n"${data.data.shareId}",\n`);
-            console.log(`每日9:00以后复制下面的URL链接在浏览器里面打开一次就能自动上车\n\n${addUrl}${data.data.shareId}\n`);
+            // console.log(`每日9:00以后复制下面的URL链接在浏览器里面打开一次就能自动上车\n\n${addUrl}${data.data.shareId}\n`);
             let ctrTemp;
             if ($.isNode() && process.env.JD_818_SHAREID_NOTIFY) {
               console.log(`环境变量JD_818_SHAREID_NOTIFY::${process.env.JD_818_SHAREID_NOTIFY}`)
@@ -692,16 +694,16 @@ function getHelp() {
             } else {
               ctrTemp = `${jdNotify}` === 'true';
             }
-            console.log(`是否发送上车推送链接:${ctrTemp ? '是': '否'}`)
-            // 只在早晨9点钟触发一次
-            let NowHours = new Date().getHours();
-            const zone = new Date().getTimezoneOffset();
-            if (zone === 0) {
-              NowHours += 8;//UTC-0时区加上8个小时
-            }
-            if(ctrTemp && NowHours === 9 && $.isNode()) await notify.sendNotify(`${$.name} - 账号${$.index} - ${$.nickName}互助码自动上车`, `[9:00之后上车]您的互助码上车链接是 ↓↓↓ \n\n ${addUrl}${data.data.shareId} \n\n ↑↑↑`, {
-              url: `${addUrl}${data.data.shareId}`
-            })
+            // console.log(`是否发送上车推送链接:${ctrTemp ? '是' : '否'}`)
+            // // 只在早晨9点钟触发一次
+            // let NowHours = new Date().getHours();
+            // const zone = new Date().getTimezoneOffset();
+            // if (zone === 0) {
+            //   NowHours += 8;//UTC-0时区加上8个小时
+            // }
+            // if (ctrTemp && NowHours === 9 && $.isNode()) await notify.sendNotify(`${$.name} - 账号${$.index} - ${$.nickName}互助码自动上车`, `[9:00之后上车]您的互助码上车链接是 ↓↓↓ \n\n ${addUrl}${data.data.shareId} \n\n ↑↑↑`, {
+            //   url: `${addUrl}${data.data.shareId}`
+            // })
             // await $.http.get({url: `http://jd.turinglabs.net/helpcode/add/${data.data.shareId}/`}).then((resp) => {
             //   console.log(resp);
             //   return
@@ -730,7 +732,7 @@ function getListJbean() {
         "Accept": "application/json, text/plain, */*",
         "Connection": "keep-alive",
         "Cookie": cookie,
-        "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0"),
+        "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.2 Mobile/15E148 Safari/604.1",
         "Accept-Language": "zh-cn",
         "Referer": "https://rdcseason.m.jd.com",
         "Accept-Encoding": "gzip, deflate, br"
@@ -765,7 +767,7 @@ function getListIntegral() {
         "Accept": "application/json, text/plain, */*",
         "Connection": "keep-alive",
         "Cookie": cookie,
-        "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0"),
+        "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.2 Mobile/15E148 Safari/604.1",
         "Accept-Language": "zh-cn",
         "Referer": "https://rdcseason.m.jd.com",
         "Accept-Encoding": "gzip, deflate, br"
@@ -801,7 +803,7 @@ function getListRank() {
         "Accept": "application/json, text/plain, */*",
         "Connection": "keep-alive",
         "Cookie": cookie,
-        "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0"),
+        "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.2 Mobile/15E148 Safari/604.1",
         "Accept-Language": "zh-cn",
         "Referer": "https://rdcseason.m.jd.com",
         "Accept-Encoding": "gzip, deflate, br"
@@ -883,7 +885,7 @@ function TotalBean() {
         "Connection": "keep-alive",
         "Cookie": cookie,
         "Referer": "https://wqs.jd.com/my/jingdou/my.shtml?sceneval=2",
-        "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0")
+        "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.2 Mobile/15E148 Safari/604.1"
       }
     }
     $.post(options, (err, resp, data) => {

@@ -111,8 +111,8 @@ async function jdFive() {
     await getGoodList()
     console.log(`去浏览店铺`)
     await getShopList()
-    //console.log(`去帮助好友`)
-    //await helpFriends()
+    console.log(`去帮助好友`)
+    await helpFriends()
     await myRank();//领取往期排名奖励
     await getActInfo()
     await showMsg()

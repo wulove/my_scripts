@@ -130,7 +130,7 @@ async function JD818() {
     await listGoods();//逛新品
     await shopInfo();//逛店铺
     await listMeeting();//逛会场
-   // await doHelp();
+    await doHelp();
     await myRank();//领取往期排名奖励
     await getListJbean();
     await getListRank();
