@@ -43,7 +43,7 @@ let prize =
 
 !(async () => {
   if (!cookiesArr[0]) {
-    console.log(`\n****************\n`);
+    $.log('', `。。。。。。。。。。。。。`, '')
     $.msg($.name, '提示：请先获取cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
     return;
   }
@@ -59,7 +59,7 @@ let prize =
       let date = new Date($.time("yyyy/MM/dd HH:mm:ss"));
       cookieExpire = false;
       lackCoin = false;
-      console.log(`\n********`+cookieExpire +`*********\n`);
+      $.log('', `。。。。。。。。。。。...。。`, '')
       await queryCouponsNotGroup()
       console.log(`\n********`+cookieExpire +`*********\n`);
       if (cookieExpire) {
