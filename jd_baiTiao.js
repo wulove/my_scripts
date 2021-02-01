@@ -7,7 +7,7 @@
 */
 const $ = new Env('天天领白条券');
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
-const printDetail = false;        //是否显示出参详情
+const printDetail = true;        //是否显示出参详情
 let cookieExpire = false;
 let lackCoin = false;
 //直接用NobyDa的jd cookie
@@ -43,7 +43,6 @@ let prize =
 
 !(async () => {
   if (!cookiesArr[0]) {
-    $.msg('', `。。。。。。。。。。。。。`, '')
     $.msg($.name, '提示：请先获取cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
     return;
   }
@@ -52,8 +51,6 @@ let prize =
     prize[i].body =`activityId=${prize[i].id}&eid=${randomWord(false,90).toUpperCase()}&fp=${randomWord(false,32).toLowerCase()}`
   }
   for (let i = 0; i < cookiesArr.length; i++) {
-
-    $.msg('', `。。。。。。1111。。。。。...。。`, '')
     cookie = cookiesArr[i];
     if (cookie) {
       $.prize = {addMsg : ``};
@@ -61,7 +58,6 @@ let prize =
       let date = new Date($.time("yyyy/MM/dd HH:mm:ss"));
       cookieExpire = false;
       lackCoin = false;
-      $.msg('', `。。。。。。。。。。。...。。`, '')
       await queryCouponsNotGroup()
       console.log(`\n********`+cookieExpire +`*********\n`);
       if (cookieExpire) {
