@@ -66,7 +66,7 @@ let prize =
       }
       await Promise.all([
         queryCouponCenter(),
-        // gateFloorById(),
+        gateFloorById(),
         queryAwardCenter()
       ])
       if (date.getHours() > 0) await takePrize(prize[0]);
@@ -112,7 +112,7 @@ function takePrize(prize,timeout = 0) {
       }
       $.post(url, (err, resp, data) => {
         try {
-          if (printDetail) console.log(data);
+          if (printDetail) console.log('takePrize:\n'+data);
           data = JSON.parse(data);
           $.prize[prize.name] = data;
           $.prize[prize.name].desc = prize.desc;
@@ -144,7 +144,7 @@ function queryMissionWantedDetail(timeout = 0) {
       }
       $.post(url, async (err, resp, data) => {
         try {
-          if (printDetail) console.log(data);
+          if (printDetail) console.log('queryMissionWantedDetail:\n'+data);
           data = JSON.parse(data);
           switch (data.resultData.data.mission.status ) {
             case -1 :
@@ -298,7 +298,7 @@ function queryCouponCenter(timeout = 0) {
       }
       $.get(url, async(err, resp, data) => {
         try {
-          if (printDetail) console.log(data);
+          if (printDetail) console.log("queryCouponCenter:\n" + data);
           data = JSON.parse(data);
           //return
           for (let i = data.resultData.data.length - 1;i >= 0 ;i--) {
@@ -336,7 +336,7 @@ function queryAwardCenter(timeout = 0) {
       }
       $.get(url, async (err, resp, data) => {
         try {
-          if (printDetail) console.log(data.match(/(window.__react_data__ =) (.+)/)[2])
+          if (printDetail) console.log('queryAwardCenter: \n'+data.match(/(window.__react_data__ =) (.+)/)[2])
           if (data.match(/(window.__react_data__ =) .+/)) {
             data = JSON.parse(data.match(/(window.__react_data__ =) (.+)/)[2]);
           } else {
@@ -448,7 +448,7 @@ function gateFloorById(timeout = 0) {
       }
       $.get(url, async(err, resp, data) => {
         try {
-          if (printDetail) console.log(data);
+          if (printDetail) console.log("gateFloorById:\n" + data);
           data = JSON.parse(data);
           for (let i = 0;i < data.resultData.data.data.length;i++) {
             if (lackCoin) break
