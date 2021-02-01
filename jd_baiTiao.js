@@ -69,7 +69,7 @@ let prize =
         gateFloorById(),
         queryAwardCenter()
       ])
-      if (date.getHours() > 0) await takePrize(prize[0]);
+      /*if (date.getHours() > 0) await takePrize(prize[0]);
       if (date.getDay() !== 0 && date.getHours() >= 8) {
         await takePrize(prize[date.getDay()],820);//延迟执行，防止提示活动火爆
         if (date.getDay() === 6) await takePrize(prize[7],820);//第二个周六券
@@ -78,7 +78,7 @@ let prize =
       if (date.getHours() > 0 && date.getDay() === 0) {
         $.prize.addMsg = `提　醒：请于今天使用周日专享白条券\n`
       }
-      if (date.getHours() >= 8) await queryMissionWantedDetail();
+      if (date.getHours() >= 8) await queryMissionWantedDetail();*/
       await msgShow();
     }
   }
