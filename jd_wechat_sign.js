@@ -194,7 +194,7 @@ function sign() {
           data = JSON.parse(data)
           console.log(`签到成功，获得${data.signInModule.signPoints}金币`)
           $.currentPoint = data.currPoint
-          for(let task of data.task_info.taskFavShop){
+          /*for(let task of data.task_info.taskFavShop){
             await completeTask(1, task.taskId)
             await $.wait(500)
           }
@@ -205,7 +205,7 @@ function sign() {
           for(let task of data.task_info.taskNewUser){
             await completeTask(5, task.taskId)
             await $.wait(500)
-          }
+          }*/
         }
       } catch (e) {
         $.logErr(e, resp)
