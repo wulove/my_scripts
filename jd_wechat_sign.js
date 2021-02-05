@@ -236,7 +236,7 @@ function getReward() {
           }
           for(let task of data.complete_task_info.taskOrder){
             await rewardTask(4, task.taskId)
-            await $.wait(500)
+            await $.wait(1500)
           }
           for(let task of data.complete_task_info.taskNewUser){
             await rewardTask(5, task.taskId)
