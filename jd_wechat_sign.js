@@ -190,6 +190,7 @@ function sign() {
           console.log(`${err}`)
           console.log(`${$.name} API请求失败，请检查网路重试`)
         } else {
+          console.log(`返回数据\n` + data)
           data = JSON.parse(data)
           console.log(`签到成功，获得${data.signInModule.signPoints}金币`)
           $.currentPoint = data.currPoint
