@@ -190,22 +190,22 @@ function sign() {
           console.log(`${err}`)
           console.log(`${$.name} API请求失败，请检查网路重试`)
         } else {
-          console.log(`返回数据\n` + data)
+          //console.log(`sign\n` + data)
           data = JSON.parse(data)
           console.log(`签到成功，获得${data.signInModule.signPoints}金币`)
           $.currentPoint = data.currPoint
-          /*for(let task of data.task_info.taskFavShop){
+          for(let task of data.task_info.taskFavShop){
             await completeTask(1, task.taskId)
-            await $.wait(500)
+            await $.wait(1500)
           }
           for(let task of data.task_info.taskBrowse){
             await completeTask(2, task.taskId)
-            await $.wait(500)
+            await $.wait(1500)
           }
           for(let task of data.task_info.taskNewUser){
             await completeTask(5, task.taskId)
             await $.wait(500)
-          }*/
+          }
         }
       } catch (e) {
         $.logErr(e, resp)
@@ -223,9 +223,10 @@ function getReward() {
           console.log(`${err}`)
           console.log(`${$.name} API请求失败，请检查网路重试`)
         } else {
+          console.log(`getReward\n` + data)
           data = JSON.parse(data)
           $.currentPoint = data.currPoint
-          for(let task of data.complete_task_info.taskFavShop){
+          /*for(let task of data.complete_task_info.taskFavShop){
             await rewardTask(1, task.taskId)
             await $.wait(500)
           }
@@ -240,7 +241,7 @@ function getReward() {
           for(let task of data.complete_task_info.taskNewUser){
             await rewardTask(5, task.taskId)
             await $.wait(500)
-          }
+          }*/
           for(let ex of data.exchangeList){
             if(EXCHANGE && ex['remainPercent']!=='0.00' && ex['prizeName'].indexOf('京豆')>-1 && ex['needPoint'] <= $.currentPoint ){
               console.log(`满足条件，去兑换${ex['prizeName']}`)
