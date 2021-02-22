@@ -14,7 +14,7 @@ const Dt = require('crypto-js');
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 const notify = $.isNode() ? require('./sendNotify') : '';
 let cookiesArr = [], cookie = '', originCookie = '', message = '';
-let helpAuthor = true;//为作者助力的开关
+let helpAuthor = false;//为作者助力的开关
 const API_HOST = 'https://asusiqiyi.m.jd.com/hsiqy/task/';
 const Ot = "12z65c88d1212p16";
 if ($.isNode()) {
