@@ -110,7 +110,7 @@ async function signInit() {
     $.get(taskUrl('speedSignInit', {
       "activityId": "8a8fabf3cccb417f8e691b6774938bc2",
       "kernelPlatform": "RN",
-      "inviterId":"140oB9/DNfaRn46j3w7TR4On8bJjlhOf"
+      "inviterId":"gCBrvPfINCZc+dotfvHPlA=="
     }), async (err, resp, data) => {
       try {
         if (err) {
@@ -483,11 +483,11 @@ function invite2() {
     'origin': 'https://assignment.jd.com',
     'accept-language': 'zh-cn',
     'user-agent': 'jdltapp;iPad;3.1.0;14.4;a54abe779c8fbeb4e8e34f01fdc5cc4dd78173a2;network/wifi;ADID/BB69CC09-77D8-43A2-8645-CBC4CCE49911;hasUPPay/0;pushNoticeIsOpen/0;lang/zh_CN;model/iPad13,1;addressid/3438850002;hasOCPay/0;appBuild/1017;supportBestPay/0;pv/14.9;apprpd/ProductCoupon_MergeMain;ref/FSPromListViewController;psq/0;ads/;psn/a54abe779c8fbeb4e8e34f01fdc5cc4dd78173a2|27;jdv/0|kong|t_1000170135|tuiguang|notset|1613101365448|1613101365;adk/;app_device/IOS;pap/JA2020_3112531|3.1.0|IOS 14.4;Mozilla/5.0 (iPad; CPU OS 14_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1',
-    'referer': 'https://assignment.jd.com/?inviterId=ZkwcpLegNlzAaWJFNT0DOIjvAArnAKULplIlLRGdC+0=&lng=0.000000&lat=0.000000&sid=2131b85f0bcb82714e032402628cc2fw&un_area=12_904_50647_57886',
+    'referer': 'https://assignment.jd.com/?inviterId=Wy3rGd8o4Vckq1VucBFJjA==&lng=0.000000&lat=0.000000&sid=2131b85f0bcb82714e032402628cc2fw&un_area=12_904_50647_57886',
     'Cookie': cookie
   };
 
-  var dataString = `functionId=TaskInviteService&body={"method":"participateInviteTask","data":{"channel":"1","encryptionInviterPin":"ZkwcpLegNlzAaWJFNT0DOIjvAArnAKULplIlLRGdC%2B0%3D","type":1}}&appid=market-task-h5&uuid=&_t=${t}`;
+  var dataString = `functionId=TaskInviteService&body={"method":"participateInviteTask","data":{"channel":"1","encryptionInviterPin":"Wy3rGd8o4Vckq1VucBFJjA%3D%3D","type":1}}&appid=market-task-h5&uuid=&_t=${t}`;
 
   var options = {
     url: 'https://api.m.jd.com/',
@@ -512,7 +512,7 @@ function invite() {
     'Cookie': cookie
   };
 
-  var dataString = `functionId=InviteFriendApiService&body={"method":"attendInviteActivity","data":{"inviterPin":"ZkwcpLegNlzAaWJFNT0DOIjvAArnAKULplIlLRGdC%2B0%3D","channel":1,"token":"","frontendInitStatus":""}}&referer=-1&eid=eidIf3dd8121b7sdmiBLGdxRR46OlWyh62kFAZogTJFnYqqRkwgr63%2BdGmMlcv7EQJ5v0HBic81xHXzXLwKM6fh3i963zIa7Ym2v5ehnwo2B7uDN92Q0&aid=&client=ios&clientVersion=14.4&networkType=wifi&fp=-1&appid=market-task-h5&_t=${t}`;
+  var dataString = `functionId=InviteFriendApiService&body={"method":"attendInviteActivity","data":{"inviterPin":"Wy3rGd8o4Vckq1VucBFJjA%3D%3D","channel":1,"token":"","frontendInitStatus":""}}&referer=-1&eid=eidIf3dd8121b7sdmiBLGdxRR46OlWyh62kFAZogTJFnYqqRkwgr63%2BdGmMlcv7EQJ5v0HBic81xHXzXLwKM6fh3i963zIa7Ym2v5ehnwo2B7uDN92Q0&aid=&client=ios&clientVersion=14.4&networkType=wifi&fp=-1&appid=market-task-h5&_t=${t}`;
 
   var options = {
     url: 'https://api.m.jd.com/?t=1613645706861',
