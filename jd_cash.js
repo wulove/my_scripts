@@ -93,6 +93,7 @@ function index(info=false) {
           console.log(`${$.name} API请求失败，请检查网路重试`)
         } else {
           if (safeGet(data)) {
+            console.log(`cash_mob_home:\n` + data)
             data = JSON.parse(data);
             if(data.code===0 && data.data.result){
               if(info){
