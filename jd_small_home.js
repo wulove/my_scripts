@@ -82,7 +82,7 @@ const JD_API_HOST = 'https://lkyl.dianpusoft.cn/api';
       await smallHome();
     }
   }
-  await updateInviteCodeCDN('https://gitee.com/lxk0301/updateTeam/raw/master/shareCodes/jd_updateSmallHomeInviteCode.json');
+  /*await updateInviteCodeCDN('https://gitee.com/lxk0301/updateTeam/raw/master/shareCodes/jd_updateSmallHomeInviteCode.json');
   for (let i = 0; i < cookiesArr.length; i++) {
     if (cookiesArr[i]) {
       cookie = cookiesArr[i];
@@ -97,7 +97,7 @@ const JD_API_HOST = 'https://lkyl.dianpusoft.cn/api';
       console.log(`\n去帮助作者:LXK9301\n`)
       await helpFriends();
     }
-  }
+  }*/
 })()
     .catch((e) => {
       $.log('', `❌ ${$.name}, 失败! 原因: ${e}!`, '')
