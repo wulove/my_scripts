@@ -77,10 +77,10 @@ if ($.isNode()) {
 
 async function jsRedPacket() {
   try {
-    await invite()
+    //await invite()
     for (let i = 0; i < 3; ++i) {
       await redPacket()
-      await $.wait(500)
+      await $.wait(1000)
     }
     await showMsg()
   } catch (e) {
