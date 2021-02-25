@@ -89,8 +89,6 @@ async function jdGlobal() {
 
     await signInit()
     await sign()
-    await invite()
-    await invite2()
     $.score = 0
     $.total = 0
     await taskList()
@@ -670,71 +668,6 @@ function taskGetUrl(function_id, body) {
       "referer": "https://an.jd.com/babelDiy/Zeus/q1eB6WUB8oC4eH1BsCLWvQakVsX/index.html"
     }
   }
-}
-
-function invite2() {
-  let t = +new Date()
-  let inviterId = [
-    "Wy3rGd8o4Vckq1VucBFJjA==",
-    "VbAuzdLrRQv8DT8VU4gR66uCcg4QHrWnW+DyOv8IedA=",
-    "Lp3j8bN3zVW7XBBFzA%2Fh0IjHF0tn8HHhELd%2BqviJRJw%3D",
-    "2OldVZc5pETBD81XU85thQ%3D%3D",
-    "Pyp83Ujp%2Bedz15YE8NG3Sw%3D%3D"
-  ][Math.floor((Math.random()*5))]
-
-  let headers = {
-    'Host': 'api.m.jd.com',
-    'accept': 'application/json, text/plain, */*',
-    'content-type': 'application/x-www-form-urlencoded',
-    'origin': 'https://assignment.jd.com',
-    'accept-language': 'zh-cn',
-    'user-agent': $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JSUA') ? $.getdata('JSUA') : "'jdltapp;iPad;3.1.0;14.4;network/wifi;Mozilla/5.0 (iPad; CPU OS 14_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1"),
-    'referer': `https://assignment.jd.com/?inviterId=${inviterId}`,
-    'Cookie': cookie
-  }
-
-  let dataString = `functionId=TaskInviteService&body={"method":"participateInviteTask","data":{"channel":"1","encryptionInviterPin":"${escape(inviterId)}","type":1}}&appid=market-task-h5&uuid=&_t=${t}`;
-
-  var options = {
-    url: 'https://api.m.jd.com/',
-    headers: headers,
-    body: dataString
-  }
-  $.post(options, (err, resp, data) => {
-    // console.log(data)
-  })
-}
-
-function invite() {
-  let t = +new Date()
-  let inviterId = [
-    "Wy3rGd8o4Vckq1VucBFJjA==",
-    "VbAuzdLrRQv8DT8VU4gR66uCcg4QHrWnW+DyOv8IedA=",
-    "Lp3j8bN3zVW7XBBFzA%2Fh0IjHF0tn8HHhELd%2BqviJRJw%3D",
-    "2OldVZc5pETBD81XU85thQ%3D%3D",
-    "Pyp83Ujp%2Bedz15YE8NG3Sw%3D%3D"
-  ][Math.floor((Math.random()*5))]
-
-  var headers = {
-    'Host': 'api.m.jd.com',
-    'accept': 'application/json, text/plain, */*',
-    'content-type': 'application/x-www-form-urlencoded',
-    'origin': 'https://invite-reward.jd.com',
-    'accept-language': 'zh-cn',
-    'user-agent': $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JSUA') ? $.getdata('JSUA') : "'jdltapp;iPad;3.1.0;14.4;network/wifi;Mozilla/5.0 (iPad; CPU OS 14_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1"),
-    'referer': 'https://invite-reward.jd.com/',
-    'Cookie': cookie
-  };
-
-  var dataString = `functionId=InviteFriendApiService&body={"method":"attendInviteActivity","data":{"inviterPin":"${inviterId}","channel":1,"token":"","frontendInitStatus":""}}&referer=-1&eid=eidIf3dd8121b7sdmiBLGdxRR46OlWyh62kFAZogTJFnYqqRkwgr63%2BdGmMlcv7EQJ5v0HBic81xHXzXLwKM6fh3i963zIa7Ym2v5ehnwo2B7uDN92Q0&aid=&client=ios&clientVersion=14.4&networkType=wifi&fp=-1&appid=market-task-h5&_t=${t}`;
-  var options = {
-    url: `https://api.m.jd.com/?t=${+new Date()}`,
-    headers: headers,
-    body: dataString
-  };
-  $.post(options, (err, resp, data) => {
-    // console.log(data)
-  })
 }
 
 function TotalBean() {
