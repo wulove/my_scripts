@@ -32,7 +32,7 @@ cron "10 * * * *" script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd
 });
 
 const $ = new Env('京喜工厂');
-const JD_API_HOST = 'https://m.jingxi.com';
+const JD_API_HOST = 'https://4ZK4ZpvoSreRB92RRo8bpJAQNoTqm.jingxi.com';
 const helpAu = false; //帮作者助力 免费拿活动
 const notify = $.isNode() ? require('./sendNotify') : '';
 let jdNotify = true;//是否关闭通知，false打开通知推送，true关闭通知推送
@@ -117,7 +117,7 @@ async function jdDreamFactory() {
   try {
     await userInfo();
     await QueryFriendList();//查询今日招工情况以及剩余助力次数
-    await joinLeaderTuan();//参团
+    //await joinLeaderTuan();//参团
     await helpFriends();
     if (!$.unActive) return
     await getUserElectricity();
