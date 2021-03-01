@@ -246,6 +246,8 @@ function doTask(function_name, body) {
                 }
               }
             }
+          } else {
+            console.log(function_name + ' >>>> ' + data);
           }
         }
       } catch (e) {
