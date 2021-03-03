@@ -228,9 +228,9 @@ async function doTask() {
     await inviteFriendsInitFun();
   }
   // 投食10次
-  if (feedReachInit && !feedReachInit.finished) {
+  /*if (feedReachInit && !feedReachInit.finished) {
     await feedReachInitFun();
-  }
+  }*/
 }
 // 好友助力信息
 async function masterHelpInit() {
