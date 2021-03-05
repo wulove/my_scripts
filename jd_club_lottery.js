@@ -104,7 +104,7 @@ async function doTasks() {
       });
       console.log(`开始做浏览页面任务`)
       for (let i = 0; i < new Array(taskTime).fill('').length; i++) {
-        await $.wait(1000);
+        await $.wait(2000);
         await doTask('browseTask', taskID[i]);
       }
     }
@@ -124,7 +124,7 @@ async function doTasks() {
       });
       console.log(`开始做关注店铺任务`)
       for (let i = 0; i < new Array(taskTime).fill('').length; i++) {
-        await $.wait(1000);
+        await $.wait(1500);
         await doTask('attentionTask', taskID[i].toString());
       }
     }
@@ -133,7 +133,7 @@ async function doTasks() {
 async function shaking() {
   for (let i = 0; i < new Array($.leftShakingTimes).fill('').length; i++) {
     console.log(`开始 【京东会员】 摇奖`)
-    await $.wait(1000);
+    await $.wait(1500);
     const newShakeBeanRes = await vvipclub_shaking_lottery();
     if (newShakeBeanRes.success) {
       console.log(`京东会员-剩余摇奖次数：${newShakeBeanRes.data.remainLotteryTimes}`)
@@ -147,7 +147,7 @@ async function shaking() {
   }
   for (let i = 0; i < new Array($.freeTimes).fill('').length; i++) {
     console.log(`开始 【摇京豆】 摇奖`)
-    await $.wait(1000);
+    await $.wait(1500);
     const shakeBeanRes = await shakeBean();
     if (shakeBeanRes.success) {
       console.log(`剩余摇奖次数：${shakeBeanRes.data.luckyBox.freeTimes}`)
