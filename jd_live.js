@@ -1,5 +1,5 @@
 /*
-京东直播，每日18豆
+京东直播
 活动结束时间未知
 活动入口：京东APP首页-京东直播
 地址：https://h5.m.jd.com/babelDiy/Zeus/2zwQnu4WHRNfqMSdv69UPgpZMnE2/index.html/
