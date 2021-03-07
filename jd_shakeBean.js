@@ -1,17 +1,17 @@
 /*
-    京东会员-摇京豆
-    活动入口：京东app-我的-京东会员-摇京豆
-    脚本功能 本地用户循环助力并抽奖，脚本无任何别的内置助力。
-    适合node环境多账户使用，如仅一个账户就不需要运行这个脚本了。
-    每月运行一次即可
+京东会员-摇京豆
+活动入口：京东app-我的-京东会员-摇京豆
+脚本功能 本地用户循环助力并抽奖，脚本无任何别的内置助力。
+适合node环境多账户使用，如仅一个账户就不需要运行这个脚本了。
+每月运行一次即可
 
-    新手写脚本，难免有bug，能用且用。
-    ============Quantumultx===============
-    [task_local]
-    #京东会员-摇京豆
-    3 10 1 * * https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_shakeBean.js, tag=京东会员-摇京豆,  enabled=true
+新手写脚本，难免有bug，能用且用。
+============Quantumultx===============
+[task_local]
+#京东会员-摇京豆
+3 10 1 * * https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_shakeBean.js, tag=京东会员-摇京豆,  enabled=true
 */
-const $ = Env("京东会员-摇一摇");
+const $ = new Env('京东会员-摇一摇');
 const jdCookieNode = $.isNode() ? require("./jdCookie.js") : "";
 const notify = $.isNode() ? require("./sendNotify") : "";
 let cookiesArr = [], cookie = "", message = '', helpList = [];
