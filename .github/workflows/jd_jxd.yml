@@ -10,7 +10,7 @@ on:
   watch:
     types: started
   repository_dispatch:
-    types: jxd
+    types: jd_jxd
 jobs:
   build:
 

@@ -10,7 +10,7 @@ on:
   watch:
     types: started
   repository_dispatch:
-    types: beauty
+    types: jd_beauty
 jobs:
   build:
 
