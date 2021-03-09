@@ -86,6 +86,7 @@ function exchange() {
       try {
         if (err) {
           data = JSON.parse(resp.body)
+          console.log(`兑换失败：${JSON.stringify(data)}`)
         } else {
           if (safeGet(data)) {
             data = JSON.parse(data);
