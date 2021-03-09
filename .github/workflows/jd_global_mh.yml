@@ -1,13 +1,13 @@
-name: 京东直播
+name: 京东国际盲盒
 
 on:
   workflow_dispatch:
   schedule:
-    - cron: '10-25/5 4 * * *'
+    - cron: '0 1,4,12,13 * * *'
   watch:
     types: started
   repository_dispatch:
-    types: jd_live
+    types: jd_global_mh
 jobs:
   build:
 
@@ -32,9 +32,9 @@ jobs:
       - name: npm install
         run: |
           npm install
-      - name: '运行 【京东直播天天领京豆】'
+      - name: '运行 【京东国际盲盒】'
         run: |
-          node jd_live.js
+          node jd_global_mh.js
         env:
           JD_COOKIE: ${{ secrets.JD_COOKIE }}
           PUSH_PLUS_TOKEN: ${{ secrets.PUSH_PLUS_TOKEN }}
