@@ -2,8 +2,8 @@ name: 京东超市-大转盘
 
 on:
   workflow_dispatch:
-  scheduledule:
-      - cron: "3 2 * * *"
+  schedule:
+      - cron: '3 2 * * *'
   watch:
     types: started
   repository_dispatch:
