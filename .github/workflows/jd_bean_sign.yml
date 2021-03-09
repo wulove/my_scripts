@@ -2,8 +2,8 @@ name: 京东多合一签到
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '0 16 * * *'
+#  schedule:
+#    - cron: '0 16 * * *'
   watch:
     types: started
   repository_dispatch:
