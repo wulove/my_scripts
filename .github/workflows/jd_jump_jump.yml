@@ -1,13 +1,13 @@
-name: 美丽研究院
+name: 母婴-跳一跳
 
 on:
   workflow_dispatch:
   schedule:
-    - cron: '1 23,4,10 * * *'
+    - cron: '5 0,4,12 2-7 3 *'
   watch:
     types: started
   repository_dispatch:
-    types: jd_beauty
+    types: jd_jump_jump
 jobs:
   build:
 
@@ -32,9 +32,9 @@ jobs:
       - name: npm install
         run: |
           npm install
-      - name: '运行 【美丽研究院】'
+      - name: '运行 【母婴-跳一跳】'
         run: |
-          node jd_beauty.js
+          node jd_jump_jump.js
         env:
           JD_COOKIE: ${{ secrets.JD_COOKIE }}
           PUSH_PLUS_TOKEN: ${{ secrets.PUSH_PLUS_TOKEN }}
