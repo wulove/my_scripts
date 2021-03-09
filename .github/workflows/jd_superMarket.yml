@@ -3,7 +3,7 @@ name: 东东超市
 on:
   workflow_dispatch:
   schedule:
-    - cron: '8 */4 * * *'
+    - cron: '15 * * * *'
   watch:
     types: started
   repository_dispatch:
