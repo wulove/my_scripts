@@ -3,7 +3,7 @@ name: 极速版-现金签到
 on:
   workflow_dispatch:
   schedule:
-    - cron: '10-25/5 4 * * *'
+    - cron: '1 0,16 * * *'
   watch:
     types: started
   repository_dispatch:
