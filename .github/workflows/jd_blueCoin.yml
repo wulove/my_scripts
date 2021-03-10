@@ -1,13 +1,13 @@
-name: 京东家庭号
+name: 东东超市兑京豆
 
 on:
   workflow_dispatch:
   schedule:
-    - cron: '4 23,0-14/1 * * *'
+    - cron: '0 0 * * *'
   watch:
     types: started
   repository_dispatch:
-    types: jd_family
+    types: jd_blueCoin
 jobs:
   build:
 
@@ -32,12 +32,11 @@ jobs:
       - name: npm install
         run: |
           npm install
-      - name: '运行 【京东家庭号】'
+      - name: '运行 【东东超市兑京豆】'
         run: |
-          node jd_family.js
+          node jd_blueCoin.js
         env:
           JD_COOKIE: ${{ secrets.JD_COOKIE_1 }}
-          JD_USER_AGENT: ${{ secrets.JD_USER_AGENT }}
           PUSH_PLUS_TOKEN: ${{ secrets.PUSH_PLUS_TOKEN }}
           PUSH_PLUS_USER: ${{ secrets.PUSH_PLUS_USER }}
           IGOT_PUSH_KEY: ${{ secrets.IGOT_PUSH_KEY }}
@@ -51,3 +50,4 @@ jobs:
           TG_USER_ID: ${{ secrets.TG_USER_ID }}
           DD_BOT_TOKEN: ${{ secrets.DD_BOT_TOKEN }}
           DD_BOT_SECRET: ${{ secrets.DD_BOT_SECRET }}
+          MARKET_COIN_TO_BEANS: ${{ secrets.MARKET_COIN_TO_BEANS }}
