@@ -32,7 +32,7 @@ jobs:
       - name: npm install
         run: |
           npm install
-      - name: '运行 【极速版-现金签到】'
+      - name: '运行 【京东极速版签到+赚现金】'
         run: |
           node jd_speed_sign.js
         env:
