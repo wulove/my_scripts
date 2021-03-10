@@ -1,13 +1,13 @@
-name: 京喜财富岛
+name: 京东领现金
 
 on:
   workflow_dispatch:
   schedule:
-    - cron: "33 0/2 * * *"
+    - cron: '6 0-16/4 * * *'
   watch:
     types: started
   repository_dispatch:
-    types: jx_cfd
+    types: jd_cash
 jobs:
   build:
 
@@ -32,9 +32,9 @@ jobs:
       - name: npm install
         run: |
           npm install
-      - name: '运行 【京喜财富岛】'
+      - name: '运行 【京东领现金】'
         run: |
-          node jx_cfd.js
+          node jd_cash.js
         env:
           JD_COOKIE: ${{ secrets.JD_COOKIE }}
           PUSH_PLUS_TOKEN: ${{ secrets.PUSH_PLUS_TOKEN }}
