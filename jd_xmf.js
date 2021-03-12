@@ -1,19 +1,19 @@
 /**
  京东小魔方 活动入口：京东app-新品首发-百万京豆
  活动好像是持续进行的，cron还是修改成每天运行就好了。
-脚本更新地址：https://raw.githubusercontent.com/i-chenzhe/qx/master/jd_xmf.js
+脚本更新地址：https://raw.githubusercontent.com/i-chenzhe/qx/mai n/jd_xmf.js
 
  已支持IOS双京东账号,Node.js支持N个京东账号
  脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
  // quantumultx
  [task_local]
  # 京东小魔方
- 10 10 * * *   https://raw.githubusercontent.com/i-chenzhe/qx/master/jd_xmf.js, tag= 京东小魔方, enabled=true
+ 10 10 * * *   https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_xmf.js, tag= 京东小魔方, enabled=true
  //Loon
  [Script]
- cron "  10 10 * * *   " script-path=https://raw.githubusercontent.com/i-chenzhe/qx/master/jd_xmf.js ,tag= 京东小魔方
+ cron "  10 10 * * *   " script-path=https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_xmf.js ,tag= 京东小魔方
  //Surge
-  京东小魔方 = type=cron,cronexp="  10 10 * * *   ",wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/i-chenzhe/qx/master/jd_xmf.js
+  京东小魔方 = type=cron,cronexp="  10 10 * * *   ",wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_xmf.js
 * */
 const $ = new Env('京东小魔方');
 const notify = $.isNode() ? require('./sendNotify') : '';
