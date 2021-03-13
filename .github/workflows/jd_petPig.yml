@@ -7,7 +7,7 @@ on:
   watch:
     types: [started]
   repository_dispatch:
-    types: jd_petPig
+    types: jd_pigPet
 jobs:
   build:
 
@@ -34,7 +34,7 @@ jobs:
           npm install
       - name: '运行 【京东金融养猪猪】'
         run: |
-          node jd_petPig.js
+          node jd_pigPet.js
         env:
           JD_COOKIE: ${{ secrets.JD_COOKIE_1 }}
           JD_USER_AGENT: ${{ secrets.JD_USER_AGENT }}
