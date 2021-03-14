@@ -24,7 +24,7 @@ const JD_API_HOST = 'https://api.m.jd.com/client.action/';
 //Node.js用户请在jdCookie.js处填写京东ck;
 //IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [], cookie = '', message = '', assistList = [];
-let helpAuthor = true;//为作者助力的开关
+let helpAuthor = false;//为作者助力的开关
 if ($.isNode()) {
     Object.keys(jdCookieNode).forEach((item) => {
         cookiesArr.push(jdCookieNode[item])
