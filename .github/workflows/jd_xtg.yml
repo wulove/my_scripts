@@ -2,8 +2,8 @@ name: 手机尚学季
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '0 16 * * *'
+#  schedule:
+#    - cron: '0 16 * * *'
   watch:
     types: started
   repository_dispatch:
