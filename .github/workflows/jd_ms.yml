@@ -7,7 +7,7 @@ on:
   watch:
     types: started
   repository_dispatch:
-    types: ms
+    types: jd_ms
 jobs:
   build:
 

@@ -5,7 +5,7 @@ on:
   schedule:
     - cron: '23 * * * *'
   watch:
-    types: [started]
+    types: started
   repository_dispatch:
     types: jd_pigPet
 jobs:
