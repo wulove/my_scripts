@@ -467,7 +467,7 @@ function shareUrl() {
         "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0")
       }
     }
-    $.get(options, (err, resp, data) => {
+    $.get(options, async (err, resp, data) => {
       try {
         console.log('好友邀请码', data)
         data = JSON.parse(data);
@@ -478,6 +478,24 @@ function shareUrl() {
         if (data['code'] === 200) {
           $.shareId.push(data['data']);
           console.log(`\n【京东账号${$.index}（${$.nickName || $.UserName}）的${$.name}好友互助码】${data['data']}\n`);
+          await $.http.get({url: `https://code.chiang.fun/autocommit/mohe/insert/${data['data']}`, timeout: 10000}).then((resp) => {
+            // console.log('resp', resp)
+            if (resp.statusCode === 200) {
+              try {
+                let { body } = resp;
+                body = JSON.parse(body);
+                if (body['code'] === 200) {
+                  console.log(`邀请码${data['data']}}提交成功\n`)
+                } else if (body['code'] === 400) {
+                  // console.log(`邀请码 【${data['data']}】 已存在\n`)
+                } else {
+                  console.log(`邀请码提交结果:${JSON.stringify(body)}\n`)
+                }
+              } catch (e) {
+                console.log(`邀请码提交异常:${e}`)
+              }
+            }
+          });
         }
       } catch (e) {
         $.logErr(e, resp);
