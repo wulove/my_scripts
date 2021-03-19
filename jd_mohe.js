@@ -72,7 +72,10 @@ $.shareId = ["8051f482-5619-47d3-8d2e-7b49a1c1675e","27352a8c-365c-408f-83d4-175
         task1(),
       ])
       await taskList();
-      await getAward();//抽奖
+      console.log(`当前小时数为：` + new Date().getHours())
+      if (new Date().getHours() === 0) {
+        await getAward();//抽奖
+      }
       //ios端22点通知一次
       if (new Date().getHours() === 22) {
         $.msg($.name, '', `【京东账号一】${$.UserName}\n任务已做完.\n 抽奖详情查看 https://isp5g.m.jd.com\n`, {"open-url": "https://isp5g.m.jd.com"});
