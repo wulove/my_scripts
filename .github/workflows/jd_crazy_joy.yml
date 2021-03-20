@@ -51,4 +51,4 @@ jobs:
           TG_USER_ID: ${{ secrets.TG_USER_ID }}
           DD_BOT_TOKEN: ${{ secrets.DD_BOT_TOKEN }}
           DD_BOT_SECRET: ${{ secrets.DD_BOT_SECRET }}
-          JDJOY_SHARECODES: ${{ secrets.JDJOY_SHARECODES }}
+          JDJOY_SHARECODES: ${{ '2OHYqaVeFwzHSSBf976XTg==@R90I7Pl8WLxJ73zqEWkkkw==&2OHYqaVeFwzHSSBf976XTg==@R90I7Pl8WLxJ73zqEWkkkw==' }}
