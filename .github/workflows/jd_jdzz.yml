@@ -51,4 +51,4 @@ jobs:
           DD_BOT_TOKEN: ${{ secrets.DD_BOT_TOKEN }}
           DD_BOT_SECRET: ${{ secrets.DD_BOT_SECRET }}
           JD_USER_AGENT: ${{ secrets.JD_USER_AGENT }}
-          JDZZ_SHARECODES: ${{ secrets.JDZZ_SHARECODES }}
+          JDZZ_SHARECODES: ${{ 'S5KkcAlpbtBaxXnKM7Z9_@SaEzIlJOJLepV9qJV&S5KkcAlpbtBaxXnKM7Z9_@SaEzIlJOJLepV9qJV' }}
