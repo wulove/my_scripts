@@ -74,7 +74,8 @@ $.shareId = [];
       ])
       await taskList();
       console.log(`当前小时数为：` + new Date().getHours())
-      if (new Date().getHours() === 0) {
+      // UTC时间，小时数为14的时候对应北京时间0点
+      if (new Date().getHours() === 14) {
         await getAward();//抽奖
       }
     }
