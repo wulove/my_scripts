@@ -35,7 +35,7 @@ const $ = new Env('城城分现金');
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 const notify = $.isNode() ? require('./sendNotify') : '';
 let cookiesArr = [], cookie = '',  message = '';
-let localShareCodesList = [];
+let localShareCodesList = [{"inviteId":"yjReHGE0mbQhqDs7W5h_1pBuDQEzNV7GR0t8X_o6qs79","encryptedPin":"RnFixmUNbTbentTDHj-j0OtIRS-93Sk"},{"inviteId":"RtGKiqjmAEjFAOvibrxGmsj0hc5WmeNOOCXpkdV8MnqUVIyc","encryptedPin":"RnEwwzFQbWGPn9RP--s1GZrTUP1DeY9GtzY"}];
 if ($.isNode()) {
     Object.keys(jdCookieNode).forEach((item) => {
         cookiesArr.push(jdCookieNode[item])
