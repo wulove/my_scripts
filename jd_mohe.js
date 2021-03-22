@@ -37,7 +37,7 @@ if ($.isNode()) {
 
 const JD_API_HOST = 'https://isp5g.m.jd.com';
 //邀请码一天一变化，已确定
-$.shareId = [];
+$.shareId = ['03760a57-1eeb-47db-8591-9bfd8e67f375','67fa1081-f200-401a-8385-b4dc78025b5d'];
 !(async () => {
   if (!cookiesArr[0]) {
     $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
