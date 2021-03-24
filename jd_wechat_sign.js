@@ -148,7 +148,7 @@ if (!$.isNode() && typeof $request !=='undefined') {
       if (cookiesArr[i]) {
         cookie = cookiesArr[i];
         if(cookie.indexOf('wq_uin')===-1) continue
-        $.UserName = decodeURIComponent(cookie.match(/pt_pin=(.+?);/) && cookie.match(/pt_pin=(.+?);/)[1])
+        $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1])
         $.index = i + 1;
         $.isLogin = true;
         $.nickName = '';

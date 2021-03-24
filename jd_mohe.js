@@ -51,7 +51,7 @@ $.shareId = ['6f17b5bf-c299-436b-aa05-faf1a4397766','b6e92bac-0c30-40ef-805a-7f8
   for (let i = 0; i < cookiesArr.length; i++) {
     if (cookiesArr[i]) {
       cookie = cookiesArr[i];
-      $.UserName = decodeURIComponent(cookie.match(/pt_pin=(.+?);/) && cookie.match(/pt_pin=(.+?);/)[1]);
+      $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1]);
       $.index = i + 1;
       $.isLogin = true;
       $.nickName = '';
@@ -100,7 +100,7 @@ $.shareId = ['6f17b5bf-c299-436b-aa05-faf1a4397766','b6e92bac-0c30-40ef-805a-7f8
   for (let v = 0; v < cookiesArr.length; v++) {
     cookie = cookiesArr[v];
     $.index = v + 1;
-    $.UserName = decodeURIComponent(cookie.match(/pt_pin=(.+?);/) && cookie.match(/pt_pin=(.+?);/)[1]);
+    $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1]);
     console.log(`\n\n自己账号内部互助`);
     for (let item of $.shareId) {
       console.log(`账号 ${$.index} ${$.UserName} 开始给 ${item}进行助力`)
