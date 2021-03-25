@@ -1,16 +1,16 @@
-name: 京东小魔方
+name: 乘风破浪的姐姐
 
 on:
   workflow_dispatch:
+  # 12 12 24-26 3 *
   schedule:
-    - cron: '5 16 * * *'
+    - cron: '1 4 24-26 3 *'
   watch:
     types: started
   repository_dispatch:
-    types: jd_xmf
+    types: z_sister
 jobs:
   build:
-
     runs-on: ubuntu-latest
     if: github.event.repository.owner.id == github.event.sender.id
     steps:
@@ -32,9 +32,9 @@ jobs:
       - name: npm install
         run: |
           npm install
-      - name: '运行 【京东小魔方】'
+      - name: '运行 【乘风破浪的姐姐】'
         run: |
-          node z_xmf.js
+          node z_sister.js
         env:
           JD_COOKIE: ${{ secrets.JD_COOKIE }}
           PUSH_PLUS_TOKEN: ${{ secrets.PUSH_PLUS_TOKEN }}
@@ -45,9 +45,9 @@ jobs:
           JD_DEBUG: ${{ secrets.JD_DEBUG }}
           PUSH_KEY: ${{ secrets.PUSH_KEY }}
           BARK_PUSH: ${{ secrets.BARK_PUSH }}
+          BARK_SOUND: ${{ secrets.BARK_SOUND }}
           TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
           TG_USER_ID: ${{ secrets.TG_USER_ID }}
-          BARK_SOUND: ${{ secrets.BARK_SOUND }}
           DD_BOT_TOKEN: ${{ secrets.DD_BOT_TOKEN }}
           DD_BOT_SECRET: ${{ secrets.DD_BOT_SECRET }}
           JD_USER_AGENT: ${{ secrets.JD_USER_AGENT }}
