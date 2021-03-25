@@ -46,7 +46,7 @@ jobs:
           PUSH_KEY: ${{ secrets.PUSH_KEY }}
           BARK_PUSH: ${{ secrets.BARK_PUSH }}
           FRUITSHARECODES: ${{ '2a743087d66245459df68472754d02fd@2af3c7fe21644b4092af5cfc2aab228a&2a743087d66245459df68472754d02fd@2af3c7fe21644b4092af5cfc2aab228a' }}
-          FRUIT_BEAN_CARD: ${{ secrets.FRUIT_BEAN_CARD }}
+          #FRUIT_BEAN_CARD: ${{ secrets.FRUIT_BEAN_CARD }}
           TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
           TG_USER_ID: ${{ secrets.TG_USER_ID }}
           FRUIT_NOTIFY_CONTROL: ${{ secrets.FRUIT_NOTIFY_CONTROL }}
