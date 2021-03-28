@@ -291,6 +291,7 @@ function redPacket() {
             let t = new Date()
             t.setDate(t.getDate() + 1)
             t.setHours(0, 0, 0, 0)
+            t = parseInt((t - 1) / 1000)
             // 因github上执行时间采用utc时间, 故这里减去8小时
             t = t - 8*60*60
             for (let vo of data.useRedInfo.redList || []) {
