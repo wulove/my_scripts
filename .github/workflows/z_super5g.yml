@@ -3,8 +3,8 @@ name: 5G超级盲盒
 on:
   workflow_dispatch:
     # 5 1,6,11,16,21 * 3-4 *
-  #  schedule:
-  #    - cron: '5 3,8,13,17,22 * 3-4 *'
+  schedule:
+    - cron: '5 3,8,13,17,22 * 3-4 *'
   watch:
     types: started
   repository_dispatch:
