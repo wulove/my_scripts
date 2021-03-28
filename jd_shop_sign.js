@@ -34,7 +34,7 @@ const token=[
     'A35B7B46F7B056EFE884124129793A9E',//3.18日添加7天5  10天10 15天20
     '8BB3061D36F7B14D248A04D67A55B95F',//3.18日添加7天10
     '98D37500400A712301AE1CCCD653DDE0',//3.22日添加3天2 5天5 7天10
-    '94E257FDD844E35D42A96ADC9BD729DE',//3.24日添加3天100
+    //'94E257FDD844E35D42A96ADC9BD729DE',//3.24日添加3天100
     '3AE23B40C51BB739715D2797A02C67F4',//3.24日添加5天5
     '51F3E0459250D0807F444494D3B15FAE',//3.24日添加天
     '00673762F360F776DA942F68E2B91ACE',//3.24日添加天
@@ -324,7 +324,11 @@ function TotalBean() {
                             $.isLogin = false; //cookie过期
                             return
                         }
-                        $.nickName = data['base'].nickname;
+                        if (data['retcode'] === 0) {
+                            $.nickName = (data['base'] && data['base'].nickname) || $.UserName;
+                        } else {
+                            $.nickName = $.UserName
+                        }
                     } else {
                         console.log(`京东服务器返回空数据`)
                     }
