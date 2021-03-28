@@ -140,6 +140,10 @@ async function redPacket() {
     })
 }
 
+async function cashDraw() {
+
+}
+
 function TotalBean() {
     return new Promise(async resolve => {
         const options = {
