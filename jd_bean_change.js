@@ -285,7 +285,6 @@ function redPacket() {
           console.log(`${$.name} API请求失败，请检查网路重试`)
         } else {
           if (data) {
-            console.log("资产数据返回：\n" + data)
             data = JSON.parse(data).data
             $.jxRed = 0, $.jsRed = 0, $.jdRed = 0, $.jxRedExpire = 0, $.jsRedExpire = 0, $.jdRedExpire = 0;
             let t = new Date()
@@ -317,7 +316,7 @@ function redPacket() {
             $.jdRed = $.jdRed.toFixed(2)
             $.balance = data.balance
             $.expiredBalance = data.expiredBalance || 0;
-            $.message += `\n当前总红包：${$.balance}(今日总过期${$.expiredBalance}元 🧧\n京喜红包：${$.jxRed}(今日将过期${$.jxRedExpire.toFixed(2)})元 🧧\n极速版红包：${$.jsRed}(今日将过期${$.jsRedExpire.toFixed(2)})元 🧧\n京东红包：${$.jdRed}(今日将过期${$.jdRedExpire.toFixed(2)})元 🧧`;
+            $.message += `\n当前总红包：${$.balance}(今日总过期${$.expiredBalance})元 🧧\n京喜红包：${$.jxRed}(今日将过期${$.jxRedExpire.toFixed(2)})元 🧧\n极速版红包：${$.jsRed}(今日将过期${$.jsRedExpire.toFixed(2)})元 🧧\n京东红包：${$.jdRed}(今日将过期${$.jdRedExpire.toFixed(2)})元 🧧`;
             // if ($.expiredBalance > 0) $.message += `\n今明二日过期：${$.expiredBalance}元红包🧧`;
           } else {
             console.log(`京东服务器返回空数据`)
