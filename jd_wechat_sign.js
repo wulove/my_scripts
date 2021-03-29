@@ -33,6 +33,7 @@ cron "10 0 * * *" script-path=https://raw.githubusercontent.com/shylocks/Loon/ma
 const $ = new Env('京东粉丝专享');
 const APIKey = "CookiesJD";
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
+const notify = $.isNode() ? require('./sendNotify') : '';
 let cookiesArr = [], cookie = '', message;
 let EXCHANGE = $.isNode() ? (process.env.EXCHANGE_WECHAT?process.env.EXCHANGE_WECHAT : true) : ($.getdata('JDWECHATEXCHANGE') ? $.getdata('JDWECHATEXCHANGE') : true)
 function getCache() {
@@ -131,13 +132,7 @@ if (!$.isNode() && typeof $request !=='undefined') {
     };
 
   } else {
-    let cookiesData = $.getdata('CookiesJD') || "[]";
-    cookiesData = jsonParse(cookiesData);
-    cookiesArr = cookiesData.map(item => item.cookie);
-    cookiesArr.reverse();
-    cookiesArr.push(...[$.getdata('CookieJD2'), $.getdata('CookieJD')]);
-    cookiesArr.reverse();
-    cookiesArr = cookiesArr.filter(item => item !== "" && item !== null && item !== undefined);
+    cookiesArr = [$.getdata('CookieJD'), $.getdata('CookieJD2'), ...jsonParse($.getdata('CookiesJD') || "[]").map(item => item.cookie)].filter(item => !!item);
   }
   !(async () => {
     if (!cookiesArr[0]) {
@@ -192,6 +187,10 @@ function sign() {
         } else {
           console.log(`sign\n` + data)
           data = JSON.parse(data)
+          if (data.errMsg !== 'succ') {
+            await notify.sendNotify(`${$.name}微信端cookie已失效 - ${$.UserName}`, `京东账号${$.UserName}\n请重新获取微信端Cookie`);
+            return;
+          }
           console.log(`签到成功，获得${data.signInModule.signPoints}金币`)
           $.currentPoint = data.currPoint
           for(let task of data.task_info.taskFavShop){
@@ -243,7 +242,8 @@ function getReward() {
             await $.wait(500)
           }
           for(let ex of data.exchangeList){
-            if(EXCHANGE && ex['remainPercent']!=='0.00' && ex['prizeName'].indexOf('京豆')>-1 && ex['needPoint'] <= $.currentPoint ){
+            if(EXCHANGE && ex['remainPercent']!=='0.00' && ex['needPoint'] <= $.currentPoint
+              && (ex['prizeName'].indexOf('京豆')>-1 || ex['prizeName'].endsWith('元'))){
               console.log(`满足条件，去兑换${ex['prizeName']}`)
               await exchange(ex.pondId,ex.level)
             }
