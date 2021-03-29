@@ -191,12 +191,12 @@ async function doDailyTask() {
       }
       if (item.type === 9) {
         //开卡领蓝币任务
-        if (item.taskStatus === 0) {
+        /*if (item.taskStatus === 0) {
           console.log('开始开卡领蓝币任务')
           const itemId = item.content[item.type].itemId;
           const res = await smtgDoShopTask(item.taskId, itemId);
           console.log(`${item.subTitle}结果${JSON.stringify(res)}`);
-        }
+        }*/
       }
       if (item.type === 10) {
         //关注商品领蓝币
