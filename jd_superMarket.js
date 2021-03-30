@@ -1,14 +1,13 @@
 /*
- * @Author: LXK9301 https://github.com/LXK9301
+ * @Author: lxk0301 https://gitee.com/lxk0301
  * @Date: 2020-08-16 18:54:16
- * @Last Modified by: LXK9301
+ * @Last Modified by: lxk0301
  * @Last Modified time: 2021-3-4 21:22:37
  */
 /*
 东东超市
 活动入口：京东APP首页-京东超市-底部东东超市
 Some Functions Modified From https://github.com/Zero-S1/JD_tools/blob/master/JD_superMarket.py
-支持京东双账号
 东东超市兑换奖品请使用此脚本 https://gitee.com/lxk0301/jd_scripts/raw/master/jd_blueCoin.js
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 =================QuantumultX==============
