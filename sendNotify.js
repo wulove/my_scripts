@@ -2,7 +2,7 @@
  * @Author: lxk0301 https://gitee.com/lxk0301
  * @Date: 2020-08-19 16:12:40 
  * @Last Modified by: lxk0301
- * @Last Modified time: 2021-3-29 11:52:54
+ * @Last Modified time: 2021-3-16 9:52:54
  */
 const querystring = require("querystring");
 const $ = new Env();
@@ -165,8 +165,7 @@ function serverNotify(text, desp, timeout = 2100) {
         body: `text=${text}&desp=${desp}`,
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        timeout: 10000
+        }
       }
       setTimeout(() => {
         $.post(options, (err, resp, data) => {
@@ -281,8 +280,7 @@ function BarkNotify(text, desp, params={}) {
         url: `${BARK_PUSH}/${encodeURIComponent(text)}/${encodeURIComponent(desp)}?sound=${BARK_SOUND}&${querystring.stringify(params)}`,
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        timeout: 10000
+        }
       }
       $.get(options, (err, resp, data) => {
         try {
@@ -318,8 +316,7 @@ function tgBotNotify(text, desp) {
         body: `chat_id=${TG_USER_ID}&text=${text}\n\n${desp}&disable_web_page_preview=true`,
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        timeout: 10000
+        }
       }
       if (TG_PROXY_HOST && TG_PROXY_PORT) {
         const tunnel = require("tunnel");
@@ -373,8 +370,7 @@ function ddBotNotify(text, desp) {
       },
       headers: {
         'Content-Type': 'application/json'
-      },
-      timeout: 10000
+      }
     }
     if (DD_BOT_TOKEN && DD_BOT_SECRET) {
       const crypto = require('crypto');
@@ -442,7 +438,6 @@ function qywxBotNotify(text, desp) {
       headers: {
         'Content-Type': 'application/json',
       },
-      timeout: 10000
     };
     if (QYWX_KEY) {
       $.post(options, (err, resp, data) => {
@@ -503,7 +498,6 @@ function qywxamNotify(text, desp) {
         headers: {
           'Content-Type': 'application/json',
         },
-        timeout: 10000
       };
       $.post(options_accesstoken, (err, resp, data) => {
         html = desp.replace(/\n/g, "<br/>")
@@ -614,8 +608,7 @@ function iGotNotify(text, desp, params={}){
         body: `title=${text}&content=${desp}&${querystring.stringify(params)}`,
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        timeout: 10000
+        }
       }
       $.post(options, (err, resp, data) => {
         try {
@@ -658,8 +651,7 @@ function pushPlusNotify(text, desp) {
         body: JSON.stringify(body),
         headers: {
           'Content-Type': ' application/json'
-        },
-        timeout: 10000
+        }
       }
       $.post(options, (err, resp, data) => {
         try {
