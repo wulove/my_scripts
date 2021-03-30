@@ -14,5 +14,5 @@ logging.warning(f'目标时间：{target_time}')
 if (datetime.now() < target_time):
 	td = target_time - datetime.now()
 	logging.warning(f'需要沉睡：{td.seconds}秒')
-	time.sleep(td.seconds)
+	time.sleep(td.seconds+math.floor(td.microseconds/1000)/1000)
 logging.warning(f'当前时间：{datetime.now()}')
