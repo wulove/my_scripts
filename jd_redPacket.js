@@ -114,7 +114,7 @@ async function doTask() {
             await receiveTaskRedpacket(item.taskType);
           } else {
             //TODO 领3张优惠券
-            console.log('item: ${item}')
+            console.log('item: ' + JSON.stringify(item))
             console.log(`[${item.title}] 任务未开发`)
           }
         }
