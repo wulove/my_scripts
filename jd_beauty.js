@@ -90,12 +90,12 @@ async function mr() {
   $.helpInfo = []
   $.needs = []
   const WebSocket = require('ws')
-  let client = new WebSocket(`wss://xinruimz-isv.isvjcloud.com/wss/?token=${$.token}`,null,{
+  let client = new WebSocket(`wss://116.198.3.218/wss/?token=${$.token}`,null,{
     headers:{
       'user-agent': process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : "Mozilla/5.0 (iPhone; CPU iPhone OS 14_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.3 Mobile/15E148 Safari/604.1",
     }
   })
-  console.log(`wss://xinruimz-isv.isvjcloud.com/wss/?token=${$.token}`)
+  console.log(`wss://116.198.3.218/wss/?token=${$.token}`)
   client.onopen = async () => {
     console.log(`美容研究院服务器连接成功`);
     client.send('{"msg":{"type":"action","args":{"source":1},"action":"_init_"}}');
@@ -457,7 +457,7 @@ function getIsvToken() {
 function getIsvToken2() {
   let config = {
     url: 'https://api.m.jd.com/client.action?functionId=isvObfuscator',
-    body: 'body=%7B%22url%22%3A%22https%3A%5C/%5C/xinruimz-isv.isvjcloud.com%22%2C%22id%22%3A%22%22%7D&build=167490&client=apple&clientVersion=9.3.2&openudid=53f4d9c70c1c81f1c8769d2fe2fef0190a3f60d2&osVersion=14.2&partner=apple&rfs=0000&scope=01&sign=6eb3237cff376c07a11c1e185761d073&st=1610161927336&sv=102&uuid=hjudwgohxzVu96krv/T6Hg%3D%3D',
+    body: 'body=%7B%22url%22%3A%22https%3A%5C/%5C/116.198.3.218%22%2C%22id%22%3A%22%22%7D&build=167490&client=apple&clientVersion=9.3.2&openudid=53f4d9c70c1c81f1c8769d2fe2fef0190a3f60d2&osVersion=14.2&partner=apple&rfs=0000&scope=01&sign=6eb3237cff376c07a11c1e185761d073&st=1610161927336&sv=102&uuid=hjudwgohxzVu96krv/T6Hg%3D%3D',
     headers: {
       'Host': 'api.m.jd.com',
       'accept': '*/*',
@@ -491,7 +491,7 @@ function getIsvToken2() {
 
 function getToken() {
   let config = {
-    url: 'https://xinruimz-isv.isvjcloud.com/api/auth',
+    url: 'https://116.198.3.218/api/auth',
     body: JSON.stringify({"token":$.token2,"source":"01"}),
     headers: {
       'Host': 'xinruimz-isv.isvjcloud.com',
