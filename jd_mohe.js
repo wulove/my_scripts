@@ -96,7 +96,7 @@ $.shareId = ['8d3a3f50-8e8e-446c-8696-3a08c538c716','2fc84788-4f9c-40d6-a6fc-2d2
         console.log(`读取邀请码异常:${e}`)
       }
     }
-  });*/
+  }).catch((e) => console.log(`catch 读取邀请码异常:${e}`));*/
   for (let v = 0; v < cookiesArr.length; v++) {
     cookie = cookiesArr[v];
     $.index = v + 1;
@@ -418,7 +418,7 @@ async function getAward() {
           console.log(`====抽奖结果====,${JSON.stringify(lotteryRes.data)}`);
           console.log(lotteryRes.data.name);
           console.log(lotteryRes.data.beanNum);
-          if ((lotteryRes.data['prizeId'] && lotteryRes.data['prizeId'] !== '9999') || lotteryRes.data.name === '未中奖') {
+          if ((lotteryRes.data['prizeId'] && lotteryRes.data['prizeId'] !== '9999') || lotteryRes.data.name !== '未中奖') {
             message += `抽奖获得：${lotteryRes.data.name}\n`;
           }
         } else if (lotteryRes.code === 4001) {
