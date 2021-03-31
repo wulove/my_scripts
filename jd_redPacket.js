@@ -112,13 +112,8 @@ async function doTask() {
             console.log(`开始做浏览任务\n`);
             await active(item.taskType);
             await receiveTaskRedpacket(item.taskType);
-          } if (item.taskType == 1) {
-            console.log(`开始做逛10s任务\n`);
-            await active(item.taskType, 12000);
-            await receiveTaskRedpacket(item.taskType);
           } else {
             //TODO 领3张优惠券
-            console.log('item: ' + JSON.stringify(item))
             console.log(`[${item.title}] 任务未开发`)
           }
         }
@@ -170,16 +165,16 @@ function startTask(taskType) {
   })
 }
 
-async function active(taskType,t=1000) {
+async function active(taskType) {
   const getTaskDetailForColorRes = await getTaskDetailForColor(taskType);
   if (getTaskDetailForColorRes && getTaskDetailForColorRes.code === 0) {
     if (getTaskDetailForColorRes.data && getTaskDetailForColorRes.data.result) {
       const { advertDetails } = getTaskDetailForColorRes.data.result;
       for (let item of advertDetails) {
-        await $.wait(t);
+        await $.wait(1000);
         if (item.id && item.status == 0) {
           let taskReportForColorRes = await taskReportForColor(taskType, item.id);
-          console.log(`完成任务的动作---${JSON.stringify(taskReportForColorRes)}`)
+          // console.log(`完成任务的动作---${JSON.stringify(taskReportForColorRes)}`)
         }
       }
     } else {
