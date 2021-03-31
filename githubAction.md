@@ -4,7 +4,7 @@
 
 |    Name     | 归属 | 属性 | 说明                                                         |
 | :---------: | :--: | ---- | ------------------------------------------------------------ |
-| `JD_COOKIE` | 京东 | 必须 | 京东cookie,多个账号的cookie使用`&`隔开。具体获取参考[浏览器获取京东cookie教程](./backUp/GetJdCookie.md) 或者 [插件获取京东cookie教程](./backUp/GetJdCookie2.md) |
+| `JD_COOKIE` | 京东 | 必须 | 京东cookie,多个账号的cookie使用`&`隔开，例：`pt_key=XXX;pt_pin=XXX;&pt_key=XXX;pt_pin=XXX;&pt_key=XXX;pt_pin=XXX;`。具体获取参考[浏览器获取京东cookie教程](./backUp/GetJdCookie.md) 或者 [插件获取京东cookie教程](./backUp/GetJdCookie2.md) |
 
 ##### 京东隐私安全 环境变量
 
@@ -13,7 +13,7 @@
 |   `JD_DEBUG`    | 脚本打印log | 非必须 |  true  | 运行脚本时，是否显示log,默认显示。改成false表示不显示，注重隐私的人可以设置 JD_DEBUG 为false |
 | `JD_USER_AGENT` |    京东     | 非必须 |        | 自定义此库里京东系列脚本的UserAgent，不懂不知不会UserAgent的请不要随意填写内容。如需使用此功能建议填写京东APP的UA |
 
-##### 推送通知环境变量(目前提供`微信server酱`、`pushplus(推送加)`、`iOS Bark APP`、`telegram机器人`、`钉钉机器人`、`企业微信机器人`、`iGot`等通知方式)
+##### 推送通知环境变量(目前提供`微信server酱`、`pushplus(推送加)`、`iOS Bark APP`、`telegram机器人`、`钉钉机器人`、`企业微信机器人`、`iGot`、`企业微信应用消息`等通知方式)
 
 |       Name        |                             归属                             |  属性  | 说明                                                         |
 | :---------------: | :----------------------------------------------------------: | :----: | ------------------------------------------------------------ |
@@ -31,7 +31,9 @@
 | `PUSH_PLUS_USER`  |                         pushplus推送                         | 非必须 | 一对多推送的“群组编码”（一对多推送下面->您的群组(如无则新建)->群组编码）注:(1、需订阅者扫描二维码 2、如果您是创建群组所属人，也需点击“查看二维码”扫描绑定，否则不能接受群组消息推送)，只填`PUSH_PLUS_TOKEN`默认为一对一推送 |
 |  `TG_PROXY_HOST`  |                      Telegram 代理的 IP                      | 非必须 | 代理类型为 http。例子：http代理 http://127.0.0.1:1080 则填写 127.0.0.1 |
 |  `TG_PROXY_PORT`  |                     Telegram 代理的端口                      | 非必须 | 例子：http代理 http://127.0.0.1:1080 则填写 1080             |
+|  `TG_PROXY_AUTH`  |                     Telegram 代理的认证参数              | 非必须 | 代理的认证参数     |
 |  `TG_API_HOST`  |                      Telegram api自建的反向代理地址              | 非必须 | 例子：反向代理地址 http://aaa.bbb.ccc 则填写 aaa.bbb.ccc [简略搭建教程](https://shimo.im/docs/JD38CJDQtYy3yTd8/read)     |
+
 
 ##### 互助码类环境变量
 
@@ -49,7 +51,6 @@
 |      `JXNC_SHARECODES`      |   京喜农场<br>互助码   | 非必须 |             /             | 注意：京喜农场种植种子发生变化的时候，互助码也会变！！<br>每个账号 shareCode 是一个 json，<br>json 需要用单引号包裹且是一行字符串，<br>否则设置环境变量时会出错，<br>示例：'{"smp":"22bdadsfaadsfadse8a",<br>"active":"jdnc_1_btorange210113_2","joinnum":"1"}'，<br>多账单间使用`&`或换行分开。<br>详细说明参见[#Pr202](https://github.com/LXK9301/jd_scripts/pull/202)<br>如果使用`docker-compose`部署就不需要在互助码两端加单引号。详细参见Issues[#I35AG8](https://gitee.com/lxk0301/jd_scripts/issues/I35AG8)|
 |    `JDSGMH_SHARECODES`      |  闪购盲盒<br>互助码  | 非必须 |            10/            | 填写规则和上面类似，或见下方[互助码的填写规则](#互助码的填写规则) |
 |    `JDCFD_SHARECODES`      |  京喜财富岛<br>互助码  | 非必须 |            未知/未知            | 填写规则和上面类似，或见下方[互助码的填写规则](#互助码的填写规则) |
-|    `CITY_SHARECODES`      |  城城领现金<br>互助码  | 非必须 |            未知/未知            | 填写规则和上面类似，或见下方[互助码的填写规则](#互助码的填写规则) |
 
 
 ##### 控制脚本功能环境变量
@@ -66,7 +67,7 @@
 |    `DDQ_NOTIFY_CONTROL`    |     点点券<br>推送开关     | 非必须 | 控制点点券是否静默运行,<br>`false`为否(发送推送通知消息),`true`为是(即：不发送推送通知消息) |
 |    `JDZZ_NOTIFY_CONTROL`    |     京东赚赚小程序<br>推送开关     | 非必须 | 控制京东赚赚小程序是否静默运行,<br>`false`为否(发送推送通知消息),`true`为是(即：不发送推送通知消息) |
 |    `JD_JOY_REWARD_NOTIFY`    |  宠汪汪<br>兑换京豆推送开关  | 非必须 | 控制`jd_joy_reward.js`脚本是否静默运行,<br>`false`为否(发送推送通知消息),`true`为是(即：不发送推送通知消息) |
-|       `JOY_FEED_COUNT`       |        宠汪汪喂食数量        | 非必须 | 控制`jd_joy_feedPets.js`脚本喂食数量,可以填的数字10,20,40,80,其他数字不可. |
+|       `JOY_FEED_COUNT`       |        宠汪汪喂食数量        | 非必须 | 控制`jd_joy_feedPets.js`脚本喂食数量,可以填的数字0,10,20,40,80,其他数字不可. |
 |       `JOY_HELP_FEED`        |       宠汪汪帮好友喂食       | 非必须 | 控制`jd_joy_steal.js`脚本是否给好友喂食,`false`为否,`true`为是(给好友喂食) |
 |        `JOY_RUN_FLAG`        |        宠汪汪是否赛跑        | 非必须 | 控制`jd_joy.js`脚本是否参加赛跑(默认参加双人赛跑),<br>`false`为否,`true`为是，脚本默认是`true` |
 |       `JOY_TEAM_LEVEL`       | 宠汪汪<br>参加什么级别的赛跑 | 非必须 | 控制`jd_joy.js`脚本参加几人的赛跑,可选数字为`2`,`10`,`50`，<br>其中2代表参加双人PK赛，10代表参加10人突围赛，<br>50代表参加50人挑战赛(注：此项功能在`JOY_RUN_FLAG`为true的时候才生效)，<br>如若想设置不同账号参加不同类别的比赛则用&区分即可(如下三个账号：`2&10&50`) |
@@ -89,11 +90,10 @@
 |    `CFD_NOTIFY_CONTROL`      |    京喜财富岛<br>控制是否运行脚本后通知     | 非必须 | 输入`true`为通知,不填则为不通知 |
 |    `JD_JXD_EXCHANGE`      |    京小兑<br>自动把抽奖卷兑换为兑币,默认否     | 非必须 | 输入`true`为自动兑换,不填则为不兑换 |
 |    `JXNC_NOTIFY_LEVEL`      |    京喜农场通知控制<br>推送开关,默认1     | 非必须 | 通知级别 0=只通知成熟;1=本次获得水滴>0;2=任务执行;3=任务执行+未种植种子 |
-|    `JD_CITY_EXCHANGE`      |    城城领现金是否自动抽奖<br>默认关闭     | 非必须 | 建议活动快结束开启，默认关闭，true开启 |
 
 ##### 互助码的填写规则
 
-  > 互助码如何获取：运行相应脚本后，在日志里面可以找到。
+  > 互助码如何获取：长期活动可在jd_get_share_code.js里面查找，短期活动需运行相应脚本后，在日志里面可以找到。
 
 同一个京东账号的好友互助码用@隔开,不同京东账号互助码用&或者换行隔开,下面给一个文字示例和具体互助码示例说明
 

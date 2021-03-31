@@ -3,7 +3,7 @@ name: 全民开红包
 on:
   workflow_dispatch:
   schedule:
-    - cron: '10 14,16 * * *'
+    - cron: '10 14,16,17 * * *'
   watch:
     types: started
   repository_dispatch:
