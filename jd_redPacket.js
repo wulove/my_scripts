@@ -114,6 +114,7 @@ async function doTask() {
             await receiveTaskRedpacket(item.taskType);
           } else {
             //TODO 领3张优惠券
+            console.log('item: ${item}')
             console.log(`[${item.title}] 任务未开发`)
           }
         }
@@ -174,7 +175,7 @@ async function active(taskType) {
         await $.wait(1000);
         if (item.id && item.status == 0) {
           let taskReportForColorRes = await taskReportForColor(taskType, item.id);
-          // console.log(`完成任务的动作---${JSON.stringify(taskReportForColorRes)}`)
+          console.log(`完成任务的动作---${JSON.stringify(taskReportForColorRes)}`)
         }
       }
     } else {
