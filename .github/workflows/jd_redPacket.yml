@@ -32,9 +32,6 @@ jobs:
       - name: npm install
         run: |
           npm install
-      - name: 'env'
-        run: |
-          node env.js
       - name: '运行 【全民开红包】'
         run: |
           node jd_redPacket.js
