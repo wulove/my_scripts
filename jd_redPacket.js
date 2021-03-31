@@ -87,7 +87,7 @@ async function redPacket() {
     await taskHomePage();
     await doTask();
     await h5activityIndex();
-    await jinli_h5assist();
+    //await jinli_h5assist();
   } catch (e) {
     $.logErr(e);
   }
