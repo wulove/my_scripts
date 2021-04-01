@@ -55,4 +55,4 @@ jobs:
           DD_BOT_TOKEN: ${{ secrets.DD_BOT_TOKEN }}
           DD_BOT_SECRET: ${{ secrets.DD_BOT_SECRET }}
           JD_USER_AGENT: ${{ secrets.JD_USER_AGENT }}
-          JD818_SHARECODES: ''
+          JD818_SHARECODES: '621ae1aa-1662-4318-ba81-12f307ee589c@9a89917f-7b46-401a-a477-36424bac3c5a&621ae1aa-1662-4318-ba81-12f307ee589c@9a89917f-7b46-401a-a477-36424bac3c5a'
