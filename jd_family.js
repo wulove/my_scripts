@@ -91,7 +91,7 @@ function showMsg() {
 function getInfo() {
   return new Promise(resolve => {
     $.get({
-      url: 'https://anmp.jd.com/babelDiy/Zeus/2ZpHzZdUuvWxMJT4KXuRdK6NPj3D/index.html?wxAppName=jd',
+      url: 'https://lgame.jd.com/babelDiy/Zeus/VhPVVaw8nTSVr69E757fyCebwKG/index.html',
       headers: {
         "Host": "lgame.jd.com",
         "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
@@ -185,13 +185,15 @@ function taskUrl(function_id, body = '') {
     url: `https://wq.jd.com/activep3/family/${function_id}?${body}`,
     headers: {
       'Host': 'wq.jd.com',
-      'Accept': 'application/json',
+      'Accept': '*/*',
+      "Connection": "keep-alive",
       'Accept-Language': 'zh-cn',
       'Content-Type': 'application/json;charset=utf-8',
       'Origin': 'wq.jd.com',
-      'User-Agent': 'JD4iPhone/167490 (iPhone; iOS 14.2; Scale/3.00)',
-      'Referer': `https://anmp.jd.com/babelDiy/Zeus/xKACpgVjVJM7zPKbd5AGCij5yV9/index.html?wxAppName=jd`,
-      'Cookie': cookie
+      "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1") : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1"),
+      'Referer': `https://lgame.jd.com/babelDiy/Zeus/VhPVVaw8nTSVr69E757fyCebwKG/index.html`,
+      'Cookie': cookie,
+      "Accept-Encoding": "br, gzip, deflate",
     }
   }
 }
