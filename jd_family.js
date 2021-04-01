@@ -121,7 +121,7 @@ function getUserInfo(info = false) {
           console.log(`${err},${jsonParse(resp.body)['message']}`)
           console.log(`${$.name} API请求失败，请检查网路重试`)
         } else {
-          $.userInfo = JSON.parse(data.match(/query\((.*)\n/)[1])
+          $.userInfo = JSON.parse(data.match(/checkParam\((.*)\n/)[1])
           console.log(`当前幸福值：${$.userInfo.tatalprofits}`)
           if (info) {
             message += `当前幸福值：${$.userInfo.tatalprofits}`
@@ -137,7 +137,7 @@ function getUserInfo(info = false) {
                 if (vo['times'] === 0) {
                   console.log(`去做任务${task['_id']}`)
                   await doTask(task['_id'])
-                  await $.wait(2000)
+                  await $.wait(Math.max(2000, Math.floor(Math.random() * 5000)))
                 } else {
                   console.log(`${Math.trunc(vo['times'] / 60)}分钟可后做任务${task['_id']}`)
                 }
@@ -163,7 +163,7 @@ function doTask(taskId) {
           console.log(`${err},${jsonParse(resp.body)['message']}`)
           console.log(`${$.name} API请求失败，请检查网路重试`)
         } else {
-          data = JSON.parse(data.match(/query\((.*)\n/)[1])
+          data = JSON.parse(data.match(/checkParam\((.*)\n/)[1])
           if (data.ret === 0) {
             console.log(`任务完成成功`)
           } else {
@@ -180,7 +180,7 @@ function doTask(taskId) {
 }
 
 function taskUrl(function_id, body = '') {
-  body = `activeid=${$.info.activeId}&token=${$.info.actToken}&sceneval=2&shareid=&t=${Date.now()}&_=${new Date().getTime()}&callback=query&${body}`
+  body = `activeid=${$.info.activeId}&token=${$.info.actToken}&sceneval=2&shareid=&t=${Date.now()}&_=${new Date().getTime()}&callback=checkParam&${body}`
   return {
     url: `https://wq.jd.com/activep3/family/${function_id}?${body}`,
     headers: {
