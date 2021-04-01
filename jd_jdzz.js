@@ -408,7 +408,7 @@ function requireConfig() {
       }
     }
     console.log(`共${cookiesArr.length}个京东账号\n`);
-    $.shareCodesArr = [];
+    $.shareCodesArr = ['S5KkcAlpbtBaxXnKM7Z9_','SaEzIlJOJLepV9qJV'];
     if ($.isNode()) {
       Object.keys(shareCodes).forEach((item) => {
         if (shareCodes[item]) {
