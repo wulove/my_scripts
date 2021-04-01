@@ -1,13 +1,13 @@
-name: 城城分现金
+name: 百变大咖秀
 
 on:
   workflow_dispatch:
   schedule:
-      - cron: '0 0 19-24 3 *'
+    - cron: '10 2,3 * * 2-5'
   watch:
     types: started
   repository_dispatch:
-    types: z_city_cash
+    types: jd_entertainment
 jobs:
   build:
 
@@ -32,9 +32,9 @@ jobs:
       - name: npm install
         run: |
           npm install
-      - name: '运行 【城城分现金】'
+      - name: '运行 【百变大咖秀】'
         run: |
-          node z_city_cash.js
+          node jd_entertainment.js
         env:
           JD_COOKIE: ${{ secrets.JD_COOKIE }}
           PUSH_PLUS_TOKEN: ${{ secrets.PUSH_PLUS_TOKEN }}
@@ -51,4 +51,3 @@ jobs:
           DD_BOT_TOKEN: ${{ secrets.DD_BOT_TOKEN }}
           DD_BOT_SECRET: ${{ secrets.DD_BOT_SECRET }}
           JD_USER_AGENT: ${{ secrets.JD_USER_AGENT }}
-          Z_CTYTCASH_LOTTERY: ${{ secrets.Z_CTYTCASH_LOTTERY }}
