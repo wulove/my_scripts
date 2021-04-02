@@ -7,14 +7,14 @@ import math
 if (len(sys.argv) < 2):
 	exit
 logging.warning(f'当前时间：{datetime.now()}')
-
+target_hour = None
 hour = datetime.now().hour
 for i in range(1, len(sys.argv)):
 	if (hour < int(sys.argv[i])):
 		print(sys.argv[i])
 		target_hour = int(sys.argv[i])
 		break;
-if (target_hour):
+if target_hour is None:
 	print('无匹配')
 	exit;
 print(f'hour: {target_hour}')
