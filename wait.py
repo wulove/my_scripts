@@ -5,7 +5,7 @@ import sys
 import math
 
 if (len(sys.argv) < 2):
-	exit
+	exit()
 logging.warning(f'当前时间：{datetime.now()}')
 target_time = sys.argv[1]
 logging.warning(f'参数值：{target_time}')
