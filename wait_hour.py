@@ -12,7 +12,6 @@ target_hour = 0
 hour = now.hour
 for i in range(1, len(sys.argv)):
 	if (hour < int(sys.argv[i])):
-		print(sys.argv[i])
 		target_hour = int(sys.argv[i])
 		break
 if target_hour == 0:
