@@ -7,16 +7,24 @@ import math
 if (len(sys.argv) < 2):
 	exit
 logging.warning(f'当前时间：{datetime.now()}')
+
 hour = datetime.now().hour
 for i in range(1, len(sys.argv)):
-
-target_time = sys.argv[1]
-logging.warning(f'参数值：{target_time}')
-now = datetime.now()
-target_time = datetime.strptime(now.strftime("%Y-%m-%d ") + target_time, "%Y-%m-%d %H:%M:%S.%f")
-logging.warning(f'目标时间：{target_time}')
-if (datetime.now() < target_time):
-	td = target_time - datetime.now()
-	logging.warning(f'需要沉睡：{td.seconds}秒')
-	time.sleep(td.seconds+math.floor(td.microseconds/1000)/1000)
-logging.warning(f'当前时间：{datetime.now()}')
+	if (hour < int(sys.argv[i])):
+		print(sys.argv[i])
+		target_hour = int(sys.argv[i])
+		break;
+if (target_hour):
+	print('无匹配')
+	exit;
+print(f'hour: {target_hour}')
+# target_time = sys.argv[1]
+# logging.warning(f'参数值：{target_time}')
+# now = datetime.now()
+# target_time = datetime.strptime(now.strftime("%Y-%m-%d ") + target_time, "%Y-%m-%d %H:%M:%S.%f")
+# logging.warning(f'目标时间：{target_time}')
+# if (datetime.now() < target_time):
+# 	td = target_time - datetime.now()
+# 	logging.warning(f'需要沉睡：{td.seconds}秒')
+# 	time.sleep(td.seconds+math.floor(td.microseconds/1000)/1000)
+# logging.warning(f'当前时间：{datetime.now()}')
