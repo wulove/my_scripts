@@ -2,9 +2,8 @@ name: 京东手机狂欢城
 
 on:
   workflow_dispatch:
-  # 0 0-18/6 * * *  UTC:16,22,4,10
   schedule:
-    - cron: '20 4-22/6 * * *'
+    - cron: '20 4,10 * * *'
   watch:
     types: started
   repository_dispatch:
