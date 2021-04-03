@@ -11,14 +11,14 @@ zone_cn = timezone(timedelta(hours=8))
 now_cn = now.astimezone(zone_cn)
 logging.warning(f'服务器时间：{now}, 北京时间：{now_cn}')
 logging.warning(now_cn.hour)
-target_hour = 0
+target_hour = -1
 hour = now.hour
 for i in range(1, len(sys.argv)):
 	if (hour < int(sys.argv[i])):
 		target_hour = int(sys.argv[i])
 		break
 
-if target_hour == 0:
+if target_hour == -1:
 	logging.error(f'木有匹配到对应的参数: {sys.argv[1:]}')
 	exit()
 logging.warning(f'匹配到的参数为: {target_hour}')
