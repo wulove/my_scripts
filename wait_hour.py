@@ -12,7 +12,7 @@ now_cn = now.astimezone(zone_cn)
 logging.warning(f'服务器时间：{now}, 北京时间：{now_cn}')
 logging.warning(now_cn.hour)
 target_hour = -1
-hour = now.hour
+hour = now_cn.hour
 for i in range(1, len(sys.argv)):
 	if (hour < int(sys.argv[i])):
 		target_hour = int(sys.argv[i])
