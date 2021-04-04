@@ -43,7 +43,7 @@ const openUrl = `openjd://virtual?params=%7B%20%22category%22:%20%22jump%22,%20%
     for (let i = 0; i < cookiesArr.length; i++) {
         if (cookiesArr[i]) {
             cookie = cookiesArr[i];
-            $.UserName = decodeURIComponent(cookie.match(/pt_pin=(.+?);/) && cookie.match(/pt_pin=(.+?);/)[1])
+            $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1])
             $.index = i + 1
             $.isLogin = true
             $.nickName = ''
@@ -141,10 +141,10 @@ function jdbalance() {
                 } else {
                     // console.log(data)
                     data=JSON.parse(data)
-                    balance=`(${$.nickName})红包余额：${data.data.balance}`
-                    expiredBalance=`(${$.nickName})即将过期红包：${data.data.expiredBalance}`
+                    let balance=`(${$.nickName})红包余额：${data.data.balance}`
+                    let expiredBalance=`(${$.nickName})即将过期红包：${data.data.expiredBalance}`
 
-                    allMessage += "京东账号${$.index}${$.nickName}\n${balance}\n${expiredBalance}${$.index !== cookiesArr.length ? '\n\n' : ''}"
+                    allMessage += `京东账号${$.index}${$.nickName}\n${balance}\n${expiredBalance}${$.index !== cookiesArr.length ? '\n\n' : ''}`;
                     console.log(balance)
                     console.log(expiredBalance)
                 }
