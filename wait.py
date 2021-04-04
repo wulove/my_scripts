@@ -11,7 +11,7 @@ zone_cn = timezone(timedelta(hours=8))
 now_cn = now.astimezone(zone_cn)
 logging.warning(f'服务器时间：{now}, 北京时间：{now_cn}')
 logging.warning(f'参数值：{sys.argv[1]}')
-target_time = datetime.strptime(now_cn.strftime("%Y-%m-%d ") + sys.argv[1], "%Y-%m-%d %H:%M:%S.%f")
+target_time = datetime.strptime(now_cn.strftime("%Y-%m-%d ") + sys.argv[1], "%Y-%m-%d %H:%M:%S.%f").replace(tzinfo=zone_cn)
 # 当前时间在设置时间前，则默认目标时间设置为第二天
 if now_cn.strftime("%H:%M:%S.%f") > sys.argv[1]:
 	target_time = target_time + timedelta(days=1)
