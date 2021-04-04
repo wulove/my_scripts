@@ -7,7 +7,7 @@ on:
   watch:
     types: started
   repository_dispatch:
-    types: jd_inner_shop_sign
+    types: jd_inter_shop_sign
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -33,7 +33,7 @@ jobs:
           npm install
       - name: '运行 【interCenter渠道店铺签到】'
         run: 
-          node jd_inner_shop_sign.js
+          node jd_inter_shop_sign.js
         env:
           JD_COOKIE: ${{ secrets.JD_COOKIE }}
           PUSH_PLUS_TOKEN: ${{ secrets.PUSH_PLUS_TOKEN }}
