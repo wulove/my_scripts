@@ -12,7 +12,7 @@ now_cn = now.astimezone(zone_cn)
 logging.warning(f'服务器时间：{now}, 北京时间：{now_cn}')
 logging.warning(f'参数值：{sys.argv[1]}')
 target_time = datetime.strptime(now_cn.strftime("%Y-%m-%d ") + sys.argv[1], "%Y-%m-%d %H:%M:%S.%f")
-if (now_cn.strftime("%H:%M:%S.%f") > sys.argv[1]) {
+if now_cn.strftime("%H:%M:%S.%f") > sys.argv[1]:
 	target_time = target_time + timedelta(days=1)
 }
 logging.warning(f'目标时间：{target_time}')
