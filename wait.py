@@ -14,7 +14,7 @@ target_time = sys.argv[1]
 logging.warning(f'参数值：{target_time}')
 target_time = datetime.strptime(now_cn.strftime("%Y-%m-%d ") + target_time, "%Y-%m-%d %H:%M:%S.%f")
 logging.warning(f'目标时间：{target_time}')
-if (datetime.now() < target_time):
+if (now_cn < target_time):
 	td = target_time - now_cn
 	logging.warning(f'需要沉睡：{td.seconds}秒')
 	time.sleep(td.seconds+math.floor(td.microseconds/1000)/1000)
