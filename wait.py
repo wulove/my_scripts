@@ -19,7 +19,7 @@ logging.warning(f'目标时间：{target_time}')
 td = target_time - now_cn
 # 当目标时间与当前时间相差过大时，直接跳过
 if td.seconds > 3600 * 2:
-	logging.error('当天时间与目标时间相差过大，直接跳过')
+	logging.error('当前时间与目标时间相差过大，直接跳过')
 	exit()
 logging.warning(f'需要沉睡：{td.seconds}秒')
 time.sleep(td.seconds+math.floor(td.microseconds/1000)/1000)
