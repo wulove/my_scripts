@@ -22,7 +22,7 @@ const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 let jdNotify = true;//是否关闭通知，false打开通知推送，true关闭通知推送
 const randomCount = $.isNode() ? 20 : 5;
 //IOS等用户直接用NobyDa的jd cookie
-let cookiesArr = [], cookie = '', message,notice, superAssist = [],money;
+let cookiesArr = [], cookie = '', allMessage, superAssist = [],money;
 if ($.isNode()) {
     Object.keys(jdCookieNode).forEach((item) => {
         cookiesArr.push(jdCookieNode[item])
@@ -47,8 +47,6 @@ const openUrl = `openjd://virtual?params=%7B%20%22category%22:%20%22jump%22,%20%
             $.index = i + 1
             $.isLogin = true
             $.nickName = ''
-            message = ''
-            notice =''
             await TotalBean();
             console.log(`\n******开始【京东账号${$.index}】${$.nickName || $.UserName}*********\n`);
             if (!$.isLogin) {
@@ -60,6 +58,9 @@ const openUrl = `openjd://virtual?params=%7B%20%22category%22:%20%22jump%22,%20%
             }
             await jdDlt()
         }
+    }
+    if (allMessage) {
+        if ($.isNode()) await notify.sendNotify($.name, allMessage);
     }
 })()
     .catch((e) => {
@@ -142,7 +143,8 @@ function jdbalance() {
                     data=JSON.parse(data)
                     balance=`(${$.nickName})红包余额：${data.data.balance}`
                     expiredBalance=`(${$.nickName})即将过期红包：${data.data.expiredBalance}`
-                    notice += `\n${balance}\n${expiredBalance}\n`
+
+                    allMessage += "京东账号${$.index}${$.nickName}\n${balance}\n${expiredBalance}${$.index !== cookiesArr.length ? '\n\n' : ''}"
                     console.log(balance)
                     console.log(expiredBalance)
                 }
