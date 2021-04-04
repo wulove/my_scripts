@@ -1,15 +1,16 @@
-﻿name: 京东店铺签到
+﻿name: 店铺关注有礼
 
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 16 * * *'
+    - cron: '10 7 * * *'
   watch:
     types: started
   repository_dispatch:
-    types: jd_shop_sign
+    types: jd_shop_follow_sku
 jobs:
   build:
+
     runs-on: ubuntu-latest
     if: github.event.repository.owner.id == github.event.sender.id
     steps:
@@ -31,9 +32,9 @@ jobs:
       - name: npm install
         run: |
           npm install
-      - name: '运行 【京东店铺签到】'
+      - name: '运行 【店铺关注有礼】'
         run: 
-          node jd_shop_sign.js
+          node jd_shop_follow_sku.js
         env:
           JD_COOKIE: ${{ secrets.JD_COOKIE }}
           PUSH_PLUS_TOKEN: ${{ secrets.PUSH_PLUS_TOKEN }}

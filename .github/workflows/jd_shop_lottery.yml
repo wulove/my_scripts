@@ -1,15 +1,16 @@
-﻿name: 京东店铺签到
+﻿name: 店铺大转盘
 
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 16 * * *'
+    - cron: '3 2,15,16 * * *'
   watch:
     types: started
   repository_dispatch:
-    types: jd_shop_sign
+    types: jd_shop_lottery
 jobs:
   build:
+
     runs-on: ubuntu-latest
     if: github.event.repository.owner.id == github.event.sender.id
     steps:
@@ -31,9 +32,9 @@ jobs:
       - name: npm install
         run: |
           npm install
-      - name: '运行 【京东店铺签到】'
+      - name: '运行 【店铺大转盘】'
         run: 
-          node jd_shop_sign.js
+          node jd_shop_lottery.js
         env:
           JD_COOKIE: ${{ secrets.JD_COOKIE }}
           PUSH_PLUS_TOKEN: ${{ secrets.PUSH_PLUS_TOKEN }}
