@@ -1,4 +1,4 @@
-﻿name: 京东店铺签到
+﻿name: 店铺签到
 
 on:
   workflow_dispatch:
@@ -31,7 +31,7 @@ jobs:
       - name: npm install
         run: |
           npm install
-      - name: '运行 【京东店铺签到】'
+      - name: '运行 【店铺签到】'
         run: 
           node jd_shop_sign.js
         env:
