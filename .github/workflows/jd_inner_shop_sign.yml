@@ -1,16 +1,15 @@
-﻿name: 店铺关注有礼
+﻿name: interCenter渠道店铺签到
 
 on:
   workflow_dispatch:
   schedule:
-    - cron: '10 16 * * *'
+    - cron: '0 16 * * *'
   watch:
     types: started
   repository_dispatch:
-    types: jd_shop_follow_sku
+    types: jd_inner_shop_sign
 jobs:
   build:
-
     runs-on: ubuntu-latest
     if: github.event.repository.owner.id == github.event.sender.id
     steps:
@@ -32,9 +31,9 @@ jobs:
       - name: npm install
         run: |
           npm install
-      - name: '运行 【店铺关注有礼】'
+      - name: '运行 【interCenter渠道店铺签到】'
         run: 
-          node jd_shop_follow_sku.js
+          node jd_inner_shop_sign.js
         env:
           JD_COOKIE: ${{ secrets.JD_COOKIE }}
           PUSH_PLUS_TOKEN: ${{ secrets.PUSH_PLUS_TOKEN }}
