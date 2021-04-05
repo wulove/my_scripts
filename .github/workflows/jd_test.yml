@@ -34,7 +34,7 @@ jobs:
           npm install
       - name: '运行 【测试】'
         run: |
-          node activity/jd_818.js
+          node activity/jd_xgyl.js
         env:
           JD_COOKIE: ${{ secrets.JD_COOKIE }}
           PUSH_PLUS_TOKEN: ${{ secrets.PUSH_PLUS_TOKEN }}
