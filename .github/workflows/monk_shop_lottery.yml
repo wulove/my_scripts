@@ -7,7 +7,7 @@ on:
   watch:
     types: started
   repository_dispatch:
-    types: jd_shop_lottery
+    types: monk_shop_lottery
 jobs:
   build:
 
@@ -34,7 +34,7 @@ jobs:
           npm install
       - name: '运行 【店铺大转盘】'
         run: 
-          node jd_shop_lottery.js
+          node monk_shop_lottery.js
         env:
           JD_COOKIE: ${{ secrets.JD_COOKIE }}
           PUSH_PLUS_TOKEN: ${{ secrets.PUSH_PLUS_TOKEN }}

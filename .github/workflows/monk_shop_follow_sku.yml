@@ -7,7 +7,7 @@ on:
   watch:
     types: started
   repository_dispatch:
-    types: jd_shop_follow_sku
+    types: monk_shop_follow_sku
 jobs:
   build:
 
@@ -34,7 +34,7 @@ jobs:
           npm install
       - name: '运行 【店铺关注有礼】'
         run: 
-          node jd_shop_follow_sku.js
+          node monk_shop_follow_sku.js
         env:
           JD_COOKIE: ${{ secrets.JD_COOKIE }}
           PUSH_PLUS_TOKEN: ${{ secrets.PUSH_PLUS_TOKEN }}
