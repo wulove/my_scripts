@@ -10,7 +10,6 @@ on:
     types: monk_shop_add_to_car
 jobs:
   build:
-
     runs-on: ubuntu-latest
     if: github.event.repository.owner.id == github.event.sender.id
     steps:
