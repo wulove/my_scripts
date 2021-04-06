@@ -100,7 +100,10 @@ async function jdBeauty() {
     $.draw_limit = 0
     while ($.gold >= 800) {
       // 连续5次空气直接跳出抽奖
-      if ($.draw_limit >= 5) break;
+      if ($.draw_limit >= 5) {
+        console.error("连续5次抽到空气，直接跳出抽奖！！！")
+        break;
+      }
       await draw()
       await $.wait(1000)
       $.gold -= 800
@@ -400,6 +403,7 @@ function draw() {
             data = JSON.parse(data);
             if (data.result && data.data) {
               if (data.data.name) {
+                $.draw_limit = 0
                 console.log(`抽奖成功，获得奖品：${data.data.name}`)
                 message += `抽奖成功，获得奖品：${data.data.name}\n`
               } else {
