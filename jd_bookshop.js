@@ -97,7 +97,10 @@ async function jdBeauty() {
   await getActContent(true)
   if ($.gold > 800) {
     console.log(`金币大于800，去抽奖`)
+    $.draw_limit = 0
     while ($.gold >= 800) {
+      // 连续5次空气直接跳出抽奖
+      if ($.draw_limit >= 5) break;
       await draw()
       await $.wait(1000)
       $.gold -= 800
@@ -400,6 +403,7 @@ function draw() {
                 console.log(`抽奖成功，获得奖品：${data.data.name}`)
                 message += `抽奖成功，获得奖品：${data.data.name}\n`
               } else {
+                $.draw_limit++
                 console.log(`抽奖成功，获得空气`)
                 message += `抽奖成功，获得空气`
               }
