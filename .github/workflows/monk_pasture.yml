@@ -1,14 +1,13 @@
-name: 金口碑奖投票
+﻿name: 蒙牛有机牧场
 
 on:
   workflow_dispatch:
   schedule:
-    # 5 2 * 3 *
-    - cron: '5 10 * 3 *'
+    - cron: '0 0,1-22/2 1-31 4-7 *'
   watch:
     types: started
   repository_dispatch:
-    types: z_mgold
+    types: monk_shop_lottery
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -32,9 +31,9 @@ jobs:
       - name: npm install
         run: |
           npm install
-      - name: '运行 【金口碑奖投票】'
-        run: |
-          node z_mgold.js
+      - name: '运行 【蒙牛有机牧场】'
+        run: 
+          node monk_pasture.js
         env:
           JD_COOKIE: ${{ secrets.JD_COOKIE }}
           PUSH_PLUS_TOKEN: ${{ secrets.PUSH_PLUS_TOKEN }}
@@ -51,3 +50,4 @@ jobs:
           DD_BOT_TOKEN: ${{ secrets.DD_BOT_TOKEN }}
           DD_BOT_SECRET: ${{ secrets.DD_BOT_SECRET }}
           JD_USER_AGENT: ${{ secrets.JD_USER_AGENT }}
+          PASTURE_EXCHANGE_KEYWORD: ${{ secrets.PASTURE_EXCHANGE_KEYWORD }}
