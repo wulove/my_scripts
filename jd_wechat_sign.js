@@ -185,7 +185,6 @@ function sign() {
           console.log(`${err}`)
           console.log(`${$.name} API请求失败，请检查网路重试`)
         } else {
-          console.log(`sign\n` + data)
           data = JSON.parse(data)
           if (data.errMsg !== 'succ') {
             await notify.sendNotify(`${$.name}微信端cookie已失效 - ${$.UserName}`, `京东账号${$.UserName}\n请重新获取微信端Cookie`);
@@ -222,9 +221,15 @@ function getReward() {
           console.log(`${err}`)
           console.log(`${$.name} API请求失败，请检查网路重试`)
         } else {
-          console.log(`getReward\n` + data)
           data = JSON.parse(data)
           $.currentPoint = data.currPoint
+          for(let ex of data.exchangeList){
+            if(EXCHANGE && ex['remainPercent']!=='0.00' && ex['needPoint'] <= $.currentPoint
+              && (ex['prizeName'].indexOf('京豆')>-1 || ex['prizeName'].endsWith('元'))){
+              console.log(`满足条件，去兑换${ex['prizeName']}`)
+              await exchange(ex.pondId,ex.level)
+            }
+          }
           for(let task of data.complete_task_info.taskFavShop){
             await rewardTask(1, task.taskId)
             await $.wait(1500)
@@ -241,13 +246,7 @@ function getReward() {
             await rewardTask(5, task.taskId)
             await $.wait(500)
           }
-          for(let ex of data.exchangeList){
-            if(EXCHANGE && ex['remainPercent']!=='0.00' && ex['needPoint'] <= $.currentPoint
-              && (ex['prizeName'].indexOf('京豆')>-1 || ex['prizeName'].endsWith('元'))){
-              console.log(`满足条件，去兑换${ex['prizeName']}`)
-              await exchange(ex.pondId,ex.level)
-            }
-          }
+
         }
       } catch (e) {
         $.logErr(e, resp)
