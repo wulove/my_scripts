@@ -23,4 +23,4 @@ if td.seconds > 3600 * 2:
 	exit()
 logging.warning(f'需要沉睡：{td.seconds}秒')
 time.sleep(td.seconds+math.floor(td.microseconds/1000)/1000)
-logging.warning(f'当前时间：{datetime.now()}')
+logging.warning(f'当前时间：{datetime.now().astimezone(zone_cn)}')
