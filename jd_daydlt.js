@@ -79,7 +79,7 @@ async function jdDlt() {
             await getLuckDrawEntrance()
         }
         console.log(`\n本次运行共获得${money}无门槛红包\n`)
-        allMessage += `京东账号${$.index}${$.nickName}\n本次运行共获得${money}无门槛红包`
+        allMessage += `京东账号${$.index}-${$.nickName}\n本次运行共获得${money}无门槛红包\n`
         await jdbalance()
        // await showMsg()
     } catch (e) {
@@ -141,8 +141,8 @@ function jdbalance() {
                 } else {
                     // console.log(data)
                     data=JSON.parse(data)
-                    let balance=`(${$.nickName})红包余额：${data.data.balance}`
-                    let expiredBalance=`(${$.nickName})即将过期红包：${data.data.expiredBalance}`
+                    let balance=`红包余额：${data.data.balance}`
+                    let expiredBalance=`即将过期红包：${data.data.expiredBalance}`
 
                     allMessage += `${balance}\n${expiredBalance}${$.index !== cookiesArr.length ? '\n\n' : ''}`;
                     console.log(balance)
