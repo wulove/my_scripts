@@ -970,11 +970,12 @@ async function joinLeaderTuan() {
   if (!res) res = await updateTuanIdsCDN('https://cdn.jsdelivr.net/gh/gitupdate/updateTeam@master/shareCodes/jd_updateFactoryTuanId.json');
   $.authorTuanIds = [...(res && res.tuanIds || []),...(res2 && res2.tuanIds || [])]
   if ($.authorTuanIds && $.authorTuanIds.length) {
-    console.log(`\n参加作者的团`);
     for (let tuanId of $.authorTuanIds) {
       if (!tuanId) continue
       if (!$.canHelp) break;
+      console.log(`\n账号${$.UserName} 参加作者lxk0301的团 【${tuanId}】`);
       await JoinTuan(tuanId);
+      await $.wait(1000);
     }
   }
 }
