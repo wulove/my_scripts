@@ -1,13 +1,13 @@
-name: 超级直播间红包雨
+name: lxk0301_live_redrain
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '5 0-14/1,23 8-14 4 *'
+#  schedule:
+#    - cron: '5 0-14/1,23 8-14 4 *'
   watch:
     types: started
   repository_dispatch:
-    types: jd_live_redrain
+    types: lxk0301_live_redrain
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -31,12 +31,12 @@ jobs:
       - name: npm install
         run: |
           npm install
-      - name: '等待'
-        run: |
-          python3 wait_hour.py 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23
+#      - name: '等待'
+#        run: |
+#          python3 wait_hour.py 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23
       - name: '运行 【超级直播间红包雨】'
         run: |
-          node jd_live_redrain.js
+          node lxk0301_live_redrain.js
         env:
           JD_COOKIE: ${{ secrets.JD_COOKIE }}
           PUSH_PLUS_TOKEN: ${{ secrets.PUSH_PLUS_TOKEN }}
