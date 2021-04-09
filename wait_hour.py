@@ -13,10 +13,15 @@ logging.warning(f'服务器时间：{now}, 北京时间：{now_cn}')
 logging.warning(now_cn.hour)
 target_hour = -1
 hour = now_cn.hour
-for i in range(1, len(sys.argv)):
-	if (hour < int(sys.argv[i])):
-		target_hour = int(sys.argv[i])
-		break
+if (len(sys.argv) == 2 and "-" in sys.argv[1]):
+	hs = sys.argv[1].split("-")
+	if hour+1 >= int(hs[0]) and hour+1 <= int(hs[1]):
+		target_hour = hour+1
+else :
+	for i in range(1, len(sys.argv)):
+		if (hour < int(sys.argv[i])):
+			target_hour = int(sys.argv[i])
+			break
 
 if target_hour == -1:
 	logging.error(f'木有匹配到对应的参数: {sys.argv[1:]}')
