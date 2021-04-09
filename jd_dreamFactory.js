@@ -107,11 +107,12 @@ if ($.isNode()) {
       if ($.canHelp) await joinLeaderTuan();//参团
       $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1])
       if ((cookiesArr && cookiesArr.length >= ($.tuanNum || 5)) && $.canHelp) {
-        console.log(`\n账号内部相互进团\n`);
+        console.log(`\n账号${$.UserName} 内部相互进团\n`);
         for (let item of $.tuanIds) {
           console.log(`\n${$.UserName} 去参加团 ${item}`);
           if (!$.canHelp) break;
           await JoinTuan(item);
+          await $.wait(1000);
         }
       }
     }
@@ -1352,7 +1353,7 @@ function requireConfig() {
       })
     } else {
       if ($.getdata('jd_jxFactory')) $.shareCodesArr = $.getdata('jd_jxFactory').split('\n').filter(item => item !== "" && item !== null && item !== undefined);
-      console.log(`\nBoxJs设置的京喜工厂邀请码:${$.getdata('jd_jxFactory')}\n`);
+      console.log(`\nBoxJs设置的${$.name}好友邀请码:${$.getdata('jd_jxFactory')}\n`);
     }
     // console.log(`\n种豆得豆助力码::${JSON.stringify($.shareCodesArr)}`);
     console.log(`您提供了${$.shareCodesArr.length}个账号的${$.name}助力码\n`);
@@ -1588,7 +1589,7 @@ function decrypt(time, stk, type, url) {
       const random = '5gkjB6SpmC9s';
       $.token = `tk01wcdf61cb3a8nYUtHcmhSUFFCfddDPRvKvYaMjHkxo6Aj7dhzO+GXGFa9nPXfcgT+mULoF1b1YIS1ghvSlbwhE0Xc`;
       $.fingerprint = 5287160221454703;
-      const str = `${token}${$.fingerprint}${timestamp}${$.appId}${random}`;
+      const str = `${$.token}${$.fingerprint}${timestamp}${$.appId}${random}`;
       hash1 = $.CryptoJS.SHA512(str, token).toString($.CryptoJS.enc.Hex);
     }
     let st = '';
