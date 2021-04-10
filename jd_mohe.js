@@ -47,7 +47,7 @@ $.shareId = [];
     $.msg($.name, '活动已结束', `请禁用或删除脚本`);
     return
   }
-  await updateShareCodesCDN()
+  //await updateShareCodesCDN()
   for (let i = 0; i < cookiesArr.length; i++) {
     if (cookiesArr[i]) {
       cookie = cookiesArr[i];
