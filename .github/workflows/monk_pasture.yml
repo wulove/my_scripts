@@ -50,4 +50,4 @@ jobs:
           DD_BOT_TOKEN: ${{ secrets.DD_BOT_TOKEN }}
           DD_BOT_SECRET: ${{ secrets.DD_BOT_SECRET }}
           JD_USER_AGENT: ${{ secrets.JD_USER_AGENT }}
-          PASTURE_EXCHANGE_KEYWORD: ${{ secrets.PASTURE_EXCHANGE_KEYWORD }}
+          PASTURE_EXCHANGE_KEYWORD: ${{ '1京豆' }}
