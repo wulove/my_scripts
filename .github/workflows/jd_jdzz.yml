@@ -35,7 +35,7 @@ jobs:
           npm install
       - name: '等待'
         run: |
-          python3 wait_hour.py 1,2,11,24
+          python3 wait_hour.py 1 2 11 24
       - name: '运行 【京东赚赚】'
         run: |
           node jd_jdzz.js
