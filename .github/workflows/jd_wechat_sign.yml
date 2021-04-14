@@ -3,7 +3,7 @@ name: 京东粉丝专享
 on:
   workflow_dispatch:
   schedule:
-    - cron: "18 15 * * *"
+    - cron: "18 14,15 * * *"
   watch:
     types: started
   repository_dispatch:
@@ -37,7 +37,7 @@ jobs:
           python-version: 3.7
       - name: '京东粉丝专享'
         run: |
-          python3 wait.py 23:59:59.990
+          python3 wait_hour.py 23 24
       - name: '运行'
         run: |
           node jd_wechat_sign.js
