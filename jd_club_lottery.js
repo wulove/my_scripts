@@ -46,7 +46,15 @@ let superShakeBeanConfig = {
   "superShakeTitle": "",
   "taskVipName": "",
 }
-$.assigFirends = [];
+$.assigFirends = [{
+  "encryptAssignmentId": "2mPXah3aWb3Q86kkaCMhey6sNYR4",
+  "assignmentType": 2,
+  "itemId": "S5KkcAlpbtBaxXnKM7Z9_",
+}, {
+  "encryptAssignmentId": "2mPXah3aWb3Q86kkaCMhey6sNYR4",
+  "assignmentType": 2,
+  "itemId": "SaEzIlJOJLepV9qJV",
+}];
 const JD_API_HOST = 'https://api.m.jd.com/client.action';
 !(async () => {
   if (!cookiesArr[0]) {
