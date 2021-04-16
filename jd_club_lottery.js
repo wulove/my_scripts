@@ -88,11 +88,11 @@ const JD_API_HOST = 'https://api.m.jd.com/client.action';
     $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1]);
     $.canHelp = true;
     if ($.canHelp) {
-      $.assigFirends = $.assigFirends.concat({
+      /*$.assigFirends = $.assigFirends.concat({
         "encryptAssignmentId": "2mPXah3aWb3Q86kkaCMhey6sNYR4",
         "assignmentType": 2,
         "itemId": "SZm_olqSxIOtH97BATGmKoWraLaw",
-      })
+      })*/
       for (let item of $.assigFirends || []) {
         if (item['encryptAssignmentId'] && item['assignmentType'] && item['itemId']) {
           console.log(`\n账号 ${$.index} ${$.UserName} 开始给 ${item['itemId']} 进行助力`)
