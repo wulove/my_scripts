@@ -3,7 +3,7 @@ name: 天天加速
 on:
   workflow_dispatch:
   schedule:
-    - cron: "30 */2 * * *"
+    - cron: "30 */2 17-21 4 *"
   watch:
     types: started
   repository_dispatch:
