@@ -1,4 +1,4 @@
-name: 整点京豆雨
+name: lxk0301_live_redrain
 
 on:
   workflow_dispatch:

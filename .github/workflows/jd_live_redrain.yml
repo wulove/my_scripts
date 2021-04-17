@@ -1,9 +1,9 @@
-name: 超级直播间红包雨
+name: jd_live_redrain
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '5 * 12-14 4 *'
+#  schedule:
+#    - cron: '5 * * 4 *'
   watch:
     types: started
   repository_dispatch:
