@@ -28,6 +28,7 @@ let vender = ''
 let num = 0
 let shopname = ''
 const token = [
+'835A3AC23A597842CC3548B7DFC12711',//3天100豆4.18
   'CE296A9B8F9B8341E368254051B9BF00',//3.12天添加14天20京豆 30天5红包
   '3AE23B40C51BB739715D2797A02C67F4',//3.24日添加5天5
   // https://github.com/zero205/JD
