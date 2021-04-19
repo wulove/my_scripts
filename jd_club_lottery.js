@@ -55,7 +55,7 @@ $.assigFirends = [{
   "assignmentType": 2,
   "itemId": "SaEzIlJOJLepV9qJV",
 }];
-$.brandActivityId = '2f707380-ebc9-4b4f-bc39-cc2c7702ca0e';//超级品牌日活动ID
+$.brandActivityId = 'd629534c-5276-4b59-953f-ba101df525e5';//超级品牌日活动ID
 $.brandActivityId2 = '2vSNXCeVuBy8mXTL2hhG3mwSysoL';//超级品牌日活动ID2
 const JD_API_HOST = 'https://api.m.jd.com/client.action';
 !(async () => {
