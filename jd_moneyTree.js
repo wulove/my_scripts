@@ -286,7 +286,7 @@ function sell() {
       rs()
       return
     }
-    if (fruitTotal > 380) {
+    if (true || fruitTotal > 380) {
       request('sell', params).then((sellRes) => {
         console.log(`卖出金果结果:${JSON.stringify(sellRes)}\n`)
         rs()
