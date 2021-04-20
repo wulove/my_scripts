@@ -239,7 +239,6 @@ function getUserTuanInfo() {
           console.log(`${$.name} API请求失败，请检查网路重试`)
         } else {
           if (safeGet(data)) {
-            console.log("getUserTuanInfo: " + data)
             data = JSON.parse(data);
             if (data['success']) {
               $.log(`\n\n当前【赚京豆(微信小程序)-瓜分京豆】能否再次开团: ${data.data.canStartNewAssist ? '可以' : '否'}`)
@@ -257,6 +256,7 @@ function getUserTuanInfo() {
                   "assistedPinEncrypted": data.data.encPin,
                   "channel": "FISSION_BEAN"
                 }
+                console.log("tuan: " + $.tuan)
               }
               $.tuanActId = data.data.id;
               $.assistNum = data['data']['assistNum'] || 4;
