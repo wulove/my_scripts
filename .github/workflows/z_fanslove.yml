@@ -35,6 +35,7 @@ jobs:
       - name: '运行 【京东粉丝互动】'
         run: |
           node z_fanslove.js
+          node jd_unsubscribe.js
         env:
           JD_COOKIE: ${{ secrets.JD_COOKIE }}
           PUSH_PLUS_TOKEN: ${{ secrets.PUSH_PLUS_TOKEN }}
@@ -51,3 +52,4 @@ jobs:
           DD_BOT_TOKEN: ${{ secrets.DD_BOT_TOKEN }}
           DD_BOT_SECRET: ${{ secrets.DD_BOT_SECRET }}
           JD_USER_AGENT: ${{ secrets.JD_USER_AGENT }}
+          UN_SUBSCRIBES: ${{ secrets.UNSUBSCRIBE }}
