@@ -45,7 +45,7 @@ const inviteCodes = [
 ]
 let nowTimes = new Date(new Date().getTime() + new Date().getTimezoneOffset() * 60 * 1000 + 8 * 60 * 60 * 1000);
 !(async () => {
-  $.tuanList = [];
+  $.tuanList = [{"activityIdEncrypted":"8sBLn517hnk=\n","assistStartRecordId":786365,"assistedPinEncrypted":"LR-dgMDCGwixFtwjyCWv_A==\n","channel":"FISSION_BEAN"},{"activityIdEncrypted":"8sBLn517hnk=\n","assistStartRecordId":794293,"assistedPinEncrypted":"8CvT9nKYKc1fs8vgBTAzIA==\n","channel":"FISSION_BEAN"}];
   $.authorTuanList = [];
   await requireConfig();
   // if (helpAuthor) await getAuthorShareCode('https://gitee.com/shylocks/updateTeam/raw/main/jd_zz.json');
