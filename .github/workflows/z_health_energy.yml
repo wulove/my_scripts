@@ -1,4 +1,4 @@
-name: z_health_community-健康社区
+name: z_health_energy-健康社区收取能量
 
 on:
   workflow_dispatch:
@@ -7,7 +7,7 @@ on:
   watch:
     types: started
   repository_dispatch:
-    types: z_health_community
+    types: z_health_energy
 jobs:
   build:
 
@@ -32,9 +32,9 @@ jobs:
       - name: npm install
         run: |
           npm install
-      - name: '运行 【健康社区】'
+      - name: '运行 【健康社区收取能量】'
         run: |
-          node z_health_community.js
+          node z_health_energy.js
         env:
           JD_COOKIE: ${{ secrets.JD_COOKIE }}
           PUSH_PLUS_TOKEN: ${{ secrets.PUSH_PLUS_TOKEN }}
