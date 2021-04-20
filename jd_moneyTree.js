@@ -80,8 +80,8 @@ async function jd_moneyTree() {
     if (!userRes || !userRes.realName) return
     await signEveryDay();
     await dayWork();
-    await harvest();
-    await sell();
+    //await harvest();
+    //await sell();
     await myWealth();
     await stealFriendFruit()
 
