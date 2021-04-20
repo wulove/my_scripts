@@ -1,4 +1,4 @@
-name: 京东小魔方
+name: z_xmf-京东小魔方
 
 on:
   workflow_dispatch:
