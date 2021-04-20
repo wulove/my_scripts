@@ -1,4 +1,4 @@
-name: 京东粉丝互动
+name: z_fanslove-京东粉丝互动
 
 on:
   workflow_dispatch:
@@ -7,7 +7,7 @@ on:
   watch:
     types: started
   repository_dispatch:
-    types: jd_fanslove
+    types: z_fanslove
 jobs:
   build:
 
@@ -34,7 +34,7 @@ jobs:
           npm install
       - name: '运行 【京东粉丝互动】'
         run: |
-          node jd_fanslove.js
+          node z_fanslove.js
         env:
           JD_COOKIE: ${{ secrets.JD_COOKIE }}
           PUSH_PLUS_TOKEN: ${{ secrets.PUSH_PLUS_TOKEN }}
