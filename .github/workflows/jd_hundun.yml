@@ -1,16 +1,15 @@
-name: test
+name: jd_hundun
 
 on:
   workflow_dispatch:
-#  schedule:
-#    - cron: '10 22 * * *'
+  schedule:
+    - cron: '10 15 * * *'
   watch:
     types: started
   repository_dispatch:
-    types: jd_test
+    types: jd_hundun
 jobs:
   build:
-
     runs-on: ubuntu-latest
     if: github.event.repository.owner.id == github.event.sender.id
     steps:
@@ -32,6 +31,9 @@ jobs:
       - name: npm install
         run: |
           npm install
+      - name: '运行【hundun】'
+        run: |
+          python3 wait.py 23:59:59.999
       - name: '运行 【测试】'
         run: |
           node hundun/dd_factory.js
