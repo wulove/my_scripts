@@ -16,7 +16,7 @@ if (process.env.JD_COOKIE) {
     CookieJDs = [process.env.JD_COOKIE];
   }
 }
-console.log(`\n+++++++++wulove/my_scripts+++++++++\n`);
+console.log(`\n+++++++++${"wulove/my_scripts"}+++++++++\n`);
 CookieJDs = [...new Set(CookieJDs.filter(item => !!item))]
 console.log(`\n====================共${CookieJDs.length}个京东账号Cookie=========\n`);
 console.log(`==================脚本执行- 北京时间(UTC+8)：${new Date(new Date().getTime() + new Date().getTimezoneOffset()*60*1000 + 8*60*60*1000).toLocaleString()}=====================\n`)
