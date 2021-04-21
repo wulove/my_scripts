@@ -36,10 +36,10 @@ jobs:
           python3 wait.py 23:59:59.999
       - name: '运行 【测试】'
         run: |
-          node hundun/dd_factory.js
-          node hundun/ddxw.js
           node hundun/jd_zjd_tuan.js
           node hundun/jdzz.js
+          node hundun/ddxw.js
+          node hundun/dd_factory.js
           node hundun/jx_factory.js
           node hundun/jx_factory_component.js
           node hundun/jx_nc.js
