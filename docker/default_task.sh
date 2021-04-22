@@ -1,6 +1,8 @@
 #!/bin/sh
 set -e
 
+echo "开始升级node版本"
+apk add nodejs-current
 # 放在这个初始化python3环境，目的减小镜像体积，一些不需要使用bot交互的用户可以不用拉体积比较大的镜像
 # 在这个任务里面还有初始化还有目的就是为了方便bot更新了新功能的话只需要重启容器就完成更新
 function initPythonEnv() {
@@ -247,6 +249,6 @@ echo "第11步将仓库的docker_entrypoint.sh脚本更新至系统/usr/local/bi
 cat /scripts/docker/docker_entrypoint.sh >/usr/local/bin/docker_entrypoint.sh
 
 echo "发送通知"
-export NOTIFY_CONTENT="2021-03-21更新 增加bot交互，spnode指令，功能是否开启自动根据你的配置判断，详见 https://gitee.com/lxk0301/jd_docker/pulls/18"
+export NOTIFY_CONTENT="升级容器内部node版本(v14.5.0)"
 cd /scripts/docker
 node notify_docker_user.js
