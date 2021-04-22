@@ -1,13 +1,13 @@
-name: z_health_community-健康社区
+name: jd_health-健康社区
 
 on:
   workflow_dispatch:
   schedule:
-    - cron: '25 2-14/3 * * *'
+    - cron: '25 0-23/3 * * *'
   watch:
     types: started
   repository_dispatch:
-    types: z_health_community
+    types: jd_health
 jobs:
   build:
 
@@ -34,20 +34,10 @@ jobs:
           npm install
       - name: '运行 【健康社区】'
         run: |
-          node z_health_community.js
+          node jd_health.js
         env:
           JD_COOKIE: ${{ secrets.JD_COOKIE }}
-          PUSH_PLUS_TOKEN: ${{ secrets.PUSH_PLUS_TOKEN }}
-          PUSH_PLUS_USER: ${{ secrets.PUSH_PLUS_USER }}
-          IGOT_PUSH_KEY: ${{ secrets.IGOT_PUSH_KEY }}
-          QYWX_KEY: ${{ secrets.QYWX_KEY }}
-          QYWX_AM: ${{ secrets.QYWX_AM }}
           JD_DEBUG: ${{ secrets.JD_DEBUG }}
           PUSH_KEY: ${{ secrets.PUSH_KEY }}
-          BARK_PUSH: ${{ secrets.BARK_PUSH }}
-          TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
-          TG_USER_ID: ${{ secrets.TG_USER_ID }}
-          BARK_SOUND: ${{ secrets.BARK_SOUND }}
-          DD_BOT_TOKEN: ${{ secrets.DD_BOT_TOKEN }}
-          DD_BOT_SECRET: ${{ secrets.DD_BOT_SECRET }}
+          JDHEALTH_SHARECODES: ${{ secrets.JDHEALTH_SHARECODES }}
           JD_USER_AGENT: ${{ secrets.JD_USER_AGENT }}
