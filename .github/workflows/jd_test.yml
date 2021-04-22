@@ -33,8 +33,7 @@ jobs:
           npm install
       - name: '运行 【测试】'
         run: |
-          node env.js
-          node env.js
+          node jx_cash_sign.js
         env:
           JD_COOKIE: ${{ secrets.JD_COOKIE }}
           JD_USER_AGENT: ${{ secrets.JD_USER_AGENT }}
