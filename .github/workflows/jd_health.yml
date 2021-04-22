@@ -39,5 +39,5 @@ jobs:
           JD_COOKIE: ${{ secrets.JD_COOKIE }}
           JD_DEBUG: ${{ secrets.JD_DEBUG }}
           PUSH_KEY: ${{ secrets.PUSH_KEY }}
-          JDHEALTH_SHARECODES: ${{ secrets.JDHEALTH_SHARECODES }}
           JD_USER_AGENT: ${{ secrets.JD_USER_AGENT }}
+          JDHEALTH_SHARECODES: ${{ secrets.JDHEALTH_SHARECODES }}
