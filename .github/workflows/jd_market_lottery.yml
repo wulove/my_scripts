@@ -7,7 +7,7 @@ on:
   watch:
     types: started
   repository_dispatch:
-    types: z_marketLottery
+    types: jd_market_lottery
 jobs:
   build:
 
@@ -34,7 +34,7 @@ jobs:
           npm install
       - name: '运行 【京东超市-大转盘】'
         run: |
-          node z_marketLottery.js
+          node jd_market_lottery.js
         env:
           JD_COOKIE: ${{ secrets.JD_COOKIE }}
           PUSH_PLUS_TOKEN: ${{ secrets.PUSH_PLUS_TOKEN }}

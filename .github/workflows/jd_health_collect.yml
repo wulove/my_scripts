@@ -1,13 +1,13 @@
-name: z_health_energy-健康社区收取能量
+name: jd_health_collect-健康社区收取能量
 
 on:
   workflow_dispatch:
   schedule:
-    - cron: '25 * * * *'
+    - cron: '5-45/20 * * * *'
   watch:
     types: started
   repository_dispatch:
-    types: z_health_energy
+    types: jd_health_collect
 jobs:
   build:
 
@@ -32,9 +32,9 @@ jobs:
       - name: npm install
         run: |
           npm install
-      - name: '运行 【健康社区收取能量】'
+      - name: '运行 【健康社区-收取能量】'
         run: |
-          node z_health_energy.js
+          node jd_health_collect.js
         env:
           JD_COOKIE: ${{ secrets.JD_COOKIE }}
           PUSH_PLUS_TOKEN: ${{ secrets.PUSH_PLUS_TOKEN }}
