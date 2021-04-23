@@ -7,7 +7,7 @@ on:
   watch:
     types: started
   repository_dispatch:
-    types: jd_live_redrain
+    types: jd_super_redrain
 jobs:
   build:
     runs-on: ubuntu-latest
