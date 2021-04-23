@@ -5,7 +5,7 @@
 const $ = new Env('整点京豆雨');
 let allMessage = '';
 let bodyList = {
-  't': {
+  '20': {
     url: 'https://api.m.jd.com/client.action?functionId=liveActivityV842&uuid=8888888&client=apple&clientVersion=9.4.4&st=1616204859304&sign=a52a5ba5b42a43ce8d81e0014ba04859&sv=121',
     body: 'body=%7B%22liveId%22%3A%223689733%22%7D'
   }
@@ -35,6 +35,7 @@ let ids = {
   '21': 'RRA4RhWMc159kA62qLbaEa88evE7owb',
   '22': 'RRA4RhWMc159kA62qLbaEa88evE7owb',
   '23': 'RRA4RhWMc159kA62qLbaEa88evE7owb'
+
 }
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
@@ -91,6 +92,8 @@ const JD_API_HOST = 'https://api.m.jd.com/api';
         }
         continue
       }
+      let nowTs = new Date().getTime() + new Date().getTimezoneOffset() * 60 * 1000 + 8 * 60 * 60 * 1000
+      console.log(nowTs, $.startTime, $.endTime, cookie)
       await receiveRedRain();
       // await showMsg();
     }
@@ -115,10 +118,9 @@ function showMsg() {
 }
 
 function getRedRain() {
-  let day = 't'
   let body
-  if (bodyList.hasOwnProperty(day)) {
-    body = bodyList[day]
+  if (bodyList.hasOwnProperty(new Date().getDate())) {
+    body = bodyList[new Date().getDate()]
   } else {
     return
   }
