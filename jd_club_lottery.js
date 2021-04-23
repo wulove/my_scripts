@@ -2,7 +2,7 @@
 * @Author: LXK9301
 * @Date: 2020-11-03 20:35:07
 * @Last Modified by: LXK9301
-* @Last Modified time: 2021-4-20 13:27:09
+* @Last Modified time: 2021-4-23 13:27:09
 */
 /*
 活动入口：京东APP首页-领京豆-摇京豆/京东APP首页-我的-京东会员-摇京豆
@@ -47,15 +47,7 @@ let superShakeBeanConfig = {
   "superShakeTitle": "",
   "taskVipName": "",
 }
-$.assigFirends = [{
-  "encryptAssignmentId": "2mPXah3aWb3Q86kkaCMhey6sNYR4",
-  "assignmentType": 2,
-  "itemId": "S5KkcAlpbtBaxXnKM7Z9_",
-}, {
-  "encryptAssignmentId": "2mPXah3aWb3Q86kkaCMhey6sNYR4",
-  "assignmentType": 2,
-  "itemId": "SaEzIlJOJLepV9qJV",
-}];
+$.assigFirends = [];
 $.brandActivityId = '';//超级品牌日活动ID
 $.brandActivityId2 = '2vSNXCeVuBy8mXTL2hhG3mwSysoL';//超级品牌日活动ID2
 const JD_API_HOST = 'https://api.m.jd.com/client.action';
@@ -100,11 +92,11 @@ const JD_API_HOST = 'https://api.m.jd.com/client.action';
     $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1]);
     $.canHelp = true;
     if ($.canHelp && $.activityId) {
-      /*$.assigFirends = $.assigFirends.concat({
-        "encryptAssignmentId": "2mPXah3aWb3Q86kkaCMhey6sNYR4",
+      $.assigFirends = $.assigFirends.concat({
+        "encryptAssignmentId": $.assigFirends[0] && $.assigFirends[0]['encryptAssignmentId'],
         "assignmentType": 2,
         "itemId": "SZm_olqSxIOtH97BATGmKoWraLaw",
-      })*/
+      })
       for (let item of $.assigFirends || []) {
         if (item['encryptAssignmentId'] && item['assignmentType'] && item['itemId']) {
           console.log(`\n账号 ${$.index} ${$.UserName} 开始给 ${item['itemId']} 进行助力`)
@@ -486,8 +478,8 @@ function welcomeHome() {
               if (shakeFloorNew) {
                 const jump = shakeFloorNew['jump'];
                 if (jump && jump.params && jump['params']['url']) {
-                  // superShakeBeanConfig['superShakeUlr'] = jump.params.url;
-                  // console.log(`【超级摇一摇】活动链接：${superShakeBeanConfig['superShakeUlr']}`);
+                  $.superShakeUrl = "jump.params.url"
+                  console.log(`【超级摇一摇】活动链接：${jump.params.url}`);
                 }
               }
               if (shakeFloorNew && shakeFloorNew2) {
@@ -525,7 +517,7 @@ function superBrandMainPage() {
               if (data['data']['bizCode'] === '0') {
                 //superShakeBeanConfig['superShakeUlr'] = jump.params.url;
                 //console.log(`【超级摇一摇】活动链接：${superShakeBeanConfig['superShakeUlr']}`);
-
+                superShakeBeanConfig['superShakeUlr'] = $.superShakeUrl;
                 $.activityId = data['data']['result']['activityBaseInfo']['activityId'];
                 $.encryptProjectId = data['data']['result']['activityBaseInfo']['encryptProjectId'];
                 $.activityName = data['data']['result']['activityBaseInfo']['activityName'];
