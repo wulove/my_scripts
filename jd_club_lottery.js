@@ -47,7 +47,15 @@ let superShakeBeanConfig = {
   "superShakeTitle": "",
   "taskVipName": "",
 }
-$.assigFirends = [];
+$.assigFirends = [{
+  "encryptAssignmentId": "2mPXah3aWb3Q86kkaCMhey6sNYR4",
+  "assignmentType": 2,
+  "itemId": "S5KkcAlpbtBaxXnKM7Z9_",
+}, {
+  "encryptAssignmentId": "2mPXah3aWb3Q86kkaCMhey6sNYR4",
+  "assignmentType": 2,
+  "itemId": "SaEzIlJOJLepV9qJV",
+}];
 $.brandActivityId = '';//超级品牌日活动ID
 $.brandActivityId2 = '2vSNXCeVuBy8mXTL2hhG3mwSysoL';//超级品牌日活动ID2
 const JD_API_HOST = 'https://api.m.jd.com/client.action';
@@ -92,11 +100,11 @@ const JD_API_HOST = 'https://api.m.jd.com/client.action';
     $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1]);
     $.canHelp = true;
     if ($.canHelp && $.activityId) {
-      $.assigFirends = $.assigFirends.concat({
-        "encryptAssignmentId": $.assigFirends[0] && $.assigFirends[0]['encryptAssignmentId'],
+      /*$.assigFirends = $.assigFirends.concat({
+        "encryptAssignmentId": "2mPXah3aWb3Q86kkaCMhey6sNYR4",
         "assignmentType": 2,
         "itemId": "SZm_olqSxIOtH97BATGmKoWraLaw",
-      })
+      })*/
       for (let item of $.assigFirends || []) {
         if (item['encryptAssignmentId'] && item['assignmentType'] && item['itemId']) {
           console.log(`\n账号 ${$.index} ${$.UserName} 开始给 ${item['itemId']} 进行助力`)
