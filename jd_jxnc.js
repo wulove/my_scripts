@@ -37,7 +37,7 @@ let tokenNull = {'farm_jstoken': '', 'phoneid': '', 'timestamp': ''}; // 内置�
 let tokenArr = []; // 用户 token 数组
 let currentToken = {}; // 当前用户 token
 let shareCode = ''; // 内置助力码
-let jxncShareCodeArr = []; // 用户 助力码 数组
+let jxncShareCodeArr = [{"smp":"7a3c29871e087342d38603bb81738544","active":"jdnc_1_guamian210305_2","joinnum":1},{"smp":"bf45dbbf13be83c1ea2c691023d6135b","active":"jdnc_1_guamian210305_2","joinnum":1}]; // 用户 助力码 数组
 let currentShareCode = []; // 当前用户 要助力的助力码
 const openUrl = `openjd://virtual?params=${encodeURIComponent('{ "category": "jump", "des": "m", "url": "https://wqsh.jd.com/sns/201912/12/jxnc/detail.html?ptag=7155.9.32&smp=b47f4790d7b2a024e75279f55f6249b9&active=jdnc_1_chelizi1205_2"}',)}`; // 打开京喜农场
 let subTitle = '', message = '', option = {'open-url': openUrl}; // 消息副标题，消息正文，消息扩展参数
