@@ -138,8 +138,17 @@ function getUserInfo(info = false) {
               if (vo['isdo'] === 1) {
                 if (vo['times'] === 0) {
                   console.log(`去做任务${task['_id']}`)
-                  await doTask(task['_id'])
-                  await $.wait(Math.max(2000, Math.floor(Math.random() * 5000)))
+                  if (task['_id'] == '5fed97ce5da81a8c069810df') {
+                    for (let i=0;i<10;i++) {
+                      // 健身任务连续做10次
+                      let data = await doTask(task['_id'])
+                      if (data.ret !== 0) break;
+                      await $.wait(30 * 1000)
+                    }
+                  } else {
+                    await doTask(task['_id'])
+                    await $.wait(Math.max(2000, Math.floor(Math.random() * 5000)))
+                  }
                 } else {
                   console.log(`${Math.trunc(vo['times'] / 60)}分钟可后做任务${task['_id']}`)
                 }
