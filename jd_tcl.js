@@ -28,8 +28,8 @@ let cookiesArr = [],
   cookie = "",
   message;
 let shareUUID= [
-  '',
-  ''
+  '68263D3E4AE76C539BEF4EFDF2D7874783FB0445DFF30BEFB817E82E77D1318C4FEA184A667D55012A49A0C7B411360062D87BDD9321627416B3163CCB417CD9DDDA672BF446E2FCC0D1D6B4E52826D1',
+  '2F50CDF4F638F30DB25A08910FA573AF65673F7D8D8E93B62E93732AA642AE5474D05EDAD17077AFFA80DAD7387DD28B3BEE5701143FCA11A003164F79A3ADAEDDDA672BF446E2FCC0D1D6B4E52826D1'
 ]
 let isPurchaseShops = false
 isPurchaseShops = $.isNode() ? (process.env.PURCHASE_SHOPS ? process.env.PURCHASE_SHOPS : isPurchaseShops) : ($.getdata("isPurchaseShops") ? $.getdata("isPurchaseShops") : isPurchaseShops);
@@ -89,7 +89,9 @@ function showMsg() {
 }
 async function main() {
   await loadAct()
-  //await helpFriend(shareUUID[Math.floor(Math.random() * 2)])
+  for (let i in shareUUID) {
+    await helpFriend(shareUUID[i])
+  }
   await sign()
   await $.wait(1000)
   await getShopList()
@@ -131,7 +133,7 @@ function loadAct() {
         } else {
           //console.log(data)
           let id = data.match(/<input type="hidden" id="buyer_nick_code" name="buyer_nick_code" value="(.*)">/)
-          console.log('好友助力码' + id[1])
+          //console.log('好友助力码' + id[1])
           if (data.indexOf('<div class="yourChoice">') === -1) {
             console.log(`未选择球队，去选择`)
             await chooseTeam()
