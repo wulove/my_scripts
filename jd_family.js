@@ -103,6 +103,7 @@ function getInfo() {
     }, async (err, resp, data) => {
       try {
         $.info = JSON.parse(data.match(/var snsConfig = (.*)/)[1])
+          console.log(JSON.stringify($.info.config.tasks))
         $.prize = JSON.parse($.info.prize)
       } catch (e) {
         console.log(e)
@@ -122,8 +123,8 @@ function getUserInfo(info = false) {
           console.log(`${$.name} API请求失败，请检查网路重试`)
         } else {
           $.userInfo = JSON.parse(data.match(/checkParam\((.*)\n/)[1])
-          console.log($.userInfo)
           console.log(`当前幸福值：${$.userInfo.tatalprofits}`)
+          console.log(JSON.stringify($.userInfo.tasklist))
           if (info) {
             message += `当前幸福值：${$.userInfo.tatalprofits}`
           } else for (let task of $.info.config.tasks) {
