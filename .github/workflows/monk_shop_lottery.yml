@@ -3,7 +3,7 @@
 on:
   workflow_dispatch:
   schedule:
-    - cron: '3 2,14,16 * * *'
+    - cron: '11 1,13,15 * * *'
   watch:
     types: started
   repository_dispatch:
@@ -31,24 +31,16 @@ jobs:
       - name: npm install
         run: |
           npm install
+      - name: '等待'
+        run: |
+          python3 wait_hour.py 10 22 24
       - name: '运行 【店铺大转盘】'
         run: 
           node monk_shop_lottery.js
           node jd_unsubscribe.js
         env:
           JD_COOKIE: ${{ secrets.JD_COOKIE }}
-          PUSH_PLUS_TOKEN: ${{ secrets.PUSH_PLUS_TOKEN }}
-          PUSH_PLUS_USER: ${{ secrets.PUSH_PLUS_USER }}
-          IGOT_PUSH_KEY: ${{ secrets.IGOT_PUSH_KEY }}
-          QYWX_KEY: ${{ secrets.QYWX_KEY }}
-          QYWX_AM: ${{ secrets.QYWX_AM }}
           JD_DEBUG: ${{ secrets.JD_DEBUG }}
           PUSH_KEY: ${{ secrets.PUSH_KEY }}
-          BARK_PUSH: ${{ secrets.BARK_PUSH }}
-          BARK_SOUND: ${{ secrets.BARK_SOUND }}
-          TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
-          TG_USER_ID: ${{ secrets.TG_USER_ID }}
-          DD_BOT_TOKEN: ${{ secrets.DD_BOT_TOKEN }}
-          DD_BOT_SECRET: ${{ secrets.DD_BOT_SECRET }}
           JD_USER_AGENT: ${{ secrets.JD_USER_AGENT }}
           UN_SUBSCRIBES: ${{ secrets.UNSUBSCRIBE }}
