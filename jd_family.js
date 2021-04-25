@@ -122,6 +122,7 @@ function getUserInfo(info = false) {
           console.log(`${$.name} API请求失败，请检查网路重试`)
         } else {
           $.userInfo = JSON.parse(data.match(/checkParam\((.*)\n/)[1])
+          console.log($.userInfo)
           console.log(`当前幸福值：${$.userInfo.tatalprofits}`)
           if (info) {
             message += `当前幸福值：${$.userInfo.tatalprofits}`
