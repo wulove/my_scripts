@@ -168,7 +168,7 @@ function taskPostUrl() {
             "referer": "https://h5.m.jd.com/babelDiy/Zeus/yj8mbcm6roENn7qhNdhiekyeqtd/index.html",
             'accept-language': 'zh-CN,zh;q=0.9,en-US;q=0.8,en;q=0.7',
             'accept-encoding': 'gzip, deflate, br',
-            "user-agent": `jdapp;android;9.3.6;10;3353234393134326-3673735303632613;network/wifi;model/MI 8;addressid/1381501175;aid/3524914bc77506b1;oaid/274aeb3d01b03a22;osVer/29;appBuild/86560;partner/xiaomi001;eufv/1;jdSupportDarkMode/0;Mozilla/5.0 (Linux; Android 10; MI 8 Build/QKQ1.190828.002; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/77.0.3865.120 MQQBrowser/6.2 TBS/045227 Mobile Safari/537.36`
+            "user-agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1"),
         }
     }
 }
@@ -181,7 +181,7 @@ function balanceUrl() {
             "referer": "https://wqs.jd.com/my/redpacket.shtml?lng=113.717441&lat=31.317081&sid=bf2053330b94c1c1b1ee0a53bafdf28w&un_area=17_1432_45217_45228",
             'accept-language': 'zh-CN,zh;q=0.9,en-US;q=0.8,en;q=0.7',
             'accept-encoding': 'gzip, deflate, br',
-            "user-agent": `jdapp;android;9.3.6;10;3353234393134326-3673735303632613;network/wifi;model/MI 8;addressid/1381501175;aid/3524914bc77506b1;oaid/274aeb3d01b03a22;osVer/29;appBuild/86560;partner/xiaomi001;eufv/1;jdSupportDarkMode/0;Mozilla/5.0 (Linux; Android 10; MI 8 Build/QKQ1.190828.002; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/77.0.3865.120 MQQBrowser/6.2 TBS/045227 Mobile Safari/537.36`,
+            "user-agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1"),
             "cookie": cookie,
         }
     }
