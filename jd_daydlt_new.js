@@ -77,8 +77,8 @@ async function jdDlt() {
         for (let i=0; i<$.leftUseNum; i++) {
             await doLuckDrawEntrance();
         }
-        console.log(`\n本次运行共获得${money}无门槛红包\n`)
-        allMessage += `京东账号${$.index}-${$.nickName}\n本次运行共获得${money}无门槛红包\n`
+        console.log(`\n本次运行共获得${$.money}无门槛红包\n`)
+        allMessage += `京东账号${$.index}-${$.nickName}\n本次运行共获得${$.money}无门槛红包\n`
         await jdbalance()
     } catch (e) {
         $.logErr(e)
@@ -117,8 +117,8 @@ function doLuckDrawEntrance() {
                     console.log(`${$.name} API请求失败，请检查网路重试`)
                 } else {
                     data = JSON.parse(data);
-                    data = data.result.luckyDrawData;
                     console.log(JSON.stringify(data))
+                    data = data.result.luckyDrawData;
                     $.leftUseNum = data.leftUseNum
                     $.prizeName = data.prizeName
                     let quota = data.quota
@@ -126,7 +126,7 @@ function doLuckDrawEntrance() {
                     if (data.checkWinOrNot) {
                         if ('红包'==$.prizeName) {
                             console.log(`获得${quota}无门槛红包`)
-                            money += parseFloat(quota)
+                            $.money += parseFloat(quota)
                         }else if ('指定商品可用'==$.prizeName) {
                             console.log(`获得满${quota}减${discount}优惠券（指定商品可用）`)
                         }else if ('指定店铺可用'==$.prizeName) {
