@@ -73,6 +73,7 @@ const openUrl = `openjd://virtual?params=%7B%20%22category%22:%20%22jump%22,%20%
 async function jdDlt() {
     try {
         $.money = 0, $.leftUseNum = 0
+        await getDrawSignFloor();
         await getLuckDrawNum();
         for (let i=0; i<$.leftUseNum; i++) {
             await doLuckDrawEntrance();
@@ -85,6 +86,29 @@ async function jdDlt() {
     }
 }
 
+function getDrawSignFloor() {
+    return new Promise((resolve) => {
+        let extParam = "&monitorSource=&uuid=badbca31864b231fdbd9c05eb1b4a56043999456"
+        let clientVersion = "4.6.0"
+        $.post(taskPostUrl('getDrawSignFloor',extParam, clientVersion), async (err, resp, data) => {
+            try {
+                if (err) {
+                    console.log(`${JSON.stringify(err)}`)
+                    console.log(`${$.name} API请求失败，请检查网路重试`)
+                } else {
+                    console.log(data)
+                    data = JSON.parse(data);
+                    //$.leftUseNum = data.result.luckyDrawConfig.userCouponData.leftUseNum;
+                    // console.log(`剩余抽奖次数: ${$.leftUseNum}次`)
+                }
+            } catch (e) {
+                $.logErr(e, resp);
+            } finally {
+                resolve();
+            }
+        })
+    })
+}
 
 function getLuckDrawNum() {
     return new Promise((resolve) => {
@@ -175,9 +199,9 @@ function jdbalance() {
     })
 }
 
-function taskPostUrl(function_id, params='') {
+function taskPostUrl(function_id, params='', clientVersion='1.0.0') {
     return {
-        url: `${JD_API_HOST}?functionId=${function_id}&body=%7B%22platformType%22%3A%221%22%7D&appid=XPMSGC2019&client=m&clientVersion=1.0.0&area=&geo=%5Bobject%20Object%5D${params}`,
+        url: `${JD_API_HOST}?functionId=${function_id}&body=%7B%22platformType%22%3A%221%22%7D&appid=XPMSGC2019&client=m&clientVersion=${clientVersion}&area=&geo=%5Bobject%20Object%5D${params}`,
         headers: {
             "host": "api.m.jd.com",
             "cookie": cookie,
