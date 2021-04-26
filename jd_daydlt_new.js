@@ -110,7 +110,8 @@ function getLuckDrawNum() {
 
 function doLuckDrawEntrance() {
     return new Promise((resolve) => {
-        $.post(taskPostUrl('doLuckDrawEntrance'), async (err, resp, data) => {
+        let extParam = "&uuid=badbca31864b231fdbd9c05eb1b4a56043999456";
+        $.post(taskPostUrl('doLuckDrawEntrance', extParam), async (err, resp, data) => {
             try {
                 if (err) {
                     console.log(`${JSON.stringify(err)}`)
@@ -118,6 +119,7 @@ function doLuckDrawEntrance() {
                 } else {
                     console.log(data)
                     data = JSON.parse(data);
+                    if (!data.success) return;
                     data = data.result.luckyDrawData;
                     $.leftUseNum = data.leftUseNum
                     $.prizeName = data.prizeName
@@ -173,9 +175,9 @@ function jdbalance() {
     })
 }
 
-function taskPostUrl(function_id) {
+function taskPostUrl(function_id, params='') {
     return {
-        url: `${JD_API_HOST}?functionId=${function_id}&body=%7B%22platformType%22%3A%221%22%7D&appid=XPMSGC2019&client=m&clientVersion=1.0.0&area=&geo=%5Bobject%20Object%5D`,
+        url: `${JD_API_HOST}?functionId=${function_id}&body=%7B%22platformType%22%3A%221%22%7D&appid=XPMSGC2019&client=m&clientVersion=1.0.0&area=&geo=%5Bobject%20Object%5D${params}`,
         headers: {
             "host": "api.m.jd.com",
             "cookie": cookie,
