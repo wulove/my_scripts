@@ -96,7 +96,7 @@ function getDrawSignFloor() {
                     console.log(`${JSON.stringify(err)}`)
                     console.log(`${$.name} API请求失败，请检查网路重试`)
                 } else {
-                    console.log(data)
+                    // console.log(data)
                     data = JSON.parse(data);
                     //$.leftUseNum = data.result.luckyDrawConfig.userCouponData.leftUseNum;
                     // console.log(`剩余抽奖次数: ${$.leftUseNum}次`)
@@ -145,7 +145,7 @@ function doLuckDrawEntrance() {
                     data = JSON.parse(data);
                     if (!data.success) return;
                     data = data.result.luckyDrawData;
-                    $.leftUseNum = data.leftUseNum
+                    //$.leftUseNum = data.leftUseNum
                     $.prizeName = data.prizeName
                     let quota = data.quota
                     let discount= data.discount
