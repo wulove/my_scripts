@@ -141,7 +141,7 @@ function doLuckDrawEntrance() {
                     console.log(`${JSON.stringify(err)}`)
                     console.log(`${$.name} API请求失败，请检查网路重试`)
                 } else {
-                    console.log(data)
+                    //console.log(data)
                     data = JSON.parse(data);
                     if (!data.success) return;
                     data = data.result.luckyDrawData;
