@@ -95,7 +95,7 @@ function getLuckDrawNum() {
                     console.log(`${$.name} API请求失败，请检查网路重试`)
                 } else {
                     data = JSON.parse(data);
-                    console.log(data)
+                    //console.log(data)
                     $.leftUseNum = data.result.luckyDrawConfig.userCouponData.leftUseNum;
                     console.log(`剩余抽奖次数: ${$.leftUseNum}次`)
                 }
@@ -116,8 +116,8 @@ function doLuckDrawEntrance() {
                     console.log(`${JSON.stringify(err)}`)
                     console.log(`${$.name} API请求失败，请检查网路重试`)
                 } else {
+                    console.log(data)
                     data = JSON.parse(data);
-                    console.log(JSON.stringify(data))
                     data = data.result.luckyDrawData;
                     $.leftUseNum = data.leftUseNum
                     $.prizeName = data.prizeName
