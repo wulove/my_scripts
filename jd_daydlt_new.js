@@ -74,7 +74,7 @@ async function jdDlt() {
     try {
         $.money = 0, $.leftUseNum = 0
         await getLuckDrawNum();
-        while ($.leftUseNum > 0) {
+        for (let i=0; i<$.leftUseNum; i++) {
             await doLuckDrawEntrance();
         }
         console.log(`\n本次运行共获得${money}无门槛红包\n`)
@@ -97,7 +97,7 @@ function getLuckDrawNum() {
                     data = JSON.parse(data);
                     // console.log(data)
                     $.leftUseNum = data.result.luckyDrawConfig.userCouponData.leftUseNum;
-                    console.log("剩余抽奖次数: ${$.leftUseNum}次")
+                    console.log(`剩余抽奖次数: ${$.leftUseNum}次`)
                 }
             } catch (e) {
                 $.logErr(e, resp);
@@ -119,11 +119,11 @@ function doLuckDrawEntrance() {
                     data = JSON.parse(data);
                     data = data.result.luckyDrawData;
                     // console.log(data)
-                    $.leftUseNum =data.checkWinOrNot
+                    $.leftUseNum = data.leftUseNum
                     $.prizeName = data.prizeName
                     let quota = data.quota
                     let discount= data.discount
-                    if (true==result) {
+                    if (data.checkWinOrNot) {
                         if ('红包'==$.prizeName) {
                             console.log(`获得${quota}无门槛红包`)
                             money += parseFloat(quota)
