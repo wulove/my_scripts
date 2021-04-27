@@ -185,6 +185,8 @@ function pickUserComponents(pin, isMe) {
           }
         } else if (isMe) {
           resolve(true);
+        } else {
+          resolve(false);
         }
       } catch (e) {
         $.logErr(e, resp);
