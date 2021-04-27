@@ -4,14 +4,14 @@
 ============Quantumultx===============
 [task_local]
 #天天优惠大乐透
-0 0 * * * https://raw.githubusercontent.com/mit-ywtm/MyScripts/main/daydlt/jd_daydlt.js, tag=天天优惠大乐透, enabled=true
+0 0 * * * https://raw.githubusercontent.com/wulove/my_scripts/main/jd_daydlt.js, tag=天天优惠大乐透, enabled=true
 ================Loon==============
 [Script]
-cron "0 0 * * *" script-path=https://raw.githubusercontent.com/mit-ywtm/MyScripts/main/daydlt/jd_daydlt.js,tag=天天优惠大乐透
+cron "0 0 * * *" script-path=https://raw.githubusercontent.com/wulove/my_scripts/main/jd_daydlt.js,tag=天天优惠大乐透
 ===============Surge=================
-天天优惠大乐透 = type=cron,cronexp="0 0 * * *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/mit-ywtm/MyScripts/main/daydlt/jd_daydlt.js
+天天优惠大乐透 = type=cron,cronexp="0 0 * * *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/wulove/my_scripts/main/jd_daydlt.js
 ============小火箭=========
-天天优惠大乐透 = type=cron,script-path=https://raw.githubusercontent.com/mit-ywtm/MyScripts/main/daydlt/jd_daydlt.js, cronexpr="0 0 * * *", timeout=3600, enable=true
+天天优惠大乐透 = type=cron,script-path=https://raw.githubusercontent.com/wulove/my_scripts/main/jd_daydlt.js, cronexpr="0 0 * * *", timeout=3600, enable=true
  */
 
 const $ = new Env('天天优惠大乐透');
@@ -20,9 +20,8 @@ const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 let jdNotify = true;//是否关闭通知，false打开通知推送，true关闭通知推送
-const randomCount = $.isNode() ? 20 : 5;
 //IOS等用户直接用NobyDa的jd cookie
-let cookiesArr = [], cookie = '', allMessage='', superAssist = [],money;
+let cookiesArr = [], cookie = '', allMessage='';
 if ($.isNode()) {
     Object.keys(jdCookieNode).forEach((item) => {
         cookiesArr.push(jdCookieNode[item])
@@ -33,8 +32,6 @@ if ($.isNode()) {
 }
 const JD_API_HOST = 'https://api.m.jd.com/client.action';
 
-let nowTimes = new Date(new Date().getTime() + new Date().getTimezoneOffset()*60*1000 + 8*60*60*1000);
-const openUrl = `openjd://virtual?params=%7B%20%22category%22:%20%22jump%22,%20%22des%22:%20%22m%22,%20%22url%22:%20%22https://wbbny.m.jd.com/babelDiy/Zeus/2cKMj86srRdhgWcKonfExzK4ZMBy/index.html%22%20%7D`;
 !(async () => {
     if (!cookiesArr[0]) {
         $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
@@ -63,54 +60,97 @@ const openUrl = `openjd://virtual?params=%7B%20%22category%22:%20%22jump%22,%20%
         if ($.isNode()) await notify.sendNotify($.name, allMessage);
     }
 })()
-    .catch((e) => {
-        $.log('', `❌ ${$.name}, 失败! 原因: ${e}!`, '')
-    })
-    .finally(() => {
-        $.done();
-    })
+  .catch((e) => {
+      $.log('', `❌ ${$.name}, 失败! 原因: ${e}!`, '')
+  })
+  .finally(() => {
+      $.done();
+  })
 
 
 async function jdDlt() {
     try {
-        money = 0
-        $.prizeName='123'
-        while(!(''==$.prizeName)){
-            await getLuckDrawEntrance()
+        $.money = 0, $.leftUseNum = 0
+        await getDrawSignFloor();
+        await getLuckDrawNum();
+        for (let i=0; i<$.leftUseNum; i++) {
+            await doLuckDrawEntrance();
         }
-        console.log(`\n本次运行共获得${money}无门槛红包\n`)
-        allMessage += `京东账号${$.index}-${$.nickName}\n本次运行共获得${money}无门槛红包\n`
+        console.log(`\n本次运行共获得${$.money}无门槛红包\n`)
+        allMessage += `京东账号${$.index}-${$.nickName}\n本次运行共获得${$.money}无门槛红包\n`
         await jdbalance()
-       // await showMsg()
     } catch (e) {
         $.logErr(e)
     }
 }
 
-async function showMsg() {
-    if ($.isNode()) {
-        await notify.sendNotify(`天天优惠大乐透 - ${$.nickName}`, notice);
-    }
+function getDrawSignFloor() {
+    return new Promise((resolve) => {
+        let extParam = "&monitorSource=&uuid=badbca31864b231fdbd9c05eb1b4a56043999456"
+        let clientVersion = "4.6.0"
+        $.post(taskPostUrl('getDrawSignFloor',extParam, clientVersion), async (err, resp, data) => {
+            try {
+                if (err) {
+                    console.log(`${JSON.stringify(err)}`)
+                    console.log(`${$.name} API请求失败，请检查网路重试`)
+                } else {
+                    // console.log(data)
+                    data = JSON.parse(data);
+                    //$.leftUseNum = data.result.luckyDrawConfig.userCouponData.leftUseNum;
+                    // console.log(`剩余抽奖次数: ${$.leftUseNum}次`)
+                }
+            } catch (e) {
+                $.logErr(e, resp);
+            } finally {
+                resolve();
+            }
+        })
+    })
 }
 
-function getLuckDrawEntrance() {
+function getLuckDrawNum() {
     return new Promise((resolve) => {
-        $.post(taskPostUrl(), async (err, resp, data) => {
+        $.post(taskPostUrl('getLuckyDrawResourceConfig'), async (err, resp, data) => {
             try {
                 if (err) {
                     console.log(`${JSON.stringify(err)}`)
                     console.log(`${$.name} API请求失败，请检查网路重试`)
                 } else {
                     data = JSON.parse(data);
-                    // console.log(data)
-                    $.prizeName=data.result.luckyDrawData.prizeName
-                    result=data.result.luckyDrawData.checkWinOrNot
-                    quota= data.result.luckyDrawData.quota
-                    discount=data.result.luckyDrawData.discount
-                    if (true==result) {
+                    //console.log(data)
+                    $.leftUseNum = data.result.luckyDrawConfig.userCouponData.leftUseNum;
+                    console.log(`剩余抽奖次数: ${$.leftUseNum}次`)
+                }
+            } catch (e) {
+                $.logErr(e, resp);
+            } finally {
+                resolve();
+            }
+        })
+    })
+}
+
+function doLuckDrawEntrance() {
+    return new Promise((resolve) => {
+        let extParam = "&uuid=badbca31864b231fdbd9c05eb1b4a56043999456";
+        $.post(taskPostUrl('doLuckDrawEntrance', extParam), async (err, resp, data) => {
+            try {
+                if (err) {
+                    console.log(`${JSON.stringify(err)}`)
+                    console.log(`${$.name} API请求失败，请检查网路重试`)
+                } else {
+                    //console.log(data)
+                    data = JSON.parse(data);
+                    if (!data.success) return;
+                    data = data.result.luckyDrawData;
+                    //$.leftUseNum = data.leftUseNum
+                    $.prizeName = data.prizeName
+                    let quota = data.quota
+                    let discount= data.discount
+                    if (data.checkWinOrNot) {
                         if ('红包'==$.prizeName) {
                             console.log(`获得${quota}无门槛红包`)
-                            money += parseFloat(quota)
+                            $.money += parseFloat(quota)
                         }else if ('指定商品可用'==$.prizeName) {
                             console.log(`获得满${quota}减${discount}优惠券（指定商品可用）`)
                         }else if ('指定店铺可用'==$.prizeName) {
@@ -157,10 +197,11 @@ function jdbalance() {
     })
 }
 
-function taskPostUrl() {
+function taskPostUrl(function_id, params='', clientVersion='1.0.0') {
     return {
-        url: `${JD_API_HOST}?functionId=getLuckDrawEntrance&body=%7B%22platformType%22%3A%221%22%7D&appid=couponPackDetail&client=m&clientVersion=1.0.0&area=&geo=%5Bobject%20Object%5D&eu=3353234393134326&fv=3673735303632613`,
+        url: `${JD_API_HOST}?functionId=${function_id}&body=%7B%22platformType%22%3A%221%22%7D&appid=XPMSGC2019&client=m&clientVersion=${clientVersion}&area=&geo=%5Bobject%20Object%5D${params}`,
         headers: {
+            "host": "api.m.jd.com",
             "cookie": cookie,
             "content-length": "0",
             "accept": "application/json, text/plain, */*",
