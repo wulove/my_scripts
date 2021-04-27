@@ -121,7 +121,7 @@ async function jdWish() {
   $.assistStatus = 0;
   await getTaskList(true)
   await getUserTuanInfo()
-  if (!$.tuan && ($.assistStatus === 3 || $.assistStatus === 2) && $.canStartNewAssist) {
+  if (!$.tuan && ($.assistStatus === 3 || $.assistStatus === 2 || $.assistStatus === 0) && $.canStartNewAssist) {
     console.log(`准备再次开团`)
     await openTuan()
     if ($.hasOpen) await getUserTuanInfo()
