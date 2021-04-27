@@ -39,10 +39,9 @@ jobs:
           node hundun/jd_zjd_tuan.js
           node hundun/jdzz.js
           node hundun/ddxw.js
-          node hundun/jx_factory_component.js
           node hundun/jx_nc.js
-          node hundun/jx_factory.js
           node hundun/dd_factory.js
+          node hundun/jx_factory.js
         env:
           JD_COOKIE: ${{ secrets.JD_COOKIE }}
           JD_DEBUG: ${{ secrets.JD_DEBUG }}
