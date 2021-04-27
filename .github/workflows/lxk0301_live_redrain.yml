@@ -35,9 +35,9 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: 3.7
-#      - name: '整点京豆雨'
-#        run: |
-#          python3 wait_hour.py 1-24
+      - name: '整点京豆雨'
+        run: |
+          python3 wait_hour.py 1-24
       - name: '运行'
         run: |
           node lxk0301_live_redrain.js
