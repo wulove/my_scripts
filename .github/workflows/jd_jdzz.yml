@@ -3,15 +3,13 @@ name: 京东赚赚(小程序)
 on:
   workflow_dispatch:
   schedule:
-    # 0,1,2,11
-    - cron: '7 2,15,16,17 * * *'
+    - cron: '7 15,16 * * *'
   watch:
     types: started
   repository_dispatch:
     types: jd_jdzz
 jobs:
   build:
-
     runs-on: ubuntu-latest
     if: github.event.repository.owner.id == github.event.sender.id
     steps:
@@ -33,26 +31,12 @@ jobs:
       - name: npm install
         run: |
           npm install
-      - name: '等待'
-        run: |
-          python3 wait_hour.py 1 2 11 24
       - name: '运行 【京东赚赚】'
         run: |
           node jd_jdzz.js
         env:
           JD_COOKIE: ${{ secrets.JD_COOKIE }}
-          PUSH_PLUS_TOKEN: ${{ secrets.PUSH_PLUS_TOKEN }}
-          PUSH_PLUS_USER: ${{ secrets.PUSH_PLUS_USER }}
-          IGOT_PUSH_KEY: ${{ secrets.IGOT_PUSH_KEY }}
-          QYWX_KEY: ${{ secrets.QYWX_KEY }}
-          QYWX_AM: ${{ secrets.QYWX_AM }}
           JD_DEBUG: ${{ secrets.JD_DEBUG }}
           PUSH_KEY: ${{ secrets.PUSH_KEY }}
-          BARK_PUSH: ${{ secrets.BARK_PUSH }}
-          BARK_SOUND: ${{ secrets.BARK_SOUND }}
-          TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
-          TG_USER_ID: ${{ secrets.TG_USER_ID }}
-          DD_BOT_TOKEN: ${{ secrets.DD_BOT_TOKEN }}
-          DD_BOT_SECRET: ${{ secrets.DD_BOT_SECRET }}
           JD_USER_AGENT: ${{ secrets.JD_USER_AGENT }}
           JDZZ_SHARECODES: ${{ 'S5KkcAlpbtBaxXnKM7Z9_@SaEzIlJOJLepV9qJV&S5KkcAlpbtBaxXnKM7Z9_@SaEzIlJOJLepV9qJV' }}
