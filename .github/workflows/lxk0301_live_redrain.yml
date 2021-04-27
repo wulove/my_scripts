@@ -44,8 +44,6 @@ jobs:
           node lxk0301_live_redrain2.js
           node lxk0301_live_redrain3.js
           node lxk0301_live_redrain4.js
-          node lxk0301_live_redrain5.js
-          node lxk0301_live_redrain6.js
         env:
           JD_COOKIE: ${{ secrets.JD_COOKIE }}
           JD_DEBUG: ${{ secrets.JD_DEBUG }}
