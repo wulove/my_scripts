@@ -3,7 +3,7 @@ name: 赚京豆(微信小程序)签到
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 10,15,16 * * *'
+    - cron: '0 14,16,22 * * *'
   watch:
     types: started
   repository_dispatch:
