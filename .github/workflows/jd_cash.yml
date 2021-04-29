@@ -40,5 +40,5 @@ jobs:
           JD_USER_AGENT: ${{ secrets.JD_USER_AGENT }}
           JD_DEBUG: ${{ secrets.JD_DEBUG }}
           PUSH_KEY: ${{ secrets.PUSH_KEY }}
-          JD_CASH_SHARECODES: ${{ 'eU9YLqjwJ75Ajwatshtm@9aqMuGEivkKkJ9Z0&eU9YLqjwJ75Ajwatshtm@9aqMuGEivkKkJ9Z0' }}
+          JD_CASH_SHARECODES: ${{ secrets.JD_CASH_SHARECODES }}
           CASH_EXCHANGE: ${{ secrets.CASH_EXCHANGE }}
