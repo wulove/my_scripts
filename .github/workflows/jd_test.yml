@@ -39,7 +39,7 @@ jobs:
         run: |
           node jddj_fruit.js
         env:
-          JD_COOKIE: ${{ secrets.JDDJ_COOKIE }}
+          JDDJ_COOKIE: ${{ secrets.JDDJ_COOKIE }}
           JD_DEBUG: ${{ secrets.JD_DEBUG }}
           PUSH_KEY: ${{ secrets.PUSH_KEY }}
 
