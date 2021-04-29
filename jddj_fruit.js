@@ -78,8 +78,8 @@ let cookies = [], notify = ''; waterNum = 0, waterTimes = 0;
         await runTask(tslist);
         await $.wait(1000);
 
-        await zhuLi();
-        await $.wait(1000);
+        // await zhuLi();
+        // await $.wait(1000);
 
         await treeInfo(1);
         await $.wait(1000);
