@@ -17,6 +17,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: ${{ secrets.REPO }}
+          ref: jddj
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
@@ -36,9 +37,9 @@ jobs:
 #          python3 wait.py 23:59:59.999
       - name: '运行 【测试】'
         run: |
-          node m_get_shop_lottery.js
+          node jddj_fruit.js.js
         env:
-          JD_COOKIE: ${{ secrets.JD_COOKIE }}
+          JD_COOKIE: ${{ secrets.JDDJ_COOKIE }}
           JD_DEBUG: ${{ secrets.JD_DEBUG }}
           PUSH_KEY: ${{ secrets.PUSH_KEY }}
 
