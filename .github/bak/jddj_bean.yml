@@ -1,0 +1,35 @@
+name: jddj_bean
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 16 * * *'
+  watch:
+    types: started
+  repository_dispatch:
+    types: jddj_bean
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    if: github.event.repository.owner.id == github.event.sender.id
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          repository: ${{ secrets.REPO }}
+          ref: jddj
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: npm install
+        run: |
+          npm install
+      - name: '运行 【京东到家鲜豆】'
+        run: |
+          node jddj_bean.js
+          node jddj_plantBeans.js
+        env:
+          JDDJ_COOKIE: ${{ secrets.JDDJ_COOKIE }}
+          JD_DEBUG: ${{ secrets.JD_DEBUG }}
+          PUSH_KEY: ${{ secrets.PUSH_KEY }}
