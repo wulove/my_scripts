@@ -14,5 +14,5 @@ if (process.env.JDDJ_COOKIE) {
     cookies = [process.env.JDDJ_COOKIE];
   }
 }
-console.log(JSON.stringify(cookies))
+
 module.exports = cookies;
