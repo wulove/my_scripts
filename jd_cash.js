@@ -29,7 +29,7 @@ let jdNotify = true;//是否关闭通知，false打开通知推送，true关闭�
 let cookiesArr = [], cookie = '', message;
 let helpAuthor = false;
 const randomCount = $.isNode() ? 20 : 5;
-let cash_exchange = true;//是否消耗2元红包兑换200京豆，默认是
+let cash_exchange = false;//是否消耗2元红包兑换200京豆，默认否
 const inviteCodes = [
   `eU9YLqjwJ75Ajwatshtm@9aqMuGEivkKkJ9Z0`,
   `9aqMuGEivkKkJ9Z0@eU9YLqjwJ75Ajwatshtm`
