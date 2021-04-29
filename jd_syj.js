@@ -89,6 +89,7 @@ const JD_API_HOST = 'https://api.m.jd.com/api';
           console.log(`账号 ${$.UserName} 开始给 【${$.tuanList[j]['assistedPinEncrypted']}】助力`)
           await helpFriendTuan($.tuanList[j])
           if(!$.canHelp) break
+          await $.wait(200)
         }
       }
       /*if ($.canHelp) {
@@ -98,6 +99,7 @@ const JD_API_HOST = 'https://api.m.jd.com/api';
           console.log(`账号 ${$.UserName} 开始给作者lxk0301和随机团 ${$.authorTuanList[j]['assistedPinEncrypted']}助力`)
           await helpFriendTuan($.authorTuanList[j])
           if(!$.canHelp) break
+          await $.wait(200)
         }
       }*/
     }
@@ -551,11 +553,10 @@ async function distributeBeanActivity() {
     }
     if ($.tuan && $.tuan.hasOwnProperty('assistedPinEncrypted') && $.assistStatus !== 3) {
       $.tuanList.push($.tuan);
-      console.log(`\n【京东账号${$.index}（${$.nickName || $.UserName}）的赚京豆开团好友互助码: \n${JSON.stringify($.tuan)}\n`)
       $.http.post({
         url: `https://code.c-hiang.cn/autocommit/zuan/insert`,
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify($.tuan),
+        body: JSON.stringify(Object.assign($.tuan, {"time": Date.now()})),
         timeout: 30000
       }).then((resp) => {
         if (resp.statusCode === 200) {
@@ -581,7 +582,12 @@ async function distributeBeanActivity() {
 }
 function helpFriendTuan(body) {
   return new Promise(resolve => {
-    $.get(taskUrl("vvipclub_distributeBean_assist", body), async (err, resp, data) => {
+    const data = {
+      "activityIdEncrypted": body['activityIdEncrypted'],
+      "assistStartRecordId": body['assistStartRecordId'],
+      "channel": body['channel'],
+    }
+    $.get(taskUrl("vvipclub_distributeBean_assist", data), async (err, resp, data) => {
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
@@ -596,6 +602,7 @@ function helpFriendTuan(body) {
               else if (data.resultCode === '9200011') console.log('助力结果：已经助力过\n')
               else if (data.resultCode === '2400205') console.log('助力结果：团已满\n')
               else if (data.resultCode === '2400203') {console.log('助力结果：助力次数已耗尽\n');$.canHelp = false}
+              else if (data.resultCode === '9000000') {console.log('助力结果：活动火爆，跳出\n');$.canHelp = false}
               else console.log(`助力结果：未知错误\n${JSON.stringify(data)}\n\n`)
             }
           }
