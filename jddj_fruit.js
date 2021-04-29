@@ -17,7 +17,7 @@ let thiscookie = '', deviceid = '', nickname = '';
 let lat = '30.' + Math.round(Math.random() * (99999 - 10000) + 10000);
 let lng = '114.' + Math.round(Math.random() * (99999 - 10000) + 10000);
 let cityid = Math.round(Math.random() * (1500 - 1000) + 1000);
-let cookies = [], treeInfoTimes = false; notify = '';
+let cookies = [], notify = ''; waterNum = 0, waterTimes = 0;
 !(async () => {
     if (cookies.length == 0) {
         if ($.env.isNode) { delete require.cache['./jddj_cookie.js']; cookies = require('./jddj_cookie.js') }
@@ -42,9 +42,11 @@ let cookies = [], treeInfoTimes = false; notify = '';
     else {
         notify = require('./sendNotify');
     }
+
     for (let i = 0; i < cookies.length; i++) {
         console.log(`\r\n★★★★★开始执行第${i + 1}个账号,共${cookies.length}个账号★★★★★`);
         thiscookie = cookies[i];
+        waterNum = 0, waterTimes = 0;
 
         if (!thiscookie.trim()) continue;
 
@@ -58,8 +60,7 @@ let cookies = [], treeInfoTimes = false; notify = '';
         await userinfo();
         await $.wait(1000);
 
-        treeInfoTimes = false;
-        await treeInfo();
+        await treeInfo(0);
         await $.wait(1000);
 
         let tslist = await taskList();
@@ -80,13 +81,16 @@ let cookies = [], treeInfoTimes = false; notify = '';
         await zhuLi();
         await $.wait(1000);
 
+        await treeInfo(1);
+        await $.wait(1000);
+
         await water();
         await $.wait(1000);
 
         await runTask2(tslist);
         await $.wait(1000);
 
-        await treeInfo();
+        await treeInfo(2);
         await $.wait(1000);
     }
 
@@ -158,6 +162,7 @@ async function water() {
                     let data = JSON.parse(response.body);
                     console.log('\n【浇水】:' + data.msg);
                     waterStatus = data.code;
+                    if (data.code == 0) waterTimes++;
                 })
                 await $.wait(1000);
             } while (waterStatus == 0);
@@ -205,7 +210,7 @@ async function zhuLi() {
                 resolve();
             })
         } catch (error) {
-            console.log('\n【助力】:' + error);
+            //console.log('\n【助力】:' + error);
             resolve();
         }
     })
@@ -278,8 +283,6 @@ async function runTask2(tslist) {
                 const item = tslist.result.taskInfoList[index];
                 if (item.taskTitle.indexOf('限时') > -1) {
 
-
-
                     //领取任务
                     let option = urlTask('https://daojia.jd.com/client?_jdrandom=' + Math.round(new Date()) + '&functionId=task%2Freceived&isNeedDealError=true&body=%7B%22modelId%22%3A%22' + item.modelId + '%22%2C%22taskId%22%3A%22' + item.taskId + '%22%2C%22taskType%22%3A' + item.taskType + '%2C%22plateCode%22%3A1%2C%22subNode%22%3Anull%7D&channel=ios&platform=6.6.0&platCode=h5&appVersion=6.6.0&appName=paidaojia&deviceModel=appmodel&traceId=' + deviceid + Math.round(new Date()) + '&deviceToken=' + deviceid + '&deviceId=' + deviceid + '', ``);
                     await $.http.get(option).then(response => {
@@ -334,25 +337,39 @@ async function runTask2(tslist) {
 }
 
 //当前果树详情
-async function treeInfo() {
+async function treeInfo(step) {
     return new Promise(async resolve => {
         try {
             let option = urlTask('https://daojia.jd.com:443/client?_jdrandom=' + Math.round(new Date()), 'functionId=fruit%2FinitFruit&isNeedDealError=true&method=POST&body=%7B%22cityId%22%3A' + cityid + '%2C%22longitude%22%3A' + lng + '%2C%22latitude%22%3A' + lat + '%7D&lat=' + lat + '&lng=' + lng + '&lat_pos=' + lat + '&lng_pos=' + lng + '&city_id=' + cityid + '&channel=ios&platform=6.6.0&platCode=h5&appVersion=6.6.0&appName=paidaojia&deviceModel=appmodel&traceId=' + deviceid + Math.round(new Date()) + '&deviceToken=' + deviceid + '&deviceId=' + deviceid);
             await $.http.post(option).then(async response => {
                 let data = JSON.parse(response.body);
                 if (data.code == 0) {
-                    console.log('\n【果树信息】:' + data.result.activityInfoResponse.fruitName + ',还需浇水' + data.result.activityInfoResponse.curStageLeftProcess + '次' + data.result.activityInfoResponse.stageName + ',还剩' + data.result.userResponse.waterBalance + '滴水');
-
-                    if (data.result.activityInfoResponse.curStageLeftProcess == 0 && treeInfoTimes) {
-                        $.notify('京东到家果园【' + nickname + '】', '京东到家果园' + data.result.activityInfoResponse.fruitName + '已成熟,快去收取!', '');
-                        if ($.env.isNode && `${isNotify}` == 'true') {
-                            await notify.sendNotify('京东到家果园【' + nickname + '】', '京东到家果园' + data.result.activityInfoResponse.fruitName + '已成熟,快去收取!');
-                        }
+                    if (step == 0) {
+                        waterNum = data.result.userResponse.waterBalance;
                     }
-                    if (data.result.activityInfoResponse.curStageLeftProcess > 0 && treeInfoTimes) {
-                        $.notify('京东到家果园【' + nickname + '】', '【果树信息】:' + data.result.activityInfoResponse.fruitName + ',还需浇水' + data.result.activityInfoResponse.curStageLeftProcess + '次' + data.result.activityInfoResponse.stageName + ',还剩' + data.result.userResponse.waterBalance + '滴水', '');
-                        if ($.env.isNode && `${isNotify}` == 'true') {
-                            await notify.sendNotify('京东到家果园【' + nickname + '】', '【果树信息】:' + data.result.activityInfoResponse.fruitName + ',还需浇水' + data.result.activityInfoResponse.curStageLeftProcess + '次' + data.result.activityInfoResponse.stageName + ',还剩' + data.result.userResponse.waterBalance + '滴水');
+                    if (step == 2) {
+                        waterNum = (waterTimes * 10) + data.result.userResponse.waterBalance - waterNum;//浇水次数*10+剩余水滴-初始水滴
+                        if (waterNum < 0) waterNum = 0;
+
+                        if (data.result.activityInfoResponse.curStageLeftProcess == 0) {
+                            console.log('\n京东到家果园【' + nickname + '】:' + data.result.activityInfoResponse.fruitName + '已成熟,快去收取!');
+
+                            $.notify('京东到家果园', '【' + nickname + '】', '京东到家果园' + data.result.activityInfoResponse.fruitName + '已成熟,快去收取!');
+
+                            if ($.env.isNode && `${isNotify}` == 'true') {
+                                await notify.sendNotify('京东到家果园【' + nickname + '】', '京东到家果园' + data.result.activityInfoResponse.fruitName + '已成熟,快去收取!');
+                            }
+                        }
+                        if (data.result.activityInfoResponse.curStageLeftProcess > 0) {
+                            let unit = '次';
+                            if (data.result.activityInfoResponse.growingStage == 5) unit = '%';
+                            console.log('\n京东到家果园【' + nickname + '】:' + data.result.activityInfoResponse.fruitName + ',本次领取' + waterNum + '滴水,浇水' + waterTimes + '次,还需浇水' + data.result.activityInfoResponse.curStageLeftProcess + unit + data.result.activityInfoResponse.stageName + ',还剩' + data.result.userResponse.waterBalance + '滴水');
+
+                            $.notify('京东到家果园', '【' + nickname + '】', '【果树信息】:' + data.result.activityInfoResponse.fruitName + ',本次领取' + waterNum + '滴水,浇水' + waterTimes + '次,还需浇水' + data.result.activityInfoResponse.curStageLeftProcess + unit + data.result.activityInfoResponse.stageName + ',还剩' + data.result.userResponse.waterBalance + '滴水');
+
+                            if ($.env.isNode && `${isNotify}` == 'true') {
+                                await notify.sendNotify('京东到家果园【' + nickname + '】', '【果树信息】:' + data.result.activityInfoResponse.fruitName + ',本次领取' + waterNum + '滴水,浇水' + waterTimes + '次,还需浇水' + data.result.activityInfoResponse.curStageLeftProcess + unit + data.result.activityInfoResponse.stageName + ',还剩' + data.result.userResponse.waterBalance + '滴水');
+                            }
                         }
                     }
                 }
