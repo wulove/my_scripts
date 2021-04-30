@@ -3,7 +3,7 @@
 on:
   workflow_dispatch:
   schedule:
-    - cron: '11 1,13,22 * * *'
+    - cron: '11 1,13,15 * * *'
   watch:
     types: started
   repository_dispatch:
@@ -37,7 +37,6 @@ jobs:
       - name: '运行 【店铺大转盘】'
         run: 
           node monk_shop_lottery.js
-#          node jd_unsubscribe.js
         env:
           JD_COOKIE: ${{ secrets.JD_COOKIE }}
           JD_DEBUG: ${{ secrets.JD_DEBUG }}
