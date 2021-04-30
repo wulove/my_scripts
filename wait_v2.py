@@ -16,9 +16,9 @@ now_cn = now.astimezone(zone_cn)
 logging.warning(f'服务器时间：{now}, 北京时间：{now_cn}')
 
 # 参数获取并格式化
-argv1 = sys.argv[1], argv2 = sys.argv[2]
-
 logging.warning(f'参数值：{sys.argv[1]}')
+arg1 = sys.argv[1], arg2 = sys.argv[2]
+target_hour = -1
 
 
 

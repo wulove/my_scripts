@@ -72,9 +72,9 @@ const JD_API_HOST = 'https://wq.jd.com/fav';
     .finally(() => {
       $.done();
     })
-async function jdUnsubscribe(doubleKey) {
+async function jdUnsubscribe() {
   await Promise.all([
-    unsubscribeGoods(doubleKey),
+    unsubscribeGoods(),
     unsubscribeShops()
   ])
   await Promise.all([
