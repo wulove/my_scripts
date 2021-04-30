@@ -191,8 +191,7 @@ function serverNotify(text, desp, time = 2100) {
               console.log('发送通知调用API失败！！\n')
               console.log(err);
             } else {
-              console.log(data)
-              data = JSON.parse(`发送的信息：\n${data}\n`);
+              data = JSON.parse(data);
               //server酱和Server酱·Turbo版的返回json格式不太一样
               if (data.errno === 0 || data.data.errno === 0 ) {
                 console.log('server酱发送通知消息成功🎉\n')
