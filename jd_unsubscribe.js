@@ -90,6 +90,7 @@ function showMsg() {
   }
 }
 function unsubscribeGoods() {
+  console.log(111)
   return new Promise(async (resolve) => {
     let followGoods = await getFollowGoods();
     if (followGoods.iRet === '0') {
@@ -143,6 +144,7 @@ function getFollowGoods() {
     }
     $.get(option, (err, resp, data) => {
       try {
+        console.log(data)
         data = JSON.parse(data.slice(14, -13));
         $.goodsTotalNum = data.totalNum;
         // console.log('data', data.data.length)
