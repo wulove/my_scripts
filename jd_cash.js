@@ -49,7 +49,7 @@ let allMessage = '';
     $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
     return;
   }
-  await requireConfig()
+  // await requireConfig()
   // await getAuthorShareCode();
   // await getAuthorShareCode2();
   for (let i = 0; i < cookiesArr.length; i++) {
