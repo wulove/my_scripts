@@ -3,21 +3,18 @@ name: 领京豆额外奖励
 on:
   workflow_dispatch:
   schedule:
-    - cron: '10 23 * * *'
+    - cron: '10 15 * * *'
   watch:
     types: started
   repository_dispatch:
     types: jd_bean_home
 jobs:
   build:
-
     runs-on: ubuntu-latest
     if: github.event.repository.owner.id == github.event.sender.id
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-        with:
-          repository: wulove/my_scripts
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
@@ -32,6 +29,9 @@ jobs:
       - name: npm install
         run: |
           npm install
+      - name: '运行【等待...】'
+        run: |
+          python3 wait.py 23:59:59.999
       - name: '运行 【领京豆额外奖励】'
         run: |
           node jd_bean_home.js
