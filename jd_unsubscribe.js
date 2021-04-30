@@ -90,47 +90,44 @@ function showMsg() {
   }
 }
 function unsubscribeGoods() {
-  console.log(111)
   return new Promise(async (resolve) => {
-    let followGoods = await getFollowGoods();
-    if (followGoods.iRet === '0') {
-      let count = 0;
-      $.unsubscribeGoodsCount = count;
-      if ((goodPageSize * 1) !== 0) {
-        if (followGoods.totalNum > 0) {
-          for (let item of followGoods.data) {
-
-            console.log(`是否匹配：：${item.commTitle.indexOf(stopGoods.replace(/\ufffc|\s*/g, ''))}`)
-
-            if (stopGoods && item.commTitle.indexOf(stopGoods.replace(/\ufffc|\s*/g, '')) > -1) {
-              console.log(`匹配到了您设定的商品--${stopGoods}，不在进行取消关注商品`)
-              break;
-            }
-            let res = await unsubscribeGoodsFun(item.commId);
-            // console.log('取消关注商品结果', res);
-            if (res.iRet === 0 && res.errMsg === 'success') {
-              console.log(`取消关注商品---${item.commTitle.substring(0, 20).concat('...')}---成功\n`)
-              count ++;
-            } else {
-              console.log(`取消关注商品---${item.commTitle.substring(0, 20).concat('...')}---失败\n`)
-            }
-          }
-          $.unsubscribeGoodsCount = count;
-          resolve(count)
-        } else {
-          resolve(count)
-        }
-      } else {
-        console.log(`\n您设置的是不取关商品\n`);
-        resolve(count);
-      }
+    let goodSize = goodPageSize * 1;
+    if (goodSize === 0) {
+      console.log(`\n您设置的是不取关商品\n`);
+      resolve(0)
+      return;
     }
+    const pages = 20;
+    $.unsubscribeGoodsCount = 0;
+    LOP: while (Math.ceil(goodSize / 20) > 0) {
+      let followSize = goodSize >= pages ? pages : goodSize;
+      let followGoods = await getFollowGoods(followSize);
+      if (followGoods.iRet === '0' && followGoods.totalNum > 0) {
+        for (let item of followGoods.data) {
+          console.log(`是否匹配：：${item.commTitle.indexOf(stopGoods.replace(/\ufffc|\s*/g, ''))}`)
+          if (stopGoods && item.commTitle.indexOf(stopGoods.replace(/\ufffc|\s*/g, '')) > -1) {
+            console.log(`匹配到了您设定的商品--${stopGoods}，不在进行取消关注商品`)
+            break LOP;
+          }
+          let res = await unsubscribeGoodsFun(item.commId);
+          // console.log('取消关注商品结果', res);
+          if (res.iRet === 0 && res.errMsg === 'success') {
+            console.log(`取消关注商品---${item.commTitle.substring(0, 20).concat('...')}---成功\n`)
+            $.unsubscribeGoodsCount++;
+          } else {
+            console.log(`取消关注商品---${item.commTitle.substring(0, 20).concat('...')}---失败\n`)
+          }
+        }
+      }
+      goodSize -= pages;
+    }
+    resolve($.unsubscribeGoodsCount)
   })
 }
-function getFollowGoods() {
+function getFollowGoods(goodSize) {
   return new Promise((resolve) => {
     const option = {
-      url: `${JD_API_HOST}/comm/FavCommQueryFilter?cp=1&pageSize=${goodPageSize}&_=${Date.now()}&category=0&promote=0&cutPrice=0&coupon=0&stock=0&areaNo=1_72_4139_0&sceneval=2&g_login_type=1&callback=jsonpCBKB&g_ty=ls`,
+      url: `${JD_API_HOST}/comm/FavCommQueryFilter?cp=1&pageSize=${goodSize}&_=${Date.now()}&category=0&promote=0&cutPrice=0&coupon=0&stock=0&areaNo=1_72_4139_0&sceneval=2&g_login_type=1&callback=jsonpCBKB&g_ty=ls`,
       headers: {
         "Host": "wq.jd.com",
         "Accept": "*/*",
@@ -144,7 +141,6 @@ function getFollowGoods() {
     }
     $.get(option, (err, resp, data) => {
       try {
-        console.log(data)
         data = JSON.parse(data.slice(14, -13));
         $.goodsTotalNum = data.totalNum;
         // console.log('data', data.data.length)
