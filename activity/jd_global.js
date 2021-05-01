@@ -198,11 +198,10 @@ async function getTask() {
                         "viewSeconds": vo['viewSeconds'],
                         "activityCode": actCode,
                         "doType": vo['taskType'],
-                        "client":"iphone",
-                        "clientVersion":"9.5.2",
-                        "uuid":"badbca31864b231fdbd9c05eb1b4a56043999456",
-                        "openudid":"badbca31864b231fdbd9c05eb1b4a56043999456",
-                        "sceneid":"HQhomePageh5",
+                        "client":"m",
+                        "clientVersion":"-1",
+                        "uuid":"-1",
+                        "openudid":"-1"
                       })
                     }
                   }
@@ -391,9 +390,9 @@ function taskUrl(function_id, body = {}) {
 
     return {sealsTs: t, seals: $.md5(`${data.taskId}${data.inviterPin?data.inviterPin:''}${t}Ea6YXT`)}
   }
-  /*if(body['taskId']) {
+  if(body['taskId']) {
     body = {...body, ...getSign(body)}
-  }*/
+  }
   return {
     url: `${JD_API_HOST}/client.action?functionId=${function_id}&body=${escape(JSON.stringify(body))}&appid=global_mart&time=${new Date().getTime()}`,
     headers: {
