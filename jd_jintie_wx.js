@@ -160,12 +160,8 @@ function doMission(mission, functionId) {
     "environment":"wxMiniEnv",
     "linkId":linkId,
   };
-  if (functionId === 'receiveMission') {
-    body['channelCode'] = "JTYSXCX";
-    body['missionId'] = mission['missionId'];
-    body['taskType'] = mission['taskType'];
-  } else if (functionId === 'appletDoTaskNew') {
-    body['taskId'] = mission['missionId'];
+  if (functionId === 'appletDoTaskNew') {
+    body['taskId'] = mission['id'];
     body['taskType'] = mission['taskType'];
   } else if (functionId === 'sentMissionMq') {
     body['missionId'] = mission['missionId'];
@@ -181,7 +177,7 @@ function doMission(mission, functionId) {
           data = JSON.parse(data);
           if (data.resultCode === 0) {
             if (data.resultData.success) {
-              console.log(`任务${functionId}操作成功```)
+              console.log("任务操作成功")
             } else {
               console.log('任务操作失败', data.resultData.message)
             }
