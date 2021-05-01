@@ -1,6 +1,6 @@
 /*
 环球挑战赛
-活动时间：2021-03-08 至 2021-03-31
+活动时间：2021-04-28 至 2021-05-28
 多个账号会相互互助
 活动地址：https://gmart.jd.com/?appId=54935130mart.jd.com/?appId=54935130
 活动入口：京东app搜索京东国际-环球挑战赛
@@ -198,10 +198,11 @@ async function getTask() {
                         "viewSeconds": vo['viewSeconds'],
                         "activityCode": actCode,
                         "doType":`"${vo['taskType']}"`,
-                        "client":"m",
-                        "clientVersion":"-1",
-                        "uuid":"-1",
-                        "openudid":"-1"
+                        "client":"iphone",
+                        "clientVersion":"9.5.2",
+                        "uuid":"badbca31864b231fdbd9c05eb1b4a56043999456",
+                        "openudid":"badbca31864b231fdbd9c05eb1b4a56043999456",
+                        "sceneid":"HQhomePageh5",
                       })
                     }
                   }
@@ -221,6 +222,7 @@ async function getTask() {
 
 async function doTask(body) {
   return new Promise(resolve => {
+    console.log(JSON.stringify(body))
     $.get(taskUrl("taskRun", body), async (err, resp, data) => {
       try {
         if (err) {
@@ -389,9 +391,9 @@ function taskUrl(function_id, body = {}) {
 
     return {sealsTs: t, seals: $.md5(`${data.taskId}${data.inviterPin?data.inviterPin:''}${t}Ea6YXT`)}
   }
-  if(body['taskId']) {
+  /*if(body['taskId']) {
     body = {...body, ...getSign(body)}
-  }
+  }*/
   return {
     url: `${JD_API_HOST}/client.action?functionId=${function_id}&body=${escape(JSON.stringify(body))}&appid=global_mart&time=${new Date().getTime()}`,
     headers: {
