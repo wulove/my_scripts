@@ -95,6 +95,7 @@ function queryMission() {
               console.log('互动任务获取成功')
               const {missionPlayingList, missionLimitList} = data.resultData.data
               $.taskData = [...missionPlayingList, ...missionLimitList];
+              console.log(JSON.stringify($.taskData))
               $.willTask = $.taskData.filter(t => t.status === 1) || [];
               $.willingTask = $.taskData.filter(t => t.status === 0) || [];//已领取任务，但未完成
               $.recevieTask = $.taskData.filter(t => t.status === 2) || [];//待领取奖励
@@ -196,36 +197,6 @@ function doMission(mission, functionId) {
     })
   })
 }
-//完成任务
-function finishReadMission(missionId, readTime) {
-  const body = JSON.stringify({missionId, readTime});
-  const options = taskUrl('finishReadMission', body);
-  return new Promise((resolve) => {
-    $.get(options, (err, resp, data) => {
-      try {
-        if (err) {
-          console.log(`${JSON.stringify(err)}`)
-          console.log(`${$.name} API请求失败，请检查网路重试`)
-        } else {
-          data = JSON.parse(data);
-          if (data.resultCode === 0) {
-            if (data.resultData.code === '0000') {
-              console.log('完成任务 成功')
-            } else {
-              console.log('完成任务失败', data.resultData.msg)
-            }
-          } else {
-            console.log('完成任务失败', data.resultMsg)
-          }
-        }
-      } catch (e) {
-        $.logErr(e, resp);
-      } finally {
-        resolve(data);
-      }
-    })
-  })
-}
 //领取金贴奖励
 function drawMission(mission) {
   const body = JSON.stringify({
@@ -236,7 +207,7 @@ function drawMission(mission) {
     "missionId":mission['missionId'],
     "taskType":mission['taskType']
   });
-  const options = taskUrl('appletWithDrawMissionNew', body);
+  const options = taskUrl('appletWithDrawMissionNew', body, 'uc');
   return new Promise((resolve) => {
     $.get(options, (err, resp, data) => {
       try {
@@ -249,7 +220,7 @@ function drawMission(mission) {
             if (data.resultData.code === '0000') {
               console.log(`${data.resultData.data.amountStr}奖励领取成功`)
             } else {
-              console.log('奖励领取失败', data.resultData.msg)
+              console.log('奖励领取失败', data.resultData.message)
             }
           } else {
             console.log('奖励领取失败', data.resultMsg)
@@ -383,7 +354,7 @@ function signOfJinTie() {
   })
 }
 async function doTask() {
-  for (let task of $.willTask) {
+  /*for (let task of $.willTask) {
     console.log(`\n开始领取 【${task['title']}】任务`);
     await receiveMession(task);
     await $.wait(100);
@@ -392,10 +363,11 @@ async function doTask() {
     await doMission(task, 'sentMessionMq');
     await $.wait(100);
     await drawMission(task);
-  }
+  }*/
   if ($.recevieTask && $.recevieTask.length) {
     for (let task of $.recevieTask) {
       console.log('预计获得：', task['awardStr'])
+      console.log(JSON.stringify(task))
       await drawMission(task)
     }
   }
@@ -416,11 +388,7 @@ function taskUrl(function_id, body, type = 'mission') {
     }
   }
 }
-function getFp() {
-  // const crypto = require('crypto');
-  // let fp = crypto.createHash("md5").update($.UserName + '573.9', "utf8").digest("hex").substr(4, 16)
-  return ""
-}
+
 function TotalBean() {
   return new Promise(async resolve => {
     const options = {
