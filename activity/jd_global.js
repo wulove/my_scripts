@@ -197,7 +197,7 @@ async function getTask() {
                         "itemId": vo['itemId'],
                         "viewSeconds": vo['viewSeconds'],
                         "activityCode": actCode,
-                        "doType":`"${vo['taskType']}"`,
+                        "doType": vo['taskType'],
                         "client":"iphone",
                         "clientVersion":"9.5.2",
                         "uuid":"badbca31864b231fdbd9c05eb1b4a56043999456",
