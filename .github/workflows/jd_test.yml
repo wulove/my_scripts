@@ -37,9 +37,9 @@ jobs:
 #          python3 wait.py 23:59:59.999
       - name: '运行 【测试】'
         run: |
-          node jddj_fruit.js
+          node jd_jintie_wx.js
         env:
-          JDDJ_COOKIE: ${{ secrets.JDDJ_COOKIE }}
+          JD_COOKIE: ${{ secrets.JD_COOKIE_1 }}
           JD_DEBUG: ${{ secrets.JD_DEBUG }}
           PUSH_KEY: ${{ secrets.PUSH_KEY }}
 

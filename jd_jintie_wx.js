@@ -20,6 +20,7 @@ const notify = $.isNode() ? require('./sendNotify') : '';
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 //IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [], cookie = '', message, allMessage = '';
+const linkId = "ZTCPS112071853458";
 if ($.isNode()) {
   Object.keys(jdCookieNode).forEach((item) => {
     cookiesArr.push(jdCookieNode[item]);
@@ -65,11 +66,11 @@ if ($.isNode()) {
   })
 async function main() {
   try {
-    await signInforOfJinTie();
+    await userInfoOfJinTie();
     await queryMission();
-    await doTask();
+    /*await doTask();
     await queryMission(false);
-    await queryAvailableSubsidyAmount();
+    await queryAvailableSubsidyAmount();*/
   } catch (e) {
     $.logErr(e)
   }
@@ -77,27 +78,11 @@ async function main() {
 function queryMission(info = true) {
   $.taskData = [];
   const body = JSON.stringify({
-    channel: "sqcs",
-    channelCode: "SUBSIDY2",
-    "riskDeviceParam": JSON.stringify({
-      appId: "jdapp",
-      appType: "3",
-      clientVersion: "9.4.6",
-      deviceType: "iPhone11,8",
-      "eid": cookie,
-      "fp": getFp(),
-      idfa: "",
-      imei: "",
-      ip: "",
-      macAddress: "",
-      networkType: "WIFI",
-      os: "iOS",
-      osVersion: "14.2",
-      token: "",
-      uuid: ""
-    })
+    "sourceType":"2",
+    "environment":"wxMiniEnv",
+    "linkId":linkId,
   })
-  const options = taskUrl('queryMission', body);
+  const options = taskUrl('appletSubsidyMissionsNew', body, 'uc');
   return new Promise((resolve) => {
     $.get(options, async (err, resp, data) => {
       try {
@@ -107,21 +92,22 @@ function queryMission(info = true) {
         } else {
           data = JSON.parse(data);
           if (data.resultCode === 0) {
-            if (data.resultData.code === '0000') {
+            if (data.resultData.code === 0) {
               if (info) {
                 console.log('互动任务获取成功')
-                $.taskData = data.resultData.data;
-                $.willTask = $.taskData.filter(t => t.status === -1) || [];
+                const {missionPlayingList, missionLimitList} = data.result.data
+                $.taskData = [...missionPlayingList, ...missionPlayingList];
+                $.willTask = $.taskData.filter(t => t.status === 1) || [];
                 // $.willTask = $.taskData.filter(t => t.status === 0) || [];//已领取任务，但未完成
-                $.recevieTask = $.taskData.filter(t => t.status === 1) || [];
-                const doneTask = $.taskData.filter(t => t.status === 2);
+                $.recevieTask = $.taskData.filter(t => t.status === 2) || [];//待领取奖励
+                const doneTask = $.taskData.filter(t => t.status === 3);
                 console.log(`\n剩余未接取任务：${$.willTask.length}`)
                 console.log(`已完成任务：${doneTask.length}\n`);
               } else {
                 if ($.recevieTask && $.recevieTask.length) {
                   for (let task of $.recevieTask) {
-                    console.log('预计获得：', task.awards[0].awardName, task.awards[0].awardRealNum, task.awards[0].awardUnit)
-                    await awardMission(task['missionId'])
+                    console.log('预计获得：', task.awardStr)
+                    await drawMission(task)
                   }
                 }
               }
@@ -141,12 +127,14 @@ function queryMission(info = true) {
   })
 }
 //领取任务
-function receiveMission(missionId) {
+function receiveMission(mission) {
   const body = JSON.stringify({
-    missionId,
-    "channelCode": "SUBSIDY2",
-    "timeStamp": new Date().toString(),
-    "env": "JDAPP"
+    "sourceType":"2",
+    "environment":"wxMiniEnv",
+    "linkId":linkId,
+    "channel":"JTYSXCX",
+    "missionId":mission['missionId'],
+    "taskType":mission['taskType']
   });
   const options = taskUrl('receiveMission', body);
   return new Promise((resolve) => {
@@ -206,14 +194,17 @@ function finishReadMission(missionId, readTime) {
   })
 }
 //领取金贴奖励
-function awardMission(missionId) {
+function drawMission(mission) {
   const body = JSON.stringify({
-    missionId,
-    "channelCode": "SUBSIDY2",
-    "timeStamp": new Date().toString(),
-    "env": "JDAPP"
+    "sourceType":"2",
+    "environment":"wxMiniEnv",
+    "linkId":linkId,
+    "token":"",
+    "channel":"JTYSXCX",
+    "missionId":mission['missionId'],
+    "taskType":mission['taskType']
   });
-  const options = taskUrl('awardMission', body);
+  const options = taskUrl('appletWithDrawMissionNew', body);
   return new Promise((resolve) => {
     $.get(options, (err, resp, data) => {
       try {
@@ -240,29 +231,65 @@ function awardMission(missionId) {
     })
   })
 }
-//获取签到状态
-function signInforOfJinTie() {
+//获取用户金贴信息
+function userInfoOfJinTie() {
   const body = JSON.stringify({
-    channel: "sqcs",
+    "sourceType":"2",
+    "environment":"wxMiniEnv",
+    "linkId":linkId,
+    "token":"",
     "riskDeviceParam": JSON.stringify({
-      appId: "jdapp",
-      appType: "3",
-      clientVersion: "9.4.6",
-      deviceType: "iPhone11,8",
-      "eid": cookie,
-      "fp": getFp(),
-      idfa: "",
-      imei: "",
-      ip: "",
-      macAddress: "",
-      networkType: "WIFI",
-      os: "iOS",
-      osVersion: "14.2",
-      token: "",
-      uuid: ""
+      "SDKVersion": "2.16.1",
+      "albumAuthorized": true,
+      "appType": 9,
+      "batteryLevel": 46,
+      "benchmarkLevel": 10,
+      "bluetoothEnabled": true,
+      "brand": "iPhone",
+      "cameraAuthorized": true,
+      "deviceOrientation": "portrait",
+      "devicePixelRatio": 2,
+      "enableDebug": false,
+      "fontSizeSetting": 16,
+      "host": {
+        "appId": "",
+        "env": "WeChat",
+        "version": 402654252
+      },
+      "language": "zh_CN",
+      "locationAuthorized": true,
+      "locationEnabled": true,
+      "locationReducedAccuracy": false,
+      "microphoneAuthorized": true,
+      "model": "iPhone 6s<iPhone8,1>",
+      "notificationAlertAuthorized": false,
+      "notificationAuthorized": true,
+      "notificationBadgeAuthorized": true,
+      "notificationSoundAuthorized": true,
+      "openuuid": "",
+      "pixelRatio": 2,
+      "platform": "ios",
+      "safeArea": {
+        "bottom": 667,
+        "height": 647,
+        "left": 0,
+        "right": 375,
+        "top": 20,
+        "width": 375
+      },
+      "screenHeight": 667,
+      "screenTop": 0,
+      "screenWidth": 375,
+      "statusBarHeight": 20,
+      "system": "iOS 12.0.1",
+      "uuid": "",
+      "version": "8.0.4",
+      "wifiEnabled": true,
+      "windowHeight": 667,
+      "windowWidth": 375
     })
   })
-  const options = taskUrl('signInforOfJinTie', body, 'jrm');
+  const options = taskUrl('appletSubsidyUserInfoNew', body, 'uc');
   return new Promise((resolve) => {
     $.get(options, async (err, resp, data) => {
       try {
@@ -270,17 +297,14 @@ function signInforOfJinTie() {
           console.log(`${JSON.stringify(err)}`)
           console.log(`${$.name} API请求失败，请检查网路重试`)
         } else {
+          console.log(data)
           data = JSON.parse(data);
-          if (data.resultCode === 0) {
-            if (data.resultData.code === '000') {
-              let state = data.resultData.data.sign
-              console.log('获取签到状态成功', state ? '今日已签到' : '今日未签到', '连续签到', data.resultData.data.signContinuity, '天\n')
-              if (!state) await signOfJinTie()
-            } else {
-              console.log('获取签到状态失败', data.resultData.msg)
-            }
+          if (data.resultCode === 0 && data.resultData.code === '000') {
+            let state = data.resultData.data.todayIsOver
+            $.totalSubsidy = data.resultData.data.totalSubsidy/100;
+            console.log(`${$.nickName}拥有${$.totalSubsidy}金贴`)
           } else {
-            console.log('获取签到状态失败', data.resultMsg)
+            console.log('获取签到状态失败', data.resultData.msg)
           }
         }
       } catch (e) {
@@ -391,7 +415,7 @@ function queryAvailableSubsidyAmount() {
 async function doTask() {
   for (let task of $.willTask) {
     console.log(`\n开始领取 【${task['name']}】任务`);
-    await receiveMission(task['missionId']);
+    await receiveMission(task);
     await $.wait(100)
     if (task.doLink.indexOf('readTime=') !== -1) {
       const readTime = parseInt(task.doLink.substr(task.doLink.indexOf('readTime=') + 9));
@@ -409,14 +433,13 @@ function taskUrl(function_id, body, type = 'mission') {
     url: `https://ms.jr.jd.com/gw/generic/${type}/h5/m/${function_id}?reqData=${encodeURIComponent(body)}`,
     headers: {
       'Accept' : `*/*`,
-      'Origin' : `https://u.jr.jd.com`,
-      'Accept-Encoding' : `gzip, deflate, br`,
+      'Accept-Encoding' : `gzip,compress,br,deflate`,
       'Cookie' : cookie,
-      'Content-Type' : `application/x-www-form-urlencoded;charset=UTF-8`,
+      'Content-Type' : `application/json`,
       'Host' : `ms.jr.jd.com`,
       'Connection' : `keep-alive`,
-      "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1"),
-      'Referer' : `https://u.jr.jd.com/`,
+      "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 12_0_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/16A404 MicroMessenger/8.0.4(0x1800042c) NetType/4G Language/zh_CN",
+      'Referer' : `https://servicewechat.com/wx5c9a5ce20be8207b/199/page-frame.html`,
       'Accept-Language' : `zh-cn`
     }
   }
