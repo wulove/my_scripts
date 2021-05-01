@@ -96,8 +96,8 @@ function queryMission(info = true) {
             if (data.resultData.code === 0) {
               if (info) {
                 console.log('互动任务获取成功')
-                const {missionPlayingList, missionLimitList} = data.result.data
-                $.taskData = [...missionPlayingList, ...missionPlayingList];
+                const {missionPlayingList, missionLimitList} = data.resultData.data
+                $.taskData = [...missionPlayingList, ...missionLimitList];
                 $.willTask = $.taskData.filter(t => t.status === 1) || [];
                 // $.willTask = $.taskData.filter(t => t.status === 0) || [];//已领取任务，但未完成
                 $.recevieTask = $.taskData.filter(t => t.status === 2) || [];//待领取奖励
@@ -238,7 +238,7 @@ function userInfoOfJinTie() {
     "sourceType":"2",
     "environment":"wxMiniEnv",
     "linkId":linkId,
-    "token":"",
+    /*"token":"",
     "riskDeviceParam": JSON.stringify({
       "SDKVersion": "2.16.1",
       "albumAuthorized": true,
@@ -288,7 +288,7 @@ function userInfoOfJinTie() {
       "wifiEnabled": true,
       "windowHeight": 667,
       "windowWidth": 375
-    })
+    })*/
   })
   const options = taskUrl('appletSubsidyUserInfoNew', body, 'uc');
   return new Promise((resolve) => {
@@ -300,7 +300,7 @@ function userInfoOfJinTie() {
         } else {
           console.log(data)
           data = JSON.parse(data);
-          if (data.resultCode === 0 && data.resultData.code === '000') {
+          if (data.resultCode === 0 && data.resultData.code === 0) {
             let state = data.resultData.data.todayIsOver
             $.totalSubsidy = data.resultData.data.totalSubsidy/100;
             console.log(`${$.nickName}拥有${$.totalSubsidy}金贴`)
