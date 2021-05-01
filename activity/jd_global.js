@@ -1,6 +1,6 @@
 /*
 环球挑战赛
-活动时间：2021-04-28 至 2021-05-28
+活动时间：2021-03-08 至 2021-03-31
 多个账号会相互互助
 活动地址：https://gmart.jd.com/?appId=54935130mart.jd.com/?appId=54935130
 活动入口：京东app搜索京东国际-环球挑战赛
@@ -44,8 +44,8 @@ if ($.isNode()) {
 
 const JD_API_HOST = 'https://api.m.jd.com/', actCode = 'visa-card-001';
 const inviteCodes = [
-  'WDhxZEZJYjVJeHRIUC9qL245Y1Z3QT09@Q1pOenZPOXNJeTI4a0N1akVVUnRTQT09',
-  'WDhxZEZJYjVJeHRIUC9qL245Y1Z3QT09@Q1pOenZPOXNJeTI4a0N1akVVUnRTQT09',
+  'WmpHM2pndWh3OFphS2NsbTRLMmhqZz09@M3ozUGw0eExUZ25hSHBTZ2pJcTdpZz09@S2tETnZ0REtONy9Dc2Nqek1KNXpmWHFTNnF3OUtQQjJKZmJ2YUtSS3BQTT0=@a1RrenU1WExQaXRWS3VIZHgwMjlUYzJSeHhVMDlvZXgxR2RsdkZkRXZnOD0=@bHNsOVFIL2tQRTJhSndpRVNHVTlheXJLbzZRK09HaUtidjJUUFNQRXdqbz0=@M0JxTFVEbmxtV05uQWJVQVdyL2NxeTcycG1lcWtEbzVOc283bjR2MklkWT0=',
+  'a1RrenU1WExQaXRWS3VIZHgwMjlUYzJSeHhVMDlvZXgxR2RsdkZkRXZnOD0=@bHNsOVFIL2tQRTJhSndpRVNHVTlheXJLbzZRK09HaUtidjJUUFNQRXdqbz0=@WmpHM2pndWh3OFphS2NsbTRLMmhqZz09@M3ozUGw0eExUZ25hSHBTZ2pJcTdpZz09@S2tETnZ0REtONy9Dc2Nqek1KNXpmWHFTNnF3OUtQQjJKZmJ2YUtSS3BQTT0=',
 ];
 $.invites = [];
 !(async () => {
@@ -193,15 +193,15 @@ async function getTask() {
                     console.log(`去做${vo['taskName']}任务`)
                     for (let i = vo['executedTimes']; i < vo['totalTimes']; ++i) {
                       await doTask({
-                        "doType": "0",
                         "taskId": vo['taskId'],
                         "itemId": vo['itemId'],
+                        "viewSeconds": vo['viewSeconds'],
                         "activityCode": actCode,
-                        "sceneid":"HQhomePageh5",
-                        "client":"iphone",
-                        "clientVersion":"9.5.2",
-                        "uuid":"badbca31864b231fdbd9c05eb1b4a56043999456",
-                        "openudid":"badbca31864b231fdbd9c05eb1b4a56043999456"
+                        "doType": vo['taskType'],
+                        "client":"m",
+                        "clientVersion":"-1",
+                        "uuid":"-1",
+                        "openudid":"-1"
                       })
                     }
                   }
@@ -221,14 +221,12 @@ async function getTask() {
 
 async function doTask(body) {
   return new Promise(resolve => {
-    console.log(JSON.stringify(body))
     $.get(taskUrl("taskRun", body), async (err, resp, data) => {
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
           console.log(`${$.name} API请求失败，请检查网路重试`)
         } else {
-          console.log(data)
           if (safeGet(data)) {
             data = JSON.parse(data);
             if (data['code'] === '0') {
@@ -386,12 +384,20 @@ function requireConfig() {
 }
 
 function taskUrl(function_id, body = {}) {
+  function getSign(data) {
+    let t = +new Date()
+
+    return {sealsTs: t, seals: $.md5(`${data.taskId}${data.inviterPin?data.inviterPin:''}${t}Ea6YXT`)}
+  }
+  if(body['taskId']) {
+    body = {...body, ...getSign(body)}
+  }
   return {
     url: `${JD_API_HOST}/client.action?functionId=${function_id}&body=${escape(JSON.stringify(body))}&appid=global_mart&time=${new Date().getTime()}`,
     headers: {
       "Cookie": cookie,
-      "origin": "https://gmart.jd.com",
-      "referer": "https://gmart.jd.com/",
+      "origin": "https://h5.m.jd.com",
+      "referer": "https://h5.m.jd.com/",
       'Content-Type': 'application/x-www-form-urlencoded',
       "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('../USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1")
     }
