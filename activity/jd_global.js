@@ -193,15 +193,17 @@ async function getTask() {
                     console.log(`去做${vo['taskName']}任务`)
                     for (let i = vo['executedTimes']; i < vo['totalTimes']; ++i) {
                       await doTask({
+                        "doType": vo['taskType'],
                         "taskId": vo['taskId'],
                         "itemId": vo['itemId'],
-                        "viewSeconds": vo['viewSeconds'],
                         "activityCode": actCode,
-                        "doType": vo['taskType'],
-                        "client":"m",
-                        "clientVersion":"-1",
-                        "uuid":"-1",
-                        "openudid":"-1"
+                        "log":"1619874625874~1RgBzTUJ4on0def9344a598cc97844a1c21a2bbb853~2,1~F675EA10A4286DF371CB87C2391263084EDAE35C~19cy7f8~C~TRVFXxMMbRVVBBwHAxsIBh0EBmBmHlAaQhUdEFUAGwYEHgl5GgUBanUaVxtFEB0UUgEcAwAaDgQdAAFuYxtQHkUUGhVVBBxhGgB0HgMGb30dUx1CFGodEEVYWxULaRNSARpmHgZzGgUBa2kaVxtFEB0UUgIcCmYaDn0dAHN4ARtQHkUUGhVVBRwOYRsJeB0EdGR+HlAaQhVsHhNRRFkTCAAaFERCEAsUBwEACwkBAgIABQACBQIFAAcUGhVGV1UUDBVFRkVCQhUdEEZTVxULEFdQQhUdEEFSWBULaQAGGgQBCh0HAhsHHgMaWEJdXmwaFF1bEAsHGhVSQRMMFFFTUQgCVwFTVwQGAA8IUQNSVwcAUQkPUwdVBFQOBgEAEB0UWEcTCBNfZl9eXFQUGhVFEAsHAAYICgYCAAUECgYCGhVbWRMMFFVQVlNVVwQACgcCVAUCA1dSVFMIUQEDU1UAUAVXAwEBBgIPDw4FBwcUGhVXQlMUDBVGQnJOf2VkAHVhR0REWHp0AGFWAmIDdwoMEB0UWEETCBN3RkddVxF1WVpBR0VTRBsRe19VGBUdEF9XQBULEAAAAQEEAhMaFERSQBMMbQEHBR0FAQJsHhNEWRULaRNfZl9eXFQOGgYTHhNfeWQTHhMHBBkBHAAUGhUIHAQYBBUdEAAAAQEEAhMaFFVQVlNVVwQACgcCVAUCA1dSVFMIUQEDU1UAUAVXAwEBBgIPDw4FBwcUGhVQEGwaFF5eUxMMFFFXVFdQUENFEB0UV10TCBNDFBsTUVgUDBVGAR8GGAcTHhNVUGhHEAsUBgcTHhNUUhULEFBVQl5HW0VPdVhVVwxAX0RQH1JXRFMcAgEHEEVQXFVZWwoIBwIOBgQGEB0UW10TCGoPGgYAHgVrGhVTXl5RFA0TAwcHDw8GBgUOAwcACk8HDnJ1B3ZxAWdTUQZXBVQDCwkBB1IBCgYFAgVVAQkABgRTUAkHAQQJBwUCSE9PTE90SGNZVn1wYFxnc3cHV39nA2llcE9jZXcHbmAASmJhcE9zanNgZnFge2ByZHJnegFkYHFGCmBudHZSdGR/bnNJQXRiZ2F/cEljUHFkVnRydFRwc1ZnfXJaXQxIBw8JQ1JQTBUdEFxFURULEBNL~1hzf7vo",
+                        "random":"9538037",
+                        "sceneid":"HQhomePageh5",
+                        "client":"iphone",
+                        "clientVersion":"9.5.2",
+                        "uuid":"badbca31864b231fdbd9c05eb1b4a56043999456",
+                        "openudid":"badbca31864b231fdbd9c05eb1b4a56043999456"
                       })
                     }
                   }
@@ -228,6 +230,7 @@ async function doTask(body) {
           console.log(`${JSON.stringify(err)}`)
           console.log(`${$.name} API请求失败，请检查网路重试`)
         } else {
+          console.log(data)
           if (safeGet(data)) {
             data = JSON.parse(data);
             if (data['code'] === '0') {
@@ -385,20 +388,12 @@ function requireConfig() {
 }
 
 function taskUrl(function_id, body = {}) {
-  function getSign(data) {
-    let t = +new Date()
-
-    return {sealsTs: t, seals: $.md5(`${data.taskId}${data.inviterPin?data.inviterPin:''}${t}Ea6YXT`)}
-  }
-  if(body['taskId']) {
-    body = {...body, ...getSign(body)}
-  }
   return {
     url: `${JD_API_HOST}/client.action?functionId=${function_id}&body=${escape(JSON.stringify(body))}&appid=global_mart&time=${new Date().getTime()}`,
     headers: {
       "Cookie": cookie,
-      "origin": "https://h5.m.jd.com",
-      "referer": "https://h5.m.jd.com/",
+      "origin": "https://gmart.jd.com",
+      "referer": "https://gmart.jd.com/",
       'Content-Type': 'application/x-www-form-urlencoded',
       "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('../USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1")
     }
