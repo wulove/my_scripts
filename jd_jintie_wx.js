@@ -90,6 +90,7 @@ function queryMission(info = true) {
           console.log(`${JSON.stringify(err)}`)
           console.log(`${$.name} API请求失败，请检查网路重试`)
         } else {
+          console.log(data)
           data = JSON.parse(data);
           if (data.resultCode === 0) {
             if (data.resultData.code === 0) {
