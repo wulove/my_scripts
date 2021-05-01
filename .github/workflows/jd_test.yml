@@ -39,7 +39,7 @@ jobs:
         run: |
           node jd_jintie_wx.js
         env:
-          JD_COOKIE: ${{ secrets.JD_COOKIE }}
+          JD_COOKIE: ${{ secrets.JD_COOKIE_2 }}
           JD_DEBUG: ${{ secrets.JD_DEBUG }}
           PUSH_KEY: ${{ secrets.PUSH_KEY }}
 

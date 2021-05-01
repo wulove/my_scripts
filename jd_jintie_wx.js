@@ -95,7 +95,6 @@ function queryMission() {
               console.log('互动任务获取成功')
               const {missionPlayingList, missionLimitList} = data.resultData.data
               $.taskData = [...missionPlayingList, ...missionLimitList];
-              console.log(JSON.stringify($.taskData))
               $.willTask = $.taskData.filter(t => t.status === 1) || [];
               $.willingTask = $.taskData.filter(t => t.status === 0) || [];//已领取任务，但未完成
               $.recevieTask = $.taskData.filter(t => t.status === 2) || [];//待领取奖励
@@ -211,6 +210,7 @@ function drawMission(mission) {
           console.log(`${JSON.stringify(err)}`)
           console.log(`${$.name} API请求失败，请检查网路重试`)
         } else {
+          console.log(data)
           data = JSON.parse(data);
           if (data.resultCode === 0) {
             if (data.resultData.success) {
@@ -236,57 +236,6 @@ function queryAvailableSubsidyAmount() {
     "sourceType":"2",
     "environment":"wxMiniEnv",
     "linkId":linkId,
-    /*"token":"",
-    "riskDeviceParam": JSON.stringify({
-      "SDKVersion": "2.16.1",
-      "albumAuthorized": true,
-      "appType": 9,
-      "batteryLevel": 46,
-      "benchmarkLevel": 10,
-      "bluetoothEnabled": true,
-      "brand": "iPhone",
-      "cameraAuthorized": true,
-      "deviceOrientation": "portrait",
-      "devicePixelRatio": 2,
-      "enableDebug": false,
-      "fontSizeSetting": 16,
-      "host": {
-        "appId": "",
-        "env": "WeChat",
-        "version": 402654252
-      },
-      "language": "zh_CN",
-      "locationAuthorized": true,
-      "locationEnabled": true,
-      "locationReducedAccuracy": false,
-      "microphoneAuthorized": true,
-      "model": "iPhone 6s<iPhone8,1>",
-      "notificationAlertAuthorized": false,
-      "notificationAuthorized": true,
-      "notificationBadgeAuthorized": true,
-      "notificationSoundAuthorized": true,
-      "openuuid": "",
-      "pixelRatio": 2,
-      "platform": "ios",
-      "safeArea": {
-        "bottom": 667,
-        "height": 647,
-        "left": 0,
-        "right": 375,
-        "top": 20,
-        "width": 375
-      },
-      "screenHeight": 667,
-      "screenTop": 0,
-      "screenWidth": 375,
-      "statusBarHeight": 20,
-      "system": "iOS 12.0.1",
-      "uuid": "",
-      "version": "8.0.4",
-      "wifiEnabled": true,
-      "windowHeight": 667,
-      "windowWidth": 375
-    })*/
   })
   const options = taskUrl('appletSubsidyUserInfoNew', body, 'uc');
   return new Promise((resolve) => {
@@ -296,15 +245,18 @@ function queryAvailableSubsidyAmount() {
           console.log(`${JSON.stringify(err)}`)
           console.log(`${$.name} API请求失败，请检查网路重试`)
         } else {
-          console.log(data)
           data = JSON.parse(data);
-          if (data.resultCode === 0 && data.resultData.code === 0) {
-            let state = data.resultData.data.todayIsOver
-            if (!state) signOfJinTie();
-            $.totalSubsidy = data.resultData.data.totalSubsidy/100;
-            console.log(`当前总金贴：${data.resultData.data.totalSubsidyStr}元`)
+          if (data.resultCode === 0) {
+            if (data.resultData.code === 0) {
+              let state = data.resultData.data.todayIsOver
+              if (!state) signOfJinTie();
+              $.totalSubsidy = data.resultData.data.totalSubsidy / 100;
+              console.log(`当前总金贴：${data.resultData.data.totalSubsidyStr}元`)
+            } else {
+              console.log('获取金贴失败', data.resultData.message)
+            }
           } else {
-            console.log('获取签到状态失败', data.resultData.msg)
+            console.log('获取金贴失败', data.resultData.retMsg)
           }
         }
       } catch (e) {
