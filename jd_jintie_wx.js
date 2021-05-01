@@ -127,7 +127,7 @@ function receiveMession(mission) {
     "missionId":mission['missionId'],
     "taskType":mission['taskType'],
   });
-  const options = taskUrl('receiveMession', body);
+  const options = taskUrl('receiveMission', body);
   return new Promise((resolve) => {
     $.get(options, (err, resp, data) => {
       try {
@@ -138,9 +138,9 @@ function receiveMession(mission) {
           data = JSON.parse(data);
           if (data.resultCode === 0) {
             if (data.resultData.success) {
-              console.log(`任务${functionId}操作成功```)
+              console.log("任务接取操作成功")
             } else {
-              console.log('任务接取失败', data.resultData.message)
+              console.log('任务接取失败', data.resultData.msg)
             }
           } else {
             console.log('任务接取失败', data.resultMsg)
@@ -160,14 +160,14 @@ function doMission(mission, functionId) {
     "environment":"wxMiniEnv",
     "linkId":linkId,
   };
-  if (functionId === 'receiveMession') {
+  if (functionId === 'receiveMission') {
     body['channelCode'] = "JTYSXCX";
     body['missionId'] = mission['missionId'];
     body['taskType'] = mission['taskType'];
   } else if (functionId === 'appletDoTaskNew') {
     body['taskId'] = mission['missionId'];
     body['taskType'] = mission['taskType'];
-  } else if (functionId === 'sentMessionMq') {
+  } else if (functionId === 'sentMissionMq') {
     body['missionId'] = mission['missionId'];
   }
   const options = taskUrl(functionId, JSON.stringify(body), 'uc');
@@ -180,13 +180,13 @@ function doMission(mission, functionId) {
         } else {
           data = JSON.parse(data);
           if (data.resultCode === 0) {
-            if (data.resultData.code === '0000' || data.resultData.code === 0) {
-              console.log(`任务${functionId}接取成功```)
+            if (data.resultData.success) {
+              console.log(`任务${functionId}操作成功```)
             } else {
-              console.log('任务接取失败', data.resultData.msg)
+              console.log('任务操作失败', data.resultData.message)
             }
           } else {
-            console.log('任务接取失败', data.resultMsg)
+            console.log('任务操作失败', data.resultMsg)
           }
         }
       } catch (e) {
@@ -217,8 +217,8 @@ function drawMission(mission) {
         } else {
           data = JSON.parse(data);
           if (data.resultCode === 0) {
-            if (data.resultData.code === '0000') {
-              console.log(`${data.resultData.data.amountStr}奖励领取成功`)
+            if (data.resultData.success) {
+              console.log('奖励领取成功')
             } else {
               console.log('奖励领取失败', data.resultData.message)
             }
@@ -354,20 +354,19 @@ function signOfJinTie() {
   })
 }
 async function doTask() {
-  /*for (let task of $.willTask) {
+  for (let task of $.willTask) {
     console.log(`\n开始领取 【${task['title']}】任务`);
     await receiveMession(task);
     await $.wait(100);
     await doMission(task, 'appletDoTaskNew');
     await $.wait(100);
-    await doMission(task, 'sentMessionMq');
+    await doMission(task, 'sentMissionMq');
     await $.wait(100);
     await drawMission(task);
-  }*/
+  }
   if ($.recevieTask && $.recevieTask.length) {
     for (let task of $.recevieTask) {
       console.log('预计获得：', task['awardStr'])
-      console.log(JSON.stringify(task))
       await drawMission(task)
     }
   }
