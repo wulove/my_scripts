@@ -120,8 +120,11 @@ function showMsg() {
 }
 async function main() {
   try {
+    console.log(`================赚京豆-签到领京豆===================`)
     await userSignIn();//赚京豆-签到领京豆
+    console.log(`================赚京豆-加速领京豆===================`)
     await vvipTask();//赚京豆-加速领京豆
+    console.log(`================赚京豆开团==========================`)
     await distributeBeanActivity();//赚京豆-瓜分京豆
     await showMsg();
   } catch (e) {
