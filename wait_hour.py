@@ -11,18 +11,23 @@ now = datetime.now()
 zone_cn = timezone(timedelta(hours=8))
 now_cn = now.astimezone(zone_cn)
 logging.warning(f'服务器时间：{now}, 北京时间：{now_cn}')
-logging.warning(now_cn.hour)
-target_hour = -1
-hour = now_cn.hour
+argv = []
 if (len(sys.argv) == 2 and "-" in sys.argv[1]):
 	hs = sys.argv[1].split("-")
-	if hour+1 >= int(hs[0]) and hour+1 <= int(hs[1]):
-		target_hour = hour+1
+	argv = list(range(int(hs[0]), int(hs[1])+1))
 else :
 	for i in range(1, len(sys.argv)):
-		if (hour < int(sys.argv[i])):
-			target_hour = int(sys.argv[i])
-			break
+		argv.append(int(sys.argv[i]))
+if 0 in argv:
+	argv[argv.index(0)] = 24
+	argv.sort()
+target_hour = -1
+hour = now_cn.hour
+for e in argv:
+	if (hour < e):
+		target_hour = e
+		break
+logging.warning(f'匹配到的参数为: {target_hour}')
 
 if target_hour == -1:
 	logging.error(f'木有匹配到对应的参数: {sys.argv[1:]}')
