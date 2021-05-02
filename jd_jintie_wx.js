@@ -99,8 +99,10 @@ function queryMission() {
               $.willingTask = $.taskData.filter(t => t.status === 0) || [];//已领取任务，但未完成
               $.recevieTask = $.taskData.filter(t => t.status === 2) || [];//待领取奖励
               const doneTask = $.taskData.filter(t => t.status === 3);
-              console.log(`\n剩余未接取任务：${$.willTask.length}`)
-              console.log(`已完成任务：${doneTask.length}\n`);
+              console.log(`\n总任务数：${$.taskData.length}`)
+              console.log(`剩余未接取任务数：${$.willTask.length}`)
+              console.log(`剩余未领取奖励数：${$.recevieTask.length}`)
+              console.log(`已完成任务数：${doneTask.length}\n`);
             } else {
               console.log('获取互动任务失败', data.resultData.msg)
             }
