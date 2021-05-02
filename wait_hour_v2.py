@@ -4,7 +4,6 @@ from datetime import datetime, timedelta, timezone
 import logging
 import sys
 import math
-import list
 
 if (len(sys.argv) < 2):
 	exit()
