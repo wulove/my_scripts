@@ -33,7 +33,7 @@ jobs:
         run: |
           node jd_jin_tie.js
         env:
-          JD_COOKIE: ${{ secrets.JD_COOKIE_1 }}
+          JD_COOKIE: ${{ secrets.JD_COOKIE }}
           JD_DEBUG: ${{ secrets.JD_DEBUG }}
           PUSH_KEY: ${{ secrets.PUSH_KEY }}
           JD_USER_AGENT: ${{ secrets.JD_USER_AGENT }}

@@ -16,7 +16,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         with:
-          repository: ${{ secrets.REPO }}
           ref: jddj
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
