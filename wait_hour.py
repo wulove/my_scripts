@@ -27,7 +27,7 @@ for e in argv:
 	if (hour < e):
 		target_hour = e
 		break
-logging.warning(f'匹配到的参数为: {target_hour}')
+logging.error(f'格式化后的参数: {argv}')
 
 if target_hour == -1:
 	logging.error(f'木有匹配到对应的参数: {sys.argv[1:]}')
