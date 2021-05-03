@@ -417,6 +417,7 @@ function vviptask_reach_task(taskIdEncrypted) {
 //领取做完任务后的奖励
 function vviptask_reward_receive(idEncKey) {
   const body = {"channel":"SWAT_RED_PACKET","systemId":"19",idEncKey}
+  console.log(JSON.stringify(body))
   const options = {
     url: `${JD_API_HOST}?functionId=vviptask_reward_receive&body=${escape(JSON.stringify(body))}&appid=swat_miniprogram&fromType=wxapp&timestamp=${new Date().getTime() + new Date().getTimezoneOffset()*60*1000 + 8*60*60*1000}`,
     headers: {
