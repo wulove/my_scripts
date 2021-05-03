@@ -187,7 +187,7 @@ async function vvipTask() {
     $.rewardBeanNum = 0;
     await vvipscdp_raffle_auto_send_bean();
     await pg_channel_page_data();
-    if (!$.vvipFlag) return
+    //if (!$.vvipFlag) return
     await vviptask_receive_list();//做任务
     await $.wait(1000)
     await pg_channel_page_data();
@@ -316,6 +316,7 @@ function vviptask_receive_list() {
             data = JSON.parse(data);
             if (data['success']) {
               $.taskData = data['data'].filter(vo => !!vo && vo['taskDataStatus'] !== 3);
+              console.log(JSON.stringify($.taskData))
               for (let item of $.taskData) {
                 console.log(`\n领取 ${item['title']} 任务`)
                 await vviptask_receive_getone(item['id']);
@@ -437,7 +438,7 @@ function vviptask_reward_receive(idEncKey) {
           console.log(`${JSON.stringify(err)}`)
           console.log(`${$.name} API请求失败，请检查网路重试`)
         } else {
-          // console.log(`做任务任务:${data}`)
+           console.log(`做领取任务:${data}`)
           // if (safeGet(data)) {
           //   data = JSON.parse(data);
           //   if (data['success']) {
