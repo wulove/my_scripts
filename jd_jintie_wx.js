@@ -1,5 +1,5 @@
 /*
-金贴小程序
+金贴小程序（每天大概可得0.07金贴）
 活动入口：微信-金贴小程序
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 =================QuantumultX==============
