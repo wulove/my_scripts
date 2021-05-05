@@ -447,6 +447,12 @@ async function missions() {
       if (item.mid === 'CPD01') {
         await pigPetDoMission(item.mid);
       } else {
+        if (item.mid === 'MC2949') {
+          console.log(`尝试做【${item.missionName}】活动`)
+          await pigPetDoMission(item.mid);
+          await queryMissionReceiveAfterStatus(item.mid);
+          await finishReadMission(item.mid);
+        }
         //TODO
         // await pigPetDoMission(item.mid);
         // await queryMissionReceiveAfterStatus(item.mid);
@@ -541,7 +547,7 @@ function queryMissionReceiveAfterStatus(missionId) {
       "url": `${MISSION_BASE_API}/queryMissionReceiveAfterStatus?reqData=%7B%2522missionId%2522:%2522${Number(missionId)}%2522%7D`,
       "headers": {
         "Accept": "*/*",
-        "Accept-Encoding": "gzip, deflate, br",
+        "Accept-Encoding": "br, gzip, deflate",
         "Accept-Language": "zh-CN,zh;q=0.9",
         "Connection": "keep-alive",
         "Host": "ms.jr.jd.com",
@@ -587,7 +593,7 @@ function finishReadMission(missionId) {
   return new Promise(async resolve => {
     const body = {"missionId": missionId.toString(),"readTime":10};
     const options = {
-      "url": `${MISSION_BASE_API}/finishReadMission?reqData=%7B%2522missionId%2522:%2522${Number(missionId)}%2522,%2522readTime%2522:10%7D`,
+      "url": `${MISSION_BASE_API}/finishReadMission?reqData=%7B%2522missionId%2522:%2522${Number(missionId)}%2522,%2522readTime%2522:15%7D`,
       "headers": {
         "Accept": "*/*",
         "Accept-Encoding": "gzip, deflate, br",
