@@ -447,7 +447,7 @@ async function missions() {
       if (item.mid === 'CPD01') {
         await pigPetDoMission(item.mid);
       } else {
-        if (item.mid === 'MC2949') {
+        if (item.mid === 'MC3664') {
           console.log(`尝试做【${item.missionName}】活动`)
           await pigPetDoMission(item.mid);
           await queryMissionReceiveAfterStatus(item.mid);
@@ -548,7 +548,7 @@ function queryMissionReceiveAfterStatus(missionId) {
       "headers": {
         "Accept": "*/*",
         "Accept-Encoding": "br, gzip, deflate",
-        "Accept-Language": "zh-CN,zh;q=0.9",
+        "Accept-Language": "zh-cn",
         "Connection": "keep-alive",
         "Host": "ms.jr.jd.com",
         "Cookie": cookie,
