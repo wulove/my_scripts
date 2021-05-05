@@ -447,14 +447,6 @@ async function missions() {
       if (item.mid === 'CPD01') {
         await pigPetDoMission(item.mid);
       } else {
-        if (item.mid === 'MC3664') {
-          console.log(`尝试做【${item.missionName}】活动`)
-          await pigPetDoMission(item.mid);
-          await $.wait(1000);
-          await queryMissionReceiveAfterStatus(item.mid);
-          await $.wait(15000);
-          await finishReadMission(item.mid);
-        }
         //TODO
         // await pigPetDoMission(item.mid);
         // await queryMissionReceiveAfterStatus(item.mid);
@@ -519,7 +511,7 @@ function pigPetMissionList() {
           console.log(`${$.name} API请求失败，请检查网路重试`)
         } else {
           if (data) {
-            console.log(data)
+            // console.log(data)
             data = JSON.parse(data);
             if (data.resultCode === 0) {
               if (data.resultData.resultCode === 0) {
@@ -546,7 +538,7 @@ function queryMissionReceiveAfterStatus(missionId) {
   return new Promise(resolve => {
     const body = {"missionId": missionId.toString()};
     const options = {
-      "url": `${MISSION_BASE_API}/queryMissionReceiveAfterStatus?reqData=%7B%22missionId%22:%22${Number(missionId)}%22%7D`,
+      "url": `${MISSION_BASE_API}/queryMissionReceiveAfterStatus?reqData=%7B%2522missionId%2522:%2522${Number(missionId)}%2522%7D`,
       "headers": {
         "Accept": "*/*",
         "Accept-Encoding": "gzip, deflate, br",
@@ -595,7 +587,7 @@ function finishReadMission(missionId) {
   return new Promise(async resolve => {
     const body = {"missionId": missionId.toString(),"readTime":10};
     const options = {
-      "url": `${MISSION_BASE_API}/finishReadMission?reqData=%7B%2522missionId%2522:%2522${Number(missionId)}%2522,%2522readTime%2522:15%7D`,
+      "url": `${MISSION_BASE_API}/finishReadMission?reqData=%7B%2522missionId%2522:%2522${Number(missionId)}%2522,%2522readTime%2522:10%7D`,
       "headers": {
         "Accept": "*/*",
         "Accept-Encoding": "gzip, deflate, br",
