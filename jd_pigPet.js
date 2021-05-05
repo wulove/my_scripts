@@ -595,7 +595,7 @@ function finishReadMission(missionId) {
   return new Promise(async resolve => {
     const body = {"missionId": missionId.toString(),"readTime":10};
     const options = {
-      "url": `${MISSION_BASE_API}/finishReadMission?reqData=%7B%2522missionId%2522:%2522${Number(missionId)}%2522,%2522readTime%2522:10%7D`,
+      "url": `${MISSION_BASE_API}/finishReadMission?reqData=%7B%2522missionId%2522:%2522${Number(missionId)}%2522,%2522readTime%2522:15%7D`,
       "headers": {
         "Accept": "*/*",
         "Accept-Encoding": "gzip, deflate, br",
