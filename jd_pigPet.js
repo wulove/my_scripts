@@ -546,7 +546,7 @@ function queryMissionReceiveAfterStatus(missionId) {
   return new Promise(resolve => {
     const body = {"missionId": missionId.toString()};
     const options = {
-      "url": `${MISSION_BASE_API}/queryMissionReceiveAfterStatus?reqData=%7B%2522missionId%2522:%2522${Number(missionId)}%2522%7D`,
+      "url": `${MISSION_BASE_API}/queryMissionReceiveAfterStatus?reqData=%7B%22missionId%22:%22${Number(missionId)}%22%7D`,
       "headers": {
         "Accept": "*/*",
         "Accept-Encoding": "gzip, deflate, br",
