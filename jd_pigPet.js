@@ -544,16 +544,16 @@ function queryMissionReceiveAfterStatus(missionId) {
   return new Promise(resolve => {
     const body = {"missionId": missionId.toString()};
     const options = {
-      "url": `${MISSION_BASE_API}/queryMissionReceiveAfterStatus?reqData=${encodeURIComponent(JSON.stringify(body))}`,
+      "url": `${MISSION_BASE_API}/queryMissionReceiveAfterStatus?reqData=%7B%2522missionId%2522:%2522${Number(missionId)}%2522%7D`,
       "headers": {
         "Accept": "*/*",
-        "Accept-Encoding": "br, gzip, deflate",
-        "Accept-Language": "zh-cn",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Accept-Language": "zh-CN,zh;q=0.9",
         "Connection": "keep-alive",
         "Host": "ms.jr.jd.com",
         "Cookie": cookie,
-        "Origin": "https://pro.m.jd.com",
-        "Referer": "https://pro.m.jd.com/mall/active/3sUgt2RjcDcaYyUfCoeqNHbUhG4F/index.html",
+        "Origin": "https://jdjoy.jd.com",
+        "Referer": "https://jdjoy.jd.com/",
         "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1")
       }
     }
@@ -593,7 +593,7 @@ function finishReadMission(missionId) {
   return new Promise(async resolve => {
     const body = {"missionId": missionId.toString(),"readTime":10};
     const options = {
-      "url": `${MISSION_BASE_API}/finishReadMission?reqData=%7B%2522missionId%2522:%2522${Number(missionId)}%2522,%2522readTime%2522:15%7D`,
+      "url": `${MISSION_BASE_API}/finishReadMission?reqData=%7B%2522missionId%2522:%2522${Number(missionId)}%2522,%2522readTime%2522:10%7D`,
       "headers": {
         "Accept": "*/*",
         "Accept-Encoding": "gzip, deflate, br",
