@@ -450,7 +450,9 @@ async function missions() {
         if (item.mid === 'MC3664') {
           console.log(`尝试做【${item.missionName}】活动`)
           await pigPetDoMission(item.mid);
+          await $.wait(1000);
           await queryMissionReceiveAfterStatus(item.mid);
+          await $.wait(15000);
           await finishReadMission(item.mid);
         }
         //TODO
