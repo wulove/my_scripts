@@ -538,7 +538,7 @@ function queryMissionReceiveAfterStatus(missionId) {
   return new Promise(resolve => {
     const body = {"missionId": missionId.toString()};
     const options = {
-      "url": `${MISSION_BASE_API}/queryMissionReceiveAfterStatus?reqData=%7B%2522missionId%2522:%2522${Number(missionId)}%2522%7D`,
+      "url": `${MISSION_BASE_API}/queryMissionReceiveAfterStatus?reqData=${encodeURIComponent(encodeURIComponent(JSON.stringify(body)))}`,
       "headers": {
         "Accept": "*/*",
         "Accept-Encoding": "gzip, deflate, br",
@@ -587,7 +587,7 @@ function finishReadMission(missionId) {
   return new Promise(async resolve => {
     const body = {"missionId": missionId.toString(),"readTime":10};
     const options = {
-      "url": `${MISSION_BASE_API}/finishReadMission?reqData=%7B%2522missionId%2522:%2522${Number(missionId)}%2522,%2522readTime%2522:10%7D`,
+      "url": `${MISSION_BASE_API}/finishReadMission?reqData=${encodeURIComponent(encodeURIComponent(JSON.stringify(body)))}`,
       "headers": {
         "Accept": "*/*",
         "Accept-Encoding": "gzip, deflate, br",
