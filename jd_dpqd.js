@@ -11,10 +11,6 @@ const JD_API_HOST = 'https://api.m.jd.com/api?appid=interCenter_shopSign';
 // ****************************************************************************
 // 活动ID配置项目
 const vas = [
-  // "10586605,10349181",//7天1元红包 100份5.7
-  // "1000015668,10348849",//2天50豆5.7/5元5.10 100份
-  // "1000001396,10341341",//7天50京豆10000份5.7
-  // "10112259,10353858",//每天5/50豆5.10/80豆5.15/100豆5.20
   "10586605,10349181",//7天1元红包 100份5.7
   "1000015668,10348849",//2天50豆5.7/5元5.10 100份
   "1000001396,10341341",//7天50京豆10000份5.7
@@ -76,11 +72,12 @@ if ($.isNode()) {
 async function dpqd() {
   for (const va of vas) {
     await taskUrl(va);
+    await $.wait(1234)
   }
 }
 
 //店铺获取签到信息
-function taskUrl(va) {
+async function taskUrl(va) {
   const [v, a] = va.split(",", 2);
   return new Promise(resolve => {
     const options = {
@@ -96,20 +93,17 @@ function taskUrl(va) {
     }
     $.get(options, (err, resp, data) => {
       try {
-        if(err){
-          console.log(`<${va}>签到异常`, err);
-          return resolve();
+        if (err) {
+          console.log(`\n${$.name}: API查询请求失败 ‼️‼️`)
+          $.logErr(err);
+        } else {
+          data = JSON.parse(data);
+          if (data.success) {
+            console.log(`${va} √`);
+          } else {
+            console.log(`${va} ×`, data.msg);
+          }
         }
-        console.log(data, resp)
-        /*resp = JSON.parse(resp);
-        if(!resp.success){
-          console.log(resp);
-          return resolve();
-        }*/
-        console.log(`${va} √`);
-        setTimeout(()=>{
-          return resolve();
-        }, 1234)
       } catch (e) {
         $.logErr(e, resp);
       } finally {
