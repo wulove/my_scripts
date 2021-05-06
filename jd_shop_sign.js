@@ -28,7 +28,6 @@ let vender = ''
 let num = 0
 let shopname = ''
 const token = [
-  'A64EB78DA688DB2B31F78EAEFACA869A', //3天10豆 正官庄
   '381B8687B3D667AD00849FB43A4142C8', //7天10豆 齐心
 ]
 //IOS等用户直接用NobyDa的jd cookie
