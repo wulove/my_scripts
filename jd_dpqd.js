@@ -91,6 +91,7 @@ function taskUrl(va) {
           console.log(`<${va}>签到异常`, err);
           return resolve();
         }
+        console.log(data)
         resp = JSON.parse(resp);
         if(!resp.success){
           console.log(resp);
