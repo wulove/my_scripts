@@ -26,8 +26,8 @@ let cookiesArr = [],
   cookie = "",
   message;
 const inviteCodes = [
-  `T016aEzIlJOJLepV9qJVCjVfnoaW5kRrbA@T0205KkcAlpbtBaxXnKM7Z9_CjVfnoaW5kRrbA`,
-  `T016aEzIlJOJLepV9qJVCjVfnoaW5kRrbA@T0205KkcAlpbtBaxXnKM7Z9_CjVfnoaW5kRrbA`
+  `T0205KkcAlpbtBaxXnKM7Z9_CjVfnoaW5kRrbA`,
+  `T016aEzIlJOJLepV9qJVCjVfnoaW5kRrbA`
 ]
 const randomCount = $.isNode() ? 20 : 5;
 if ($.isNode()) {
@@ -274,11 +274,11 @@ function readShareCode() {
       } catch (e) {
         $.logErr(e, resp)
       } finally {
-        resolve(data);
+        resolve(inviteCodes);
       }
     })
     await $.wait(10000);
-    resolve()
+    resolve(inviteCodes)
   })
 }
 //格式化助力码
@@ -293,8 +293,7 @@ function shareCodesFormat() {
       const tempIndex = $.index > inviteCodes.length ? (inviteCodes.length - 1) : ($.index - 1);
       $.newShareCodes = inviteCodes[tempIndex].split('@');
     }
-    // const readShareCodeRes = await readShareCode();
-    const readShareCodeRes = null;
+    const readShareCodeRes = await readShareCode();
     if (readShareCodeRes && readShareCodeRes.code === 200) {
       $.newShareCodes = [...new Set([...$.newShareCodes, ...(readShareCodeRes.data || [])])];
     }

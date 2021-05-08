@@ -31,8 +31,8 @@ let helpAuthor = false;
 const randomCount = $.isNode() ? 20 : 5;
 let cash_exchange = false;//是否消耗2元红包兑换200京豆，默认否
 const inviteCodes = [
-  `eU9YLqjwJ75Ajwatshtm@9aqMuGEivkKkJ9Z0`,
-  `9aqMuGEivkKkJ9Z0@eU9YLqjwJ75Ajwatshtm`
+  `eU9YLqjwJ75Ajwatshtm`,
+  `9aqMuGEivkKkJ9Z0`
 ]
 if ($.isNode()) {
   Object.keys(jdCookieNode).forEach((item) => {
@@ -363,11 +363,11 @@ function readShareCode() {
       } catch (e) {
         $.logErr(e, resp)
       } finally {
-        resolve(data);
+        resolve(inviteCodes);
       }
     })
     await $.wait(10000);
-    resolve()
+    resolve(inviteCodes)
   })
 }
 //格式化助力码
@@ -384,8 +384,7 @@ function shareCodesFormat() {
       /*let authorCode = deepCopy($.authorCode)
       $.newShareCodes = [...(authorCode.map((item, index) => authorCode[index] = item['inviteCode'])), ...$.newShareCodes];*/
     }
-    // const readShareCodeRes = await readShareCode();
-    const readShareCodeRes = null;
+    const readShareCodeRes = await readShareCode();
     if (readShareCodeRes && readShareCodeRes.code === 200) {
       $.newShareCodes = [...new Set([...$.newShareCodes, ...(readShareCodeRes.data || [])])];
     }

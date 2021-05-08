@@ -30,9 +30,9 @@ let cookiesArr = [], cookie = '', jdFruitShareArr = [], isBox = false, notify, n
 //下面给出两个账号的填写示例（iOS只支持2个京东账号）
 let shareCodes = [ // 这个列表填入你要助力的好友的shareCode
    //账号一的好友shareCode,不同好友的shareCode中间用@符号隔开
-  '2a743087d66245459df68472754d02fd@2af3c7fe21644b4092af5cfc2aab228a',
+  '2a743087d66245459df68472754d02fd',
   //账号二的好友shareCode,不同好友的shareCode中间用@符号隔开
-  '2a743087d66245459df68472754d02fd@2af3c7fe21644b4092af5cfc2aab228a',
+  '2af3c7fe21644b4092af5cfc2aab228a',
 ]
 let message = '', subTitle = '', option = {}, isFruitFinished = false;
 const retainWater = 100;//保留水滴大于多少g,默认100g;
@@ -1265,11 +1265,11 @@ function readShareCode() {
       } catch (e) {
         $.logErr(e, resp)
       } finally {
-        resolve(data);
+        resolve(shareCodes);
       }
     })
     await $.wait(10000);
-    resolve()
+    resolve(shareCodes)
   })
 }
 function shareCodesFormat() {
@@ -1283,10 +1283,8 @@ function shareCodesFormat() {
       const tempIndex = $.index > shareCodes.length ? (shareCodes.length - 1) : ($.index - 1);
       newShareCodes = shareCodes[tempIndex].split('@');
     }
-    //const readShareCodeRes = await readShareCode();
-    const readShareCodeRes = null;
+    const readShareCodeRes = await readShareCode();
     if (readShareCodeRes && readShareCodeRes.code === 200) {
-      // newShareCodes = newShareCodes.concat(readShareCodeRes.data || []);
       newShareCodes = [...new Set([...newShareCodes, ...(readShareCodeRes.data || [])])];
     }
     console.log(`第${$.index}个京东账号将要助力的好友${JSON.stringify(newShareCodes)}`)

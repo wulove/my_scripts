@@ -29,8 +29,7 @@ const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 let appId = '1EFRXxg' , homeDataFunPrefix = 'interact_template', collectScoreFunPrefix = 'harmony', message = ''
 let lotteryResultFunPrefix = homeDataFunPrefix, browseTime = 6
 const inviteCodes = [
-  'T0205KkcAlpbtBaxXnKM7Z9_CjVQmoaT5kRrbA@T016aEzIlJOJLepV9qJVCjVQmoaT5kRrbA',
-  'T0205KkcAlpbtBaxXnKM7Z9_CjVQmoaT5kRrbA@T016aEzIlJOJLepV9qJVCjVQmoaT5kRrbA'
+  'T0205KkcAlpbtBaxXnKM7Z9_CjVQmoaT5kRrbA','T016aEzIlJOJLepV9qJVCjVQmoaT5kRrbA'
 ];
 const randomCount = $.isNode() ? 20 : 5;
 const notify = $.isNode() ? require('./sendNotify') : '';
@@ -298,11 +297,10 @@ function shareCodesFormat() {
       const tempIndex = $.index > inviteCodes.length ? (inviteCodes.length - 1) : ($.index - 1);
       $.newShareCodes = inviteCodes[tempIndex].split('@');
     }
-    /*const readShareCodeRes = await readShareCode();
-    // console.log(readShareCodeRes)
+    const readShareCodeRes = await readShareCode();
     if (readShareCodeRes && readShareCodeRes.code === 200) {
       $.newShareCodes = [...new Set([...$.newShareCodes, ...(readShareCodeRes.data || [])])];
-    }*/
+    }
     console.log(`第${$.index}个京东账号将要助力的好友${JSON.stringify($.newShareCodes)}`)
     resolve();
   })
@@ -328,11 +326,11 @@ function readShareCode() {
       } catch (e) {
         $.logErr(e, resp)
       } finally {
-        resolve(data);
+        resolve(inviteCodes);
       }
     })
     await $.wait(2000);
-    resolve()
+    resolve(inviteCodes)
   })
 }
 function TotalBean() {
