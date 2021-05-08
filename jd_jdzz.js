@@ -40,8 +40,8 @@ if ($.isNode()) {
 }
 const JD_API_HOST = 'https://api.m.jd.com/client.action';
 const inviteCodes = [
-  `S5KkcAlpbtBaxXnKM7Z9_@SaEzIlJOJLepV9qJV`,
-  `S5KkcAlpbtBaxXnKM7Z9_@SaEzIlJOJLepV9qJV`
+  `SaEzIlJOJLepV9qJV`,
+  `S5KkcAlpbtBaxXnKM7Z9_`
 ]
 let nowTimes = new Date(new Date().getTime() + new Date().getTimezoneOffset() * 60 * 1000 + 8 * 60 * 60 * 1000);
 !(async () => {
@@ -242,11 +242,11 @@ function readShareCode() {
       } catch (e) {
         $.logErr(e, resp)
       } finally {
-        resolve(data);
+        resolve(inviteCodes);
       }
     })
     await $.wait(10000);
-    resolve()
+    resolve(inviteCodes)
   })
 }
 //格式化助力码
@@ -261,8 +261,7 @@ function shareCodesFormat() {
       const tempIndex = $.index > inviteCodes.length ? (inviteCodes.length - 1) : ($.index - 1);
       $.newShareCodes = inviteCodes[tempIndex].split('@');
     }
-    // const readShareCodeRes = await readShareCode();
-    const readShareCodeRes = null;
+    const readShareCodeRes = await readShareCode();
     if (readShareCodeRes && readShareCodeRes.code === 200) {
       $.newShareCodes = [...new Set([...$.newShareCodes, ...(readShareCodeRes.data || [])])];
     }
