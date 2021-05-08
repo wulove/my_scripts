@@ -564,9 +564,11 @@ function shareCodesFormat() {
       const tempIndex = $.index > shareCodes.length ? (shareCodes.length - 1) : ($.index - 1);
       newShareCodes = shareCodes[tempIndex].split('@');
     }
-    // const readShareCodeRes = await readShareCode();
     const tempIndex = $.index > shareCodes.length ? (shareCodes.length - 1) : ($.index - 1);
-    const readShareCodeRes = shareCodes[tempIndex].split('@');
+    newShareCodes = [...new Set([...newShareCodes, ...(shareCodes[tempIndex].split('@') || [])])];;
+
+    // const readShareCodeRes = await readShareCode();
+    const readShareCodeRes = null;
     if (readShareCodeRes && readShareCodeRes.code === 200) {
       newShareCodes = [...new Set([...newShareCodes, ...(readShareCodeRes.data || [])])];
     }
