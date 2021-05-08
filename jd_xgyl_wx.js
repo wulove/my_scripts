@@ -91,7 +91,7 @@ function showMsg() {
 async function xgyl() {
   $.draw = 0
   $.beans = 0
-  for (let i = 0; i < 20; ++i) {
+  for (let i = 0; i < 30; ++i) {
     await getMissionList()
     await $.wait(1000)
   }
