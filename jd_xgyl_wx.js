@@ -68,7 +68,7 @@ if ($.isNode()) {
   }
 
   if (allMessage) {
-    if ($.isNode()) await notify.sendNotify($.name, allMessage, {}, 'https://github.com/wulove/my_scripts');
+    if ($.isNode()) await notify.sendNotify($.name, allMessage, {}, 'Author By：github.com/wulove/my_scripts');
   }
 
 })()
