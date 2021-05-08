@@ -28,7 +28,7 @@ const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 //IOS等用户直接用NobyDa的jd cookie
-let cookiesArr = [], cookie = '', message;
+let cookiesArr = [], cookie = '', message, allMessage;
 if ($.isNode()) {
   Object.keys(jdCookieNode).forEach((item) => {
     cookiesArr.push(jdCookieNode[item])
@@ -66,6 +66,11 @@ if ($.isNode()) {
       await showMsg();
     }
   }
+
+  if (allMessage) {
+    if ($.isNode()) await notify.sendNotify($.name, allMessage, {}, 'https://github.com/wulove/my_scripts');
+  }
+
 })()
   .catch((e) => {
     $.log('', `❌ ${$.name}, 失败! 原因: ${e}!`, '')
@@ -76,6 +81,7 @@ if ($.isNode()) {
 
 function showMsg() {
   message += `本次运行获得${$.beans}京豆`
+  allMessage += `【京东账号${$.index}】${$.nickName}\n${message}\n`
   return new Promise(resolve => {
     $.msg($.name, '', `【京东账号${$.index}】${$.nickName}\n${message}`);
     resolve()
