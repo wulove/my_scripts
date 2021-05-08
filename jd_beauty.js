@@ -207,7 +207,7 @@ async function mr() {
     if (e.data !== 'pong' && e.data && safeGet(e.data)) {
       let vo = JSON.parse(e.data);
       await $.wait(Math.random()*2000+500);
-      console.log(`开始任务："${JSON.stringify(vo.action)}`);
+      console.log(`\n开始任务："${JSON.stringify(vo.action)}`);
       switch (vo.action) {
         case "get_ad":
           console.log(`当期活动：${vo.data.screen.name}`)
@@ -315,17 +315,17 @@ async function mr() {
           }
           break
         case "produce_position_info_v2":
-          // console.log(`${Boolean(vo?.data)};${vo?.data?.material_name !== ''}`);
+          // console.log(`${Boolean(vo.data)};${vo.data.material_name !== ''}`);
           if (vo.data && vo.data.material_name !== '') {
-            console.log(`【${vo?.data?.position}】上正在生产【${vo?.data?.material_name}】，可收取 ${vo.data.produce_num} 份`)
+            console.log(`【${vo.data.position}】上正在生产【${vo.data.material_name}】，可收取 ${vo.data.produce_num} 份`)
             if (new Date().getTime() > vo.data.procedure.end_at) {
-              console.log(`去收取${vo?.data?.material_name}`)
-              client.send(`{"msg":{"type":"action","args":{"position":"${vo?.data?.position}","replace_material":false},"action":"material_fetch_v2"}}`)
+              console.log(`去收取${vo.data.material_name}`)
+              client.send(`{"msg":{"type":"action","args":{"position":"${vo.data.position}","replace_material":false},"action":"material_fetch_v2"}}`)
               client.send(`{"msg":{"type":"action","args":{},"action":"to_employee"}}`)
-              $.pos.push(vo?.data?.position)
+              $.pos.push(vo.data.position)
             }
           } else {
-            if (vo?.data && vo.data.valid_electric > 0) {
+            if (vo.data && vo.data.valid_electric > 0) {
               console.log(`【${vo.data.position}】上尚未开始生产`)
               let ma
               console.log(`$.needs:${JSON.stringify($.needs)}`);
@@ -354,14 +354,13 @@ async function mr() {
           }
           break
         case "material_produce_v2":
-          console.log(`【${vo.data.position}】上开始生产${vo?.data?.material_name}`)
+          console.log(`【${vo.data.position}】上开始生产${vo.data.material_name}`)
           client.send(`{"msg":{"type":"action","args":{},"action":"to_employee"}}`)
           $.pos.push(vo.data.position)
           break
         case "material_fetch_v2":
           if (vo.code === '200' || vo.code === 200) {
-            console.log(vo)
-            console.log(`【${vo.data.position}】收取成功，获得${vo.data.procedure.produce_num}份${vo.data.material_name}`)
+            console.log(`【${vo.data.position}】收取成功，获得${vo.data.procedure.produce_num}份${vo.data.material_name}\n`);
           } else {
             console.log(`任务完成失败，错误信息${vo.msg}`)
           }

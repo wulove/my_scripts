@@ -81,7 +81,9 @@ if ($.isNode()) {
 
 function showMsg() {
   message += `本次运行获得${$.beans}京豆`
-  allMessage += `【京东账号${$.index}】${$.nickName}\n${message}\n`
+  if ($.beans) {
+    allMessage += `【京东账号${$.index}】${$.nickName}\n${message}\n`
+  }
   return new Promise(resolve => {
     $.msg($.name, '', `【京东账号${$.index}】${$.nickName}\n${message}`);
     resolve()
