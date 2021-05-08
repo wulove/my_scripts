@@ -565,7 +565,7 @@ function shareCodesFormat() {
       newShareCodes = shareCodes[tempIndex].split('@');
     }
     const tempIndex = $.index > shareCodes.length ? (shareCodes.length - 1) : ($.index - 1);
-    newShareCodes = [...new Set([...newShareCodes, ...(shareCodes[tempIndex].split('@') || [])])];;
+    newShareCodes = [...new Set([...newShareCodes, ...(shareCodes[tempIndex].split('@') || [])])];
 
     // const readShareCodeRes = await readShareCode();
     const readShareCodeRes = null;
