@@ -33,11 +33,8 @@ const JD_API_HOST = 'https://api.m.jd.com/client.action';
 //助力好友分享码(最多3个,否则后面的助力失败)
 //此此内容是IOS用户下载脚本到本地使用，填写互助码的地方，同一京东账号的好友互助码请使用@符号隔开。
 //下面给出两个账号的填写示例（iOS只支持2个京东账号）
-let shareCodes = [ // IOS本地脚本用户这个列表填入你要助力的好友的shareCode
-                   //账号一的好友shareCode,不同好友的shareCode中间用@符号隔开
-  '4vvbjlml6tdfc4ithg6rz56qpyaap4kvcofak2i@otcv6vmocc5iix6e4yd2i5hrze5ac3f4ijdgqji',
-  //账号二的好友shareCode,不同好友的shareCode中间用@符号隔开
-  'otcv6vmocc5iix6e4yd2i5hrze5ac3f4ijdgqji@4vvbjlml6tdfc4ithg6rz56qpyaap4kvcofak2i',
+let shareCodes = [
+  '4vvbjlml6tdfc4ithg6rz56qpyaap4kvcofak2i', 'otcv6vmocc5iix6e4yd2i5hrze5ac3f4ijdgqji'
 ]
 let allMessage = ``;
 let currentRoundId = null;//本期活动id
@@ -545,11 +542,11 @@ function readShareCode() {
       } catch (e) {
         $.logErr(e, resp)
       } finally {
-        resolve(data);
+        resolve(shareCodes);
       }
     })
     await $.wait(15000);
-    resolve()
+    resolve(shareCodes)
   })
 }
 //格式化助力码
@@ -564,11 +561,8 @@ function shareCodesFormat() {
       const tempIndex = $.index > shareCodes.length ? (shareCodes.length - 1) : ($.index - 1);
       newShareCodes = shareCodes[tempIndex].split('@');
     }
-    const tempIndex = $.index > shareCodes.length ? (shareCodes.length - 1) : ($.index - 1);
-    newShareCodes = [...new Set([...newShareCodes, ...(shareCodes[tempIndex].split('@') || [])])];
 
-    // const readShareCodeRes = await readShareCode();
-    const readShareCodeRes = null;
+    const readShareCodeRes = await readShareCode();
     if (readShareCodeRes && readShareCodeRes.code === 200) {
       newShareCodes = [...new Set([...newShareCodes, ...(readShareCodeRes.data || [])])];
     }
