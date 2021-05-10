@@ -16,8 +16,8 @@ cron "15 8 7-31 5 *" script-path=https://raw.githubusercontent.com/monk-coder/du
 海尔_欢乐大逃亡 = type=cron,script-path=https://raw.githubusercontent.com/monk-coder/dust/dust/car/adolf_haier.js, cronexpr="15 8 7-31 5 *", timeout=3600, enable=true
 */
 const $ = new Env("海尔_欢乐大逃亡");
-const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
-const notify = $.isNode() ? require('./sendNotify') : '';
+const jdCookieNode = $.isNode() ? require('../jdCookie.js') : '';
+const notify = $.isNode() ? require('../sendNotify') : '';
 const cp = $.isNode() ? require('child_process') : '';
 let cookiesArr = [], cookie = '', message = '';
 let helpAuthor = false;//为作者助力的开关
