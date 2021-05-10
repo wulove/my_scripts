@@ -2,8 +2,8 @@ name: jd_live_redrain
 
 on:
   workflow_dispatch:
-#  schedule:
-#    - cron: '5 * * 4 *'
+  schedule:
+    - cron: '5 * * 4 *'
   watch:
     types: started
   repository_dispatch:
@@ -29,9 +29,9 @@ jobs:
       - name: npm install
         run: |
           npm install
-#      - name: '等待'
-#        run: |
-#          python3 wait_hour.py 1-24
+      - name: '等待'
+        run: |
+          python3 wait_hour.py 1-24
       - name: '运行 【超级直播间红包雨】'
         run: |
           node jd_live_redrain.js
