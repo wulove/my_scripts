@@ -26,8 +26,8 @@
         }
       ],
       "icons": [
-        "https://raw.githubusercontent.com/Orz-3/mini/master/Alpha/jd.png",
-        "https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png"
+        "https://gitee.com/passerby-b/javascript/raw/master/icon/jddj.png",
+        "https://gitee.com/passerby-b/javascript/raw/master/icon/jddj.png"
       ],
       "author": "@passerby-b",
       "repo": "https://gitee.com/passerby-b/javascript/raw/master/JD/passerby-b.boxjs.json",
@@ -54,8 +54,8 @@
         }
       ],
       "icons": [
-        "https://raw.githubusercontent.com/Orz-3/mini/master/Alpha/jd.png",
-        "https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png"
+        "https://gitee.com/passerby-b/javascript/raw/master/icon/jddj.png",
+        "https://gitee.com/passerby-b/javascript/raw/master/icon/jddj.png"
       ],
       "author": "@passerby-b",
       "repo": "https://gitee.com/passerby-b/javascript/raw/master/JD/passerby-b.boxjs.json",
@@ -82,8 +82,8 @@
         }
       ],
       "icons": [
-        "https://raw.githubusercontent.com/Orz-3/mini/master/Alpha/jd.png",
-        "https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png"
+        "https://gitee.com/passerby-b/javascript/raw/master/icon/jddj.png",
+        "https://gitee.com/passerby-b/javascript/raw/master/icon/jddj.png"
       ],
       "author": "@passerby-b",
       "repo": "https://gitee.com/passerby-b/javascript/raw/master/JD/passerby-b.boxjs.json",
@@ -110,8 +110,8 @@
         }
       ],
       "icons": [
-        "https://raw.githubusercontent.com/Orz-3/mini/master/Alpha/jd.png",
-        "https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png"
+        "https://gitee.com/passerby-b/javascript/raw/master/icon/jddj.png",
+        "https://gitee.com/passerby-b/javascript/raw/master/icon/jddj.png"
       ],
       "author": "@passerby-b",
       "repo": "https://gitee.com/passerby-b/javascript/raw/master/JD/passerby-b.boxjs.json",
@@ -138,8 +138,8 @@
         }
       ],
       "icons": [
-        "https://raw.githubusercontent.com/Orz-3/mini/master/Alpha/jd.png",
-        "https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png"
+        "https://gitee.com/passerby-b/javascript/raw/master/icon/jddj.png",
+        "https://gitee.com/passerby-b/javascript/raw/master/icon/jddj.png"
       ],
       "author": "@passerby-b",
       "repo": "https://gitee.com/passerby-b/javascript/raw/master/JD/passerby-b.boxjs.json",
@@ -152,12 +152,40 @@
       "descs_html": [],
       "settings": [],
       "icons": [
-        "https://gitee.com/passerby-b/javascript/raw/master/icon/dy.png",
-        "https://gitee.com/passerby-b/javascript/raw/master/icon/dy.png"
+        "https://gitee.com/passerby-b/javascript/raw/master/icon/dyjsb.png",
+        "https://gitee.com/passerby-b/javascript/raw/master/icon/dyjsb.png"
       ],
       "author": "@passerby-b",
       "repo": "https://gitee.com/passerby-b/javascript/raw/master/JD/passerby-b.boxjs.json",
       "script": "https://gitee.com/passerby-b/javascript/raw/master/dyjs.js"
+    },
+    {
+      "id": "didi_fruit",
+      "name": "滴滴橙心果园",
+      "keys": [
+        "ddtoken"
+      ],
+      "descs_html": [
+        "填写token,多账号用英文逗号(,)分开"
+      ],
+      "settings": [
+        {
+          "id": "ddtoken",
+          "name": "token",
+          "val": "",
+          "type": "textarea",
+          "autoGrow": true,
+          "rows": 8,
+          "desc": "token"
+        }
+      ],
+      "icons": [
+        "https://gitee.com/passerby-b/javascript/raw/master/icon/didi.png",
+        "https://gitee.com/passerby-b/javascript/raw/master/icon/didi.png"
+      ],
+      "author": "@passerby-b",
+      "repo": "https://gitee.com/passerby-b/javascript/raw/master/JD/passerby-b.boxjs.json",
+      "script": "https://raw.githubusercontent.com/passerby-b/didi_fruit/main/dd_fruit.js"
     }
   ]
 }

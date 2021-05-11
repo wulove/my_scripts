@@ -222,19 +222,19 @@ async function runTask(tslist) {
         try {
             for (let index = 0; index < tslist.result.taskInfoList.length; index++) {
                 const item = tslist.result.taskInfoList[index];
-
-                //领取任务
-                let option = urlTask('https://daojia.jd.com/client?_jdrandom=' + Math.round(new Date()) + '&functionId=task%2Freceived&isNeedDealError=true&body=%7B%22modelId%22%3A%22' + item.modelId + '%22%2C%22taskId%22%3A%22' + item.taskId + '%22%2C%22taskType%22%3A' + item.taskType + '%2C%22plateCode%22%3A1%2C%22subNode%22%3Anull%7D&channel=ios&platform=6.6.0&platCode=h5&appVersion=6.6.0&appName=paidaojia&deviceModel=appmodel&traceId=' + deviceid + Math.round(new Date()) + '&deviceToken=' + deviceid + '&deviceId=' + deviceid + '', ``);
-                await $.http.get(option).then(response => {
-                    var data = JSON.parse(response.body), msg = '';
-                    if (data.code == 0) {
-                        msg = data.msg + ',奖励:' + data.result.awardValue;
-                    } else {
-                        msg = data.msg;
-                    }
-                    console.log('\n领取任务【' + item.taskTitle + '】:' + msg);
-                })
-
+                if (item.taskType == 307 || item.taskType == 901) {
+                    //领取任务
+                    let option = urlTask('https://daojia.jd.com/client?_jdrandom=' + Math.round(new Date()) + '&functionId=task%2Freceived&isNeedDealError=true&body=%7B%22modelId%22%3A%22' + item.modelId + '%22%2C%22taskId%22%3A%22' + item.taskId + '%22%2C%22taskType%22%3A' + item.taskType + '%2C%22plateCode%22%3A1%2C%22subNode%22%3Anull%7D&channel=ios&platform=6.6.0&platCode=h5&appVersion=6.6.0&appName=paidaojia&deviceModel=appmodel&traceId=' + deviceid + Math.round(new Date()) + '&deviceToken=' + deviceid + '&deviceId=' + deviceid + '', ``);
+                    await $.http.get(option).then(response => {
+                        var data = JSON.parse(response.body), msg = '';
+                        if (data.code == 0) {
+                            msg = data.msg + ',奖励:' + data.result.awardValue;
+                        } else {
+                            msg = data.msg;
+                        }
+                        console.log('\n领取任务【' + item.taskTitle + '】:' + msg);
+                    })
+                }
                 if (item.browseTime > -1) {
                     for (let t = 0; t < parseInt(item.browseTime); t++) {
                         await $.wait(1000);
