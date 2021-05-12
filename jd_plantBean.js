@@ -96,7 +96,6 @@ async function jdPlantBean() {
       lastRoundId = roundList[0].roundId;//上期的roundId
       awardState = roundList[0].awardState;
       $.taskList = $.plantBeanIndexResult.data.taskList;
-      console.log('task:', JSON.stringify($.taskList))
       subTitle = `【京东昵称】${$.plantBeanIndexResult.data.plantUserInfo.plantNickName}`;
       message += `【上期时间】${roundList[0].dateDesc.replace('上期 ', '')}\n`;
       message += `【上期成长值】${roundList[0].growth}\n`;
