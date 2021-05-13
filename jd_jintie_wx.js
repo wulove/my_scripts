@@ -121,8 +121,6 @@ function queryMission() {
 async function doTask() {
   for (let task of $.willTask) {
     console.log(`\n开始领取 【${task['title']}】任务`);
-    await receiveMession(task);
-    await $.wait(100);
 
     if (task.taskType === 5) {
       await doMission(task, 'seeVideoMission');
@@ -131,6 +129,8 @@ async function doTask() {
       await $.wait(100);
       await drawMission(task, 'videoSubsidyReceive');
     } else {
+      await receiveMession(task);
+      await $.wait(100);
       await doMission(task, 'appletDoTaskNew');
       await $.wait(100);
       await doMission(task, 'sentMissionMq');
