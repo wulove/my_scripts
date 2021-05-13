@@ -117,6 +117,38 @@ function queryMission() {
     })
   })
 }
+// 做任务
+async function doTask() {
+  for (let task of $.willTask) {
+    console.log(`\n开始领取 【${task['title']}】任务`);
+    await receiveMession(task);
+    await $.wait(100);
+
+    if (task.taskType === 5) {
+      await doMission(task, 'seeVideoMission');
+      await $.wait(10000);
+      await doMission(task, 'videoMissionDone');
+      await $.wait(100);
+      await drawMission(task, 'videoSubsidyReceive');
+    } else {
+      await doMission(task, 'appletDoTaskNew');
+      await $.wait(100);
+      await doMission(task, 'sentMissionMq');
+      await $.wait(100);
+      await drawMission(task, 'appletWithDrawMissionNew');
+    }
+  }
+  if ($.recevieTask && $.recevieTask.length) {
+    for (let task of $.recevieTask) {
+      console.log('预计获得：', task['awardStr'])
+      if (task.taskType === 5) {
+        await drawMission(task, 'videoSubsidyReceive');
+      } else {
+        await drawMission(task, 'appletWithDrawMissionNew');
+      }
+    }
+  }
+}
 //领取任务
 function receiveMession(mission) {
   const body = JSON.stringify({
@@ -165,6 +197,9 @@ function doMission(mission, functionId) {
     body['taskType'] = mission['taskType'];
   } else if (functionId === 'sentMissionMq') {
     body['missionId'] = mission['missionId'];
+  } else if (functionId === 'seeVideoMission' || functionId === 'videoMissionDone') {
+    body['missionId'] = mission['missionId'];
+    body['amount'] = mission['award'];
   }
   const options = taskUrl(functionId, JSON.stringify(body), 'uc');
   return new Promise((resolve) => {
@@ -194,7 +229,7 @@ function doMission(mission, functionId) {
   })
 }
 //领取金贴奖励
-function drawMission(mission) {
+function drawMission(mission, functionId) {
   const body = JSON.stringify({
     "sourceType":"2",
     "environment":"wxMiniEnv",
@@ -203,7 +238,7 @@ function drawMission(mission) {
     "missionId":mission['missionId'],
     "taskType":mission['taskType']
   });
-  const options = taskUrl('appletWithDrawMissionNew', body, 'uc');
+  const options = taskUrl(functionId, body, 'uc');
   return new Promise((resolve) => {
     $.get(options, (err, resp, data) => {
       try {
@@ -302,24 +337,7 @@ function signOfJinTie() {
     })
   })
 }
-async function doTask() {
-  for (let task of $.willTask) {
-    console.log(`\n开始领取 【${task['title']}】任务`);
-    await receiveMession(task);
-    await $.wait(100);
-    await doMission(task, 'appletDoTaskNew');
-    await $.wait(100);
-    await doMission(task, 'sentMissionMq');
-    await $.wait(100);
-    await drawMission(task);
-  }
-  if ($.recevieTask && $.recevieTask.length) {
-    for (let task of $.recevieTask) {
-      console.log('预计获得：', task['awardStr'])
-      await drawMission(task)
-    }
-  }
-}
+
 function taskUrl(function_id, body, type = 'mission') {
   return {
     url: `https://ms.jr.jd.com/gw/generic/${type}/h5/m/${function_id}?reqData=${encodeURIComponent(body)}`,
