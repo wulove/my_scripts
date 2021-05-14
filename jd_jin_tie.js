@@ -68,7 +68,7 @@ if ($.isNode()) {
 async function main() {
   try {
     await signInforOfJinTie();
-    //await getProfitSum();
+    await getProfitSum();
     await queryMission();
     await doTask();
     await queryMission(false);
