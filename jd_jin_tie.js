@@ -409,7 +409,7 @@ async function doTask() {
   for (let task of $.willingTask) {
     if (task.doLink.indexOf('juid=') !== -1) {
       console.log(`\n开始做 【${task['name']}】任务`);
-      const juid = data.match(/juid=(.*)/)[1];
+      const juid = task.doLink.match(/juid=(.*)/)[1];
       await getJumpInfo(juid);
       await $.wait(1000)
     }
