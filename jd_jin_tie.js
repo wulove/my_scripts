@@ -400,6 +400,8 @@ async function doTask() {
       const readTime = parseInt(task.doLink.substr(task.doLink.indexOf('readTime=') + 9));
       await finishReadMission(task['missionId'], readTime);
       await $.wait(200);
+      console.log('预计获得：', task.awards[0].awardName, task.awards[0].awardRealNum, task.awards[0].awardUnit)
+      await awardMission(task['missionId'])
     } else if (task.detail.indexOf('京东到家') !== -1) {
 
     } else if ((task.detail.indexOf('关注') !== -1 || task.detail.indexOf('收藏')) && task.doLink.indexOf('shopId') !== -1) {
@@ -411,7 +413,9 @@ async function doTask() {
       console.log(`\n开始做 【${task['name']}】任务`);
       const juid = task.doLink.match(/juid=(.*)/)[1];
       await getJumpInfo(juid);
-      await $.wait(1000)
+      await $.wait(1000);
+      console.log('预计获得：', task.awards[0].awardName, task.awards[0].awardRealNum, task.awards[0].awardUnit)
+      await awardMission(task['missionId'])
     }
   }
 }
