@@ -115,7 +115,7 @@ function queryMission(info = true) {
                 console.log('互动任务获取成功')
                 $.taskData = data.resultData.data;
                 $.willTask = $.taskData.filter(t => t.status === -1) || [];
-                // $.willTask = $.taskData.filter(t => t.status === 0) || [];//已领取任务，但未完成
+                $.willingTask = $.taskData.filter(t => t.status === 0) || [];//已领取任务，但未完成
                 $.recevieTask = $.taskData.filter(t => t.status === 1) || [];
                 const doneTask = $.taskData.filter(t => t.status === 2);
                 console.log(`\n剩余未接取任务：${$.willTask.length}`)
@@ -406,6 +406,45 @@ async function doTask() {
       const shopId = task.doLink.substr(task.doLink.indexOf('shopId=') + 7);
     }
   }
+  for (let task of $.willingTask) {
+    if (task.doLink.indexOf('juid=') !== -1) {
+      console.log(`\n开始做 【${task['name']}】任务`);
+      const juid = data.match(/juid=(.*)/)[1];
+      await getJumpInfo(juid);
+      await $.wait(1000)
+    }
+  }
+}
+function getJumpInfo(juid) {
+  const body = JSON.stringify({
+    juid
+  });
+  const options = taskUrl('getJumpInfo', body);
+  return new Promise((resolve) => {
+    $.get(options, (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+        } else {
+          data = JSON.parse(data);
+          if (data.resultCode === 0) {
+            if (data.resultData.code === '0000') {
+              console.log(data.resultData.msg)
+            } else {
+              console.log(data.resultData.msg)
+            }
+          } else {
+            console.log(data.resultMsg)
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp);
+      } finally {
+        resolve(data);
+      }
+    })
+  })
 }
 function taskUrl(function_id, body, type = 'mission') {
   return {
