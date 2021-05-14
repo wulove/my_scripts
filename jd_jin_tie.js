@@ -68,6 +68,7 @@ if ($.isNode()) {
 async function main() {
   try {
     await signInforOfJinTie();
+    //await getProfitSum();
     await queryMission();
     await doTask();
     await queryMission(false);
@@ -333,6 +334,108 @@ function signOfJinTie() {
             }
           } else {
             console.log('签到失败', data.resultMsg)
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp);
+      } finally {
+        resolve(data);
+      }
+    })
+  })
+}
+//
+function getProfitSum() {
+  const body = JSON.stringify({
+    channel: "sqcs",
+    source: "jd",
+    "riskDeviceParam": JSON.stringify({
+      appId: "jdapp",
+      appType: "3",
+      clientVersion: "9.4.6",
+      deviceType: "iPhone11,8",
+      "eid": cookie,
+      "fp": getFp(),
+      idfa: "",
+      imei: "",
+      ip: "",
+      macAddress: "",
+      networkType: "WIFI",
+      os: "iOS",
+      osVersion: "14.2",
+      token: "",
+      uuid: ""
+    })
+  })
+  const options = taskUrl('getProfitSum', body, 'jrm');
+  return new Promise((resolve) => {
+    $.get(options, async (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+        } else {
+          data = JSON.parse(data);
+          if (data.resultCode === 0) {
+            if (data.resultData.success) {
+              if (data.resultData.data.unObtainAmount !== 0) {
+                await rcGivenJupiterWithdraw();
+              }
+            } else {
+              console.log('getProfitSum', data.resultData.msg)
+            }
+          } else {
+            console.log('getProfitSum', data.resultMsg)
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp);
+      } finally {
+        resolve(data);
+      }
+    })
+  })
+}
+//单单返
+function rcGivenJupiterWithdraw() {
+  const body = JSON.stringify({
+    channel: "sqcs",
+    source: "jd",
+    "riskDeviceParam": JSON.stringify({
+      appId: "jdapp",
+      appType: "3",
+      clientVersion: "9.4.6",
+      deviceType: "iPhone11,8",
+      "eid": cookie,
+      "fp": getFp(),
+      idfa: "",
+      imei: "",
+      ip: "",
+      macAddress: "",
+      networkType: "WIFI",
+      os: "iOS",
+      osVersion: "14.2",
+      token: "",
+      uuid: ""
+    })
+  })
+  const options = taskUrl('rcGivenJupiterWithdraw', body, 'jrm');
+  return new Promise((resolve) => {
+    $.get(options, async (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+        } else {
+          data = JSON.parse(data);
+          if (data.resultCode === 0) {
+            if (data.resultData.success) {
+              console.log('获取单单返', data.resultData.data.obtainAmount)
+            } else {
+              console.log('单单返失败', data.resultData.msg)
+            }
+          } else {
+            console.log('单单返失败', data.resultMsg)
           }
         }
       } catch (e) {
