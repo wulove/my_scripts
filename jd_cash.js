@@ -97,7 +97,7 @@ async function jdCash() {
     for (let item of ["-1", "0", "1", "2", "3"]) {
       $.canLoop = true;
       if ($.canLoop) {
-        for (let i = 0; i < 4; i++) {
+        for (let i = 0; i < 5; i++) {
           await exchange2(item);//兑换200京豆(2元红包换200京豆，一周四次。)
         }
         if (!$.canLoop) {
