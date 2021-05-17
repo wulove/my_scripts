@@ -148,7 +148,7 @@ function doLuckDrawEntrance() {
                     let quota = data.quota
                     let discount= data.discount
                     if (data.checkWinOrNot) {
-                        if ('红包'==$.prizeName) {
+                        if (!!data.redPacketId || '红包'==$.prizeName) {
                             console.log(`获得${quota}无门槛红包`)
                             $.money += parseFloat(quota)
                         }else if ('指定商品可用'==$.prizeName) {
