@@ -77,7 +77,7 @@ async function jdDlt() {
             await doLuckDrawEntrance();
         }
         console.log(`\n本次运行共获得${$.money}无门槛红包\n`)
-        allMessage += `京东账号${$.index}-${$.nickName}\n本次运行共获得${$.money}无门槛红包\n`
+        if($.money!=0) allMessage += `京东账号${$.index}-${$.nickName}\n本次运行共获得${$.money}无门槛红包\n`
         await jdbalance()
     } catch (e) {
         $.logErr(e)
