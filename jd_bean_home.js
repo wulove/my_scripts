@@ -40,7 +40,7 @@ if ($.isNode()) {
 }
 const JD_API_HOST = 'https://api.m.jd.com/';
 !(async () => {
-  $.newShareCodes = [['A58BE37A34F762C1F1053444FCD51C49','842914371673149440'] ,['507A4DDCFFD437A1C843EB76FE3C8E34','842914234879463424']]
+  $.newShareCodes = [['A58BE37A34F762C1F1053444FCD51C49','844001534385606656'] ,['507A4DDCFFD437A1C843EB76FE3C8E34','844001397101187072']]
   // await getAuthorShareCode();
   // await getAuthorShareCode2();
   if (!cookiesArr[0]) {
