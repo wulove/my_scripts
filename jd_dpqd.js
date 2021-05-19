@@ -78,7 +78,7 @@ if ($.isNode()) {
 
 //开始店铺签到
 async function dpqd() {
-  for (const va of vas) {
+  for (const va of [...new Set([...vas])) {
     await taskUrl(va);
     await $.wait(1234)
   }
