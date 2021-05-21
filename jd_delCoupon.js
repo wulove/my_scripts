@@ -145,11 +145,11 @@ function getCoupon() {
 function isJDCoupon(title) {
   if (title.indexOf('仅可购买京东服务+') > -1)
     return false
-  else if (/仅可购买[京东京造|个人护理|自营图书|服饰内衣|男装服饰|装备自营]部分商品/.test(title))
+  else if (/仅可购买(京东京造|个人护理|自营图书|服饰内衣|男装服饰|装备自营)部分商品/.test(title))
     return false
-  else if (/仅可购买[茗茶]商品/.test(title))
+  else if (/仅可购(茗茶)商品/.test(title))
     return false
-  else if (/限购\[[\s\S]+\]店铺部分商品/.test(title))
+  else if (/限购 \[[\s\S]+\] 店铺部分商品/.test(title))
     return false
   else
     return true
