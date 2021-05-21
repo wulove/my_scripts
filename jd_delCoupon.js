@@ -143,24 +143,12 @@ function getCoupon() {
 }
 
 function isJDCoupon(title) {
-  if (title.indexOf('京东') > -1)
-    return true
-  else if (title.indexOf('超市') > -1)
-    return true
-  else if (title.indexOf('京贴') > -1)
-    return true
-  else if (title.indexOf('全品类') > -1)
-    return true
-  else if (title.indexOf('话费') > -1)
-    return true
-  else if (title.indexOf('小鸽有礼') > -1)
-    return true
-  else if (title.indexOf('旗舰店') > -1)
+  if (title.indexOf('仅可购买京东服务+') > -1)
     return false
-  else if (title.indexOf('生鲜') > -1)
-    return true
+  else if (/限购\[[\s\S]+\]店铺部分商品/.test(title))
+    return false
   else
-    return false
+    return true
 }
 
 function showMsg() {
