@@ -111,13 +111,13 @@ function getCoupon() {
               couponId = escape(`${expire[i].couponid},1,0`);
               await delCoupon(couponId, couponTitle)
             }
-            // 删除已使用
+            /*// 删除已使用
             let used = data['coupon']['used']
             for (let i = 0; i < used.length; i++) {
               couponTitle = used[i].couponTitle
               couponId = escape(`${used[i].couponid},0,0`);
               await delCoupon(couponId, couponTitle)
-            }
+            }*/
           } else if (states[s] === '1') {
             // 删除可使用且非超市、生鲜、京贴
             let useable = data.coupon.useable
@@ -145,7 +145,7 @@ function getCoupon() {
 function isJDCoupon(title) {
   if (title.indexOf('仅可购买京东服务+') > -1)
     return false
-  else if (/仅可购买[京东京造|个人护理|自营图书|服饰内衣]部分商品/.test(title))
+  else if (/仅可购买[京东京造|个人护理|自营图书|服饰内衣|男装服饰|装备自营]部分商品/.test(title))
     return false
   else if (/仅可购买[茗茶]商品/.test(title))
     return false
