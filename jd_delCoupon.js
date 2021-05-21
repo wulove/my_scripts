@@ -105,12 +105,12 @@ function getCoupon() {
           let couponId = ''
           if (states[s] === '6') {
             // 删除已过期
-            let expire = data['coupon']['expired']
+            /*let expire = data['coupon']['expired']
             for (let i = 0; i < expire.length; i++) {
               couponTitle = expire[i].couponTitle
               couponId = escape(`${expire[i].couponid},1,0`);
               await delCoupon(couponId, couponTitle)
-            }
+            }*/
             /*// 删除已使用
             let used = data['coupon']['used']
             for (let i = 0; i < used.length; i++) {
