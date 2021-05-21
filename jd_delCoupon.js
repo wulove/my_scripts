@@ -121,11 +121,10 @@ function getCoupon() {
           } else if (states[s] === '1') {
             // 删除可使用且非超市、生鲜、京贴
             let useable = data.coupon.useable
-            console.log(`总共${useable.length}张优惠券`)
+            console.log(JSON.stringify(useable))
             for (let i = 0; i < useable.length; i++) {
               couponTitle = useable[i].limitStr
               couponId = escape(`${useable[i].couponid},1,0`);
-              console.log(couponTitle, isJDCoupon(couponTitle))
               if (!isJDCoupon(couponTitle)) {
                 await delCoupon(couponId, couponTitle)
               } else {
@@ -149,12 +148,12 @@ function isJDCoupon(title) {
     return false
   else if (/仅可购买(京东京造|个人护理|自营图书|服饰内衣|男装服饰|装备自营)部分商品/.test(title))
     return false
-  else if (/仅可购(茗茶)商品/.test(title))
+  else if (/仅可购买(茗茶)商品/.test(title))
     return false
   else if (/限购 \[.+\] 店铺(部分)?商品/.test(title))
     return false
-  else
-    return true
+
+  return true
 }
 
 function showMsg() {
