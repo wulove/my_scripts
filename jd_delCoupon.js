@@ -150,7 +150,7 @@ function isJDCoupon(title) {
     return false
   else if (/仅可购(茗茶)商品/.test(title))
     return false
-  else if (/限购 \[.+\] 店铺部分商品/.test(title))
+  else if (/限购 \[.+\] 店铺(部分)?商品/.test(title))
     return false
   else
     return true
