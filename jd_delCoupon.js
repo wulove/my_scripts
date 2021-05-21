@@ -121,6 +121,7 @@ function getCoupon() {
           } else if (states[s] === '1') {
             // 删除可使用且非超市、生鲜、京贴
             let useable = data.coupon.useable
+            console.log(`总共${useable.length}张优惠券`)
             for (let i = 0; i < useable.length; i++) {
               couponTitle = useable[i].limitStr
               couponId = escape(`${useable[i].couponid},1,0`);
@@ -149,7 +150,7 @@ function isJDCoupon(title) {
     return false
   else if (/仅可购(茗茶)商品/.test(title))
     return false
-  else if (/限购 \[[\s\S]+\] 店铺部分商品/.test(title))
+  else if (/限购 \[.+\] 店铺部分商品/.test(title))
     return false
   else
     return true
