@@ -85,7 +85,7 @@ function delCoupon(couponId, couponTitle) {
 
 function getCoupon() {
   return new Promise(resolve => {
-    let states = ['1', '6']
+    let states = ['1']
     for (let s = 0; s < states.length; s++) {
       let options = {
         url: `https://wq.jd.com/activeapi/queryjdcouponlistwithfinance?state=${states[s]}&wxadd=1&filterswitch=1&_=${Date.now()}&sceneval=2&g_login_type=1&callback=jsonpCBKB&g_ty=ls`,
@@ -105,19 +105,19 @@ function getCoupon() {
           let couponId = ''
           if (states[s] === '6') {
             // 删除已过期
-            /*let expire = data['coupon']['expired']
+            let expire = data['coupon']['expired']
             for (let i = 0; i < expire.length; i++) {
               couponTitle = expire[i].couponTitle
               couponId = escape(`${expire[i].couponid},1,0`);
               await delCoupon(couponId, couponTitle)
-            }*/
-            /*// 删除已使用
+            }
+            // 删除已使用
             let used = data['coupon']['used']
             for (let i = 0; i < used.length; i++) {
               couponTitle = used[i].couponTitle
               couponId = escape(`${used[i].couponid},0,0`);
               await delCoupon(couponId, couponTitle)
-            }*/
+            }
           } else if (states[s] === '1') {
             // 删除可使用且非超市、生鲜、京贴
             let useable = data.coupon.useable
