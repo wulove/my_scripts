@@ -145,6 +145,8 @@ function getCoupon() {
 function isJDCoupon(title) {
   if (title.indexOf('仅可购买京东服务+') > -1)
     return false
+  else if (/仅可购买[京东京造|个人护理]部分商品/.test(title))
+    return false
   else if (/限购\[[\s\S]+\]店铺部分商品/.test(title))
     return false
   else
