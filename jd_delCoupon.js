@@ -125,6 +125,7 @@ function getCoupon() {
             for (let i = 0; i < useable.length; i++) {
               couponTitle = useable[i].limitStr
               couponId = escape(`${useable[i].couponid},1,0`);
+              console.log(couponTitle, isJDCoupon(couponTitle))
               if (!isJDCoupon(couponTitle)) {
                 await delCoupon(couponId, couponTitle)
               } else {
@@ -141,8 +142,8 @@ function getCoupon() {
       })
     }
   })
-}
 
+}
 function isJDCoupon(title) {
   if (title.indexOf('仅可购买京东服务+') > -1)
     return false
