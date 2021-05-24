@@ -32,11 +32,11 @@ cron "12 0 19-24 3 * " script-path=https://raw.githubusercontent.com/i-chenzhe/q
  */
 
 const $ = new Env('城城分现金');
-const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
-const notify = $.isNode() ? require('./sendNotify') : '';
+const jdCookieNode = $.isNode() ? require('../jdCookie.js') : '';
+const notify = $.isNode() ? require('../sendNotify') : '';
 let cookiesArr = [], cookie = '',  message = '';
-let localShareCodesList = [{"inviteId":"yjReHGE0mbQhqDs7W5h_1pBuDQEzNV7GR0t8X_o6qs79","encryptedPin":"RnFixmUNbTbentTDHj-j0OtIRS-93Sk"},{"inviteId":"RtGKiqjmAEjFAOvibrxGmsj0hc5WmeNOOCXpkdV8MnqUVIyc","encryptedPin":"RnEwwzFQbWGPn9RP--s1GZrTUP1DeY9GtzY"}];
-const lottery = $.isNode() ? process.env.Z_CTYTCASH_LOTTERY || false : true;//是否需要抽奖
+let localShareCodesList = [];
+const lottery = $.isNode() ? process.env.Z_CTYTCASH_LOTTERY || false : false;//是否需要抽奖
 if ($.isNode()) {
     Object.keys(jdCookieNode).forEach((item) => {
         cookiesArr.push(jdCookieNode[item])
