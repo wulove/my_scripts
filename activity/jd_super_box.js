@@ -34,11 +34,9 @@ const jdCookieNode = $.isNode() ? require('../jdCookie.js') : '';
 //IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [], cookie = '', message;
 const randomCount = $.isNode() ? 20 : 5;
+const linkId = 'qRO6PiJnrfsIFj72ovs_FA'
 
-const inviteCodes = [
-  `O3eI2LwEpHNofuF6LxjNqw@Hvm2Tg0jWloh4bnPOa9wuA@RY7V2DbS5uInv_GGD7JuoQij_0m9TAUe-t_mpE-BHB4@dZGLTyomKT0ZmOYaa4FSu0Ch0ywXFSW7gXwe_z6nUFc@UHW6hnmrpOABeMMKc5kpng`,
-  `O3eI2LwEpHNofuF6LxjNqw@Hvm2Tg0jWloh4bnPOa9wuA@RY7V2DbS5uInv_GGD7JuoQij_0m9TAUe-t_mpE-BHB4@dZGLTyomKT0ZmOYaa4FSu0Ch0ywXFSW7gXwe_z6nUFc@UHW6hnmrpOABeMMKc5kpng`,
-];
+$.newShareCodes = ['YEc69qHIi4_XW4rHNGtTzQ', 'szgEaXOmVtssfEJORd8u8w'];
 
 if ($.isNode()) {
   Object.keys(jdCookieNode).forEach((item) => {
@@ -76,7 +74,7 @@ const JD_API_HOST = 'https://api.m.jd.com/';
         }
         continue
       }
-      await shareCodesFormat()
+      //await shareCodesFormat()
       await superBox()
       await showMsg();
     }
@@ -110,15 +108,15 @@ async function helpFriends() {
 async function superBox() {
   $.earn = 0.0
   await drawInfo()
+  await helpFriends()
   await getTask()
   await drawInfo(false)
-  await helpFriends()
 }
 
 
 function getTask() {
   return new Promise(resolve => {
-    $.get(taskUrl('apTaskList',{"linkId":"xrfyA3nByKnAd7qxzmURNQ","encryptPin":""}), async (err, resp, data) => {
+    $.get(taskUrl('apTaskList',{"linkId":linkId,"encryptPin":""}), async (err, resp, data) => {
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
@@ -128,12 +126,11 @@ function getTask() {
             data = JSON.parse(data);
             if (data.success) {
               for(let vo of data.data){
-                if(vo.taskType==='BROWSE_SHOP'){
-                  if(vo.taskDoTimes<vo.taskLimitTimes) {
+                if(vo.taskType === 'BROWSE_SHOP'){
+                  if(vo.taskDoTimes < vo.taskLimitTimes) {
                     console.log(`去做${vo.taskTitle}任务`)
-                    for(let i = vo.taskDoTimes;i<vo.taskLimitTimes;++i){
-                      await getTaskDetail(vo.id,vo.taskType)
-                      return
+                    for(let i = vo.taskDoTimes; i < vo.taskLimitTimes; ++i){
+                      await getTaskDetail(vo.id, vo.taskType)
                     }
                   }
                   else
@@ -160,7 +157,7 @@ function getTaskDetail(taskId,taskType) {
     "taskId":taskId,
     "taskType":taskType,
     "channel":4,
-    "linkId":"xrfyA3nByKnAd7qxzmURNQ",
+    "linkId":linkId,
     "encryptPin":""
   }
   return new Promise(resolve => {
@@ -198,7 +195,7 @@ function doTask(taskId,taskType,itemId) {
     "taskType":taskType,
     "channel":4,
     "itemId":itemId,
-    "linkId":"xrfyA3nByKnAd7qxzmURNQ",
+    "linkId":linkId,
     "encryptPin":""
   }
   return new Promise(resolve => {
@@ -228,7 +225,7 @@ function doTask(taskId,taskType,itemId) {
   })
 }
 function drawInfo(share=true) {
-  let body = {"taskId":"","linkId":"xrfyA3nByKnAd7qxzmURNQ","encryptPin":""}
+  let body = {"taskId":"","linkId":linkId,"encryptPin":""}
   return new Promise(resolve => {
     $.get(taskUrl('superboxSupBoxHomePage',body), async (err, resp, data) => {
       try {
@@ -265,7 +262,7 @@ function drawInfo(share=true) {
   })
 }
 function draw() {
-  let body = {"taskId":"","linkId":"xrfyA3nByKnAd7qxzmURNQ","encryptPin":""}
+  let body = {"taskId":"","linkId":linkId,"encryptPin":""}
   return new Promise(resolve => {
     $.get(taskUrl('superboxOrdinaryLottery',body), async (err, resp, data) => {
       try {
@@ -301,7 +298,7 @@ function draw() {
 }
 
 function doSupport(shareId) {
-  let body = {"taskId":"61","linkId":"xrfyA3nByKnAd7qxzmURNQ","encryptPin":shareId}
+  let body = {"taskId":"61","linkId":linkId,"encryptPin":shareId}
   return new Promise(resolve => {
     $.get(taskUrl('superboxSupBoxHomePage',body), async (err, resp, data) => {
       try {
