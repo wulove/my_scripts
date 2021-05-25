@@ -1,13 +1,13 @@
-name: jd_city-城城领现金
+name: jd_zoo-618动物联萌
 
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 * * * *'
+    - cron: '10 */2 * * *'
   watch:
     types: started
   repository_dispatch:
-    types: jd_city
+    types: jd_zoo
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -31,9 +31,9 @@ jobs:
       - name: npm install
         run: |
           npm install
-      - name: '运行 【城城领现金】'
+      - name: '运行 【618动物联萌】'
         run: |
-          node jd_city.js
+          node jd_zoo.js
         env:
           JD_COOKIE: ${{ secrets.JD_COOKIE }}
           PUSH_PLUS_TOKEN: ${{ secrets.PUSH_PLUS_TOKEN }}
