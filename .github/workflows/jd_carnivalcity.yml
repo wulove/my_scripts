@@ -3,7 +3,7 @@ name: jd_carnivalcity-京东手机狂欢城
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 */6 * * *'
+    - cron: '0 4,10,13,16 * * *'
   watch:
     types: started
   repository_dispatch:
@@ -16,7 +16,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         with:
-          repository: wulove/my_scripts
+          repository: ${{ wulove/my_scripts }}
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
