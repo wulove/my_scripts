@@ -131,6 +131,7 @@ function getTask() {
                     console.log(`去做${vo.taskTitle}任务`)
                     for(let i = vo.taskDoTimes; i < vo.taskLimitTimes; ++i){
                       await getTaskDetail(vo.id, vo.taskType)
+                      continue
                     }
                   }
                   else
