@@ -38,7 +38,8 @@ $.inviteList = [];
 $.pkInviteList = [];
 $.secretpInfo = {};
 $.innerPkInviteList = [
-
+  'ZXTKT016aEzIlJOJLepV9qJVFjRWn6-7zx55awQ',
+  'ZXTKT0205KkcAlpbtBaxXnKM7Z9_FjRWn6-7zx55awQ'
 ];
 if ($.isNode()) {
   Object.keys(jdCookieNode).forEach((item) => {
