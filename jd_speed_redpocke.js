@@ -1,10 +1,10 @@
 /*
-京东极速版红包
+京东极速版红包、签到提现
 欧皇3个微信现金，支持自动提现
-
+支持签到提现活动
 活动时间：2021-5-6至2021-5-31
 活动地址：https://prodev.m.jd.com/jdlite/active/31U4T6S4PbcK83HyLPioeCWrD63j/index.html
-活动入口：京东极速版app-领红包
+活动入口：京东极速版app-领红包，签到提现
 已支持IOS双京东账号,Node.js支持N个京东账号
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 ============Quantumultx===============
@@ -29,15 +29,16 @@ const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 
-let activeId = 'AkOULcXbUA_8EAPbYLLMgg';
+const linkId = 'AkOULcXbUA_8EAPbYLLMgg';
+const signLinkId = '9WA12jYGulArzWS7vcrwhw';
+
 
 let cookiesArr = [], cookie = '', message;
 if ($.isNode()) {
   Object.keys(jdCookieNode).forEach((item) => {
     cookiesArr.push(jdCookieNode[item])
   })
-  if (process.env.JD_DEBUG && process.env.JD_DEBUG === 'false') console.log = () => {
-  };
+  if (process.env.JD_DEBUG && process.env.JD_DEBUG === 'false') console.log = () => {};
 } else {
   cookiesArr = [$.getdata('CookieJD'), $.getdata('CookieJD2'), ...jsonParse($.getdata('CookiesJD') || "[]").map(item => item.cookie)].filter(item => !!item);
 }
@@ -50,7 +51,7 @@ if ($.isNode()) {
   for (let i = 0; i < cookiesArr.length; i++) {
     if (cookiesArr[i]) {
       cookie = cookiesArr[i];
-      $.UserName = decodeURIComponent(cookie.match(/pt_pin=(.+?);/) && cookie.match(/pt_pin=(.+?);/)[1])
+      $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1])
       $.index = i + 1;
       $.isLogin = true;
       $.nickName = '';
@@ -79,112 +80,244 @@ if ($.isNode()) {
 async function jsRedPacket() {
   try {
     // await invite()
+    console.log("===================领红包===================")
     for (let i = 0; i < 3; ++i) {
       await redPacket()
-      await $.wait(3000)
+      await $.wait(2000)
     }
+    await redPacketList()
+    console.log("===================签到提现===================")
+
+    await sign();
+    $.speedUp = true
+    while($.speedUp) {
+      await speedUp()
+      await $.wait(2000)
+    }
+    await signList()
+
     await showMsg()
-    let flag = 1, page = 1;
-    do {
-      let list = await wxRewardList(page++);
-      $.log(`待提现记录数：${list.length}`)
-      if (list.length > 0) {
-        for (let body of list) {
-          await getWxReward(body);
-        }
-      } else {
-        flag = 0;
-      }
-    } while (flag);
   } catch (e) {
     $.logErr(e)
   }
 }
 
-// 获取微信奖励列表
-function wxRewardList(page) {
-  return new Promise(async resolve => {
-    const options = {
-      "url": `https://api.m.jd.com/?functionId=spring_reward_list&body={%22pageNum%22:${page},%22pageSize%22:10,%22linkId%22:%22${activeId}%22,%22inviter%22:%22%22}&_t=${+new Date()}&appid=activities_platform`,
-      "headers": {
-        'Host': 'api.m.jd.com',
-        'accept': 'application/json, text/plain, */*',
-        'origin': 'https://prodev.m.jd.com',
-        'user-agent': $.isNode() ? (process.env.JS_USER_AGENT ? process.env.JS_USER_AGENT : (require('./JS_USER_AGENTS').USER_AGENT)) : ($.getdata('JSUA') ? $.getdata('JSUA') : "'jdltapp;iPad;3.1.0;14.4;network/wifi;Mozilla/5.0 (iPad; CPU OS 14_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1"),
-        'accept-language': 'zh-cn',
-        'referer': 'https://prodev.m.jd.com/jdlite/active/31U4T6S4PbcK83HyLPioeCWrD63j/index.html',
-        'Cookie': cookie
-      }
-    }
-    $.get(options, (err, resp, data) => {
-      let list = [];
+async function redPacket() {
+  return new Promise(resolve => {
+    $.get(taskGetUrl("spring_reward_receive",{"inviter":"",linkId}),
+      async (err, resp, data) => {
+        try {
+          if (err) {
+            console.log(`${JSON.stringify(err)}`)
+            console.log(`${$.name} API请求失败，请检查网路重试`)
+          } else {
+            if (safeGet(data)) {
+              data = JSON.parse(data);
+              if (data.code === 0) {
+                if (data.data.received.prizeType !== 1) {
+                  message += `获得${data.data.received.prizeDesc}\n`
+                  console.log(`获得${data.data.received.prizeDesc}`)
+                } else {
+                  console.log("获得优惠券")
+                }
+              } else {
+                console.log(data.errMsg)
+              }
+            }
+          }
+        } catch (e) {
+          $.logErr(e, resp)
+        } finally {
+          resolve(data);
+        }
+      })
+  })
+}
+
+function redPacketList() {
+  return new Promise(resolve => {
+    $.get(taskGetUrl("spring_reward_list",{"pageNum":1,"pageSize":20,linkId,"inviter":""}), async (err, resp, data) => {
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
           console.log(`${$.name} API请求失败，请检查网路重试`)
         } else {
-          if (data) {
+          if (safeGet(data)) {
             data = JSON.parse(data);
-            // console.log(data)
-            ((data && data.data && data.data.items) || []).forEach(o => {
-              if (o.prizeType == 4 && o.state == 0) {
-                // 筛选未提现数据
-                let body = {
-                  "businessSource": "SPRING_FESTIVAL_RED_ENVELOPE",
-                  "base": {
-                    "id": o.id,
-                    "business": null,
-                    "poolBaseId": o.poolBaseId,
-                    "prizeGroupId": o.prizeGroupId,
-                    "prizeBaseId": o.prizeBaseId,
-                    "prizeType": 4
-                  },
-                  "linkId": activeId,
-                  "inviter": ""
-                };
-                list.push(JSON.stringify(body));
+            if (data.code === 0) {
+              for(let item of data.data.items.filter(vo => vo.prizeType===4)){
+                if(item.state===0){
+                  console.log(`去提现${item.amount}微信现金`)
+                  message += `提现${item.amount}微信现金，`
+                  let body = {
+                    "businessSource": "SPRING_FESTIVAL_RED_ENVELOPE",
+                    "base": {
+                      "id": item.id,
+                      "business": null,
+                      "poolBaseId": item.poolBaseId,
+                      "prizeGroupId": item.prizeGroupId,
+                      "prizeBaseId": item.prizeBaseId,
+                      "prizeType": 4
+                    },
+                    linkId,
+                    "inviter": ""
+                  }
+                  await cashOut(body)
+                }
               }
-            })
-          } else {
-            console.log(`京东服务器返回空数据`)
+            } else {
+              console.log(data.errMsg)
+            }
           }
         }
       } catch (e) {
         $.logErr(e, resp)
       } finally {
-        resolve(list);
+        resolve(data);
       }
     })
   })
 }
 
-// 获取微信奖励列表
-function getWxReward(body) {
-  return new Promise(async resolve => {
-    const options = {
-      "url": `https://api.m.jd.com/`,
-      "headers": {
-        'Host': 'api.m.jd.com',
-        'accept': 'application/json, text/plain, */*',
-        'origin': 'https://prodev.m.jd.com',
-        'user-agent': $.isNode() ? (process.env.JS_USER_AGENT ? process.env.JS_USER_AGENT : (require('./JS_USER_AGENTS').USER_AGENT)) : ($.getdata('JSUA') ? $.getdata('JSUA') : "'jdltapp;iPad;3.1.0;14.4;network/wifi;Mozilla/5.0 (iPad; CPU OS 14_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1"),
-        'accept-language': 'zh-cn',
-        'referer': 'https://prodev.m.jd.com/jdlite/active/31U4T6S4PbcK83HyLPioeCWrD63j/index.html',
-        "Content-Type": "application/x-www-form-urlencoded",
-        'Cookie': cookie
-      },
-      "body": `functionId=apCashWithDraw&body=${body}&_t=${+new Date()}&appid=activities_platform`
-    }
-    $.post(options, (err, resp, data) => {
+// 签到
+async function sign() {
+  return new Promise(resolve => {
+    $.post(signPostUrl("apSignIn_day"), async (err, resp, data) => {
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
           console.log(`${$.name} API请求失败，请检查网路重试`)
         } else {
-          if (data) {
-            $.log(data)
-          } else {
-            console.log(`京东服务器返回空数据`)
+          if (safeGet(data)) {
+            data = $.toObj(data);
+            if (data.code === 0) {
+              if (data.data.retCode === 0) {
+                message += `极速版签到提现：签到成功\n`;
+                console.log(`极速版签到提现：签到成功\n`);
+              } else {
+                console.log(`极速版签到提现：签到失败:${data.data.retMessage}\n`);
+              }
+            } else {
+              console.log(`极速版签到提现：签到异常:${JSON.stringify(data)}\n`);
+            }
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve(data);
+      }
+    })
+  })
+}
+// 签到加速
+async function speedUp() {
+  return new Promise(resolve => {
+    $.post(signPostUrl("apSpeedUp_day"), async (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+        } else {
+          if (safeGet(data)) {
+            data = $.toObj(data);
+            if (data.code === 0) {
+              if (data.data.retCode === 0) {
+                message += `签到加速成功\n`;
+                console.log(`签到加速成功，额外获取一份红包或微信现金\n`);
+              } else if (data.data.retCode === 10013) {
+                console.error(`加速失败浪费一次机会...\n`);
+              } else if (data.data.retCode === 300) {
+                console.error(`加速机会已用完...\n`);
+                $.speedUp = false
+              } else {
+                $.speedUp = false
+                console.log(`签到加速失败:${data.data.retMessage}\n`);
+              }
+            } else {
+              $.speedUp = false
+              console.log(`签到加速异常:${JSON.stringify(data)}\n`);
+            }
+          }
+        }
+      } catch (e) {
+        $.speedUp = false
+        $.logErr(e, resp)
+      } finally {
+        resolve(data);
+      }
+    })
+  })
+}
+
+async function signList() {
+  return new Promise(resolve => {
+    $.post(signPostUrl("signPrizeDetailList",{"page":1,"pageSize":20}), async (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+        } else {
+          if (safeGet(data)) {
+            data = JSON.parse(data);
+            if (data.code === 0) {
+              for(let item of data.data.prizeDrawBaseVoPageBean.items.filter(vo => vo.prizeType===4)){
+                if(item.prizeStatus===0){
+                  console.log(`去提现${item.prizeValue}微信现金`)
+                  message += `提现${item.amount}微信现金，`
+                  let body = {
+                    "businessSource": "DAY_DAY_RED_PACKET_SIGN",
+                    "base": {
+                      "id": item.id,
+                      "business": item.business,
+                      "poolBaseId": item.poolBaseId,
+                      "prizeGroupId": item.prizeGroupId,
+                      "prizeBaseId": item.prizeBaseId,
+                      "prizeType": 4
+                    },
+                    "linkId": signLinkId,
+                    "inviter": ""
+                  }
+                  await cashOut(body)
+                }
+              }
+            } else {
+              console.log(data.errMsg)
+            }
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve(data);
+      }
+    })
+  })
+}
+
+// 微信提现
+function cashOut(body) {
+  return new Promise(async resolve => {
+    $.post(taskPostUrl("apCashWithDraw",body), async (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+        } else {
+          if (safeGet(data)) {
+            console.log(`提现零钱结果：${data}`)
+            data = JSON.parse(data);
+            if (data.code === 0) {
+              if (data['data']['status'] === "310") {
+                console.log(`提现成功！`)
+                message += `提现成功！`;
+              } else {
+                console.log(`提现失败：${data['data']['message']}`);
+                message += `提现失败：${data['data']['message']}`;
+              }
+            } else {
+              console.log(`提现异常：${data['errMsg']}`);
+            }
           }
         }
       } catch (e) {
@@ -203,74 +336,60 @@ function showMsg() {
   })
 }
 
-async function redPacket() {
-  var headers = {
-    'Host': 'api.m.jd.com',
-    'Accept': 'application/json, text/plain, */*',
-    'Origin': 'https://prodev.m.jd.com',
-    'User-Agent': $.isNode() ? (process.env.JS_USER_AGENT ? process.env.JS_USER_AGENT : (require('./JS_USER_AGENTS').USER_AGENT)) : ($.getdata('JSUA') ? $.getdata('JSUA') : "'jdltapp;iPad;3.1.0;14.4;network/wifi;Mozilla/5.0 (iPad; CPU OS 14_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1"),
-    'Accept-Language': 'zh-cn',
-    'Referer': 'https://prodev.m.jd.com/jdlite/active/31U4T6S4PbcK83HyLPioeCWrD63j/index.html',
-    'Cookie': cookie
-  };
-
-  var options = {
-    url: `https://api.m.jd.com/?functionId=spring_reward_receive&body={%22inviter%22:%22%22,%22linkId%22:%22${activeId}%22}&_t=${+new Date()}&appid=activities_platform`,
-    headers: headers
+function taskPostUrl(function_id, body) {
+  return {
+    url: `https://api.m.jd.com/`,
+    body: `appid=activities_platform&functionId=${function_id}&body=${escape(JSON.stringify(body))}&t=${+new Date()}`,
+    headers: {
+      'Cookie': cookie,
+      'Host': 'api.m.jd.com',
+      'Accept': '*/*',
+      'Connection': 'keep-alive',
+      'user-agent': $.isNode() ? (process.env.JS_USER_AGENT ? process.env.JS_USER_AGENT : (require('./JS_USER_AGENTS').USER_AGENT)) : ($.getdata('JSUA') ? $.getdata('JSUA') : "'jdltapp;iPad;3.1.0;14.4;network/wifi;Mozilla/5.0 (iPad; CPU OS 14_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1"),
+      'Accept-Language': 'zh-Hans-CN;q=1,en-CN;q=0.9',
+      'Accept-Encoding': 'gzip, deflate, br',
+      'Content-Type': "application/x-www-form-urlencoded",
+      "referer": "https://an.jd.com/babelDiy/Zeus/q1eB6WUB8oC4eH1BsCLWvQakVsX/index.html"
+    }
   }
-  return new Promise(resolve => {
-    $.get(options, async (err, resp, data) => {
-      try {
-        if (err) {
-          console.log(`${JSON.stringify(err)}`)
-          console.log(`${$.name} API请求失败，请检查网路重试`)
-        } else {
-          if (safeGet(data)) {
-            data = JSON.parse(data);
-            if (data.code === 0) {
-              if (data.data.received.prizeType !== 1) {
-                message += `获得${data.data.received.prizeDesc}\n`
-                console.log(`获得${data.data.received.prizeDesc}`)
-              } else {
-                console.log("获得优惠券")
-              }
-            } else {
-              console.log(data.errMsg)
-            }
-          }
-        }
-      } catch (e) {
-        $.logErr(e, resp)
-      } finally {
-        resolve(data);
-      }
-    })
-  })
 }
 
-function invite() {
-  let t = +new Date()
-  var headers = {
-    'Host': 'api.m.jd.com',
-    'accept': 'application/json, text/plain, */*',
-    'content-type': 'application/x-www-form-urlencoded',
-    'origin': 'https://invite-reward.jd.com',
-    'accept-language': 'zh-cn',
-    'user-agent': $.isNode() ? (process.env.JS_USER_AGENT ? process.env.JS_USER_AGENT : (require('./JS_USER_AGENTS').USER_AGENT)) : ($.getdata('JSUA') ? $.getdata('JSUA') : "'jdltapp;iPad;3.1.0;14.4;network/wifi;Mozilla/5.0 (iPad; CPU OS 14_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1"),
-    'referer': 'https://invite-reward.jd.com/?lng=0.000000&lat=0.000000&sid=2131b85f0bcb82714e032402628cc2fw&un_area=12_904_50647_57886',
-    'Cookie': cookie
-  };
+function taskGetUrl(function_id, body) {
+  return {
+    url: `https://api.m.jd.com/?appid=activities_platform&functionId=${function_id}&body=${escape(JSON.stringify(body))}&t=${+new Date()}`,
+    headers: {
+      'Cookie': cookie,
+      'Host': 'api.m.jd.com',
+      'Accept': '*/*',
+      'Connection': 'keep-alive',
+      'user-agent': $.isNode() ? (process.env.JS_USER_AGENT ? process.env.JS_USER_AGENT : (require('./JS_USER_AGENTS').USER_AGENT)) : ($.getdata('JSUA') ? $.getdata('JSUA') : "'jdltapp;iPad;3.1.0;14.4;network/wifi;Mozilla/5.0 (iPad; CPU OS 14_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1"),
+      'Accept-Language': 'zh-Hans-CN;q=1,en-CN;q=0.9',
+      'Accept-Encoding': 'gzip, deflate, br',
+      'Content-Type': "application/x-www-form-urlencoded",
+      "referer": "https://an.jd.com/babelDiy/Zeus/q1eB6WUB8oC4eH1BsCLWvQakVsX/index.html"
+    }
+  }
+}
 
-  var dataString = `functionId=InviteFriendApiService&body={"method":"attendInviteActivity","data":{"inviterPin":"Wy3rGd8o4Vckq1VucBFJjA%3D%3D","channel":1,"token":"","frontendInitStatus":""}}&referer=-1&eid=eidIf3dd8121b7sdmiBLGdxRR46OlWyh62kFAZogTJFnYqqRkwgr63%2BdGmMlcv7EQJ5v0HBic81xHXzXLwKM6fh3i963zIa7Ym2v5ehnwo2B7uDN92Q0&aid=&client=ios&clientVersion=14.4&networkType=wifi&fp=-1&appid=market-task-h5&_t=${t}`;
-
-  var options = {
-    url: `https://api.m.jd.com/?t=${t}`,
-    headers: headers,
-    body: dataString
-  };
-  $.post(options, (err, resp, data) => {
-    // console.log(data)
-  })
+function signPostUrl(function_id, ext = {}) {
+  let body = {"linkId":signLinkId,"serviceName":"dayDaySignGetRedEnvelopeSignService","business":1};
+  body = Object.assign(body, ext);
+  return {
+    url: `https://api.m.jd.com`,
+    body: `functionId=${function_id}&body=${escape(JSON.stringify(body))}&_t=${+new Date()}&appid=activities_platform`,
+    headers: {
+      'Cookie': cookie,
+      "Host": "api.m.jd.com",
+      'Origin': 'https://daily-redpacket.jd.com',
+      "Content-Type": "application/x-www-form-urlencoded",
+      "Accept": "*/*",
+      "Connection": "keep-alive",
+      'user-agent': $.isNode() ? (process.env.JS_USER_AGENT ? process.env.JS_USER_AGENT : (require('./JS_USER_AGENTS').USER_AGENT)) : ($.getdata('JSUA') ? $.getdata('JSUA') : "'jdltapp;iPad;3.1.0;14.4;network/wifi;Mozilla/5.0 (iPad; CPU OS 14_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1"),
+      "Accept-Language": "zh-Hans-CN;q=1, en-CN;q=0.9, zh-Hant-CN;q=0.8",
+      'Referer': 'https://daily-redpacket.jd.com/?activityId=9WA12jYGulArzWS7vcrwhw',
+      "Accept-Encoding": "gzip, deflate, br"
+    }
+  }
 }
 
 function TotalBean() {
