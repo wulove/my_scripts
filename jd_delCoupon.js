@@ -143,15 +143,30 @@ function getCoupon() {
   })
 
 }
+const delRegex = [
+  '仅可购买京东服务\\+',
+  '^仅可购买(京东京造|个人护理|自营图书|服饰内衣|男装服饰|装备自营)部分商品$',
+  '仅可购买(茗茶)商品',
+  '^限购 \\[.+\\] 店铺(部分)?商品$',
+  '快递券',
+  '.+快递.+寄件.+',
+  '保障产品'
+]
+const blankRegex = [
+  '全品券',
+  '运费券'
+]
 function isJDCoupon(title) {
-  if (title.indexOf('仅可购买京东服务+') > -1)
-    return false
-  else if (/仅可购买(京东京造|个人护理|自营图书|服饰内衣|男装服饰|装备自营)部分商品/.test(title))
-    return false
-  else if (/仅可购买(茗茶)商品/.test(title))
-    return false
-  else if (/限购 \[.+\] 店铺(部分)?商品/.test(title))
-    return false
+  for (const regex of blankRegex) {
+    if (new RegExp(regex).test(title)) {
+      return true
+    }
+  }
+  for (const regex of delRegex) {
+    if (new RegExp(regex).test(title)) {
+      return false
+    }
+  }
 
   return true
 }
