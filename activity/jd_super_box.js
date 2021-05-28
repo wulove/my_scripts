@@ -299,7 +299,7 @@ function draw() {
 }
 
 function doSupport(shareId) {
-  let body = {"taskId":"61","linkId":linkId,"encryptPin":shareId}
+  let body = {"taskId":"116","linkId":linkId,"encryptPin":shareId}
   return new Promise(resolve => {
     $.get(taskUrl('superboxSupBoxHomePage',body), async (err, resp, data) => {
       try {
