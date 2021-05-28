@@ -230,6 +230,9 @@ async function speedUp() {
               } else if (data.data.retCode === 300) {
                 console.error(`加速机会已用完...\n`);
                 $.speedUp = false
+              } else if (data.data.retCode === 10019) {
+                console.error(`进度已达上限...\n`);
+                $.speedUp = false
               } else {
                 $.speedUp = false
                 console.log(`签到加速失败:${data.data.retMessage}\n`);
@@ -264,7 +267,7 @@ async function signList() {
               for(let item of data.data.prizeDrawBaseVoPageBean.items.filter(vo => vo.prizeType===4)){
                 if(item.prizeStatus===0){
                   console.log(`去提现${item.prizeValue}微信现金`)
-                  message += `提现${item.amount}微信现金，`
+                  message += `提现${item.prizeValue}微信现金，`
                   let body = {
                     "businessSource": "DAY_DAY_RED_PACKET_SIGN",
                     "base": {
