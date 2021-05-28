@@ -307,7 +307,7 @@ function redPacket() {
             t.setHours(0, 0, 0, 0)
             t = parseInt((t - 1) / 1000)
             // 因github上执行时间采用utc时间, 故这里减去8小时
-            if(t.getHours() === t.getUTCHours()) t = t - 8*60*60
+            if(new Date().getHours() === new Date().getUTCHours()) t = t - 8*60*60
             for (let vo of data.useRedInfo.redList || []) {
               if (vo.activityName.includes("京喜")) {
                 $.jxRed += parseFloat(vo.balance)
