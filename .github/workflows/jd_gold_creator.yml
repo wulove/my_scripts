@@ -1,13 +1,13 @@
-name: jd_xtg-家电星推官
+name: 金榜创造营
 
 on:
   workflow_dispatch:
   schedule:
-    - cron: '10 15 * * *'
+    - cron: "13 14,17 * * *"
   watch:
     types: started
   repository_dispatch:
-    types: jd_xtg
+    types: jd_gold_creator
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -16,7 +16,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         with:
-          repository: wulove/my_scripts
+          repository: ${{ secrets.REPO }}
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
@@ -31,12 +31,9 @@ jobs:
       - name: npm install
         run: |
           npm install
-      - name: 'waiting...'
+      - name: '运行 【金榜创造营】'
         run: |
-          python3 wait.py 23:59:59.800
-      - name: '运行 【家电星推官】'
-        run: |
-          node jd_xtg.js
+          node jd_gold_creator.js
         env:
           JD_COOKIE: ${{ secrets.JD_COOKIE }}
           PUSH_PLUS_TOKEN: ${{ secrets.PUSH_PLUS_TOKEN }}
@@ -47,10 +44,9 @@ jobs:
           JD_DEBUG: ${{ secrets.JD_DEBUG }}
           PUSH_KEY: ${{ secrets.PUSH_KEY }}
           BARK_PUSH: ${{ secrets.BARK_PUSH }}
-          BARK_SOUND: ${{ secrets.BARK_SOUND }}
           TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
           TG_USER_ID: ${{ secrets.TG_USER_ID }}
+          BARK_SOUND: ${{ secrets.BARK_SOUND }}
           DD_BOT_TOKEN: ${{ secrets.DD_BOT_TOKEN }}
           DD_BOT_SECRET: ${{ secrets.DD_BOT_SECRET }}
           JD_USER_AGENT: ${{ secrets.JD_USER_AGENT }}
-          UN_SUBSCRIBES: ${{ secrets.UNSUBSCRIBE }}
