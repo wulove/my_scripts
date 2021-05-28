@@ -104,7 +104,7 @@ async function jsRedPacket() {
 
 async function redPacket() {
   return new Promise(resolve => {
-    $.get(taskGetUrl("spring_reward_receive",{"inviter":"",linkId}),
+    $.get(taskGetUrl("spring_reward_receive",{"inviter":["4faoee9PSI_FBqRgoLWtSg","fD3SXlYmJzblks_ZrUuFsQ"][Math.floor((Math.random()*2))],linkId}),
       async (err, resp, data) => {
         try {
           if (err) {
