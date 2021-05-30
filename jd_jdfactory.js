@@ -1,10 +1,5 @@
 /*
- * @Author: LXK9301 https://github.com/LXK9301
- * @Date: 2020-12-06 18:19:21
- * @Last Modified by: LXK9301
- * @Last Modified time: 2020-12-26 22:58:02
- */
-/*
+Last Modified time: 2020-12-26 22:58:02
 东东工厂，不是京喜工厂
 活动入口：京东APP首页-数码电器-东东工厂
 免费产生的电量(10秒1个电量，500个电量满，5000秒到上限不生产，算起来是84分钟达到上限)
@@ -622,7 +617,7 @@ function jdfactory_getHomeData() {
 function readShareCode() {
   console.log(`开始`)
   return new Promise(async resolve => {
-    $.get({url: `http://jd.turinglabs.net/api/v2/jd/ddfactory/read/${randomCount}/`, timeout: 10000}, (err, resp, data) => {
+    $.get({url: `http://share.turinglabs.net/api/v3/ddfactory/query/${randomCount}/`, timeout: 10000}, (err, resp, data) => {
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)

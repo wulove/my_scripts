@@ -26,7 +26,6 @@ crazyJoy挂机 = type=cron,script-path=https://gitee.com/lxk0301/jd_scripts/raw/
 
  */
 
-
 const $ = new Env('crazyJoy挂机');
 const JD_API_HOST = 'https://api.m.jd.com/';
 
