@@ -2,7 +2,7 @@
 京东极速版红包、签到提现
 欧皇3个微信现金，支持自动提现
 支持签到提现活动
-活动时间：2021-5-6至2021-5-31
+活动时间：2021-6-1至2021-6-30
 活动地址：https://prodev.m.jd.com/jdlite/active/31U4T6S4PbcK83HyLPioeCWrD63j/index.html
 活动入口：京东极速版app-领红包，签到提现
 已支持IOS双京东账号,Node.js支持N个京东账号
