@@ -78,7 +78,7 @@ const JD_API_HOST = 'https://api.m.jd.com/client.action';
     })
 async function main() {
   try {
-    await signForRedBag();
+    await signForRedBag();//签到领红包
     await goldCreatorTab();//获取顶部主题
     await getDetail();
     await showMsg();
