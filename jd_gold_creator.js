@@ -2,7 +2,7 @@
 金榜创造营
 活动入口：https://h5.m.jd.com/babelDiy/Zeus/2H5Ng86mUJLXToEo57qWkJkjFPxw/index.html
 活动时间：2021-05-21至2021-12-31
-脚本更新时间：2021-05-28 14:20
+脚本更新时间：2021-06-02 09:20
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 ===================quantumultx================
 [task_local]
@@ -78,6 +78,7 @@ const JD_API_HOST = 'https://api.m.jd.com/client.action';
     })
 async function main() {
   try {
+    await signForRedBag();
     await goldCreatorTab();//获取顶部主题
     await getDetail();
     await showMsg();
@@ -85,6 +86,34 @@ async function main() {
     $.logErr(e)
   }
 }
+
+async function signForRedBag() {
+  return new Promise(resolve => {
+    const body = {"actId":"RRDWrPqXWYj3CX4HnbQLDHRsmoJ2XU"};
+    const options = taskUrl('noahHaveFunLottery', body, 'publicUseApi')
+    $.post(options, async (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} noahHaveFunLottery API请求失败，请检查网路重试`)
+        } else {
+          console.log('noahHaveFunLottery', data)
+          if (safeGet(data)) {
+            data = JSON.parse(data)
+            if (data.code === '0') {
+              console.log("今日签到成功")
+            }
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve();
+      }
+    })
+  })
+}
+
 function showMsg() {
   return new Promise(resolve => {
     if ($.beans) {
@@ -244,9 +273,9 @@ function goldCreatorDoTask(body) {
     })
   })
 }
-function taskUrl(function_id, body = {}) {
+function taskUrl(function_id, body = {}, appid = 'content_ecology') {
   return {
-    url: `${JD_API_HOST}?functionId=${function_id}&body=${escape(JSON.stringify(body))}&appid=content_ecology&clientVersion=10.0.0&client=wh5&eufv=false&uuid=`,
+    url: `${JD_API_HOST}?functionId=${function_id}&body=${escape(JSON.stringify(body))}&appid=${appid}&clientVersion=10.0.0&client=wh5&eufv=false&uuid=`,
     headers: {
       "Accept": "*/*",
       "Accept-Encoding": "gzip, deflate, br",
