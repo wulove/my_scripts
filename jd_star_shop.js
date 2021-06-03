@@ -26,7 +26,7 @@ cron "0 1,21 * * *" script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/
 const $ = new Env('明星小店');
 const notify = $.isNode() ? require('./sendNotify') : '';
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
-$.inviteCodeList = [];
+$.inviteCodeList = ['fD3SXlYmJzblks_ZrUuFsQ','4faoee9PSI_FBqRgoLWtSg'];
 $.authorCodeList = [
 
 ];
