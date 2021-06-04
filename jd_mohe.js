@@ -47,7 +47,6 @@ $.shareId = [];
       '活动地址: https://isp5g.m.jd.com\n' +
       '活动时间：2021-06-2到2021-07-31\n' +
       '更新时间：2021-06-3 12:00');
-  await updateShareCodesCDN()
   for (let i = 0; i < cookiesArr.length; i++) {
     if (cookiesArr[i]) {
       cookie = cookiesArr[i];
@@ -75,7 +74,7 @@ $.shareId = [];
       await taskList();
       console.log(`当前小时数为：` + new Date().getHours())
       // UTC时间，小时数为16的时候对应北京时间0点
-      if (new Date().getHours() === 16) {
+      if ((new Date().getUTCHours() + 8) % 24 === 0) {
         await getAward();//抽奖
       }
     }
@@ -84,7 +83,6 @@ $.shareId = [];
     if ($.isNode()) await notify.sendNotify($.name, allMessage);
     $.msg($.name, '', allMessage, {"open-url": "https://isp5g.m.jd.com"})
   }
-  $.shareId = [...($.shareId || []), ...($.updatePkActivityIdRes || [])];
   for (let v = 0; v < cookiesArr.length; v++) {
     cookie = cookiesArr[v];
     $.index = v + 1;
