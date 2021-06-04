@@ -1,20 +1,21 @@
-name: 京喜签到（已失效）
+name: jd_mcxhd-新潮品牌狂欢
 
 on:
   workflow_dispatch:
-#  schedule:
-#    - cron: "2 0 * * *"
+  schedule:
+    - cron: '4 2 * * *'
   watch:
     types: started
   repository_dispatch:
-    types: jx_sign
+    types: jd_mcxhd
 jobs:
   build:
+
     runs-on: ubuntu-latest
     if: github.event.repository.owner.id == github.event.sender.id
     steps:
       - name: Checkout
-         uses: actions/checkout@v2
+        uses: actions/checkout@v2
         with:
           repository: wulove/my_scripts
       - name: Use Node.js ${{ matrix.node-version }}
@@ -31,11 +32,12 @@ jobs:
       - name: npm install
         run: |
           npm install
-      - name: '运行 【京喜签到】'
+      - name: '运行 【新潮品牌狂欢】'
         run: |
-          node jx_sign.js
+          node jd_mcxhd.js
         env:
           JD_COOKIE: ${{ secrets.JD_COOKIE }}
+          JD_USER_AGENT: ${{ secrets.JD_USER_AGENT }}
           PUSH_PLUS_TOKEN: ${{ secrets.PUSH_PLUS_TOKEN }}
           PUSH_PLUS_USER: ${{ secrets.PUSH_PLUS_USER }}
           IGOT_PUSH_KEY: ${{ secrets.IGOT_PUSH_KEY }}
@@ -49,4 +51,3 @@ jobs:
           TG_USER_ID: ${{ secrets.TG_USER_ID }}
           DD_BOT_TOKEN: ${{ secrets.DD_BOT_TOKEN }}
           DD_BOT_SECRET: ${{ secrets.DD_BOT_SECRET }}
-          JD_USER_AGENT: ${{ secrets.JD_USER_AGENT }}

@@ -3,7 +3,7 @@ name: adolf_pk
 on:
   workflow_dispatch:
   schedule:
-    - cron: '15 0,5,10 17-31 5 *'
+    - cron: '15 5,11,13,16,22 * * *'
   watch:
     types: started
   repository_dispatch:
