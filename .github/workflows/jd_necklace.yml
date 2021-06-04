@@ -1,4 +1,4 @@
-name: 点点券
+name: 点点券（失效）
 
 on:
   workflow_dispatch:
