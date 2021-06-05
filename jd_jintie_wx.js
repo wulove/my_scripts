@@ -67,7 +67,9 @@ async function main() {
   try {
     await queryAvailableSubsidyAmount();
     await queryMission();
+    await $.wait(1000);
     await doTask();
+    await $.wait(1000);
     await queryAvailableSubsidyAmount();
   } catch (e) {
     $.logErr(e)
@@ -126,15 +128,15 @@ async function doTask() {
       await doMission(task, 'seeVideoMission');
       await $.wait(10000);
       await doMission(task, 'videoMissionDone');
-      await $.wait(100);
+      await $.wait(1000);
       await drawMission(task, 'videoSubsidyReceive');
     } else {
       await receiveMession(task);
-      await $.wait(100);
+      await $.wait(1000);
       await doMission(task, 'appletDoTaskNew');
-      await $.wait(100);
+      await $.wait(1000);
       await doMission(task, 'sentMissionMq');
-      await $.wait(100);
+      await $.wait(1000);
       await drawMission(task, 'appletWithDrawMissionNew');
     }
   }
