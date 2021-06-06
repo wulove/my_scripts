@@ -33,7 +33,7 @@ jobs:
           npm install
       - name: '运行 【京享值PK】'
         run: |
-          node monk/adolf_pk.js
+          node monk/ddo_pk.js
         env:
           JD_COOKIE: ${{ secrets.JD_COOKIE }}
           PUSH_PLUS_TOKEN: ${{ secrets.PUSH_PLUS_TOKEN }}
