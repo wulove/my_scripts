@@ -24,7 +24,7 @@ const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 const randomCount = $.isNode() ? 20 : 5;
 const notify = $.isNode() ? require('./sendNotify') : '';
 let merge = {}
-let codeList = ['vlze5cgdvod2d3ipqiverxas3y','qbg36lckzzf2n6nrzoenswmkne']
+let codeList = [{"masterPin":"vlze5cgdvod2d3ipqiverxas3y","shareDate":"2021-06-06"},{"masterPin":"qbg36lckzzf2n6nrzoenswmkne","shareDate":"2021-06-06"}]
 //IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [],
     cookie = '';
