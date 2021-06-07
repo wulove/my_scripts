@@ -20,8 +20,8 @@ cron "28 9 * 5 *" script-path=https://raw.githubusercontent.com/monk-coder/dust/
 坐等更新 = type=cron,script-path=https://raw.githubusercontent.com/monk-coder/dust/dust/normal/adolf_urge.js, cronexpr="28 9 * 5 *", timeout=3600, enable=true
 */
 const $ = new Env("坐等更新");
-const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
-const notify = $.isNode() ? require('./sendNotify') : '';
+const jdCookieNode = $.isNode() ? require('../jdCookie.js') : '';
+const notify = $.isNode() ? require('../sendNotify') : '';
 const cp = $.isNode() ? require('child_process') : '';
 let cookiesArr = [], cookie = '', message = '';
 const Adolf_addsku = $.isNode() ? process.env.ADOLF_ADDSKU || '' : '';
