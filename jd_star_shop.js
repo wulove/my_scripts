@@ -5,7 +5,7 @@
 明星小店(星店长)
 助力逻辑：每个ck随机获取一个明星，然后会先内部助力，然后再助力内置助力码
 抽奖：是否中奖没判断，需自行查看
-更新时间：2021-06-04
+更新时间：2021-06-06
 脚本兼容: QuantumultX, Surge,Loon, JSBox, Node.js
 =================================Quantumultx=========================
 [task_local]
@@ -66,7 +66,7 @@ if ($.isNode()) {
   console.log('明星小店(星店长)\n' +
       '助力逻辑：每个ck随机获取一个明星，然后会先内部助力，然后再助力内置助力码\n' +
       '抽奖：是否中奖没判断，需自行查看\n' +
-      '更新时间：2021-06-04\n');
+      '更新时间：2021-06-06\n');
 
   // console.log(`==================开始执行星店长任务==================`);
   // for (let i = 0; i < cookiesArr.length; i++) {
@@ -132,7 +132,7 @@ if ($.isNode()) {
     }
     await main();
   }
-  $.inviteCodeList.push(...getRandomArrayElements($.authorCodeList, $.authorCodeList.length));
+  $.inviteCodeList.push(...getRandomArrayElements($.authorCodeList, 5));
   for (let i = 0; i < cookiesArr.length; i++) {
     $.cookie = cookiesArr[i];
     $.UserName = decodeURIComponent($.cookie.match(/pt_pin=([^; ]+)(?=;?)/) && $.cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1]);
@@ -158,16 +158,20 @@ async function main() {
   uniqueIdList = getRandomArrayElements(uniqueIdList, uniqueIdList.length);
   console.log(`现共查询到${uniqueIdList.length}个明星小店\n`);
   for (let j = 0; j < uniqueIdList.length; j++) {
-    $.uniqueId = uniqueIdList[j].id;
-    $.helpCode = '';
-    console.log(`开始第${j + 1}个明星小店，ID：${$.uniqueId},明星：${uniqueIdList[j].name}`);
-    await starShop();
-    await $.wait(1000);
-    if (j === 0) {
-      console.log(`互助码：${$.helpCode}`);
-      $.inviteCodeList.push($.helpCode);
+    try{
+      $.uniqueId = uniqueIdList[j].id;
+      $.helpCode = '';
+      console.log(`开始第${j + 1}个明星小店，ID：${$.uniqueId},明星：${uniqueIdList[j].name}`);
+      await starShop();
+      await $.wait(1000);
+      if (j === 0) {
+        console.log(`互助码：${$.helpCode}`);
+        $.inviteCodeList.push($.helpCode);
+      }
+      console.log(`\n`);
+    }catch (e) {
+      console.log(JSON.stringify(e.message));
     }
-    console.log(`\n`);
   }
   console.log(`=============${$.UserName }：星店长奖励汇总================`);
   await $.wait(1000);
@@ -181,7 +185,7 @@ async function main() {
     } else if ($.rewards[i].prizeType === 5) {
       if(!$.rewards[i].fillReceiverFlag){
         console.log(`获得实物：${$.rewards[i].prizeDesc || ''},未填写地址`);
-        sendMessage += `${$.UserName }，获得实物：${$.rewards[i].prizeDesc || '' }\n`;
+        sendMessage += `【京东账号${$.index}】${$.UserName }，获得实物：${$.rewards[i].prizeDesc || '' }\n`;
       }else{
         console.log(`获得实物：${$.rewards[i].prizeDesc || ''},已填写地址`);
       }

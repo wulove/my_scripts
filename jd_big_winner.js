@@ -72,22 +72,26 @@ async function main() {
     $.canApCashWithDraw = false;
     $.changeReward = true;
     $.canOpenRed = true;
-    await gambleHomePage();
-    if (!$.time) {
-      console.log(`开始进行翻翻乐拿红包\n`)
-      await gambleOpenReward();//打开红包
-      if ($.canOpenRed) {
-        while (!$.canApCashWithDraw && $.changeReward) {
-          await openRedReward();
-          await $.wait(500);
+    do {
+      await gambleHomePage();
+      if (!$.time) {
+        console.log(`开始进行翻翻乐拿红包\n`)
+        await gambleOpenReward();//打开红包
+        if ($.canOpenRed) {
+          while (!$.canApCashWithDraw && $.changeReward) {
+            await openRedReward();
+            await $.wait(500);
+          }
+          if ($.canApCashWithDraw) {
+            //提现
+            await openRedReward('gambleObtainReward', $.rewardData.rewardType);
+            await apCashWithDraw($.rewardData.id, $.rewardData.poolBaseId, $.rewardData.prizeGroupId, $.rewardData.prizeBaseId, $.rewardData.prizeType);
+          }
         }
-        if ($.canApCashWithDraw) {
-          //提现
-          await openRedReward('gambleObtainReward', $.rewardData.rewardType);
-          await apCashWithDraw($.rewardData.id, $.rewardData.poolBaseId, $.rewardData.prizeGroupId, $.rewardData.prizeBaseId, $.rewardData.prizeType);
-        }
+      } else if ($.time < 10) {
+        await $.wait($.time * 60 * 1000)
       }
-    }
+    } while (!$.time && $.time < 10)
   } catch (e) {
     $.logErr(e)
   }
