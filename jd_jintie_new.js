@@ -1,6 +1,6 @@
 /*
 领金贴(只做签到以及互助任务里面的部分任务)
-活动入口：京东APP首页-领金贴，[活动地址](https://active.jd.com/forever/cashback/index/)
+活动入口：京东APP首页-领金贴
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 =================QuantumultX==============
 [task_local]
@@ -56,8 +56,8 @@ if ($.isNode()) {
         }
         continue
       }
-
-      await main();
+      if (i==1)
+        await main();
     }
   }
 })()
@@ -71,6 +71,7 @@ async function main() {
   try {
 
     await queryAvailableSubsidyAmount();
+    await userSignInfo();
     await getProfitSum();
     await queryMission();
     await doTask();
@@ -78,7 +79,7 @@ async function main() {
     await queryAvailableSubsidyAmount();
 
 
-    /*await signInforOfJinTie();
+    /*
     await getProfitSum();
     await queryMission();
     await doTask();
@@ -145,9 +146,47 @@ function queryMission(info = true) {
 //领取任务
 function receiveMission(missionId) {
   const body = JSON.stringify({
+    "apiVersion": "1.0.0",
+    "channel": "default",
+    "channelLv": "scljticon",
+    "others": {
+      "taskCode": "JTPD-new",
+      missionId
+    },
+    "source": "JD_APP"
+  });
+  const options = taskUrl('receiveCenterMission', body, 'jrm');
+  return new Promise((resolve) => {
+    $.get(options, (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+        } else {
+          // console.log(data)
+          data = JSON.parse(data);
+          if (data.resultCode === 0) {
+            if (data.resultData.code === '000') {
+              console.log('任务接取成功')
+            } else {
+              console.log('任务接取失败', data.resultData.msg)
+            }
+          } else {
+            console.log('任务接取失败', data.resultMsg)
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp);
+      } finally {
+        resolve(data);
+      }
+    })
+  })
+}
+function queryMissionReceiveAfterStatus(missionId) {
+  const body = JSON.stringify({
     "missionId": `${missionId}`,
   });
-  console.log(JSON.stringify(body))
   const options = taskUrl('queryMissionReceiveAfterStatus', body);
   return new Promise((resolve) => {
     $.get(options, (err, resp, data) => {
@@ -160,12 +199,12 @@ function receiveMission(missionId) {
           data = JSON.parse(data);
           if (data.resultCode === 0) {
             if (data.resultData.success) {
-              console.log('任务接取成功')
+              console.log('查询任务接取成功')
             } else {
-              console.log('任务接取失败', data.resultData.msg)
+              console.log('查询任务接取失败', data.resultData.msg)
             }
           } else {
-            console.log('任务接取失败', data.resultMsg)
+            console.log('查询任务接取失败', data.resultMsg)
           }
         }
       } catch (e) {
@@ -187,6 +226,7 @@ function finishReadMission(missionId, readTime) {
           console.log(`${JSON.stringify(err)}`)
           console.log(`${$.name} API请求失败，请检查网路重试`)
         } else {
+          // console.log(data)
           data = JSON.parse(data);
           if (data.resultCode === 0) {
             if (data.resultData.success) {
@@ -246,28 +286,20 @@ function awardMission(missionId) {
   })
 }
 //获取签到状态
-function signInforOfJinTie() {
+function userSignInfo() {
   const body = JSON.stringify({
-    channel: "sqcs",
+    "apiVersion": "1.0.0",
+    "channel": "default",
+    "channelLv": "scljticon",
+    "source": "JD_APP",
     "riskDeviceParam": JSON.stringify({
-      appId: "jdapp",
-      appType: "3",
-      clientVersion: "9.4.6",
-      deviceType: "iPhone11,8",
-      "eid": cookie,
-      "fp": getFp(),
-      idfa: "",
-      imei: "",
-      ip: "",
-      macAddress: "",
-      networkType: "WIFI",
-      os: "iOS",
-      osVersion: "14.2",
-      token: "",
-      uuid: ""
-    })
+
+    }),
+    "others": {
+      "shareId":"",
+    }
   })
-  const options = taskUrl('signInforOfJinTie', body, 'jrm');
+  const options = taskUrl('userSignInfo', body, 'jrm');
   return new Promise((resolve) => {
     $.get(options, async (err, resp, data) => {
       try {
@@ -278,9 +310,11 @@ function signInforOfJinTie() {
           data = JSON.parse(data);
           if (data.resultCode === 0) {
             if (data.resultData.code === '000') {
-              let state = data.resultData.data.sign
-              console.log('获取签到状态成功', state ? '今日已签到' : '今日未签到', '连续签到', data.resultData.data.signContinuity, '天\n')
-              if (!state) await signOfJinTie()
+              console.log('邀请码位：', data.resultData.data.shareId)
+              let dayId = data.resultData.data.dayId;
+              let state = data.resultData.data.signDetail[dayId-1].signed;
+              console.log('获取签到状态成功', state ? '今日已签到' : '今日未签到')
+              if (!state) await signInSubsidy()
             } else {
               console.log('获取签到状态失败', data.resultData.msg)
             }
@@ -297,28 +331,20 @@ function signInforOfJinTie() {
   })
 }
 //签到
-function signOfJinTie() {
+function signInSubsidy() {
   const body = JSON.stringify({
-    channel: "sqcs",
+    "apiVersion": "1.0.0",
+    "channel": "default",
+    "channelLv": "scljticon",
+    "source": "JD_APP",
     "riskDeviceParam": JSON.stringify({
-      appId: "jdapp",
-      appType: "3",
-      clientVersion: "9.4.6",
-      deviceType: "iPhone11,8",
-      "eid": cookie,
-      "fp": getFp(),
-      idfa: "",
-      imei: "",
-      ip: "",
-      macAddress: "",
-      networkType: "WIFI",
-      os: "iOS",
-      osVersion: "14.2",
-      token: "",
-      uuid: ""
-    })
+
+    }),
+    "others": {
+      "shareId":"",
+    }
   })
-  const options = taskUrl('signOfJinTie', body, 'jrm');
+  const options = taskUrl('signInSubsidy', body, 'jrm');
   return new Promise((resolve) => {
     $.get(options, async (err, resp, data) => {
       try {
@@ -329,7 +355,7 @@ function signOfJinTie() {
           data = JSON.parse(data);
           if (data.resultCode === 0) {
             if (data.resultData.code === '000') {
-              console.log('签到成功', data.resultData.data.amount)
+              console.log('签到成功, 获得', data.resultData.data.rewardAmount/100, '金贴')
             } else {
               console.log('签到失败', data.resultData.msg)
             }
@@ -475,6 +501,7 @@ async function doTask() {
       console.log(`\n开始领取 【${task['name']}】任务`);
       await receiveMission(task['missionId']);
       await $.wait(100)
+      await queryMissionReceiveAfterStatus(task['missionId']);
       const readTime = parseInt(task.doLink.substr(task.doLink.indexOf('readTime=') + 9));
       await $.wait(1000 * readTime)
       await finishReadMission(task['missionId'], readTime);
