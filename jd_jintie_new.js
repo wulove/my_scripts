@@ -391,7 +391,7 @@ function getProfitSum() {
           if (data.resultCode === 0) {
             if (data.resultData.success) {
               if (data.resultData.data.unObtainAmount !== 0) {
-                await rcGivenJupiterWithdraw();
+                await jupiterWithdraw();
               }
             } else {
               console.log('getProfitSum', data.resultData.msg)
@@ -409,7 +409,7 @@ function getProfitSum() {
   })
 }
 //单单返
-function rcGivenJupiterWithdraw() {
+function jupiterWithdraw() {
   const body = JSON.stringify({
     channel: "sqcs",
     source: "jd",
@@ -431,7 +431,7 @@ function rcGivenJupiterWithdraw() {
       uuid: ""
     })
   })
-  const options = taskUrl('rcGivenJupiterWithdraw', body, 'jrm');
+  const options = taskUrl('jupiterWithdraw', body, 'jrm');
   return new Promise((resolve) => {
     $.get(options, async (err, resp, data) => {
       try {
@@ -442,7 +442,7 @@ function rcGivenJupiterWithdraw() {
           data = JSON.parse(data);
           if (data.resultCode === 0) {
             if (data.resultData.success) {
-              console.log('获取单单返', data.resultData.data.obtainAmount)
+              console.log('获取单单返', data.resultData.data.obtainAmount/100)
             } else {
               console.log('单单返失败', data.resultData.msg)
             }
@@ -509,7 +509,8 @@ async function doTask() {
       console.log('预计获得：', task.name, task.amount)
       await awardMission(task['missionId'])
     } else if (task.doLink.indexOf('juid=') !== -1) {
-      console.log(`\n开始做 【${task['name']}】任务`);
+      console.log(`\n开始领取 【${task['name']}】任务`);
+      await receiveMission(task['missionId']);
       const juid = task.doLink.match(/juid=(.*)/)[1];
       await getJumpInfo(juid);
       await $.wait(1000);
