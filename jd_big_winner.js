@@ -91,7 +91,7 @@ async function main() {
       } else if ($.time < 10) {
         await $.wait($.time * 60 * 1000)
       }
-    } while (!$.time && $.time < 10)
+    } while (!!$.time && $.time < 10)
   } catch (e) {
     $.logErr(e)
   }
