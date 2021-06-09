@@ -56,8 +56,7 @@ if ($.isNode()) {
         }
         continue
       }
-      if (i==1)
-        await main();
+      await main();
     }
   }
 })()
