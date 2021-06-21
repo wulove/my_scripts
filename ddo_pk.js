@@ -34,7 +34,7 @@ $.toStr = (t, e = null) => {
 }
 const notify = $.isNode() ? require("./sendNotify") : "";
 const jdCookieNode = $.isNode() ? require("./jdCookie.js") : "";
-const sck = $.isNode() ? "set-cookie" : "Set-Cookie";
+const appId = "dafbe42d5bff9d82298e5230eb8c3f79";
 let cookiesArr = [],
 	cookie = "",
 	message;
@@ -102,28 +102,29 @@ async function main() {
 		if ($.pin) {
 			console.log("当前pin（pk码）：" + $.pin);
 		}
-		await getPinList(30); // 获取的pin列表
+		$.pinList = []
+		await getPinList(); // 获取的pin列表
 		let myScore=await getScore($.pin);
-		await submitPKCode($.pin)
 		console.log("我的京享值:"+myScore);
-		if($.pinList){
-			console.log($.pinList)
+		console.log($.pinList)
+		if($.pinList.length){
 			for(let i = 0; i < $.pinList.length ; i++){
 				if(bcomplate){
 					break;
 				}
 				else{
+					await $.wait(1000);
 					let pin = $.pinList[i];
 					console.log('别人的的pin：' + pin)
 					let fscore=await getScore(pin);
 					console.log("别人的京享值:"+fscore);
 					if(fscore<myScore){
 						await launchBattle(pin);
-						await receiveBattle(pin);
-					}					
-					
+						//await receiveBattle(pin);
+					}
+
 				}
-		
+
 			}
 			bcomplate =false;
 		}
@@ -143,44 +144,18 @@ async function main() {
 	}
 }
 
-function submitPKCode (pin) {
-	console.log(`上传pk码: ${pin}`);
-	return new Promise((resolve) => {
-		let options = {
-			"url": `https://pool.nz.lu/api/v2/upload?name=PK&code=${pin}`,
-			"headers": {
-				"Host": "pool.nz.lu",
-				"Connection": "keep-alive",
-				"Accept": " */*",
-				"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4433.0 Safari/537.36",
-				"Accept-Language": "zh-cn",
-			}
-		}
-
-		$.get(options, (err, resp, res) => {
-			try {
-				if (res) {
-					console.log(`${pin}上传成功`)
-				}
-			} catch (e) {
-				console.log(e);
-			} finally {
-				resolve(res);
-			}
-		})
-	})
-}
-
-function getPinList(num = 20){
+function getPinList(){
 	console.log("获取Pk列表");
 	return new Promise((resolve) => {
 		let options = {
-			"url": `https://pool.nz.lu/api/v2/get?name=PK&count=${num}`,
+			"url": `https://pengyougou.m.jd.com/like/jxz/getUserFriends?actId=8&appId=${appId}&lkEPin=${$.pin}`,
 			"headers": {
-				"Host": "pool.nz.lu",
+				"Host": "pengyougou.m.jd.com",
+				"Content-Type": "application/json",
+				"Origin": "https://game-cdn.moxigame.cn",
 				"Connection": "keep-alive",
 				"Accept": " */*",
-				"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4433.0 Safari/537.36",
+				"User-Agent": "jdapp;iPhone;10.0.1;12.0.1;badbca31864b231fdbd9c05eb1b4a56043999456;network/wifi;model/iPhone8,1;addressid/2430648654;appBuild/167685;jdSupportDarkMode/0;Mozilla/5.0 (iPhone; CPU iPhone OS 12_0_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/16A404;supportJDSHWK/1",
 				"Accept-Language": "zh-cn",
 			}
 		}
@@ -189,7 +164,11 @@ function getPinList(num = 20){
 			try {
 				if (res) {
 					let data = $.toObj(res);
-					$.pinList = data.data;
+					if (data.success) {
+						for (let f of (data.datas.filter(f => f.leftAcceptPkNum > 0) || [])) {
+							$.pinList.push(f.friendPin);
+						}
+					}
 				}
 			} catch (e) {
 				console.log(e);
@@ -205,41 +184,37 @@ function launchBattle(fpin) {
 	console.log("发起挑战");
 	return new Promise((resolve) => {
 		let options = {
-			"url": `https://jd.moxigame.cn/likejxz/launchBattle?actId=8&appId=dafbe42d5bff9d82298e5230eb8c3f79&lkEPin=${$.pin}&recipient=${fpin}&relation=1`,
+			"url": `https://pengyougou.m.jd.com/open/api/like/jxz/launchBattle?appId=${appId}&lkEPin=${$.pin}&sign=678f641b783a2cf9a154e5a3bca7234d&t=${Date.now()}`,
 			"headers": {
-				"Host": "jd.moxigame.cn",
-				"Content-Type": "application/json",
+				"Host": "pengyougou.m.jd.com",
+				"Content-Type": "application/json;charset=utf-8",
 				"Origin": "https://game-cdn.moxigame.cn",
 				"Connection": "keep-alive",
-				"Accept": " */*",
-				"User-Agent": "",
+				"Accept": "*/*",
+				"User-Agent": "jdapp;iPhone;10.0.1;12.0.1;badbca31864b231fdbd9c05eb1b4a56043999456;network/wifi;model/iPhone8,1;addressid/2430648654;appBuild/167685;jdSupportDarkMode/0;Mozilla/5.0 (iPhone; CPU iPhone OS 12_0_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/16A404;supportJDSHWK/1",
 				"Accept-Language": "zh-cn",
-			}
+			},
+			"body": JSON.stringify({
+				"actId": 8,
+				"recipient": fpin,
+				"relation": 2
+			})
 		}
 
 
-		$.get(options, (err, resp, res) => {
+		$.post(options, (err, resp, data) => {
 			try {
-				if (res) {
-					let data = $.toObj(res);
-					console.log(data);
-					if (data) {
-						data=data.data;
-						if(data.msg){
-						    console.log(data.msg);
-							if(data.msg =="今日次数已耗尽"){
-							bcomplate=true;
-							}
-						}else{
-						     console.log($.toStr(data));
-						}
-					}
-
-				}
+				console.log(data);
+				/*data = JSON.parse(data);
+				if (data.success === true) {
+					console.log(`${$.name}第${$.drawNumber}次抽奖，获得：${data.content.rewardDTO.title || ' '}`);
+				} else {
+					console.log(`${$.name}第${$.drawNumber}次抽奖失败`);
+				}*/
 			} catch (e) {
-				console.log(e);
+				$.logErr(e, resp)
 			} finally {
-				resolve(res);
+				resolve();
 			}
 		})
 	});
@@ -249,14 +224,14 @@ function getScore(fpin){
     console.log("查询"+fpin+"分数");
 	return new Promise((resolve) => {
 		let options = {
-        	"url": "https://jd.moxigame.cn/likejxz/getScore?actId=8&appId=dafbe42d5bff9d82298e5230eb8c3f79&lkEPin="+fpin,
+        	"url": `https://pengyougou.m.jd.com/like/jxz/getScore?actId=8&appId=${appId}&lkEPin=${fpin}`,
         	"headers": {
-        		"Host": "jd.moxigame.cn",
+        		"Host": "pengyougou.m.jd.com",
         		"Content-Type": "application/json",
         		"Origin": "https://game-cdn.moxigame.cn",
         		"Connection": "keep-alive",
         		"Accept": " */*",
-        		"User-Agent": "",
+        		"User-Agent": "jdapp;iPhone;10.0.1;12.0.1;badbca31864b231fdbd9c05eb1b4a56043999456;network/wifi;model/iPhone8,1;addressid/2430648654;appBuild/167685;jdSupportDarkMode/0;Mozilla/5.0 (iPhone; CPU iPhone OS 12_0_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/16A404;supportJDSHWK/1",
         		"Accept-Language": "zh-cn",
         		"Accept-Encoding": "gzip, deflate, br"
         	}
@@ -283,14 +258,14 @@ function getScore(fpin){
 function receiveBattle(fpin) {
 	return new Promise((resolve) => {
 		let options = {
-			"url": `https://jd.moxigame.cn/likejxz/receiveBattle?actId=8&appId=dafbe42d5bff9d82298e5230eb8c3f79&lkEPin=${$.pin}&recipient=${fpin}`,
+			"url": `https://pengyougou.m.jd.com/like/jxz/receiveBattle?actId=8&appId=${appId}&lkEPin=${$.pin}&recipient=${fpin}`,
 			"headers": {
-				"Host": "jd.moxigame.cn",
+				"Host": "pengyougou.m.jd.com",
 				"Content-Type": "application/json",
 				"Origin": "https://game-cdn.moxigame.cn",
 				"Connection": "keep-alive",
 				"Accept": " */*",
-				"User-Agent": "",
+				"User-Agent": "jdapp;iPhone;10.0.1;12.0.1;badbca31864b231fdbd9c05eb1b4a56043999456;network/wifi;model/iPhone8,1;addressid/2430648654;appBuild/167685;jdSupportDarkMode/0;Mozilla/5.0 (iPhone; CPU iPhone OS 12_0_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/16A404;supportJDSHWK/1",
 				"Accept-Language": "zh-cn",
 				"Accept-Encoding": "gzip, deflate, br"
 			}
@@ -325,7 +300,7 @@ function receiveBattle(fpin) {
 function getBoxRewardInfo() {
 	return new Promise((resolve) => {
 		let options = {
-			"url": "https://pengyougou.m.jd.com/like/jxz/getBoxRewardInfo?actId=8&appId=dafbe42d5bff9d82298e5230eb8c3f79&lkEPin="+$.pin,
+			"url": "https://pengyougou.m.jd.com/like/jxz/getBoxRewardInfo?actId=8&appId=${appId}&lkEPin="+$.pin,
 			"headers": {
 				"Host": "jdjoy.jd.com",
 				"Origin": "https://prodev.m.jd.com",
@@ -363,9 +338,9 @@ function getBoxRewardInfo() {
 function sendBoxReward(rewardConfigId) {
 	return new Promise((resolve) => {
 		let options = {
-			"url": "https://pengyougou.m.jd.com/like/jxz/sendBoxReward?rewardConfigId="+rewardConfigId+"&actId=8&appId=dafbe42d5bff9d82298e5230eb8c3f79&lkEPin="+$.pin,
+			"url": `https://pengyougou.m.jd.com/like/jxz/sendBoxReward?rewardConfigId=${rewardConfigId}&actId=8&appId=${appId}&lkEPin=${$.pin}`,
 			"headers": {
-				"Host": "jdjoy.jd.com",
+				"Host": "pengyougou.m.jd.co",
 				"Origin": "https://prodev.m.jd.com",
 				"Cookie": cookie,
 				"Connection": "keep-alive",
@@ -403,14 +378,14 @@ function sendBoxReward(rewardConfigId) {
 function getPin() {
 	return new Promise((resolve) => {
 		let options = {
-			"url": "https://jdjoy.jd.com/saas/framework/encrypt/pin?appId=dafbe42d5bff9d82298e5230eb8c3f79",
+			"url": `https://jdjoy.jd.com/saas/framework/encrypt/pin?appId=${appId}`,
 			"headers": {
 				"Host": "jdjoy.jd.com",
 				"Origin": "https://prodev.m.jd.com",
 				"Cookie": cookie,
 				"Connection": "keep-alive",
 				"Accept": "application/json, text/plain, */*",
-				"User-Agent": "jdapp;iPhone;9.5.4;13.6;db48e750b34fe9cd5254d970a409af316d8b5cf3;network/wifi;ADID/38EE562E-B8B2-7B58-DFF3-D5A3CED0683A;model/iPhone10,3;addressid/0;appBuild/167668;jdSupportDarkMode/0;Mozilla/5.0 (iPhone; CPU iPhone OS 13_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1",
+				"User-Agent": "jdapp;iPhone;10.0.1;12.0.1;badbca31864b231fdbd9c05eb1b4a56043999456;network/wifi;model/iPhone8,1;addressid/2430648654;appBuild/167685;jdSupportDarkMode/0;Mozilla/5.0 (iPhone; CPU iPhone OS 12_0_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/16A404;supportJDSHWK/1",
 				"Accept-Language": "zh-cn",
 				"Referer": "https://prodev.m.jd.com/mall/active/4HTqMAvser7ctEBEdhK4yA7fXpPi/index.html?babelChannel=ttt9&tttparams=AeOIMwdeyJnTG5nIjoiMTE3LjAyOTE1NyIsImdMYXQiOiIyNS4wOTUyMDcifQ7%3D%3D&lng=00.000000&lat=00.000000&sid=&un_area="
 			}
@@ -438,14 +413,14 @@ function getPin() {
 function getToken() {
 	return new Promise((resolve) => {
 		let options = {
-			"url": "https://jdjoy.jd.com/saas/framework/user/token?appId=dafbe42d5bff9d82298e5230eb8c3f79&client=m&url=pengyougou.m.jd.com",
+			"url": `https://jdjoy.jd.com/saas/framework/user/token?appId=${appId}&client=m&url=pengyougou.m.jd.com`,
 			"headers": {
 				"Host": "jdjoy.jd.com",
 				"Origin": "https://prodev.m.jd.com",
 				"Cookie": cookie,
 				"Connection": "keep-alive",
 				"Accept": "application/json, text/plain, */*",
-				"User-Agent": "jdapp;iPhone;9.5.4;13.6;db48e750b34fe9cd5254d970a409af316d8b5cf3;network/wifi;ADID/38EE562E-B8B2-7B58-DFF3-D5A3CED0683A;model/iPhone10,3;addressid/0;appBuild/167668;jdSupportDarkMode/0;Mozilla/5.0 (iPhone; CPU iPhone OS 13_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1",
+				"User-Agent": "jdapp;iPhone;10.0.1;12.0.1;badbca31864b231fdbd9c05eb1b4a56043999456;network/wifi;model/iPhone8,1;addressid/2430648654;appBuild/167685;jdSupportDarkMode/0;Mozilla/5.0 (iPhone; CPU iPhone OS 12_0_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/16A404;supportJDSHWK/1",
 				"Accept-Language": "zh-cn",
 				"Referer": "https://prodev.m.jd.com/mall/active/4HTqMAvser7ctEBEdhK4yA7fXpPi/index.html?babelChannel=ttt9&tttparams=AeOIMwdeyJnTG5nIjoiMTE3LjAyOTE1NyIsImdMYXQiOiIyNS4wOTUyMDcifQ7%3D%3D&lng=00.000000&lat=00.000000&sid=&un_area="
 			}

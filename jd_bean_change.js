@@ -304,7 +304,7 @@ function redPacket() {
             // 因github上执行时间采用utc时间, 故这里减去8小时
             if(new Date().getHours() === new Date().getUTCHours()) t = t - 8*60*60
             for (let vo of data.useRedInfo.redList || []) {
-              if (vo.activityName.includes("京喜") || vo.activityName.includes("阶梯")) {
+              if (vo.orgLimitStr && vo.orgLimitStr.includes("京喜")) {
                 $.jxRed += parseFloat(vo.balance)
                 if (vo['endTime'] === t) {
                   $.jxRedExpire += parseFloat(vo.balance)
