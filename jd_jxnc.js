@@ -315,6 +315,7 @@ async function jdJXNC() {
         await $.wait(500);
         const endInfo = await getTaskList();
         getMessage(endInfo, startInfo);
+        /* 暂屏蔽助力
         await submitInviteId($.UserName);
         await $.wait(500);
         let next = await helpFriends();
@@ -332,7 +333,7 @@ async function jdJXNC() {
             }
             break;
           }
-        }
+        }*/
       }
     }
   }

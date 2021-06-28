@@ -92,7 +92,7 @@ function queryMission(info = true) {
   $.taskData = [];
   const body = JSON.stringify({
     "apiVersion": "1.0.0",
-    "channel": "default",
+    "channel": "scljticon",
     "channelLv": "scljticon",
     "others": {
       "taskCode": "JTPD-new"
@@ -288,7 +288,7 @@ function awardMission(missionId) {
 function userSignInfo() {
   const body = JSON.stringify({
     "apiVersion": "1.0.0",
-    "channel": "default",
+    "channel": "scljticon",
     "channelLv": "scljticon",
     "source": "JD_APP",
     "riskDeviceParam": JSON.stringify({
@@ -374,9 +374,9 @@ function signInSubsidy() {
 function getProfitSum() {
   const body = JSON.stringify({
     "apiVersion": "1.0.0",
-    "channel": "default",
+    "channel": "",
     "channelLv": "scljticon",
-    "source": "JD_APP"
+    "source": "jd"
   })
   const options = taskUrl('profitSum', body, 'uc');
   return new Promise((resolve) => {
@@ -410,27 +410,15 @@ function getProfitSum() {
 //单单返
 function jupiterWithdraw() {
   const body = JSON.stringify({
-    channel: "sqcs",
-    source: "jd",
-    "riskDeviceParam": JSON.stringify({
-      appId: "jdapp",
-      appType: "3",
-      clientVersion: "9.4.6",
-      deviceType: "iPhone11,8",
-      "eid": cookie,
-      "fp": getFp(),
-      idfa: "",
-      imei: "",
-      ip: "",
-      macAddress: "",
-      networkType: "WIFI",
-      os: "iOS",
-      osVersion: "14.2",
-      token: "",
-      uuid: ""
-    })
+    "channel": "scljticon",
+    "channelLv": "scljticon",
+    "apiVersion": "1.0.0",
+    "riskDeviceParam": "",
+    "type": 8,
+    "source": "jdjr",
+    "operType": "ttx"
   })
-  const options = taskUrl('jupiterWithdraw', body, 'jrm');
+  const options = taskUrl('commonWelfareWithdraw', body, 'jrm');
   return new Promise((resolve) => {
     $.get(options, async (err, resp, data) => {
       try {
@@ -460,7 +448,7 @@ function jupiterWithdraw() {
 function queryAvailableSubsidyAmount() {
   const body = JSON.stringify({
     "apiVersion": "1.0.0",
-    "channel": "default",
+    "channel": "scljticon",
     "channelLv": "scljticon",
     "source": "JD_APP",
     "riskDeviceParam": JSON.stringify({

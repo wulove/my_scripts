@@ -309,7 +309,7 @@ function shareCodesFormat() {
 function readShareCode() {
   console.log(`开始`)
   return new Promise(async resolve => {
-    $.get({
+    /*$.get({
       url: `http://share.turinglabs.net/api/v3/sgmh/query/${randomCount}/`,
       'timeout': 10000
     }, (err, resp, data) => {
@@ -329,7 +329,7 @@ function readShareCode() {
         resolve(inviteCodes);
       }
     })
-    await $.wait(2000);
+    await $.wait(2000);*/
     resolve(inviteCodes)
   })
 }

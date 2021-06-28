@@ -1,16 +1,10 @@
 /*
- * @Author: LXK9301 https://github.com/LXK9301
- * @Date: 2020-11-03 09:25:47
- * @Last Modified by: LXK9301
- * @Last Modified time: 2021-4-3 15:27:07
- */
-/*
 京东手机狂欢城活动，每日可获得20+以上京豆（其中20京豆是往期奖励，需第一天参加活动后，第二天才能拿到）
-活动时间: 2021-4-1至2021-4-20
+活动时间: 2021-5-24至2021-6-20
 活动入口：暂无 [活动地址](https://carnivalcity.m.jd.com/)
 
 往期奖励：
-a、 4月1日-4月20日期间第1名可获得实物手机一部，4月1日/16日/17日/18日/19日/20日 第1名/418名获得手机。
+a、第1名、第618名可获得实物手机一部
 b、 每日第2-10000名，可获得50个京豆
 c、 每日第10001-30000名可获得20个京豆
 d、 30000名之外，0京豆
@@ -51,16 +45,23 @@ if ($.isNode()) {
 } else {
   cookiesArr = [$.getdata('CookieJD'), $.getdata('CookieJD2'), ...jsonParse($.getdata('CookiesJD') || "[]").map(item => item.cookie)].filter(item => !!item);
 }
-let inviteCodes = [];
+let inviteCodes = ['99070b82-4c86-47e1-ad6d-42b4d8a73ff8','5be6ff5e-bb15-427c-93c8-14732c91542f'];
 const JD_API_HOST = 'https://carnivalcity.m.jd.com';
-const activeEndTime = '2021/4/21 00:00:00+08:00';
+const activeEndTime = '2021/06/21 00:00:00+08:00';//活动结束时间
+let nowTime = new Date().getTime() + new Date().getTimezoneOffset()*60*1000 + 8*60*60*1000;
 !(async () => {
   if (!cookiesArr[0]) {
     $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
     return;
   }
   $.temp = [];
-  await updateShareCodesCDN();
+  if (nowTime > new Date(activeEndTime).getTime()) {
+    //活动结束后弹窗提醒
+    $.msg($.name, '活动已结束', `该活动累计获得京豆：${$.jingBeanNum}个\n请删除此脚本\n咱江湖再见`);
+    if ($.isNode()) await notify.sendNotify($.name + '活动已结束', `请删除此脚本\n咱江湖再见`);
+    return
+  }
+  // await updateShareCodesCDN();
   await requireConfig();
   for (let i = 0; i < cookiesArr.length; i++) {
     if (cookiesArr[i]) {
@@ -133,6 +134,7 @@ const activeEndTime = '2021/4/21 00:00:00+08:00';
 async function JD818() {
   try {
     await indexInfo();//获取任务
+    await supportList();//助力情况
     await getHelp();//获取邀请码
     if ($.blockAccount) return
     await indexInfo(true);//获取任务
@@ -144,6 +146,7 @@ async function JD818() {
     await getListRank();
     await getListIntegral();
     await getListJbean();
+    await check();//查询抽奖记录(未兑换的，发送提醒通知);
     await showMsg()
   } catch (e) {
     $.logErr(e)
@@ -151,10 +154,10 @@ async function JD818() {
 }
 async function doHotProducttask() {
   $.hotProductList = $.hotProductList.filter(v => !!v && v['status'] === "1");
-  if ($.hotProductList && $.hotProductList.length) console.log(`开始 【浏览热销手机产品】任务`)
+  if ($.hotProductList && $.hotProductList.length) console.log(`开始 【浏览热销手机产品】任务,需等待6秒`)
   for (let item of $.hotProductList) {
     await doBrowse(item['id'], "", "hot", "browse", "browseHotSku");
-    await $.wait(200);
+    await $.wait(1000 * 6);
     if ($.browseId) {
       await getBrowsePrize($.browseId)
     }
@@ -242,7 +245,7 @@ function brandTaskInfo(brandId) {
               console.log(`\n开始做 品牌手机 【${data['data']['brandName']}】 任务`)
               console.log(`开始浏览 1-F 单品区 任务 ${sku['name']}`);
               await doBrowse(sku['id'], brandId, "brand", "presell", "browseSku");
-              await $.wait(200);
+              await $.wait(1000 * 6);
               if ($.browseId) await getBrowsePrize($.browseId, brandId);
             }
             for (let sku of $.shopTask.filter(vo => !!vo && vo['status'] !== '4')){
@@ -338,8 +341,8 @@ function indexInfo(flag = false) {
             $.brandList = data['data']['brandList'];
             $.browseshopList = data['data']['browseshopList'];
             if (flag) {
-              console.log(`助力情况：${data['data']['supportedNums']}/${data['data']['supportNeedNums']}`);
-              message += `邀请好友助力：${data['data']['supportedNums']}/${data['data']['supportNeedNums']}\n`
+              // console.log(`助力情况：${data['data']['supportedNums']}/${data['data']['supportNeedNums']}`);
+              // message += `邀请好友助力：${data['data']['supportedNums']}/${data['data']['supportNeedNums']}\n`
             }
           } else {
             console.log(`异常：${JSON.stringify(data)}`)
@@ -353,7 +356,136 @@ function indexInfo(flag = false) {
     })
   });
 }
+//获取助力信息
+function supportList() {
+  const options = taskUrl('/khc/index/supportList', { t: Date.now() })
+  return new Promise( (resolve) => {
+    $.get(options, async (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+        } else {
+          data = JSON.parse(data);
+          if (data.code === 200) {
+            console.log(`助力情况：${data['data']['supportedNums']}/${data['data']['supportNeedNums']}`);
+            message += `邀请好友助力：${data['data']['supportedNums']}/${data['data']['supportNeedNums']}\n`
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp);
+      } finally {
+        resolve();
+      }
+    })
+  });
+}
+//积分抽奖
+function lottery() {
+  const options = taskUrl('/khc/record/lottery', { t: Date.now() })
+  return new Promise( (resolve) => {
+    $.get(options, async (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+        } else {
+          data = JSON.parse(data);
+          if (data.code === 200) {
+            if (data.data.prizeId !== 8) {
+              //已中奖
+              const url = 'https://carnivalcity.m.jd.com/#/integralDetail';
+              console.log(`积分抽奖获得:${data.data.prizeName}`);
+              message += `积分抽奖获得：${data.data.prizeName}\n`;
+              $.msg($.name, '', `京东账号 ${$.index} ${$.nickName || $.UserName}\n积分抽奖获得：${data.data.prizeName}\n兑换地址：${url}`, { 'open-url': url });
+              if ($.isNode()) await notify.sendNotify($.name, `京东账号 ${$.index} ${$.nickName || $.UserName}\n积分抽奖获得：${data.data.prizeName}\n兑换地址：${url}`);
+            } else {
+              console.log(`积分抽奖结果:${data['data']['prizeName']}}`);
+            }
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp);
+      } finally {
+        resolve();
+      }
+    })
+  });
+}
+//查询抽奖记录(未兑换的)
+function check() {
+  const options = taskUrl('/khc/record/convertRecord', { t: Date.now(), pageNum: 1 })
+  return new Promise( (resolve) => {
+    $.get(options, async (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+        } else {
+          data = JSON.parse(data);
+          let str = '';
+          if (data.code === 200) {
+            for (let obj of data.data) {
+              if (obj.hasOwnProperty('fillStatus') && obj.fillStatus !== true) {
+                str += JSON.stringify(obj);
+              }
+            }
+          }
+          if (str.length > 0) {
+            const url = 'https://carnivalcity.m.jd.com/#/integralDetail';
+            $.msg($.name, '', `京东账号 ${$.index} ${$.nickName || $.UserName}\n积分抽奖获得：${str}\n兑换地址：${url}`, { 'open-url': url });
+            if ($.isNode()) await notify.sendNotify($.name, `京东账号 ${$.index} ${$.nickName || $.UserName}\n积分抽奖获得：${str}\n兑换地址：${url}`);
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp);
+      } finally {
+        resolve();
+      }
+    })
+  });
+  return new Promise((resolve)=>{
+    var request = require('request');
+    let timestamp = (new Date()).getTime()
+    var headers = {
+      'Sgm-Context': '144512924112128160;144512924112128160',
+      'Host': 'carnivalcity.m.jd.com',
+      'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 14_5_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.1 Mobile/15E148 Safari/604.1',
+      'sign': 'c5a92160e87206287af0faee2b056429',
+      'Referer': 'https://carnivalcity.m.jd.com/',
+      'timestamp': `${timestamp}`,
+      'Cookie': cookie
+    };
 
+    var options = {
+      url: `https://carnivalcity.m.jd.com/khc/record/convertRecord?pageNum=1&t=${timestamp}`,
+      headers: headers
+    };
+
+    async function callback(error, response, body) {
+      if (!error && response.statusCode == 200) {
+        // $.log(body);
+        let result = JSON.parse(body)
+        let message = ""
+        if (result.data.length > 0) {
+          message += message += `\n开始【京东账号${$.index}】${$.nickName || $.UserName}\n`
+        }
+        for (let obj of result.data) {
+          if (obj.hasOwnProperty('fillStatus') && obj.fillStatus != true) {
+            message += JSON.stringify(obj)
+          }
+        }
+        if (message.length > 0) {
+          await notify.sendNotify($.name, message);
+        }
+        resolve()
+      }
+    }
+
+    request(options, callback);
+
+  })
+}
 function myRank() {
   return new Promise(resolve => {
     const body = {
@@ -535,8 +667,13 @@ function getListIntegral() {
         } else {
           data = JSON.parse(data);
           if (data.code === 200) {
-            $.integralCount = data.data.integralNum;//累计活动积分
+            $.integralCount = data.data.integralNum || 0;//累计活动积分
             message += `累计获得积分：${$.integralCount}\n`;
+            console.log(`开始抽奖，当前积分可抽奖${parseInt($.integralCount / 50)}次\n`);
+            for (let i = 0; i < parseInt($.integralCount / 50); i ++) {
+              await lottery();
+              await $.wait(500);
+            }
           } else {
             console.log(`integralRecord失败：${JSON.stringify(data)}`);
           }
@@ -608,7 +745,7 @@ function updateShareCodesCDN(url = 'https://cdn.jsdelivr.net/gh/gitupdate/update
 function readShareCode() {
   console.log(`开始`)
   return new Promise(async resolve => {
-    $.get({url: `http://jd.turinglabs.net/api/v2/jd/carnivalcity/read/20/`, 'timeout': 20000}, (err, resp, data) => {
+    $.get({url: `http://share.turinglabs.net/api/v3/carnivalcity/query/20/`, 'timeout': 20000}, (err, resp, data) => {
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
@@ -621,11 +758,11 @@ function readShareCode() {
       } catch (e) {
         $.logErr(e, resp)
       } finally {
-        resolve(data);
+        resolve(inviteCodes);
       }
     })
     await $.wait(20000);
-    resolve()
+    resolve(inviteCodes)
   })
 }
 //格式化助力码
@@ -812,16 +949,10 @@ function TotalBean() {
 }
 
 async function showMsg() {
-  let nowTime = new Date().getTime() + new Date().getTimezoneOffset()*60*1000 + 8*60*60*1000;
-  if (nowTime > new Date(activeEndTime).getTime()) {
-    $.msg($.name, '活动已结束', `该活动累计获得京豆：${$.jingBeanNum}个\n请删除此脚本\n咱江湖再见`);
-    if ($.isNode()) await notify.sendNotify($.name + '活动已结束', `请删除此脚本\n咱江湖再见`)
-  } else {
-    if ($.beans) {
-      allMessage += `京东账号${$.index} ${$.nickName || $.UserName}\n本次运行获得：${$.beans}京豆\n${message}活动地址：${JD_API_HOST}${$.index !== cookiesArr.length ? '\n\n' : ''}`
-    }
-    $.msg($.name, `京东账号${$.index} ${$.nickName || $.UserName}`, `${message}具体详情点击弹窗跳转后即可查看`, {"open-url": JD_API_HOST});
+  if ($.beans) {
+    allMessage += `京东账号${$.index} ${$.nickName || $.UserName}\n本次运行获得：${$.beans}京豆\n${message}活动地址：${JD_API_HOST}${$.index !== cookiesArr.length ? '\n\n' : ''}`
   }
+  $.msg($.name, `京东账号${$.index} ${$.nickName || $.UserName}`, `${message}具体详情点击弹窗跳转后即可查看`, {"open-url": JD_API_HOST});
 }
 
 function jsonParse(str) {

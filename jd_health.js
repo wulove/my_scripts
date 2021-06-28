@@ -257,7 +257,7 @@ function safeGet(data) {
 function readShareCode() {
   console.log(`开始`)
   return new Promise(async resolve => {
-    $.get({
+    /*$.get({
       url: `http://share.turinglabs.net/api/v3/health/query/${randomCount}/`,
       'timeout': 10000
     }, (err, resp, data) => {
@@ -277,7 +277,7 @@ function readShareCode() {
         resolve(inviteCodes);
       }
     })
-    await $.wait(10000);
+    await $.wait(10000);*/
     resolve(inviteCodes)
   })
 }

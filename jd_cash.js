@@ -355,7 +355,7 @@ function showMsg() {
 function readShareCode() {
   console.log(`开始`)
   return new Promise(async resolve => {
-    $.get({url: `https://code.chiang.fun/api/v1/jd/jdcash/read/${randomCount}/`, 'timeout': 10000}, (err, resp, data) => {
+    /*$.get({url: `https://code.chiang.fun/api/v1/jd/jdcash/read/${randomCount}/`, 'timeout': 10000}, (err, resp, data) => {
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
@@ -372,7 +372,7 @@ function readShareCode() {
         resolve(inviteCodes);
       }
     })
-    await $.wait(10000);
+    await $.wait(10000);*/
     resolve(inviteCodes)
   })
 }
