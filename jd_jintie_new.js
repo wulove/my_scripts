@@ -378,7 +378,7 @@ function getProfitSum() {
     "channelLv": "scljticon",
     "source": "jd"
   })
-  const options = taskUrl('profitSum', body, 'uc');
+  const options = taskUrl('getProfitSum', body, 'jrm');
   return new Promise((resolve) => {
     $.get(options, async (err, resp, data) => {
       try {
@@ -420,7 +420,7 @@ function jupiterWithdraw() {
   })
   const options = taskUrl('commonWelfareWithdraw', body, 'jrm');
   return new Promise((resolve) => {
-    $.get(options, async (err, resp, data) => {
+    $.post(options, async (err, resp, data) => {
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
