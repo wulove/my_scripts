@@ -89,7 +89,7 @@ const JD_API_HOST = 'https://lkyl.dianpusoft.cn/api';
         console.log(`\n${$.UserName} 去给自己的下一账号 ${decodeURIComponent($.newShareCodes[(i + 1) % $.newShareCodes.length]['cookie'].match(/pt_pin=([^; ]+)(?=;?)/) && $.newShareCodes[(i + 1) % $.newShareCodes.length]['cookie'].match(/pt_pin=([^; ]+)(?=;?)/)[1])}助力，助力码为 ${code}\n`)
         await createAssistUser(code, $.createAssistUserID);
       }
-      /*console.log(`\n去帮助作者:LXK9301\n`)
+      /*
       await helpFriends();*/
     }
   }
@@ -138,8 +138,6 @@ async function doChannelsListTask(taskId, taskType) {
   }
 }
 async function helpFriends() {
-  // await updateInviteCode();
-  // if (!$.inviteCodes) await updateInviteCodeCDN();
   if ($.inviteCodes && $.inviteCodes['inviteCode']) {
     for (let item of $.inviteCodes.inviteCode) {
       if (!item) continue
@@ -699,7 +697,7 @@ function ssjjRooms() {
 function loginHome() {
   return new Promise(resolve => {
     const options = {
-      "url": "https://jdhome.m.jd.com/saas/framework/encrypt/pin?appId=6d28460967bda11b78e077b66751d2b0",
+      "url": "https://draw.jdfcloud.com/saas/framework/encrypt/pin?appId=6d28460967bda11b78e077b66751d2b0",
       "headers": {
         "Accept": "*/*",
         "Accept-Encoding": "gzip, deflate, br",
@@ -708,9 +706,9 @@ function loginHome() {
         "Content-Length": "0",
         "Content-Type": "application/json",
         "Cookie": cookie,
-        "Host": "jdhome.m.jd.com",
-        "Origin": "https://jdhome.m.jd.com",
-        "Referer": "https://jdhome.m.jd.com/dist/taro/index.html/",
+        "Host": "draw.jdfcloud.com",
+        "Origin": "https://draw.jdfcloud.com",
+        "Referer": "https://draw.jdfcloud.com/dist/taro/index.html/",
         "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1"),
       }
     }
@@ -718,7 +716,7 @@ function loginHome() {
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
-          console.log(`${$.name} API请求失败，请检查网路重试`)
+          console.log(`${$.name} API请求失败，请检查网路重试111`)
         } else {
           if (safeGet(data)) {
             data = JSON.parse(data);
@@ -738,7 +736,7 @@ function login(userName) {
     const body = {
       "body": {
         "client": 2,
-        userName
+        "userName" : userName["lkEPin"]
       }
     };
     const options = {
@@ -760,7 +758,7 @@ function login(userName) {
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
-          console.log(`${$.name} API请求失败，请检查网路重试`)
+          console.log(`${$.name} API请求失败，请检查网路重试12323`)
         } else {
           data = JSON.parse(data);
           if (data.head.code === 200) {
@@ -774,43 +772,6 @@ function login(userName) {
         resolve(data);
       }
     })
-  })
-}
-function updateInviteCode(url = 'https://raw.githubusercontent.com/LXK9301/updateTeam/master/jd_updateSmallHomeInviteCode.json') {
-  return new Promise(resolve => {
-    $.get({url}, async (err, resp, data) => {
-      try {
-        if (err) {
-          console.log(`${JSON.stringify(err)}`)
-        } else {
-          $.inviteCodes = JSON.parse(data);
-        }
-      } catch (e) {
-        $.logErr(e, resp)
-      } finally {
-        resolve();
-      }
-    })
-  })
-}
-function updateInviteCodeCDN(url) {
-  return new Promise(async resolve => {
-    $.get({url, headers:{"User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1")}}, async (err, resp, data) => {
-      try {
-        if (err) {
-          console.log(`${JSON.stringify(err)}`)
-          console.log(`${$.name} API请求失败，请检查网路重试`)
-        } else {
-          $.inviteCodes = JSON.parse(data);
-        }
-      } catch (e) {
-        $.logErr(e, resp)
-      } finally {
-        resolve();
-      }
-    })
-    await $.wait(3000)
-    resolve();
   })
 }
 function taskUrl(url, body = {}) {
@@ -867,7 +828,7 @@ function TotalBean() {
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
-          console.log(`${$.name} API请求失败，请检查网路重试`)
+          console.log(`${$.name} API请求失败，请检查网路重试123`)
         } else {
           if (safeGet(data)) {
             data = JSON.parse(data);
