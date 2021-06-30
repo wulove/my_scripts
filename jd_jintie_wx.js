@@ -79,12 +79,12 @@ function queryMission() {
   const body = JSON.stringify({
     "source":"MINI_APP",
     "channel":"default",
-    "apiVersion":"1.0.0",
+    "apiVersion":"4.0.0",
     "others":{
       "taskCode":"TTJT-weixin"
     }
   })
-  const options = taskUrl('queryCenterMissionList', body, 'jrm');
+  const options = taskUrl('channelQueryCenterMissionList', body, 'jrm');
   return new Promise((resolve) => {
     $.get(options, async (err, resp, data) => {
       try {
@@ -92,13 +92,13 @@ function queryMission() {
           console.log(`${JSON.stringify(err)}`)
           console.log(`${$.name} API请求失败，请检查网路重试`)
         } else {
-          //console.log(data)
+          console.log(data)
           data = JSON.parse(data);
           if (data.resultCode === 0) {
             if (data.resultData.code === '000') {
               console.log('互动任务获取成功')
               $.taskData = data.resultData.data.missionList;
-              $.willTask = $.taskData.filter(t => t.status === -1) || [];
+              $.willTask = $.taskData.filter(t => (t.status === -1 || t.status === 0)) || [];
               $.willingTask = $.taskData.filter(t => t.status === 0) || [];//已领取任务，但未完成
               $.recevieTask = $.taskData.filter(t => t.status === 1) || [];//待领取奖励
               const doneTask = $.taskData.filter(t => t.status === 2);
@@ -126,19 +126,15 @@ async function doTask() {
   for (let task of $.willTask) {
     console.log(`\n开始【${task['name']}】任务`);
 
-    if (task.taskType === 5) {
-      await doMission(task, 'seeVideoMission');
-      await $.wait(10000);
-      await doMission(task, 'videoMissionDone');
+    if (task.taskType === 1) {
+      /*await doMission(task, 'seeVideoMission');
+      await $.wait(10000);*/
+      await doMission(task, 'channelFinishSelfTask');
       await $.wait(1000);
-      await doMission(task, 'videoSubsidyReceive');
+      await doMission(task, 'channelRewardSelfTask');
     } else {
       await doMission(task, 'receiveCenterMission');
       await $.wait(1000);
-      /*await doMission(task, 'appletDoTaskNew');
-      await $.wait(1000);
-      await doMission(task, 'sentMissionMq');
-      await $.wait(1000);*/
       await doMission(task, 'doCenterMissionReport');
       await $.wait(1000);
       await doMission(task, 'awardCenterMission');
@@ -160,7 +156,7 @@ function doMission(mission, functionId) {
     "source":"MINI_APP",
     "channel":"default",
     "channelLv":"",
-    "apiVersion":"1.0.0",
+    "apiVersion":"4.0.0",
     "others":{
       "taskCode":'TTJT-weixin',
       "missionId":mission['missionId'],
