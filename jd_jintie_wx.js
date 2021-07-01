@@ -133,20 +133,20 @@ async function doTask() {
       await $.wait(1000);
       await doMission(task, 'channelRewardSelfTask');
     } else {
-      await doMission(task, 'receiveCenterMission');
+      await doMission(task, 'channelReceiveCenterMission');
       await $.wait(1000);
-      await doMission(task, 'doCenterMissionReport');
+      await doMission(task, 'channelDoCenterMissionReport');
       await $.wait(1000);
-      await doMission(task, 'awardCenterMission');
+      await doMission(task, 'channelAwardCenterMission');
     }
   }
   if ($.recevieTask && $.recevieTask.length) {
     for (let task of $.recevieTask) {
-      console.log('预计获得：', task['awardStr'])
-      if (task.taskType === 5) {
-        await doMission(task, 'videoSubsidyReceive');
+      console.log('预计获得：', task['amount'])
+      if (task.taskType === 1) {
+        await doMission(task, 'channelRewardSelfTask');
       } else {
-        await doMission(task, 'awardCenterMission');
+        await doMission(task, 'channelAwardCenterMission');
       }
     }
   }
@@ -175,7 +175,7 @@ function doMission(mission, functionId) {
             if (data.resultData.code === '000') {
               console.log(functionId, '成功')
             } else {
-              console.log(functionId, data.resultData.message)
+              console.log(functionId, data.resultData.msg)
             }
           } else {
             console.log(functionId, data.resultMsg)
@@ -192,7 +192,7 @@ function doMission(mission, functionId) {
 //获取用户金贴信息
 function queryAvailableSubsidyAmount() {
   const body = JSON.stringify({
-    "apiVersion": "1.0.0",
+    "apiVersion": "4.0.0",
     "channel": "default",
     "channelLv": "",
     "others": {
@@ -201,7 +201,7 @@ function queryAvailableSubsidyAmount() {
     "riskDeviceParam": {},
     "source": "MINI_APP"
   })
-  const options = taskUrl('userAvailableSubsidyInfo', body, 'jrm');
+  const options = taskUrl('channelUserSubsidyInfo', body, 'jrm');
   return new Promise((resolve) => {
     $.get(options, async (err, resp, data) => {
       try {
@@ -221,7 +221,7 @@ function queryAvailableSubsidyAmount() {
               console.log('获取金贴失败', data.resultData.msg)
             }
           } else {
-            console.log('获取金贴失败', data.resultData.retMsg)
+            console.log('获取金贴失败', data.resultMsg)
           }
         }
       } catch (e) {
