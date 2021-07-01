@@ -7,20 +7,9 @@
 活动入口：京东极速版app-领红包，签到提现
 已支持IOS双京东账号,Node.js支持N个京东账号
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
-============Quantumultx===============
-[task_local]
+
 #京东极速版红包
-0 0 * * * https://github.com/wulove/my_scripts/raw/master/jd_speed_redpocke.js, tag=京东极速版红包, enabled=true
-
-================Loon==============
-[Script]
-cron "0 0 * * *" script-path=https://github.com/wulove/my_scripts/raw/master/jd_speed_redpocke.js,tag=京东极速版红包
-
-===============Surge=================
-京东极速版红包 = type=cron,cronexp="0 0 * * *",wake-system=1,timeout=3600,script-path=https://github.com/wulove/my_scripts/raw/master/jd_speed_redpocke.js
-
-============小火箭=========
-京东极速版红包 = type=cron,script-path=https://github.com/wulove/my_scripts/raw/master/jd_speed_redpocke.js, cronexpr="0 0 * * *", timeout=3600, enable=true
+cron "15 0,22 * * *" script-path=jd_speed_redpocke.js,tag=京东极速版红包
 */
 
 const $ = new Env('京东极速版红包');

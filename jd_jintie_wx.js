@@ -2,17 +2,9 @@
 金贴小程序（每天大概可得0.07金贴）
 活动入口：微信-金贴小程序
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
-=================QuantumultX==============
-[task_local]
+
 #领金贴
-10 0 * * * https://github.com/wulove/my_scripts/raw/master/jd_jintie_wx.js, tag=金贴小程序, enabled=true
-===========Loon===============
-[Script]
-cron "10 0 * * *" script-path=https://github.com/wulove/my_scripts/raw/master/jd_jintie_wx.js,tag=金贴小程序
-=======Surge===========
-金贴小程序 = type=cron,cronexp="10 0 * * *",wake-system=1,timeout=3600,script-path=https://github.com/wulove/my_scripts/raw/master/jd_jintie_wx.js
-==============小火箭=============
-金贴小程序 = type=cron,script-path=https://github.com/wulove/my_scripts/raw/master/jd_jintie_wx.js, cronexpr="10 0 * * *", timeout=3600, enable=true
+cron "10 0,12,22 * * *" script-path=https://github.com/wulove/my_scripts/raw/master/jd_jintie_wx.js,tag=金贴小程序
  */
 const $ = new Env('金贴小程序');
 const notify = $.isNode() ? require('./sendNotify') : '';
