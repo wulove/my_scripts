@@ -467,7 +467,7 @@ function readShareCode() {
       }
     })
     await $.wait(10000);*/
-    resolve()
+    resolve({"code":200,"data":shareCodes})
   })
 }
 function shareCodesFormat() {

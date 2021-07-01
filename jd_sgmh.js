@@ -330,7 +330,7 @@ function readShareCode() {
       }
     })
     await $.wait(2000);*/
-    resolve(inviteCodes)
+    resolve({"code":200,"data":inviteCodes})
   })
 }
 function TotalBean() {

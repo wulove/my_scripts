@@ -546,7 +546,7 @@ function readShareCode() {
       }
     })
     await $.wait(15000);*/
-    resolve(shareCodes)
+    resolve({"code":200,"data":shareCodes})
   })
 }
 //格式化助力码

@@ -373,7 +373,7 @@ function readShareCode() {
       }
     })
     await $.wait(10000);*/
-    resolve(inviteCodes)
+    resolve({"code":200,"data":inviteCodes})
   })
 }
 //格式化助力码
