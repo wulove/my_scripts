@@ -176,8 +176,8 @@ function userSignInfo() {
 //签到
 function signInSubsidy() {
   const body = JSON.stringify({
-    "apiVersion": "1.0.0",
-    "channel": "default",
+    "apiVersion": "4.0.0",
+    "channel": "scljticon",
     "channelLv": "scljticon",
     "source": "JD_APP",
     "riskDeviceParam": JSON.stringify({
@@ -187,7 +187,7 @@ function signInSubsidy() {
       "shareId":"",
     }
   })
-  const options = taskUrl('signInSubsidy', body, 'jrm');
+  const options = taskUrl('channelSignInSubsidy', body, 'jrm');
   return new Promise((resolve) => {
     $.get(options, async (err, resp, data) => {
       try {
