@@ -511,7 +511,6 @@ function createInviteUser() {
 }
 
 function createAssistUser(inviteId, taskId) {
-  console.log(`${inviteId}, ${taskId}`, `${cookie}`);
   return new Promise(resolve => {
     $.get(taskUrl(`/ssjj-task-record/createAssistUser/${inviteId}/${taskId}`), (err, resp, data) => {
       try {
