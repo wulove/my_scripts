@@ -164,6 +164,10 @@ function getTaskDetail(taskId = '') {
                   await doTask(vo.threeMealInfoVos[0]?.taskToken, vo?.taskId)
                 } else if (vo.taskType === 26 || vo.taskType === 3) {
                   await doTask(vo.shoppingActivityVos[0]?.taskToken, vo?.taskId)
+                } else if (vo.taskType === 1) {
+                  await doTask(vo.followShopVo[i]?.taskToken, vo?.taskId)
+                } else {
+                  console.error(`${vo.taskType} 任务未编写`)
                 }
               }
             }
