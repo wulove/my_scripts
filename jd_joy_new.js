@@ -5,24 +5,22 @@
  IOS用户支持京东双账号,NodeJs用户支持N个京东账号
  更新时间：2021-06-21
  活动入口：京东APP我的-宠汪汪
-
  完成度 1%，要用的手动执行，先不加cron了
  默认80，10、20、40、80可选
  export feedNum = 80
  默认双人跑
  export JD_JOY_teamLevel = 2
  */
-
 const $ = new Env("宠汪汪二代目")
 console.log('\n====================Hello World====================\n')
 
-const https = require('https');
 const http = require('http');
 const stream = require('stream');
 const zlib = require('zlib');
 const vm = require('vm');
 const PNG = require('png-js');
 const UA = require('./USER_AGENTS.js').USER_AGENT;
+const fs = require("fs");
 
 
 Math.avg = function average() {
@@ -54,11 +52,11 @@ class PNGDecoder extends PNG {
   }
 
   getImageData(x, y, w, h) {
-    const {pixels} = this;
+    const { pixels } = this;
     const len = w * h * 4;
     const startIndex = x * 4 + y * (w * 4);
 
-    return {data: pixels.slice(startIndex, startIndex + len)};
+    return { data: pixels.slice(startIndex, startIndex + len) };
   }
 }
 
@@ -90,8 +88,8 @@ class PuzzleRecognizer {
   }
 
   recognize() {
-    const {ctx, w: width, bg} = this;
-    const {width: patchWidth, height: patchHeight} = this.patch;
+    const { ctx, w: width, bg } = this;
+    const { width: patchWidth, height: patchHeight } = this.patch;
     const posY = this.y + PUZZLE_PAD + ((patchHeight - PUZZLE_PAD) / 2) - (PUZZLE_GAP / 2);
     // const cData = ctx.getImageData(0, a.y + 10 + 20 - 4, 360, 8).data;
     const cData = bg.getImageData(0, posY, width, PUZZLE_GAP).data;
@@ -145,7 +143,7 @@ class PuzzleRecognizer {
   }
 
   runWithCanvas() {
-    const {createCanvas, Image} = require('canvas');
+    const { createCanvas, Image } = require('canvas');
     const canvas = createCanvas();
     const ctx = canvas.getContext('2d');
     const imgBg = new Image();
@@ -154,14 +152,14 @@ class PuzzleRecognizer {
 
     imgBg.src = prefix + this.rawBg;
     imgPatch.src = prefix + this.rawPatch;
-    const {naturalWidth: w, naturalHeight: h} = imgBg;
+    const { naturalWidth: w, naturalHeight: h } = imgBg;
     canvas.width = w;
     canvas.height = h;
     ctx.clearRect(0, 0, w, h);
     ctx.drawImage(imgBg, 0, 0, w, h);
 
     const width = w;
-    const {naturalWidth, naturalHeight} = imgPatch;
+    const { naturalWidth, naturalHeight } = imgPatch;
     const posY = this.y + PUZZLE_PAD + ((naturalHeight - PUZZLE_PAD) / 2) - (PUZZLE_GAP / 2);
     // const cData = ctx.getImageData(0, a.y + 10 + 20 - 4, 360, 8).data;
     const cData = ctx.getImageData(0, posY, width, PUZZLE_GAP).data;
@@ -248,7 +246,7 @@ class JDJRValidator {
     // console.log(pos[pos.length-1][2] -Date.now());
     // await sleep(4500);
     await sleep(pos[pos.length - 1][2] - Date.now());
-    const result = await JDJRValidator.jsonp('/slide/s.html', {d, ...this.data});
+    const result = await JDJRValidator.jsonp('/slide/s.html', { d, ...this.data });
 
     if (result.message === 'success') {
       console.log(result);
@@ -262,8 +260,8 @@ class JDJRValidator {
   }
 
   async recognize() {
-    const data = await JDJRValidator.jsonp('/slide/g.html', {e: ''});
-    const {bg, patch, y} = data;
+    const data = await JDJRValidator.jsonp('/slide/g.html', { e: '' });
+    const { bg, patch, y } = data;
     // const uri = 'data:image/png;base64,';
     // const re = new PuzzleRecognizer(uri+bg, uri+patch, y);
     const re = new PuzzleRecognizer(bg, patch, y);
@@ -302,8 +300,8 @@ class JDJRValidator {
   static jsonp(api, data = {}) {
     return new Promise((resolve, reject) => {
       const fnId = `jsonp_${String(Math.random()).replace('.', '')}`;
-      const extraData = {callback: fnId};
-      const query = new URLSearchParams({...DATA, ...extraData, ...data}).toString();
+      const extraData = { callback: fnId };
+      const query = new URLSearchParams({ ...DATA, ...extraData, ...data }).toString();
       const url = `http://${SERVER}${api}?${query}`;
       const headers = {
         'Accept': '*/*',
@@ -315,7 +313,7 @@ class JDJRValidator {
         'Referer': 'https://h5.m.jd.com/babelDiy/Zeus/2wuqXrZrhygTQzYA7VufBEpj4amH/index.html',
         'User-Agent': UA,
       };
-      const req = http.get(url, {headers}, (response) => {
+      const req = http.get(url, { headers }, (response) => {
         try {
           let res = response;
           if (res.headers['content-encoding'] === 'gzip') {
@@ -473,7 +471,7 @@ class MousePosFaker {
     }
   }
 
-  moveToAndCollect({x, y, duration}) {
+  moveToAndCollect({ x, y, duration }) {
     let movedX = 0;
     let movedY = 0;
     let movedT = 0;
@@ -529,14 +527,14 @@ function injectToRequest(fn) {
   };
 }
 
-let cookiesArr = [], cookie = '', jdFruitShareArr = [], isBox = false, notify, newShareCodes, allMessage = '';
+let cookiesArr = [], cookie = '', notify;
 $.get = injectToRequest($.get.bind($))
 $.post = injectToRequest($.post.bind($))
 
 !(async () => {
   await requireConfig();
   if (!cookiesArr[0]) {
-    $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
+    $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', { "open-url": "https://bean.m.jd.com/bean/signIndex.action" });
     return;
   }
   for (let i = 0; i < cookiesArr.length; i++) {
@@ -547,10 +545,13 @@ $.post = injectToRequest($.post.bind($))
       $.isLogin = true;
       $.nickName = '';
       await TotalBean();
-      
+      if (!require('./JS_USER_AGENTS').HelloWorld) {
+        console.log(`\n【京东账号${$.index}】${$.nickName || $.UserName}：运行环境检测失败\n`);
+        continue
+      }
       console.log(`\n开始【京东账号${$.index}】${$.nickName || $.UserName}\n`);
       if (!$.isLogin) {
-        $.msg($.name, `【提示】cookie已失效`, `京东账号${$.index} ${$.nickName || $.UserName}\n请重新登录获取\nhttps://bean.m.jd.com/bean/signIndex.action`, {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
+        $.msg($.name, `【提示】cookie已失效`, `京东账号${$.index} ${$.nickName || $.UserName}\n请重新登录获取\nhttps://bean.m.jd.com/bean/signIndex.action`, { "open-url": "https://bean.m.jd.com/bean/signIndex.action" });
 
         if ($.isNode()) {
           await notify.sendNotify(`${$.name}cookie已失效 - ${$.UserName}`, `京东账号${$.index} ${$.UserName}\n请重新登录获取cookie`);
@@ -560,21 +561,17 @@ $.post = injectToRequest($.post.bind($))
       message = '';
       subTitle = '';
 
+      await run('detail/v2');
       await run();
-      // await run('detail/v2');
-
       await feed();
 
       let tasks = await taskList();
-
       for (let tp of tasks.datas) {
         console.log(tp.taskName, tp.receiveStatus)
-        // if (tp.taskName === '每日签到' && tp.receiveStatus === 'chance_left')
-        //   await sign();
 
         if (tp.receiveStatus === 'unreceive') {
           await award(tp.taskType);
-          await $.wait(5000);
+          await $.wait(3000);
         }
         if (tp.taskName === '浏览频道') {
           for (let i = 0; i < 3; i++) {
@@ -583,11 +580,12 @@ $.post = injectToRequest($.post.bind($))
             for (let t of followChannelList['datas']) {
               if (!t.status) {
                 console.log('┖', t['channelName'])
-                await doTask(JSON.stringify({"channelId": t.channelId, "taskType": 'FollowChannel'}))
-                await $.wait(5000)
+                await beforeTask('follow_channel', t.channelId);
+                await doTask(JSON.stringify({ "channelId": t.channelId, "taskType": 'FollowChannel' }))
+                await $.wait(3000)
               }
             }
-            await $.wait(5000)
+            await $.wait(3000)
           }
         }
         if (tp.taskName === '逛会场') {
@@ -598,7 +596,7 @@ $.post = injectToRequest($.post.bind($))
                 "marketLink": `${t.marketLink || t.marketLinkH5}`,
                 "taskType": "ScanMarket"
               }))
-              await $.wait(5000)
+              await $.wait(3000)
             }
           }
         }
@@ -606,16 +604,20 @@ $.post = injectToRequest($.post.bind($))
           for (let t of tp.followGoodList) {
             if (!t.status) {
               console.log('┖', t.skuName)
+              await beforeTask('follow_good', t.sku)
+              await $.wait(1000)
               await doTask(`sku=${t.sku}`, 'followGood')
-              await $.wait(5000)
+              await $.wait(3000)
             }
           }
         }
         if (tp.taskName === '关注店铺') {
           for (let t of tp.followShops) {
             if (!t.status) {
-              await doTask(`shopId=${t.shopId}`, 'followShop')
-              await $.wait(5000)
+              await beforeTask('follow_shop', t.shopId);
+              await $.wait(1000);
+              await followShop(t.shopId)
+              await $.wait(2000);
             }
           }
         }
@@ -646,7 +648,6 @@ function getFollowChannels() {
 function taskList() {
   return new Promise(resolve => {
     $.get({
-      // url: `https://jdjoy.jd.com/common/pet/getPetTaskConfig?reqSource=h5&invokeKey=NRp8OPxZMFXmGkaE`,
       url: `https://jdjoy.jd.com/common/pet/getPetTaskConfig?reqSource=h5&invokeKey=NRp8OPxZMFXmGkaE`,
       headers: {
         'Host': 'jdjoy.jd.com',
@@ -673,6 +674,51 @@ function taskList() {
   })
 }
 
+function beforeTask(fn, shopId) {
+  return new Promise(resolve => {
+    $.get({
+      url: `https://jdjoy.jd.com/common/pet/icon/click?iconCode=${fn}&linkAddr=${shopId}&reqSource=h5&invokeKey=NRp8OPxZMFXmGkaE`,
+      headers: {
+        'Accept': '*/*',
+        'Connection': 'keep-alive',
+        'Content-Type': 'application/json',
+        'Origin': 'https://h5.m.jd.com',
+        'Accept-Language': 'zh-cn',
+        'Host': 'jdjoy.jd.com',
+        'User-Agent': 'jdapp;iPhone;10.0.6;12.4.1;fc13275e23b2613e6aae772533ca6f349d2e0a86;network/wifi;ADID/C51FD279-5C69-4F94-B1C5-890BC8EB501F;model/iPhone11,6;addressid/589374288;appBuild/167724;jdSupportDarkMode/0;Mozilla/5.0 (iPhone; CPU iPhone OS 12_4_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1',
+        'Referer': 'https://h5.m.jd.com/babelDiy/Zeus/2wuqXrZrhygTQzYA7VufBEpj4amH/index.html',
+        'cookie': cookie
+      }
+    }, (err, resp, data) => {
+      console.log('before task:', data);
+      resolve();
+    })
+  })
+}
+
+function followShop(shopId) {
+  return new Promise(resolve => {
+    $.post({
+      url: `https://jdjoy.jd.com/common/pet/followShop?reqSource=h5&invokeKey=NRp8OPxZMFXmGkaE`,
+      headers: {
+        'User-Agent': 'jdapp;iPhone;10.0.6;12.4.1;fc13275e23b2613e6aae772533ca6f349d2e0a86;network/wifi;ADID/C51FD279-5C69-4F94-B1C5-890BC8EB501F;model/iPhone11,6;addressid/589374288;appBuild/167724;jdSupportDarkMode/0;Mozilla/5.0 (iPhone; CPU iPhone OS 12_4_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1',
+        'Accept-Language': 'zh-cn',
+        'Referer': 'https://h5.m.jd.com/babelDiy/Zeus/2wuqXrZrhygTQzYA7VufBEpj4amH/index.html?babelChannel=ttt12&lng=0.000000&lat=0.000000&sid=87e644ae51ba60e68519b73d1518893w&un_area=12_904_3373_62101',
+        'Host': 'jdjoy.jd.com',
+        'Origin': 'https://h5.m.jd.com',
+        'Accept': '*/*',
+        'Connection': 'keep-alive',
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'cookie': cookie
+      },
+      body: `shopId=${shopId}`
+    }, (err, resp, data) => {
+      console.log(data)
+      resolve();
+    })
+  })
+}
+
 function doTask(body, fnId = 'scan') {
   return new Promise(resolve => {
     $.post({
@@ -680,7 +726,7 @@ function doTask(body, fnId = 'scan') {
       headers: {
         'Host': 'jdjoy.jd.com',
         'accept': '*/*',
-        'content-type': fnId === 'followGood' ? 'application/x-www-form-urlencoded' : 'application/json',
+        'content-type': fnId === 'followGood' || fnId === 'followShop' ? 'application/x-www-form-urlencoded' : 'application/json',
         'origin': 'https://h5.m.jd.com',
         'accept-language': 'zh-cn',
         'referer': 'https://h5.m.jd.com/',
@@ -806,23 +852,28 @@ function run(fn = 'match') {
       },
     }, async (err, resp, data) => {
       try {
-        console.log('赛跑', data)
-        data = JSON.parse(data);
-        let race = data.data.petRaceResult
-
-        if (race === 'participate') {
-          console.log('匹配成功！')
-        } else if (race === 'unbegin') {
-          console.log('还未开始！')
-        } else if (race === 'matching') {
-          console.log('正在匹配！')
-          await $.wait(2000)
-          await run()
+        if (fn === 'receive') {
+          console.log('领取赛跑奖励：', data)
         } else {
-          console.log('这是什么！')
+          data = JSON.parse(data);
+          let race = data.data.petRaceResult
+          if (race === 'participate') {
+            console.log('匹配成功！')
+          } else if (race === 'unbegin') {
+            console.log('还未开始！')
+          } else if (race === 'matching') {
+            console.log('正在匹配！')
+            await $.wait(2000)
+            await run()
+          } else if (race === 'unreceive') {
+            console.log('开始领奖')
+            await run('receive')
+          } else {
+            console.log('这是什么！')
+          }
         }
       } catch (e) {
-        $.logErr(e);
+        console.log(e)
       } finally {
         resolve();
       }
@@ -835,7 +886,6 @@ function requireConfig() {
     notify = $.isNode() ? require('./sendNotify') : '';
     //Node.js用户请在jdCookie.js处填写京东ck;
     const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
-    const jdPetShareCodes = '';
     //IOS等用户直接用NobyDa的jd cookie
     if ($.isNode()) {
       Object.keys(jdCookieNode).forEach((item) => {
@@ -849,18 +899,6 @@ function requireConfig() {
       cookiesArr = [$.getdata('CookieJD'), $.getdata('CookieJD2'), ...jsonParse($.getdata('CookiesJD') || "[]").map(item => item.cookie)].filter(item => !!item);
     }
     console.log(`共${cookiesArr.length}个京东账号\n`)
-    $.shareCodesArr = [];
-    if ($.isNode()) {
-      Object.keys(jdPetShareCodes).forEach((item) => {
-        if (jdPetShareCodes[item]) {
-          $.shareCodesArr.push(jdPetShareCodes[item])
-        }
-      })
-    } else {
-      // if ($.getdata('jd_pet_inviter')) $.shareCodesArr = $.getdata('jd_pet_inviter').split('\n').filter(item => !!item);
-      // console.log(`\nBoxJs设置的${$.name}好友邀请码:${$.getdata('jd_pet_inviter') ? $.getdata('jd_pet_inviter') : '暂无'}\n`);
-    }
-    // console.log(`您提供了${$.shareCodesArr.length}个账号的东东萌宠助力码\n`);
     resolve()
   })
 }
@@ -924,14 +962,9 @@ function jsonParse(str) {
 
 function writeFile(text) {
   if ($.isNode()) {
-    const fs = require('fs');
     fs.writeFile('a.json', text, () => {
     })
   }
-}
-
-function random() {
-  return Math.round(Math.random() * 2)
 }
 
 // prettier-ignore
@@ -944,7 +977,7 @@ function Env(t, e) {
     }
 
     send(t, e = "GET") {
-      t = "string" == typeof t ? {url: t} : t;
+      t = "string" == typeof t ? { url: t } : t;
       let s = this.get;
       return "POST" === e && (s = this.post), new Promise((e, i) => {
         s.call(this, t, (t, s, r) => {
@@ -1019,7 +1052,7 @@ function Env(t, e) {
 
     getScript(t) {
       return new Promise(e => {
-        this.get({url: t}, (t, s, i) => e(i))
+        this.get({ url: t }, (t, s, i) => e(i))
       })
     }
 
@@ -1031,8 +1064,8 @@ function Env(t, e) {
         r = r ? 1 * r : 20, r = e && e.timeout ? e.timeout : r;
         const [o, h] = i.split("@"), n = {
           url: `http://${h}/v1/scripting/evaluate`,
-          body: {script_text: t, mock_type: "cron", timeout: r},
-          headers: {"X-Key": o, Accept: "*/*"}
+          body: { script_text: t, mock_type: "cron", timeout: r },
+          headers: { "X-Key": o, Accept: "*/*" }
         };
         this.post(n, (t, e, i) => s(i))
       }).catch(t => this.logErr(t))
@@ -1119,11 +1152,11 @@ function Env(t, e) {
 
     get(t, e = (() => {
     })) {
-      t.headers && (delete t.headers["Content-Type"], delete t.headers["Content-Length"]), this.isSurge() || this.isLoon() ? (this.isSurge() && this.isNeedRewrite && (t.headers = t.headers || {}, Object.assign(t.headers, {"X-Surge-Skip-Scripting": !1})), $httpClient.get(t, (t, s, i) => {
+      t.headers && (delete t.headers["Content-Type"], delete t.headers["Content-Length"]), this.isSurge() || this.isLoon() ? (this.isSurge() && this.isNeedRewrite && (t.headers = t.headers || {}, Object.assign(t.headers, { "X-Surge-Skip-Scripting": !1 })), $httpClient.get(t, (t, s, i) => {
         !t && s && (s.body = i, s.statusCode = s.status), e(t, s, i)
-      })) : this.isQuanX() ? (this.isNeedRewrite && (t.opts = t.opts || {}, Object.assign(t.opts, {hints: !1})), $task.fetch(t).then(t => {
-        const {statusCode: s, statusCode: i, headers: r, body: o} = t;
-        e(null, {status: s, statusCode: i, headers: r, body: o}, o)
+      })) : this.isQuanX() ? (this.isNeedRewrite && (t.opts = t.opts || {}, Object.assign(t.opts, { hints: !1 })), $task.fetch(t).then(t => {
+        const { statusCode: s, statusCode: i, headers: r, body: o } = t;
+        e(null, { status: s, statusCode: i, headers: r, body: o }, o)
       }, t => e(t))) : this.isNode() && (this.initGotEnv(t), this.got(t).on("redirect", (t, e) => {
         try {
           if (t.headers["set-cookie"]) {
@@ -1134,29 +1167,29 @@ function Env(t, e) {
           this.logErr(t)
         }
       }).then(t => {
-        const {statusCode: s, statusCode: i, headers: r, body: o} = t;
-        e(null, {status: s, statusCode: i, headers: r, body: o}, o)
+        const { statusCode: s, statusCode: i, headers: r, body: o } = t;
+        e(null, { status: s, statusCode: i, headers: r, body: o }, o)
       }, t => {
-        const {message: s, response: i} = t;
+        const { message: s, response: i } = t;
         e(s, i, i && i.body)
       }))
     }
 
     post(t, e = (() => {
     })) {
-      if (t.body && t.headers && !t.headers["Content-Type"] && (t.headers["Content-Type"] = "application/x-www-form-urlencoded"), t.headers && delete t.headers["Content-Length"], this.isSurge() || this.isLoon()) this.isSurge() && this.isNeedRewrite && (t.headers = t.headers || {}, Object.assign(t.headers, {"X-Surge-Skip-Scripting": !1})), $httpClient.post(t, (t, s, i) => {
+      if (t.body && t.headers && !t.headers["Content-Type"] && (t.headers["Content-Type"] = "application/x-www-form-urlencoded"), t.headers && delete t.headers["Content-Length"], this.isSurge() || this.isLoon()) this.isSurge() && this.isNeedRewrite && (t.headers = t.headers || {}, Object.assign(t.headers, { "X-Surge-Skip-Scripting": !1 })), $httpClient.post(t, (t, s, i) => {
         !t && s && (s.body = i, s.statusCode = s.status), e(t, s, i)
-      }); else if (this.isQuanX()) t.method = "POST", this.isNeedRewrite && (t.opts = t.opts || {}, Object.assign(t.opts, {hints: !1})), $task.fetch(t).then(t => {
-        const {statusCode: s, statusCode: i, headers: r, body: o} = t;
-        e(null, {status: s, statusCode: i, headers: r, body: o}, o)
+      }); else if (this.isQuanX()) t.method = "POST", this.isNeedRewrite && (t.opts = t.opts || {}, Object.assign(t.opts, { hints: !1 })), $task.fetch(t).then(t => {
+        const { statusCode: s, statusCode: i, headers: r, body: o } = t;
+        e(null, { status: s, statusCode: i, headers: r, body: o }, o)
       }, t => e(t)); else if (this.isNode()) {
         this.initGotEnv(t);
-        const {url: s, ...i} = t;
+        const { url: s, ...i } = t;
         this.got.post(s, i).then(t => {
-          const {statusCode: s, statusCode: i, headers: r, body: o} = t;
-          e(null, {status: s, statusCode: i, headers: r, body: o}, o)
+          const { statusCode: s, statusCode: i, headers: r, body: o } = t;
+          e(null, { status: s, statusCode: i, headers: r, body: o }, o)
         }, t => {
-          const {message: s, response: i} = t;
+          const { message: s, response: i } = t;
           e(s, i, i && i.body)
         })
       }
@@ -1181,19 +1214,19 @@ function Env(t, e) {
     msg(e = t, s = "", i = "", r) {
       const o = t => {
         if (!t) return t;
-        if ("string" == typeof t) return this.isLoon() ? t : this.isQuanX() ? {"open-url": t} : this.isSurge() ? {url: t} : void 0;
+        if ("string" == typeof t) return this.isLoon() ? t : this.isQuanX() ? { "open-url": t } : this.isSurge() ? { url: t } : void 0;
         if ("object" == typeof t) {
           if (this.isLoon()) {
             let e = t.openUrl || t.url || t["open-url"], s = t.mediaUrl || t["media-url"];
-            return {openUrl: e, mediaUrl: s}
+            return { openUrl: e, mediaUrl: s }
           }
           if (this.isQuanX()) {
             let e = t["open-url"] || t.url || t.openUrl, s = t["media-url"] || t.mediaUrl;
-            return {"open-url": e, "media-url": s}
+            return { "open-url": e, "media-url": s }
           }
           if (this.isSurge()) {
             let e = t.url || t.openUrl || t["open-url"];
-            return {url: e}
+            return { url: e }
           }
         }
       };
