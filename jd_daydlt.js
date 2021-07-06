@@ -53,6 +53,7 @@ const JD_API_HOST = 'https://api.m.jd.com/client.action';
                 }
                 continue
             }
+
             await jdDlt()
         }
     }
@@ -67,15 +68,16 @@ const JD_API_HOST = 'https://api.m.jd.com/client.action';
       $.done();
   })
 
-
 async function jdDlt() {
     try {
         $.money = 0, $.leftUseNum = 0
-        await getDrawSignFloor();
-        await getLuckDrawNum();
-        for (let i=0; i<$.leftUseNum; i++) {
+        // await getDrawSignFloor();
+        do {
+            await getLuckDrawNum();
+            if ($.leftUseNum === 0) break;
             await doLuckDrawEntrance();
-        }
+            $.leftUseNum--;
+        } while ($.leftUseNum > 0)
         console.log(`\n本次运行共获得${$.money}无门槛红包\n`)
         allMessage += `京东账号${$.index}-${$.nickName}\n本次运行共获得${$.money}无门槛红包\n`
         await jdbalance()
@@ -110,15 +112,16 @@ function getDrawSignFloor() {
 
 function getLuckDrawNum() {
     return new Promise((resolve) => {
-        $.post(taskPostUrl('getLuckyDrawResourceConfig'), async (err, resp, data) => {
+        $.post(taskPostUrl('getLuckyDrawResourceConfig',{"platformType":"1"}), async (err, resp, data) => {
             try {
                 if (err) {
                     console.log(`${JSON.stringify(err)}`)
                     console.log(`${$.name} API请求失败，请检查网路重试`)
                 } else {
+                    // console.log(data)
                     data = JSON.parse(data);
-                    //console.log(data)
                     $.leftUseNum = data.result.luckyDrawConfig.userCouponData.leftUseNum;
+                    $.extend = data.result.luckyDrawConfig.extend;
                     console.log(`剩余抽奖次数: ${$.leftUseNum}次`)
                 }
             } catch (e) {
@@ -132,14 +135,13 @@ function getLuckDrawNum() {
 
 function doLuckDrawEntrance() {
     return new Promise((resolve) => {
-        let extParam = "&uuid=badbca31864b231fdbd9c05eb1b4a56043999456";
-        $.post(taskPostUrl('doLuckDrawEntrance', extParam), async (err, resp, data) => {
+        $.post(taskPostUrl('doLuckDrawEntrance', {"platformType":"1","extend":$.extend}), async (err, resp, data) => {
             try {
                 if (err) {
                     console.log(`${JSON.stringify(err)}`)
                     console.log(`${$.name} API请求失败，请检查网路重试`)
                 } else {
-                    //console.log(data)
+                    // console.log(data)
                     data = JSON.parse(data);
                     if (!data.success) return;
                     data = data.result.luckyDrawData;
@@ -197,9 +199,10 @@ function jdbalance() {
     })
 }
 
-function taskPostUrl(function_id, params='', clientVersion='1.0.0') {
+function taskPostUrl(function_id, body) {
+    let url = `${JD_API_HOST}?functionId=${function_id}&body=${encodeURI(JSON.stringify(body))}&appid=XPMSGC2019&client=m&clientVersion=1.0.0&area=&geo=%5Bobject%20Object%5D&uuid=badbca31864b231fdbd9c05eb1b4a56043999456`;
     return {
-        url: `${JD_API_HOST}?functionId=${function_id}&body=%7B%22platformType%22%3A%221%22%7D&appid=XPMSGC2019&client=m&clientVersion=${clientVersion}&area=&geo=%5Bobject%20Object%5D${params}`,
+        url: url,
         headers: {
             "host": "api.m.jd.com",
             "cookie": cookie,
