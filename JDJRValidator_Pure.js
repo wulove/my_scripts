@@ -495,7 +495,7 @@ function injectToRequest(fn,scene = 'cww') {
   return (opts, cb) => {
     fn(opts, async (err, resp, data) => {
       if (err) {
-        console.error('验证请求失败.');
+        console.error(JSON.stringify(err));
         return;
       }
       if (data.search('验证') > -1) {

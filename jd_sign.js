@@ -1,11 +1,11 @@
 /* 
 
 只支持nodejs环境
-cron 4 0 * * * jd_sign
+cron 4 0 * * * jd_sign.js
 */
 
 const validator = require('./JDJRValidator_Pure.js');
-const Faker=require('./jd_sign_validate.js') 
+const Faker=require('./j_validate.js')
 
 const $ = new Env('京东签到图形验证');
 const notify = $.isNode() ? require('./sendNotify') : '';
@@ -35,7 +35,8 @@ const turnTableId = [
   { "name": "京东商城-个护", "id": 336, "url": "https://prodev.m.jd.com/mall/active/2tZssTgnQsiUqhmg5ooLSHY9XSeN/index.html" },
   { "name": "京东商城-童装", "id": 511, "url": "https://prodev.m.jd.com/mall/active/3Af6mZNcf5m795T8dtDVfDwWVNhJ/index.html" },
   { "name": "京东商城-母婴", "id": 458, "url": "https://prodev.m.jd.com/mall/active/3BbAVGQPDd6vTyHYjmAutXrKAos6/index.html" },
-  { "name": "京东商城-数码", "id": 347, "url": "https://prodev.m.jd.com/mall/active/4SWjnZSCTHPYjE5T7j35rxxuMTb6/index.html" }
+  { "name": "京东商城-数码", "id": 347, "url": "https://prodev.m.jd.com/mall/active/4SWjnZSCTHPYjE5T7j35rxxuMTb6/index.html" },
+  { "name": "京东超市", "id": 1204, "url": "https://pro.m.jd.com/mall/active/QPwDgLSops2bcsYqQ57hENGrjgj/index.html" },
 ]
 $.get = validator.injectToRequest($.get.bind($), 'channelSign')
 $.post = validator.injectToRequest($.post.bind($), 'channelSign')

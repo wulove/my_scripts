@@ -9,6 +9,7 @@
 ============Quantumultx===============
 [task_local]
 #东东乐园
+cron 30 7 * * * jd_ddnc_farmpark.js
 30 7 * * * https://raw.githubusercontent.com/Wenmoux/scripts/wen/jd/jd_ddnc_farmpark.js, tag=东东乐园, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
 
 ================Loon==============
