@@ -362,7 +362,7 @@ function getBoxRewardInfo() {
 
     $.get(options, (err, resp, res) => {
       try {
-        console.log(err, resp, res);
+        // console.log(err, resp, res);
         if (res) {
           let data = JSON.parse(res);
           if (data.success) {
@@ -401,7 +401,7 @@ function sendBoxReward(rewardConfigId) {
 
     $.get(options, (err, resp, res) => {
       try {
-        console.log(res);
+        // console.log(res);
         if (res) {
           let data = JSON.parse(res);
           if (data.success) {
@@ -415,7 +415,7 @@ function sendBoxReward(rewardConfigId) {
 
         }
       } catch (e) {
-        console.log(e);
+        $.logErr(e)
       } finally {
         resolve(res);
       }
@@ -452,7 +452,7 @@ function getPin() {
 
         }
       } catch (e) {
-        console.log(e);
+        $.logErr(e)
       } finally {
         resolve(res);
       }
