@@ -78,7 +78,7 @@ async function main() {
     $.pinList = await getFriendPinList();
     let winCnt = 0;
     if ($.pinList.length > 0) {
-      console.log("待pk的pin list:\n" + $.pinList);
+      // console.log("待pk的pin list:\n" + $.pinList);
       for (let i = 0; i < $.pinList.length; i++) {
         let pin = $.pinList[i];
         console.log('别人的的pin：' + pin);
@@ -95,20 +95,21 @@ async function main() {
       }
     }
 
-    // if (winCnt > 0) {
-    //     await getBoxRewardInfo();
-    //     console.log("去开宝箱");
-    //     if ($.awards) {
-    //         for (let index = 0; index < $.awards.length; index++) {
-    //             let item = $.awards[index];
-    //             if (item.received == 0) {
-    //                 if ($.totalWins >= item.wins) {
-    //                     await sendBoxReward(item.id);
-    //                 }
-    //             }
-    //         }
-    //     }
-    // }
+    if (winCnt > 0) {
+      await getBoxRewardInfo();
+      if ($.awards) {
+        console.log("去开宝箱");
+        for (let index = 0; index < $.awards.length; index++) {
+          let item = $.awards[index];
+          if (item.received == 0) {
+            if ($.totalWins >= item.wins) {
+              await sendBoxReward(item.id);
+            }
+          }
+        }
+      }
+    }
+
   }
 }
 
@@ -345,7 +346,7 @@ function getScore(fpin) {
 function getBoxRewardInfo() {
   return new Promise((resolve) => {
     let options = {
-      "url": `https://pengyougou.m.jd.com/like/jxz/getBoxRewardInfo?actId=9&appId=${$.appId}&lkEPin=${$.pin.lkEPin}`
+      "url": `https://pengyougou.m.jd.com/like/jxz/getBoxRewardInfo?actId=9&appId=${$.appId}&lkEPin=${$.pin}`,
       "headers": {
         "Referer": "https://game-cdn.moxigame.cn/ClickEliminate/IntegralPK_jd/thirdapp/index.html?&token=AAFgwYjmADD1CrUNjDlWrIKSUE5xguJH3wmor9ZeStzbDq5cXG2Me0PSQgXJvT5bAgJv_DErW1E&returnurl=https%3A%2F%2Fprodev.m.jd.com%2Fmall%2Factive%2F45njQg88Vym1s2EGp9aV6cPvqecw%2Findex.html%3Ftttparams%3DImfQnGideyJnTG5nIjoiMTE0LjM3OTc2NiIsImdMYXQiOiIzMC42MDE0NzEifQ8%253D%253D%26babelChannel%3Dttt1%26qdsource%3Dapp%26lng%3D114.362856%26lat%3D30.577543%26sid%3Dab2735c8cec04b1db8d32b4f406fef7w%26un_area%3D17_1381_50717_52133%23%2Findex&tttparams=ImfQnGideyJnTG5nIjoiMTE0LjM3OTc2NiIsImdMYXQiOiIzMC42MDE0NzEifQ8%3D%3D&babelChannel=ttt1&lng=114.362856&lat=30.577543&sid=ab2735c8cec04b1db8d32b4f406fef7w&un_area=17_1381_50717_52133&friendPin=109912ce317991bcdcca46aae737b4f2",
         "Host": "pengyougou.m.jd.com",
@@ -361,7 +362,7 @@ function getBoxRewardInfo() {
 
     $.get(options, (err, resp, res) => {
       try {
-        console.log(res);
+        console.log(err, resp, res);
         if (res) {
           let data = JSON.parse(res);
           if (data.success) {
@@ -384,7 +385,7 @@ function getBoxRewardInfo() {
 function sendBoxReward(rewardConfigId) {
   return new Promise((resolve) => {
     let options = {
-      "url": `https://pengyougou.m.jd.com/like/jxz/sendBoxReward?rewardConfigId=${rewardConfigId}&actId=9&appId=${$.appId}&lkEPin=${$.pin.lkEPin}`
+      "url": `https://pengyougou.m.jd.com/like/jxz/sendBoxReward?rewardConfigId=${rewardConfigId}&actId=9&appId=${$.appId}&lkEPin=${$.pin}`,
       "headers": {
         "Referer": "https://game-cdn.moxigame.cn/ClickEliminate/IntegralPK_jd/thirdapp/index.html?&token=AAFgwYjmADD1CrUNjDlWrIKSUE5xguJH3wmor9ZeStzbDq5cXG2Me0PSQgXJvT5bAgJv_DErW1E&returnurl=https%3A%2F%2Fprodev.m.jd.com%2Fmall%2Factive%2F45njQg88Vym1s2EGp9aV6cPvqecw%2Findex.html%3Ftttparams%3DImfQnGideyJnTG5nIjoiMTE0LjM3OTc2NiIsImdMYXQiOiIzMC42MDE0NzEifQ8%253D%253D%26babelChannel%3Dttt1%26qdsource%3Dapp%26lng%3D114.362856%26lat%3D30.577543%26sid%3Dab2735c8cec04b1db8d32b4f406fef7w%26un_area%3D17_1381_50717_52133%23%2Findex&tttparams=ImfQnGideyJnTG5nIjoiMTE0LjM3OTc2NiIsImdMYXQiOiIzMC42MDE0NzEifQ8%3D%3D&babelChannel=ttt1&lng=114.362856&lat=30.577543&sid=ab2735c8cec04b1db8d32b4f406fef7w&un_area=17_1381_50717_52133&friendPin=109912ce317991bcdcca46aae737b4f2",
         "Host": "pengyougou.m.jd.com",
@@ -440,7 +441,7 @@ function getPin() {
 
     $.post(options, (err, resp, res) => {
       try {
-        console.log(res);
+        // console.log(res);
         if (res) {
           let data = JSON.parse(res);
           if (data) {
