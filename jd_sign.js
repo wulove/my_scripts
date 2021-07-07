@@ -5,7 +5,7 @@ cron 4 0 * * * jd_sign.js
 */
 
 const validator = require('./JDJRValidator_Pure.js');
-const Faker=require('./j_validate.js')
+const Faker=require('./jd_sign_validate.js')
 
 const $ = new Env('京东签到图形验证');
 const notify = $.isNode() ? require('./sendNotify') : '';
