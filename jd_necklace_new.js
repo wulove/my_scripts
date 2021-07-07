@@ -6,7 +6,7 @@ JDHelloWorld
 const $ = new Env('点点券二代目');
 const https = require('https');
 const fs = require('fs/promises');
-const { R_OK } = require('fs').constants;
+const {R_OK} = require('fs').constants;
 const vm = require('vm');
 const UA = require('./USER_AGENTS.js').USER_AGENT;
 
@@ -15,7 +15,7 @@ const REG_SCRIPT = /<script src="([^><]+\/(main\.\w+\.js))\?t=\d+">/gm;
 const REG_ENTRY = /^(.*?\.push\(\[)(\d+,\d+)/;
 const REG_PIN = /pt_pin=([^;]*)/;
 const KEYWORD_MODULE = 'get_risk_result:';
-const DATA = { appid: '50082', sceneid: 'DDhomePageh5' };
+const DATA = {appid: '50082', sceneid: 'DDhomePageh5'};
 let smashUtils;
 
 class ZooFakerNecklace {
@@ -31,7 +31,7 @@ class ZooFakerNecklace {
 
         const t = Math.floor(1e+6 * Math.random()).toString().padEnd(6, '8');
         const pin = decodeURIComponent(this.cookie.match(REG_PIN)[1]);
-        const { log } = smashUtils.get_risk_result({
+        const {log} = smashUtils.get_risk_result({
             id: this.action,
             data: {
                 ...data,
@@ -42,7 +42,7 @@ class ZooFakerNecklace {
         const body = {
             ...data,
             random: t,
-            extraData: { log, sceneid: DATA.sceneid },
+            extraData: {log, sceneid: DATA.sceneid},
         };
 
         // console.log(body);
@@ -60,13 +60,13 @@ class ZooFakerNecklace {
             const jsContent = await this.getJSContent(filename, scriptUrl);
             const fnMock = new Function;
             const ctx = {
-                window: { addEventListener: fnMock },
+                window: {addEventListener: fnMock},
                 document: {
                     addEventListener: fnMock,
                     removeEventListener: fnMock,
                     cookie: this.cookie,
                 },
-                navigator: { userAgent: UA },
+                navigator: {userAgent: UA},
             };
             const _this = this;
             Object.defineProperty(ctx.document, 'cookie', {
@@ -92,7 +92,7 @@ class ZooFakerNecklace {
     async getJSContent(cacheKey, url) {
         try {
             await fs.access(cacheKey, R_OK);
-            const rawFile = await fs.readFile(cacheKey, { encoding: 'utf8' });
+            const rawFile = await fs.readFile(cacheKey, {encoding: 'utf8'});
 
             return rawFile;
         } catch (e) {
@@ -147,10 +147,10 @@ async function getBody($ = {}) {
     let riskData;
     switch ($.action) {
         case 'startTask':
-            riskData = { taskId: $.id };
+            riskData = {taskId: $.id};
             break;
         case 'chargeScores':
-            riskData = { bubleId: $.id };
+            riskData = {bubleId: $.id};
             break;
         case 'sign':
             riskData = {};
@@ -164,13 +164,14 @@ async function getBody($ = {}) {
 }
 
 let cookiesArr = [], cookie = '', jdFruitShareArr = [], isBox = false, notify, newShareCodes, allMessage = '';
-let body = '', res = '', uuid = 'fc13275e23b2613e6aae772533ca6f349d2e0a86'
+let body = '', res = '', uuid = 'fc13275e23b2613e6aae772533ca6f349d2e0a86';
+const ua = `jdltapp;iPhone;3.1.0;${Math.ceil(Math.random()*4+10)}.${Math.ceil(Math.random()*4)};${randomString(40)}`
 
 !(async () => {
     await requireConfig();
 
     if (!cookiesArr[0]) {
-        $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', { "open-url": "https://bean.m.jd.com/bean/signIndex.action" });
+        $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
         return;
     }
     for (let i = 0; i < cookiesArr.length; i++) {
@@ -185,7 +186,7 @@ let body = '', res = '', uuid = 'fc13275e23b2613e6aae772533ca6f349d2e0a86'
             await TotalBean();
             console.log(`\n开始【京东账号${$.index}】${$.nickName || $.UserName}\n`);
             if (!$.isLogin) {
-                $.msg($.name, `【提示】cookie已失效`, `京东账号${$.index} ${$.nickName || $.UserName}\n请重新登录获取\nhttps://bean.m.jd.com/bean/signIndex.action`, { "open-url": "https://bean.m.jd.com/bean/signIndex.action" });
+                $.msg($.name, `【提示】cookie已失效`, `京东账号${$.index} ${$.nickName || $.UserName}\n请重新登录获取\nhttps://bean.m.jd.com/bean/signIndex.action`, {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
                 if ($.isNode()) {
                     await notify.sendNotify(`${$.name}cookie已失效 - ${$.UserName}`, `京东账号${$.index} ${$.UserName}\n请重新登录获取cookie`);
                 }
@@ -233,7 +234,7 @@ async function main() {
                         console.log('startTask: ', res)
                         await $.wait(3000)
                     }
-                    res = await api('necklace_reportTask', { "taskId": t.id })
+                    res = await api('necklace_reportTask', {"taskId": t.id})
                     console.log('reportTask: ', res)
                     await $.wait(2000)
                 } else if (t.taskType === 6) {
@@ -246,7 +247,7 @@ async function main() {
                     res = await getTask(t.id)
                     for (let t6 of res.data.result.taskItems) {
                         console.log(t6.id, t6.title)
-                        res = await api('necklace_reportTask', { taskId: t.id, itemId: t6.id })
+                        res = await api('necklace_reportTask', {taskId: t.id, itemId: t6.id})
                         console.log(res)
                         await $.wait(2000)
                     }
@@ -266,8 +267,8 @@ async function main() {
             res = await api('necklace_chargeScores', body)
             try {
                 res.data.biz_code === 0
-                    ? console.log('领奖成功！获得', res.data.result.giftScoreNum)
-                    : console.log('领奖失败！', JSON.stringify(res))
+                  ? console.log('领奖成功！获得', res.data.result.giftScoreNum)
+                  : console.log('领奖失败！', JSON.stringify(res))
             } catch (e) {
                 console.log('Bubble Error: ', res)
             }
@@ -291,7 +292,7 @@ function api(fnId, body) {
                 'content-type': 'application/x-www-form-urlencoded',
                 'origin': 'https://h5.m.jd.com',
                 'accept-language': 'zh-cn',
-                'User-Agent': $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1"),
+                'User-Agent': ua,
                 'referer': 'https://h5.m.jd.com/',
                 'cookie': cookie
             },
@@ -316,7 +317,7 @@ function getTask(tid) {
                 'Host': 'api.m.jd.com',
                 'accept': 'application/json, text/plain, */*',
                 'origin': 'https://h5.m.jd.com',
-                'User-Agent': $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1"),
+                'User-Agent': ua,
                 'sec-fetch-mode': 'cors',
                 'content-type': 'application/x-www-form-urlencoded',
                 'x-requested-with': 'com.jingdong.app.mall',
