@@ -499,7 +499,7 @@ async function mr() {
           break
         case "to_exchange":
           if (vo.data) {
-            console.log(`兑换${vo.data.coins/-100}京豆成功;${JSON.stringify(vo)}`)
+            console.log(`兑换${vo.data.coins/-1000}京豆成功;${JSON.stringify(vo)}`)
           } else {
             console.log(`兑换京豆失败：${JSON.stringify(vo)}`)
           }

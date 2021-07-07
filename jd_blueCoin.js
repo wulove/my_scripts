@@ -25,7 +25,7 @@ const notify = $.isNode() ? require('./sendNotify') : '';
 let allMessage = '';
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
-let coinToBeans = $.getdata('coinToBeans') || 0; //兑换多少数量的京豆（20或者1000），0表示不兑换，默认不兑换京豆，如需兑换把0改成20或者1000，或者'商品名称'(商品名称放到单引号内)即可
+let coinToBeans = $.getdata('coinToBeans') || 20; //兑换多少数量的京豆（20或者1000），0表示不兑换，默认不兑换京豆，如需兑换把0改成20或者1000，或者'商品名称'(商品名称放到单引号内)即可
 let jdNotify = false;//是否开启静默运行，默认false关闭(即:奖品兑换成功后会发出通知提示)
 //IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [], cookie = '';
@@ -79,7 +79,8 @@ const JD_API_HOST = `https://api.m.jd.com/api?appid=jdsupermarket`;
       }
       try {
         if (`${coinToBeans}` !== '0') {
-          await smtgHome();//查询蓝币数量，是否满足兑换的条件
+          // await smtgHome();//查询蓝币数量，是否满足兑换的条件
+          $.totalBlue = 3000000
           await PrizeIndex();
         } else {
           console.log('查询到您设置的是不兑换京豆选项，现在为您跳过兑换京豆。如需兑换，请去BoxJs设置或者修改脚本coinToBeans或设置环境变量MARKET_COIN_TO_BEANS\n')
@@ -371,9 +372,7 @@ function smtgHome() {
             data = JSON.parse(data);
             if (data.data.bizCode === 0) {
               const { result } = data.data;
-              $.totalGold = result.totalGold;
               $.totalBlue = result.totalBlue;
-              // console.log(`【总金币】${$.totalGold}个\n`);
               console.log(`【总蓝币】${$.totalBlue}个\n`);
             }
           }
