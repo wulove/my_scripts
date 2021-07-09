@@ -158,12 +158,6 @@ $.appId = 10009;
       //提交邀请码
       await $.wait(500);
       await submitInviteId($.userName);
-      //超级助力
-      await $.wait(500);
-      await createSuperAssistUser();
-      //普通助力
-      await $.wait(500);
-      await createAssistUser();
     }
   }
   await $.wait(500);
@@ -804,6 +798,7 @@ function submitInviteId(userName) {
     $.post(
       {
         url: `https://api.ninesix.cc/api/jx-cfd/${$.info.strMyShareId}/${encodeURIComponent(userName)}`,
+        timeout: 20000
       },
       async (err, resp, _data) => {
         try {
