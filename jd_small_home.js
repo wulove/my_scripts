@@ -717,9 +717,11 @@ function loginHome() {
           console.log(`${JSON.stringify(err)}`)
           console.log(`${$.name} API请求失败，请检查网路重试111`)
         } else {
+          console.log(data)
           if (safeGet(data)) {
             data = JSON.parse(data);
-            await login(data.data);
+            await $.wait(2000)
+            await login(data.data.lkEPin);
           }
         }
       } catch (e) {
@@ -735,7 +737,7 @@ function login(userName) {
     const body = {
       "body": {
         "client": 2,
-        "userName" : userName["lkEPin"]
+        "userName" : userName
       }
     };
     const options = {
