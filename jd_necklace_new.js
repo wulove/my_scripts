@@ -163,7 +163,7 @@ async function getBody($ = {}) {
     return log
 }
 
-let cookiesArr = [], cookie = '', jdFruitShareArr = [], isBox = false, notify, newShareCodes, allMessage = '';
+let cookiesArr = [], cookie = '', notify, allMessage = '';
 let body = '', res = '', uuid = 'fc13275e23b2613e6aae772533ca6f349d2e0a86';
 const ua = `jdltapp;iPhone;3.1.0;${Math.ceil(Math.random()*4+10)}.${Math.ceil(Math.random()*4)};${randomString(40)}`
 
