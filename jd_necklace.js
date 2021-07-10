@@ -382,7 +382,7 @@ function necklace_chargeScores(body) {
             data = JSON.parse(data);
             if (data.rtn_code === 0) {
               if (data.data.biz_code === 0) {
-                console.log('领取点点券成功！获得', res.data.result.giftScoreNum)
+                console.log('领取点点券成功！获得', data.result.giftScoreNum)
                 // $.taskConfigVos = data.data.result.taskConfigVos;
                 // $.exchangeGiftConfigs = data.data.result.exchangeGiftConfigs;
               }
