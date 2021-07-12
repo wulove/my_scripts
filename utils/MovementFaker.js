@@ -16,7 +16,7 @@ class MovementFaker {
     constructor(cookie) {
         // this.secretp = secretp;
         this.cookie = cookie;
-        this.ua = require('./USER_AGENTS.js').USER_AGENT;
+        this.ua = require('../USER_AGENTS.js').USER_AGENT;
     }
 
     async run() {
