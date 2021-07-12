@@ -82,6 +82,7 @@ $.shareuuid = "efb9a544a3274c47a66d1e7a5d3e67ee" //俺的助力码
                         if (task.taskid == "scanactive") {
                             for (m = 36; m < 41; m++) {
                                 await dotask(task.taskid, m)
+                                await $.wait(5000)
                             }
                         } else if (task.taskid == "scansku") {
                             await getproduct()
@@ -89,9 +90,11 @@ $.shareuuid = "efb9a544a3274c47a66d1e7a5d3e67ee" //俺的助力码
                                 console.log("去浏览商品 :" + $.plist[l].venderId)
                                 await writePersonInfo($.plist[l].venderId)
                                 await dotask(task.taskid, $.plist[l].id)
+                                await $.wait(5000)
                             }
                         } else {
                             await dotask(task.taskid, task.params)
+                            await $.wait(5000)
                         }
 
                     }
