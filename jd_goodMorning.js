@@ -55,6 +55,7 @@ function goodMorning() {
              },
          }, (err, resp, data) => {
              try {
+                 console.log(data)
                  data = JSON.parse(data)
                  if(data.data){
                       console.log(data.data.bizMsg)
