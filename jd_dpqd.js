@@ -1,6 +1,6 @@
 /**
  店铺签到
- cron 8 0 * * * jd_dpqd.js
+ cron 8 0,22 * * * jd_dpqd.js
  */
 const $ = new Env('店铺签到');
 
