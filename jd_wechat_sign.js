@@ -32,7 +32,7 @@ cron "10 0 * * *" script-path=https://raw.githubusercontent.com/shylocks/Loon/ma
 */
 const $ = new Env('京东粉丝专享');
 const APIKey = "CookiesJD";
-const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
+const jdCookieNode = $.isNode() ? (process.env.WX_COOKIE?process.env.WX_COOKIE:require('./jdCookie.js')) : '';
 const notify = $.isNode() ? require('./sendNotify') : '';
 let cookiesArr = [], cookie = '', message;
 let EXCHANGE = $.isNode() ? (process.env.EXCHANGE_WECHAT?process.env.EXCHANGE_WECHAT : true) : ($.getdata('JDWECHATEXCHANGE') ? $.getdata('JDWECHATEXCHANGE') : true)
