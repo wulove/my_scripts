@@ -98,7 +98,6 @@ async function signRun() {
     }else{
       errorNum++;
     }
-    await $.wait(5000)
   }
 }
 
