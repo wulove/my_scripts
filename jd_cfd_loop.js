@@ -1,6 +1,6 @@
 /*
 京喜财富岛热气球挂机
-cron 17 0-23/4 * * * jd_cfd_loop.js
+
 更新时间：2021-7-13
 活动入口：京喜APP-我的-京喜财富岛
 */
@@ -51,15 +51,10 @@ $.appId = 10028;
         $.index = i + 1;
         $.nickName = '';
         $.isLogin = true;
-        $.nickName = '';
         await TotalBean();
         console.log(`\n******开始【京东账号${$.index}】${$.nickName || $.UserName}*********\n`);
         if (!$.isLogin) {
-          // $.msg($.name, `【提示】cookie已失效`, `京东账号${$.index} ${$.nickName || $.UserName}\n请重新登录获取\nhttps://bean.m.jd.com/bean/signIndex.action`, {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
-  
-          // if ($.isNode()) {
-          //   await notify.sendNotify(`${$.name}cookie已失效 - ${$.UserName}`, `京东账号${$.index} ${$.UserName}\n请重新登录获取cookie`);
-          // }
+          $.log($.name, `【提示】cookie已失效`, `京东账号${$.index} ${$.nickName || $.UserName}\n请重新登录获取\nhttps://bean.m.jd.com/bean/signIndex.action`, {"open-url": "https://bean.m.jd.com/bean/signIndex.action"})
           continue
         }
         $.info = {}
@@ -80,7 +75,7 @@ async function cfd() {
       console.log(`还未开通活动，请先开通\n`)
       return
     }
-    await $.wait(1000)
+    await $.wait(2000)
     await speedUp()
     await $.wait(2000)
     await queryshell()
@@ -166,8 +161,8 @@ async function queryshell() {
           for (let key of Object.keys(data.Data.NormShell)) {
             let vo = data.Data.NormShell[key]
             for (let j = 0; j < vo.dwNum; j++) {
-              await pickshell(`dwType=${vo.dwType}`)
               await $.wait(1000)
+              await pickshell(`dwType=${vo.dwType}`)
             }
           }
           console.log('')
@@ -210,8 +205,8 @@ async function pickshell(body) {
             console.log(`捡贝壳成功：捡到了${dwName}`)
           } else if (data.iRet === 5403 || data.sErrMsg === '这种小贝壳背包放不下啦，先去卖掉一些吧~') {
             console.log(`捡贝壳失败：${data.sErrMsg}`)
-            await querystorageroom()
             await $.wait(1000)
+            await querystorageroom()
           } else {
             console.log(`捡贝壳失败：${data.sErrMsg}`)
           }
@@ -375,9 +370,9 @@ function showMsg() {
 function TotalBean() {
   return new Promise(async resolve => {
     const options = {
-      url: "https://me-api.jd.com/user_new/info/GetJDUserInfoUnion",
+      url: "https://wq.jd.com/user_new/info/GetJDUserInfoUnion?sceneval=2",
       headers: {
-        Host: "me-api.jd.com",
+        Host: "wq.jd.com",
         Accept: "*/*",
         Connection: "keep-alive",
         Cookie: cookie,
@@ -394,11 +389,11 @@ function TotalBean() {
         } else {
           if (data) {
             data = JSON.parse(data);
-            if (data['retcode'] === "1001") {
+            if (data['retcode'] === 1001) {
               $.isLogin = false; //cookie过期
               return;
             }
-            if (data['retcode'] === "0" && data.data && data.data.hasOwnProperty("userInfo")) {
+            if (data['retcode'] === 0 && data.data && data.data.hasOwnProperty("userInfo")) {
               $.nickName = data.data.userInfo.baseInfo.nickname;
             }
           } else {
