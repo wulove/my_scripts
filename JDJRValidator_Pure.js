@@ -1,3 +1,8 @@
+/*
+  由于 canvas 依赖系统底层需要编译且预编译包在 github releases 上，改用另一个纯 js 解码图片。若想继续使用 canvas 可调用 runWithCanvas 。
+
+  添加 injectToRequest 用以快速修复需验证的请求。eg: $.get=injectToRequest($.get.bind($))
+*/
 const https = require('https');
 const http = require('http');
 const stream = require('stream');
@@ -28,10 +33,14 @@ class PNGDecoder extends PNG {
 
   decodeToPixels() {
     return new Promise((resolve) => {
-      this.decode((pixels) => {
-        this.pixels = pixels;
-        resolve();
-      });
+      try {
+        this.decode((pixels) => {
+          this.pixels = pixels;
+          resolve();
+        });
+      } catch (e) {
+        console.info(e)
+      }
     });
   }
 
@@ -65,10 +74,14 @@ class PuzzleRecognizer {
   }
 
   async run() {
-    await this.bg.decodeToPixels();
-    await this.patch.decodeToPixels();
+    try {
+      await this.bg.decodeToPixels();
+      await this.patch.decodeToPixels();
 
-    return this.recognize();
+      return this.recognize();
+    } catch (e) {
+      console.info(e)
+    }
   }
 
   recognize() {
@@ -202,7 +215,7 @@ const DATA = {
   "product": "embed",
   "lang": "zh_CN",
 };
-const SERVER = 'iv.jd.com';
+const SERVER = '61.49.99.122';
 
 class JDJRValidator {
   constructor() {
@@ -211,57 +224,65 @@ class JDJRValidator {
     this.t = Date.now();
   }
 
-  async run(scene = 'cww') {
-    const tryRecognize = async () => {
-      const x = await this.recognize(scene);
+  async run(scene) {
+    try {
+      const tryRecognize = async () => {
+        const x = await this.recognize(scene);
 
-      if (x > 0) {
-        return x;
+        if (x > 0) {
+          return x;
+        }
+        // retry
+        return await tryRecognize();
+      };
+      const puzzleX = await tryRecognize();
+      // console.log(puzzleX);
+      const pos = new MousePosFaker(puzzleX).run();
+      const d = getCoordinate(pos);
+
+      // console.log(pos[pos.length-1][2] -Date.now());
+      // await sleep(4500);
+      await sleep(pos[pos.length - 1][2] - Date.now());
+      const result = await JDJRValidator.jsonp('/slide/s.html', {d, ...this.data}, scene);
+
+      if (result.message === 'success') {
+        // console.log(result);
+        console.log('JDJR验证用时: %fs', (Date.now() - this.t) / 1000);
+        return result;
+      } else {
+        console.count("验证失败");
+        // console.count(JSON.stringify(result));
+        await sleep(300);
+        return await this.run(scene);
       }
-      // retry
-      return await tryRecognize();
-    };
-    const puzzleX = await tryRecognize();
-    // console.log(puzzleX);
-    const pos = new MousePosFaker(puzzleX).run();
-    const d = getCoordinate(pos);
-
-    // console.log(pos[pos.length-1][2] -Date.now());
-    // await sleep(4500);
-    await sleep(pos[pos.length - 1][2] - Date.now());
-    const result = await JDJRValidator.jsonp('/slide/s.html', {d, ...this.data}, scene);
-
-    if (result.message === 'success') {
-      // console.log(result);
-      console.log('JDJR验证用时: %fs', (Date.now() - this.t) / 1000);
-      return result;
-    } else {
-      console.count("验证失败");
-      // console.count(JSON.stringify(result));
-      await sleep(300);
-      return await this.run(scene);
+    } catch (e) {
+      console.info(e)
     }
   }
 
   async recognize(scene) {
-    const data = await JDJRValidator.jsonp('/slide/g.html', {e: ''}, scene);
-    const {bg, patch, y} = data;
-    // const uri = 'data:image/png;base64,';
-    // const re = new PuzzleRecognizer(uri+bg, uri+patch, y);
-    const re = new PuzzleRecognizer(bg, patch, y);
-    const puzzleX = await re.run();
+    try {
+      const data = await JDJRValidator.jsonp('/slide/g.html', {e: ''}, scene);
+      const {bg, patch, y} = data;
+      // const uri = 'data:image/png;base64,';
+      // const re = new PuzzleRecognizer(uri+bg, uri+patch, y);
+      const re = new PuzzleRecognizer(bg, patch, y);
+      const puzzleX = await re.run();
 
-    if (puzzleX > 0) {
-      this.data = {
-        c: data.challenge,
-        w: re.w,
-        e: '',
-        s: '',
-        o: '',
-      };
-      this.x = puzzleX;
+      if (puzzleX > 0) {
+        this.data = {
+          c: data.challenge,
+          w: re.w,
+          e: '',
+          s: '',
+          o: '',
+        };
+        this.x = puzzleX;
+      }
+      return puzzleX;
+    } catch (e) {
+      console.info(e)
     }
-    return puzzleX;
   }
 
   async report(n) {
@@ -285,8 +306,8 @@ class JDJRValidator {
     return new Promise((resolve, reject) => {
       const fnId = `jsonp_${String(Math.random()).replace('.', '')}`;
       const extraData = {callback: fnId};
-      const query = new URLSearchParams({...DATA,...{"scene": scene}, ...extraData, ...data}).toString();
-      const url = `https://${SERVER}${api}?${query}`;
+      const query = new URLSearchParams({...DATA, ...{"scene": scene}, ...extraData, ...data}).toString();
+      const url = `http://${SERVER}${api}?${query}`;
       const headers = {
         'Accept': '*/*',
         'Accept-Encoding': 'gzip,deflate,br',
@@ -297,8 +318,7 @@ class JDJRValidator {
         'Referer': 'https://h5.m.jd.com/babelDiy/Zeus/2wuqXrZrhygTQzYA7VufBEpj4amH/index.html',
         'User-Agent': UA,
       };
-
-      const req = https.get(url, {headers}, (response) => {
+      const req = http.get(url, {headers}, (response) => {
         let res = response;
         if (res.headers['content-encoding'] === 'gzip') {
           const unzipStream = new stream.PassThrough();
@@ -386,7 +406,7 @@ function getCoordinate(c) {
   return b.join("")
 }
 
-const HZ = 60;
+const HZ = 25;
 
 class MousePosFaker {
   constructor(puzzleX) {
@@ -491,24 +511,43 @@ class MousePosFaker {
   }
 }
 
-function injectToRequest(fn,scene = 'cww') {
+// new JDJRValidator().run();
+// new JDJRValidator().report(1000);
+// console.log(getCoordinate(new MousePosFaker(100).run()));
+
+function injectToRequest2(fn, scene = 'cww') {
   return (opts, cb) => {
     fn(opts, async (err, resp, data) => {
-      if (err) {
-        console.error(JSON.stringify(err));
-        return;
-      }
-      if (data.search('验证') > -1) {
-        console.log('JDJR验证中......');
-        const res = await new JDJRValidator().run(scene);
-
-        opts.url += `&validate=${res.validate}`;
-        fn(opts, cb);
-      } else {
-        cb(err, resp, data);
+      try {
+        if (err) {
+          console.error('验证请求失败.');
+          return;
+        }
+        if (data.search('验证') > -1) {
+          console.log('JDJR验证中......');
+          const res = await new JDJRValidator().run(scene);
+          if (res) {
+            opts.url += `&validate=${res.validate}`;
+          }
+          fn(opts, cb);
+        } else {
+          cb(err, resp, data);
+        }
+      } catch (e) {
+        console.info(e)
       }
     });
   };
 }
 
-exports.injectToRequest = injectToRequest;
+async function injectToRequest(scene = 'cww') {
+  console.log('JDJR验证中......');
+  const res = await new JDJRValidator().run(scene);
+  return `&validate=${res.validate}`
+}
+
+module.exports = {
+  sleep,
+  injectToRequest,
+  injectToRequest2
+}
