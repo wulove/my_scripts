@@ -654,7 +654,7 @@ function helpdraw(dwUserId) {
           data = JSON.parse(data);
           if (data.iRet === 0 || data.sErrMsg === "success") {
             if (data.Data.StagePrizeInfo) {
-              console.log(`领取助力奖励成功：获得${data.Data.ddwCoin}金币 ${data.Data.StagePrizeInfo.ddwMoney}财富 ${data.Data.StagePrizeInfo.strPrizeName && !data.Data.StagePrizeInfo.ddwMoney || `0元`}红包`)
+              console.log(`领取助力奖励成功：获得${data.Data.ddwCoin}金币 ${data.Data.StagePrizeInfo.ddwMoney}财富 ${(data.Data.StagePrizeInfo.strPrizeName && !data.Data.StagePrizeInfo.ddwMoney) ? data.Data.StagePrizeInfo.strPrizeName : `0元`}红包`)
             } else {
               console.log(`领取助力奖励成功：获得${data.Data.ddwCoin}金币`)
             }
@@ -686,19 +686,28 @@ async function queryRubbishInfo() {
             for (let key of Object.keys(data.Data.StoryInfo.StoryList)) {
               let vo = data.Data.StoryInfo.StoryList[key]
               if (vo.Rubbish) {
-                console.log(`获取到垃圾信息`)
                 await $.wait(2000)
                 let rubbishOperRes = await rubbishOper('1')
-                for (let key of Object.keys(rubbishOperRes.Data.ThrowRubbish.Game.RubbishList)) {
-                  let vo = rubbishOperRes.Data.ThrowRubbish.Game.RubbishList[key]
-                  await $.wait(2000)
-                  var rubbishOperTwoRes = await rubbishOper('2', `dwRubbishId=${vo.dwId}`)
-                }
-                if (rubbishOperTwoRes.iRet === 0) {
-                  let AllRubbish = rubbishOperTwoRes.Data.RubbishGame.AllRubbish
-                  console.log(`倒垃圾成功：获得${AllRubbish.ddwCoin}金币 ${AllRubbish.ddwMoney}财富\n`)
+                if (rubbishOperRes.Data.ThrowRubbish.Game) {
+                  console.log(`获取垃圾信息成功：本次需要垃圾分类`)
+                  for (let key of Object.keys(rubbishOperRes.Data.ThrowRubbish.Game.RubbishList)) {
+                    let vo = rubbishOperRes.Data.ThrowRubbish.Game.RubbishList[key]
+                    await $.wait(2000)
+                    var rubbishOperTwoRes = await rubbishOper('2', `dwRubbishId=${vo.dwId}`)
+                  }
+                  if (rubbishOperTwoRes.iRet === 0) {
+                    let AllRubbish = rubbishOperTwoRes.Data.RubbishGame.AllRubbish
+                    console.log(`倒垃圾成功：获得${AllRubbish.ddwCoin}金币 ${AllRubbish.ddwMoney}财富\n`)
+                  } else {
+                    console.log(`倒垃圾失败：${rubbishOperTwoRes.sErrMsg}\n`)
+                  }
                 } else {
-                  console.log(`倒垃圾失败：${rubbishOperTwoRes.sErrMsg}\n`)
+                  console.log(`获取垃圾信息成功：本次不需要垃圾分类`)
+                  if (rubbishOperRes.iRet === 0 || rubbishOperRes.sErrMsg === "success") {
+                    console.log(`倒垃圾成功：获得${rubbishOperRes.Data.ThrowRubbish.ddwCoin}金币\n`)
+                  } else {
+                    console.log(`倒垃圾失败：${rubbishOperRes.sErrMsg}\n`)
+                  }
                 }
               } else {
                 console.log(`当前暂无垃圾\n`)
@@ -1058,16 +1067,16 @@ function helpByStage(shareCodes) {
           if (data.iRet === 0 || data.sErrMsg === 'success') {
             console.log(`助力成功：获得${data.Data.GuestPrizeInfo.strPrizeName}`)
           } else if (data.iRet === 2232 || data.sErrMsg === '今日助力次数达到上限，明天再来帮忙吧~') {
-            console.log(data.sErrMsg)
+            console.log(`助力失败：${data.sErrMsg}`)
             $.canHelp = false
           } else if (data.iRet === 9999 || data.sErrMsg === '您还没有登录，请先登录哦~') {
-            console.log(data.sErrMsg)
+            console.log(`助力失败：${data.sErrMsg}`)
             $.canHelp = false
           } else if (data.iRet === 2229 || data.sErrMsg === '助力失败啦~') {
-            console.log(data.sErrMsg)
+            console.log(`助力失败：您的账号或者被助力的账号可能已黑，请联系客服`)
             // $.canHelp = false
           } else {
-            console.log(data.sErrMsg)
+            console.log(`助力失败：${data.sErrMsg}`)
           }
         }
       } catch (e) {
