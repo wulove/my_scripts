@@ -1,4 +1,5 @@
 /*
+目前JD加入了日志校验，脚本已失效
 天天优惠大乐透
 活动入口：京东app首页-券后9.9-顶部球球
 ============Quantumultx===============
@@ -118,7 +119,7 @@ function getLuckDrawNum() {
                     console.log(`${JSON.stringify(err)}`)
                     console.log(`${$.name} API请求失败，请检查网路重试`)
                 } else {
-                    // console.log(data)
+                    console.log(data)
                     data = JSON.parse(data);
                     $.leftUseNum = data.result.luckyDrawConfig.userCouponData.leftUseNum;
                     $.extend = data.result.luckyDrawConfig.extend;
@@ -141,9 +142,13 @@ function doLuckDrawEntrance() {
                     console.log(`${JSON.stringify(err)}`)
                     console.log(`${$.name} API请求失败，请检查网路重试`)
                 } else {
-                    // console.log(data)
+                    console.log(data)
                     data = JSON.parse(data);
-                    if (!data.success) return;
+                    if (!data.success) {
+                        console.log(data.message)
+                        $.leftUseNum = 0
+                        return;
+                    }
                     data = data.result.luckyDrawData;
                     //$.leftUseNum = data.leftUseNum
                     $.prizeName = data.prizeName
