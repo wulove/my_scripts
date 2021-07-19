@@ -26,7 +26,6 @@ const JD_API_HOST = 'https://api.m.jd.com/api?appid=interCenter_shopSign';
 let activityId = ''
 let vender = ''
 let num = 0
-let shopname = ''
 const token = [
   '30DE3F2E8B4278A120007C8CD0D4F835',//7
   '3C0B9CE1F01623C77ADE9F90AFA0FD5F',//6.29,7.13
