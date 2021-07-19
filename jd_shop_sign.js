@@ -6,7 +6,7 @@
 0 0 * * * https://raw.githubusercontent.com/Misaka09982/AutoSignMachine/master/diy_shopsign.js, tag=店铺签到, enabled=true
 ===========Loon============
 [Script]
-cron "0 0 * * *" script-path=https://raw.githubusercontent.com/Misaka09982/AutoSignMachine/master/diy_shopsign.js,tag=店铺签到
+cron "0 0 * * *" script-path= ,tag=店铺签到
 ============Surge=============
 店铺签到 = type=cron,cronexp="0 0 * * *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/Misaka09982/AutoSignMachine/master/diy_shopsign.js
 ===========小火箭========
