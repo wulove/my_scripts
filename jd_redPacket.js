@@ -42,9 +42,7 @@ const JD_API_HOST = 'https://api.m.jd.com/api';
     $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
     return;
   }
-  // let res = await getAuthorShareCode('https://raw.githubusercontent.com/gitupdate/updateTeam/master/shareCodes/jd_red.json'), res2 = [];
-  // if (!res) res = await getAuthorShareCode();
-  // $.authorMyShareIds = [...(res || []),...(res2 || [])];
+
   for (let i = 0; i < cookiesArr.length; i++) {
     if (cookiesArr[i]) {
       cookie = cookiesArr[i];
@@ -73,7 +71,7 @@ const JD_API_HOST = 'https://api.m.jd.com/api';
     $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1]);
     $.canHelp = true;
     $.redPacketId = [...new Set($.redPacketId)];
-    if (cookiesArr && cookiesArr.length > 2) {
+    if (cookiesArr && cookiesArr.length >= 2) {
       console.log(`\n\n自己账号内部互助`);
       for (let item of $.redPacketId) {
         console.log(`账号 ${$.index} ${$.UserName} 开始给 ${item} 进行助力`)
@@ -84,17 +82,7 @@ const JD_API_HOST = 'https://api.m.jd.com/api';
         }
       }
     }
-    /*if ($.canHelp) {
-      console.log(`\n\n有剩余助力机会则给作者lxk0301进行助力`);
-      for (let item of $.authorMyShareIds || []) {
-        console.log(`\n账号 ${$.index} ${$.UserName} 开始给作者lxk0301 ${item} 进行助力`)
-        await jinli_h5assist(item);
-        if (!$.canHelp) {
-          console.log(`次数已用完，跳出助力`)
-          break
-        }
-      }
-    }*/
+
   }
 })()
     .catch((e) => {
@@ -142,13 +130,13 @@ function doLuckDrawEntrance() {
         "Accept-Encoding": "gzip, deflate, br"
       }
     }
-    $.post((options), async (err, resp, data) => {
+    $.post(options, async (err, resp, data) => {
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
           console.log(`${$.name} API请求失败，请检查网路重试`)
         } else {
-          if ((data)) {
+          if (data) {
             data = JSON.parse(data);
             if (data.code === '0' && data['busiCode'] === '0') {
               if (data.result.luckyDrawData.actId) {
@@ -553,13 +541,13 @@ function getCcTaskList(functionId, body, type = '1') {
         "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1"),
       }
     }
-    $.post((options), async (err, resp, data) => {
+    $.post(options, async (err, resp, data) => {
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
           console.log(`${$.name} API请求失败，请检查网路重试`)
         } else {
-          if ((data)) {
+          if (data) {
             // data = JSON.parse(data);
             if (type === '1' && functionId === 'reportCcTask') console.log(`京东首页点击“领券”逛10s任务:${data}`)
           }
@@ -568,39 +556,6 @@ function getCcTaskList(functionId, body, type = '1') {
         $.logErr(e, resp)
       } finally {
         resolve();
-      }
-    })
-  })
-}
-function getAuthorShareCode(url = "https://cdn.jsdelivr.net/gh/gitupdate/updateTeam@master/shareCodes/jd_red.json") {
-  return new Promise(resolve => {
-    const options = {
-      url: `${url}?${new Date()}`, "timeout": 10000, headers: {
-        "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1 Edg/87.0.4280.88"
-      }
-    };
-    if ($.isNode() && process.env.TG_PROXY_HOST && process.env.TG_PROXY_PORT) {
-      const tunnel = require("tunnel");
-      const agent = {
-        https: tunnel.httpsOverHttp({
-          proxy: {
-            host: process.env.TG_PROXY_HOST,
-            port: process.env.TG_PROXY_PORT * 1
-          }
-        })
-      }
-      Object.assign(options, { agent })
-    }
-    $.get(options, async (err, resp, data) => {
-      try {
-        if (err) {
-        } else {
-          if (data) data = JSON.parse(data)
-        }
-      } catch (e) {
-        // $.logErr(e, resp)
-      } finally {
-        resolve(data);
       }
     })
   })
