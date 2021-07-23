@@ -23,7 +23,7 @@ const notify = $.isNode() ? require('./sendNotify') : '';
 let cookiesArr = [],
     cookie = '';
 const JD_API_HOST = `https://api.m.jd.com`;
-codeList = []
+let codeList = []
 
 if ($.isNode()) {
     Object.keys(jdCookieNode).forEach((item) => {
