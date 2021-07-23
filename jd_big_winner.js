@@ -1,4 +1,5 @@
 /*
+cron 10 * * * * jd_big_winner.js
 省钱大赢家之翻翻乐
 一天可翻多次，但有上限
 运气好每次可得0.3元以上的微信现金(需京东账号绑定到微信)
@@ -217,7 +218,7 @@ function openRedReward(functionId = 'gambleChangeReward', type) {
             if (data['code'] === 0) {
               $.rewardData = data.data;
               if (data.data.rewardState === 1) {
-                if (data.data.rewardValue >= 0.3) {
+                if (data.data.rewardValue >= money) {
                   //已翻倍到0.3元，可以提现了
                   $.canApCashWithDraw = true;
                   $.changeReward = false;
