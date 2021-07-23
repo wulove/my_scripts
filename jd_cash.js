@@ -162,7 +162,7 @@ function index(info=false) {
                     await $.wait(5000)
                   }
                 }
-                else if ([16,3,5,17,21,33].includes(task.type)) {
+                else if ([16,3,5,17,21,31,33].includes(task.type)) {
                   for (let i = task.doTimes; i < task.times; ++i) {
                     console.log(`去做${task.name}任务 ${i+1}/${task.times}`)
                     await doTask(task.type, task.jump.params.url)
