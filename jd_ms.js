@@ -3,7 +3,7 @@
 Last Modified time: 2021-05-22 8:55:00
 一天签到100币左右，100币可兑换1毛钱红包，推荐攒着配合农场一起用
 活动时间：长期活动
-更新地址：https://gitee.com/lxk0301/jd_scripts/raw/master/jd_ms.js
+更新地址：jd_ms.js
 活动入口：京东app-京东秒杀-签到领红包
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 ============Quantumultx===============
