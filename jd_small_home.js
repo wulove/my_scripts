@@ -160,7 +160,7 @@ async function doAllTask() {
     }
     if (item.ssjjTaskInfo.type === 2) {
       //每日打卡
-      if (item.doneNum === (item.ssjjTaskInfo.awardOfDayNum || 1)) {
+      if (item.doneNum >= (item.ssjjTaskInfo.awardOfDayNum || 1)) {
         console.log(`${item.ssjjTaskInfo.name}已完成（${item.doneNum}/${item.ssjjTaskInfo.awardOfDayNum || 1}）`)
         continue
       }
@@ -168,7 +168,7 @@ async function doAllTask() {
     }
     // 限时连连看
     if (item.ssjjTaskInfo.type === 3) {
-      if (item.doneNum === item.ssjjTaskInfo.awardOfDayNum) {
+      if (item.doneNum >= item.ssjjTaskInfo.awardOfDayNum) {
         console.log(`${item.ssjjTaskInfo.name}已完成[${item.doneNum}/${item.ssjjTaskInfo.awardOfDayNum}]`)
         continue
       }
@@ -178,7 +178,7 @@ async function doAllTask() {
     }
     if (item.ssjjTaskInfo.type === 4) {
       //关注店铺
-      if (item.doneNum === item.ssjjTaskInfo.awardOfDayNum) {
+      if (item.doneNum >= item.ssjjTaskInfo.awardOfDayNum) {
         console.log(`${item.ssjjTaskInfo.name}已完成[${item.doneNum}/${item.ssjjTaskInfo.awardOfDayNum}]`)
         continue
       }
@@ -189,7 +189,7 @@ async function doAllTask() {
     }
     if (item.ssjjTaskInfo.type === 5) {
       //浏览店铺
-      if (item.doneNum === item.ssjjTaskInfo.awardOfDayNum) {
+      if (item.doneNum >= item.ssjjTaskInfo.awardOfDayNum) {
         console.log(`${item.ssjjTaskInfo.name}已完成[${item.doneNum}/${item.ssjjTaskInfo.awardOfDayNum}]`)
         continue
       }
@@ -199,7 +199,7 @@ async function doAllTask() {
     }
     if (item.ssjjTaskInfo.type === 6) {
       //关注4个频道
-      if (item.doneNum === item.ssjjTaskInfo.awardOfDayNum) {
+      if (item.doneNum >= item.ssjjTaskInfo.awardOfDayNum) {
         console.log(`${item.ssjjTaskInfo.name}已完成[${item.doneNum}/${item.ssjjTaskInfo.awardOfDayNum}]`)
         continue
       }
@@ -207,7 +207,7 @@ async function doAllTask() {
     }
     if (item.ssjjTaskInfo.type === 7) {
       //浏览3个频道
-      if (item.doneNum === item.ssjjTaskInfo.awardOfDayNum) {
+      if (item.doneNum >= item.ssjjTaskInfo.awardOfDayNum) {
         console.log(`${item.ssjjTaskInfo.name}已完成[${item.doneNum}/${item.ssjjTaskInfo.awardOfDayNum}]`)
         continue
       }
@@ -218,7 +218,7 @@ async function doAllTask() {
     isPurchaseShops = $.isNode() ? (process.env.PURCHASE_SHOPS ? process.env.PURCHASE_SHOPS : isPurchaseShops) : ($.getdata("isPurchaseShops") ? $.getdata("isPurchaseShops") : isPurchaseShops);
     if (isPurchaseShops && item.ssjjTaskInfo.type === 9) {
       //加购商品
-      if (item.doneNum === item.ssjjTaskInfo.awardOfDayNum) {
+      if (item.doneNum >= item.ssjjTaskInfo.awardOfDayNum) {
         console.log(`${item.ssjjTaskInfo.name}已完成[${item.doneNum}/${item.ssjjTaskInfo.awardOfDayNum}]`)
         continue
       }
@@ -229,7 +229,7 @@ async function doAllTask() {
     }
     if (item.ssjjTaskInfo.type === 10) {
       //浏览商品
-      if (item.doneNum === item.ssjjTaskInfo.awardOfDayNum) {
+      if (item.doneNum >= item.ssjjTaskInfo.awardOfDayNum) {
         console.log(`${item.ssjjTaskInfo.name}已完成[${item.doneNum}/${item.ssjjTaskInfo.awardOfDayNum}]`)
         continue
       }
@@ -239,7 +239,7 @@ async function doAllTask() {
     }
     if (item.ssjjTaskInfo.type === 11) {
       //浏览会场
-      if (item.doneNum === item.ssjjTaskInfo.awardOfDayNum) {
+      if (item.doneNum >= item.ssjjTaskInfo.awardOfDayNum) {
         console.log(`${item.ssjjTaskInfo.name}已完成[${item.doneNum}/${item.ssjjTaskInfo.awardOfDayNum}]`)
         continue
       }
