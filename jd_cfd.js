@@ -58,7 +58,7 @@ $.appId = 10028;
   $.CryptoJS = $.isNode() ? require('crypto-js') : CryptoJS;
   await requestAlgo();
   await $.wait(1000)
-  $.strMyShareIds = ['D45AF9B00ED452BF8D5790CDF120C843C16991F14EFB081058C5AE562D9EE139','A67E6E6B3CB7C5750B1DD735227B48B270AC293BD701BAEDD489B6BFBDB517FA']
+  $.strMyShareIds = ['D45AF9B00ED452BF8D5790CDF120C8439A609A9FFD0140200DC71C2466366F77','A67E6E6B3CB7C5750B1DD735227B48B2BD41439B4DD305B7D5DB47953F453656']
   for (let i = 0; i < cookiesArr.length; i++) {
     if (cookiesArr[i]) {
       cookie = cookiesArr[i];
@@ -980,7 +980,7 @@ async function getBuildInfo(body, buildList, type = true) {
             console.log(`升级建筑`)
             console.log(`【${buildNmae}】当前等级：${buildList.dwLvl} 升级获得财富：${data.ddwLvlRich}`)
             console.log(`【${buildNmae}】升级需要${data.ddwNextLvlCostCoin}金币，当前拥有${$.info.ddwCoinBalance}，保留三倍升级所需金币${data.ddwNextLvlCostCoin * 3}`)
-            if(data.dwCanLvlUp > 0 && $.info.ddwCoinBalance >= data.ddwNextLvlCostCoin * 3) {
+            if(data.dwCanLvlUp > 0 && $.info.ddwCoinBalance >= (data.ddwNextLvlCostCoin * 3)) {
               console.log(`【${buildNmae}】满足升级条件，开始升级`)
               const body = `ddwCostCoin=${data.ddwNextLvlCostCoin}&strBuildIndex=${data.strBuildIndex}`
               let buildLvlUpRes = await buildLvlUp(body)
