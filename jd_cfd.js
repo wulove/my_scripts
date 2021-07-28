@@ -58,7 +58,7 @@ $.appId = 10028;
   $.CryptoJS = $.isNode() ? require('crypto-js') : CryptoJS;
   await requestAlgo();
   await $.wait(1000)
-  $.strMyShareIds = ['D45AF9B00ED452BF8D5790CDF120C8439A609A9FFD0140200DC71C2466366F77','A67E6E6B3CB7C5750B1DD735227B48B2BD41439B4DD305B7D5DB47953F453656']
+  $.strMyShareIds = ['D45AF9B00ED452BF8D5790CDF120C8439A609A9FFD0140200DC71C2466366F77','A67E6E6B3CB7C5750B1DD735227B48B2BD41439B4DD305B7D5DB47953F453656']
   for (let i = 0; i < cookiesArr.length; i++) {
     if (cookiesArr[i]) {
       cookie = cookiesArr[i];
@@ -93,8 +93,8 @@ $.appId = 10028;
       for (let id of $.shareCodes) {
         console.log(`账号${$.UserName} 去助力 ${id}`)
         await helpByStage(id)
-        if (!$.canHelp) break
         await $.wait(3000)
+        if (!$.canHelp) break
       }
     }
     if (!$.canHelp) continue
@@ -103,8 +103,8 @@ $.appId = 10028;
       for (let id of $.strMyShareIds) {
         console.log(`账号${$.UserName} 去助力 ${id}`)
         await helpByStage(id)
-        if (!$.canHelp) break
         await $.wait(3000)
+        if (!$.canHelp) break
       }
     }
   }
@@ -889,6 +889,13 @@ async function employTourGuideInfo() {
         } else {
           data = JSON.parse(data);
           console.log(`雇导游`)
+          let minProductCoin = data.TourGuideList[0].ddwProductCoin
+          for(let key of Object.keys(data.TourGuideList)) {
+            let vo = data.TourGuideList[key]
+            if (vo.ddwProductCoin < minProductCoin) {
+              minProductCoin = vo.ddwProductCoin
+            }
+          }
           for(let key of Object.keys(data.TourGuideList)) {
             let vo = data.TourGuideList[key]
             let buildNmae;
@@ -907,16 +914,17 @@ async function employTourGuideInfo() {
               default:
                 break
             }
-            if(vo.ddwRemainTm === 0 && vo.strBuildIndex !== 'food') {
+            if(vo.ddwRemainTm === 0 && vo.ddwProductCoin !== minProductCoin) {
               let dwIsFree;
               if(vo.dwFreeMin !== 0) {
                 dwIsFree = 1
               } else {
                 dwIsFree = 0
               }
+              console.log(`【${buildNmae}】雇佣费用：${vo.ddwCostCoin}金币 增加收益：${vo.ddwProductCoin}金币`)
               const body = `strBuildIndex=${vo.strBuildIndex}&dwIsFree=${dwIsFree}&ddwConsumeCoin=${vo.ddwCostCoin}`
               await employTourGuide(body, buildNmae)
-            } else if (vo.strBuildIndex !== 'food') {
+            } else if (vo.ddwProductCoin !== minProductCoin) {
               console.log(`【${buildNmae}】无可雇佣导游`)
             }
             await $.wait(2000)
@@ -1096,7 +1104,7 @@ function helpByStage(shareCodes) {
             console.log(`助力失败：${data.sErrMsg}`)
             $.canHelp = false
           } else if (data.iRet === 2229 || data.sErrMsg === '助力失败啦~') {
-            console.log(`助力失败：您的账号或者被助力的账号可能已黑，请联系客服`)
+            console.log(`助力失败：您的账号或被助力的账号可能已黑，请联系客服`)
             // $.canHelp = false
           } else {
             console.log(`助力失败：${data.sErrMsg}`)
@@ -1198,8 +1206,8 @@ function getUserInfo(showInvite = true) {
       } finally {
         resolve();
       }
-    });
-  });
+    })
+  })
 }
 
 //任务
