@@ -74,7 +74,7 @@ Date.prototype.Format = function (fmt) { //author: meizz
       //console.log($.coincount);
       $.isLogin = true;
       $.nickName = '';
-     // await TotalBean();
+      await TotalBean();
       console.log(`\n****开始【京东账号${$.index}】${$.nickName || $.UserName}****\n`);
       // console.log(`目前暂无兑换酒类的奖品功能，即使输入酒类名称，脚本也会提示下架\n`)
       if (!$.isLogin) {
@@ -112,8 +112,8 @@ Date.prototype.Format = function (fmt) { //author: meizz
   .finally(() => $.done())
 
 async function PrizeIndex() {
-  let nowtime = new Date().Format("s")
-  let starttime = $.isNode() ? (process.env.SM_STARTTIME ? process.env.SM_STARTTIME * 1 : 59) : ($.getdata('SM_STARTTIME') ? $.getdata('SM_STARTTIME') * 1 : 59);
+  let nowtime = new Date().Format("s.S")
+  let starttime = $.isNode() ? (process.env.SM_STARTTIME ? process.env.SM_STARTTIME * 1 : 60) : ($.getdata('SM_STARTTIME') ? $.getdata('SM_STARTTIME') * 1 : 60);
   if(nowtime < 59) {
     let sleeptime = (starttime - nowtime) * 1000;
     console.log(`等待时间 ${sleeptime / 1000}`);
