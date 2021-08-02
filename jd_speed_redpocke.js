@@ -78,7 +78,8 @@ async function jsRedPacket() {
     console.log("===================签到提现===================")
 
     await sign();
-    $.speedUp = true
+    // 默认加速
+    $.speedUp = $.isNode() ? (process.env.JS_SIGN_SPEED_UP ? process.env.JS_SIGN_SPEED_UP === 'true' : true) : true
     while($.speedUp) {
       await speedUp()
       await $.wait(2000)
