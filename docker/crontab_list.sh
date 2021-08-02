@@ -30,10 +30,6 @@
 59 11,12,23 * * *  node /scripts/jd_cfdtx.js >> /scripts/logs/jd_cfdtx.log 2>&1
 # 摇京豆
 6 0,23 * * * node /scripts/jd_club_lottery.js >> /scripts/logs/jd_club_lottery.log 2>&1
-# crazyJoy自动每日任务
-30 7,23 * * * node /scripts/jd_crazy_joy.js >> /scripts/logs/jd_crazy_joy.log 2>&1
-#监控crazyJoy分红
-10 12 * * * node /scripts/jd_crazy_joy_bonus.js >> /scripts/logs/jd_crazy_joy_bonus.log 2>&1
 # 天天提鹅
 28 * * * * node /scripts/jd_daily_egg.js >> /scripts/logs/jd_daily_egg.log 2>&1
 # 东东乐园-大风车
@@ -81,7 +77,7 @@
 # 京喜签到
 15 0 node /scripts/jd_jxqd.js >> /scripts/logs/jd_jxqd.log 2>&1
 # 京东快递签到
-47 1 * * * node /scripts/jd_kd.js >> /scripts/logs/jd_kd.log 2>&1
+#47 1 * * * node /scripts/jd_kd.js >> /scripts/logs/jd_kd.log 2>&1
 # 京东直播
 30-50/5 12,23 * * * node /scripts/jd_live.js >> /scripts/logs/jd_live.log 2>&1
 # 京东抽奖机
@@ -90,8 +86,6 @@
 10 10,23 * * * node /scripts/jd_market_lottery.js >> /scripts/logs/jd_market_lottery.log 2>&1
 # 全民摸冰
 6 9,12 * * * node /scripts/jd_mb.js >> /scripts/logs/jd_mb.log 2>&1
-# 5G超级盲盒(活动时间：2021-06-2到2021-07-31)
-0 0-23/4 * * * node /scripts/jd_mohe.js >> /scripts/logs/jd_mohe.log 2>&1
 # 摇钱树
 23 */2 * * * node /scripts/jd_moneyTree.js >> /scripts/logs/jd_moneyTree.log 2>&1
 # 京东秒秒币
@@ -117,7 +111,7 @@
 # 东东小窝
 46 6,23 * * * node /scripts/jd_small_home.js >> /scripts/logs/jd_small_home.log 2>&1
 # 京东极速版红包
-45 0,23 * * * node /scripts/jd_speed_redpocke.js >> /scripts/logs/jd_speed_redpocke.log 2>&1
+#45 0,23 * * * node /scripts/jd_speed_redpocke.js >> /scripts/logs/jd_speed_redpocke.log 2>&1
 # 京东极速版签到+赚现金任务
 21 1,6 * * * node /scripts/jd_speed_sign.js >> /scripts/logs/jd_speed_sign.log 2>&1
 # 整点京豆雨
