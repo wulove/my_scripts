@@ -66,8 +66,8 @@ if ($.isNode()) {
       }
       try {
         // await jdMh('https://h5.m.jd.com/babelDiy/Zeus/3eeruLXVbXge6CexVq8XkBbBvAfy/index.html')
-        await jdMh('https://anmp.jd.com/babelDiy/Zeus/9Z9HZWmQuwDnYKC1rzZTMpdn8ms/index.html')
-        await jdMh('https://anmp.jd.com/babelDiy/Zeus/2e6SGdSEVmY18TSBeu7ewRKHmp22/index.html?wxAppName=jd')
+        await jdMh('https://h5.m.jd.com/babelDiy/Zeus/9Z9HZWmQuwDnYKC1rzZTMpdn8ms/index.html')
+        // await jdMh('https://anmp.jd.com/babelDiy/Zeus/2e6SGdSEVmY18TSBeu7ewRKHmp22/index.html?wxAppName=jd')
       } catch (e) {
         $.logErr(e)
       }
