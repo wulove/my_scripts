@@ -67,7 +67,7 @@ const JD_API_HOST = 'https://api.m.jd.com/';
       await jdBeanHome();
     }
   }
-  for (let i = 0; i < cookiesArr.length; i++) {
+  /*for (let i = 0; i < cookiesArr.length; i++) {
     $.index = i + 1;
     if (cookiesArr[i]) {
       cookie = cookiesArr[i];
@@ -95,7 +95,7 @@ const JD_API_HOST = 'https://api.m.jd.com/';
         }
       }
     }
-  }
+  }*/
 })()
   .catch((e) => {
     $.log('', `❌ ${$.name}, 失败! 原因: ${e}!`, '')
