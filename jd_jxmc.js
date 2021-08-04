@@ -1,23 +1,23 @@
 /*
-惊喜牧场
+京喜牧场
 更新时间：2021-7-17
 活动入口：京喜APP-我的-京喜牧场
 温馨提示：请先手动完成【新手指导任务】再运行脚本
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 ============Quantumultx===============
 [task_local]
-#惊喜牧场
-20 0-23/3 * * * jd_jxmc.js, tag=惊喜牧场, img-url=https://github.com/58xinian/icon/raw/master/jdgc.png, enabled=true
+#京喜牧场
+20 0-23/3 * * * jd_jxmc.js, tag=京喜牧场, img-url=https://github.com/58xinian/icon/raw/master/jdgc.png, enabled=true
 
 ================Loon==============
 [Script]
-cron "20 0-23/3 * * *" script-path=jd_jxmc.js,tag=惊喜牧场
+cron "20 0-23/3 * * *" script-path=jd_jxmc.js,tag=京喜牧场
 
 ===============Surge=================
-惊喜牧场 = type=cron,cronexp="20 0-23/3 * * *",wake-system=1,timeout=3600,script-path=jd_jxmc.js
+京喜牧场 = type=cron,cronexp="20 0-23/3 * * *",wake-system=1,timeout=3600,script-path=jd_jxmc.js
 
 ============小火箭=========
-惊喜牧场 = type=cron,script-path=jd_jxmc.js, cronexpr="20 0-23/3 * * *", timeout=3600, enable=true
+京喜牧场 = type=cron,script-path=jd_jxmc.js, cronexpr="20 0-23/3 * * *", timeout=3600, enable=true
  */
 // prettier-ignore
 !function (t, r) { "object" == typeof exports ? module.exports = exports = r() : "function" == typeof define && define.amd ? define([], r) : t.CryptoJS = r() }(this, function () {
@@ -34,6 +34,7 @@ const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 const JXUserAgent =  $.isNode() ? (process.env.JX_USER_AGENT ? process.env.JX_USER_AGENT : ``):``;
 $.inviteCodeList = [];
 let cookiesArr = [];
+let UA, UAInfo = {}
 $.appId = 10028;
 $.helpCkList = [];
 if ($.isNode()) {
@@ -51,7 +52,7 @@ if ($.isNode()) {
     $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
     return;
   }
-  console.log('惊喜牧场\n' +
+  console.log('京喜牧场\n' +
       '更新时间：2021-7-17\n' +
       '活动入口：京喜APP-我的-京喜牧场\n' +
       '温馨提示：请先手动完成【新手指导任务】再运行脚本')
@@ -71,8 +72,10 @@ if ($.isNode()) {
       }
       continue
     }
+    UA = `jdpingou;iPhone;4.13.0;14.4.2;${randomString()};network/wifi;model/iPhone10,2;appBuild/100609;ADID/00000000-0000-0000-0000-000000000000;supportApplePay/1;hasUPPay/0;pushNoticeIsOpen/1;hasOCPay/0;supportBestPay/0;session/${Math.random * 98 + 1};pap/JA2019_3111789;brand/apple;supportJDSHWK/1;Mozilla/5.0 (iPhone; CPU iPhone OS 14_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148`
     await pasture();
     await $.wait(2000);
+    UAInfo[$.UserName] = UA
   }
   console.log('\n##################开始账号内互助#################\n');
   let newCookiesArr = [];
@@ -85,6 +88,7 @@ if ($.isNode()) {
     for (let j = 0; j < thisCookiesArr.length; j++) {
       $.cookie = thisCookiesArr[j];
       $.UserName = decodeURIComponent($.cookie.match(/pt_pin=([^; ]+)(?=;?)/) && $.cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1]);
+      UA = UAInfo[$.UserName]
       for (let k = 0; k < $.inviteCodeList.length; k++) {
         if ($.UserName === $.inviteCodeList[k].use) {
           codeList.push({
@@ -97,6 +101,7 @@ if ($.isNode()) {
     for (let j = 0; j < thisCookiesArr.length; j++) {
       $.cookie = thisCookiesArr[j];
       $.UserName = decodeURIComponent($.cookie.match(/pt_pin=([^; ]+)(?=;?)/) && $.cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1]);
+      UA = UAInfo[$.UserName]
       for (let k = 0; k < codeList.length; k++) {
         $.oneCodeInfo = codeList[k];
         if(codeList[k].name === $.UserName){
@@ -558,11 +563,8 @@ function dealReturn(type, data) {
 }
 
 function getGetRequest(type, url) {
-  let ua = ``;
   if(JXUserAgent){
-    ua = JXUserAgent;
-  }else{
-    ua = `jdpingou;iPhone;4.9.4;14.6;${randomWord(false,40,40)};network/wifi;model/iPhone9,2;appBuild/100579;ADID/00000000-0000-0000-0000-000000000000;supportApplePay/1;hasUPPay/0;pushNoticeIsOpen/1;hasOCPay/0;supportBestPay/0;session/936;pap/JA2019_3111800;brand/apple;supportJDSHWK/1;Mozilla/5.0 (iPhone; CPU iPhone OS 14_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E200`;
+    UA = JXUserAgent;
   }
   const method = `GET`;
   let headers = {
@@ -572,28 +574,18 @@ function getGetRequest(type, url) {
     'Accept': `application/json`,
     'Referer': `https://st.jingxi.com/pingou/jxmc/index.html`,
     'Host': `m.jingxi.com`,
-    'User-Agent':ua,
-    //'User-Agent':$.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1"),
+    'User-Agent': UA,
     'Accept-Encoding': `gzip, deflate, br`,
     'Accept-Language': `zh-cn`
   };
   return {url: url, method: method, headers: headers};
 }
-
-function randomWord(randomFlag, min, max){
-  var str = "",
-    range = min,
-    arr = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
-
-  // 随机产生
-  if(randomFlag){
-    range = Math.round(Math.random() * (max-min)) + min;
-  }
-  for(var i=0; i<range; i++){
-    pos = Math.round(Math.random() * (arr.length-1));
-    str += arr[pos];
-  }
-  return str;
+function randomString() {
+  return Math.random().toString(16).slice(2, 10) +
+    Math.random().toString(16).slice(2, 10) +
+    Math.random().toString(16).slice(2, 10) +
+    Math.random().toString(16).slice(2, 10) +
+    Math.random().toString(16).slice(2, 10)
 }
 
 function decrypt(time, stk, type, url) {
