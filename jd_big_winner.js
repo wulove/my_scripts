@@ -25,6 +25,7 @@ const notify = $.isNode() ? require('./sendNotify') : '';
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 //IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [], cookie = '', message = '', linkId = 'yMVR-_QKRd2Mq27xguJG-w', fflLinkId = 'YhCkrVusBVa_O2K-7xE6hA';
+const money = $.isNode() ? (process.env.BIGWINNER_MONEY ? process.env.BIGWINNER_MONEY * 1 : 0.3) : ($.getdata("BIGWINNER_MONEY") ? $.getdata("BIGWINNER_MONEY") * 1 : 0.3)
 const JD_API_HOST = 'https://api.m.jd.com/api';
 if ($.isNode()) {
   Object.keys(jdCookieNode).forEach((item) => {
@@ -80,7 +81,7 @@ async function main() {
       if ($.canOpenRed) {
         while (!$.canApCashWithDraw && $.changeReward) {
           await openRedReward();
-          await $.wait(1000);
+          await $.wait(3000);
         }
         if ($.canApCashWithDraw) {
           //提现
