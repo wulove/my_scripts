@@ -76,13 +76,15 @@ async function main() {
 function queryMission(info = true) {
   $.taskData = [];
   const body = JSON.stringify({
+    "source": "JD_APP",
     "apiVersion": "4.0.0",
     "channel": "scljticon",
     "channelLv": "scljticon",
     "others": {
-      "taskCode": "JTPD-new"
-    },
-    "source": "JD_APP"
+      "taskCode": "JTPD-new",
+      "token":"",
+      "userOpenId":""
+    }
   })
   const options = taskUrl('channelQueryCenterMissionList', body, 'jrm');
   return new Promise((resolve) => {
@@ -92,7 +94,7 @@ function queryMission(info = true) {
           console.log(`${JSON.stringify(err)}`)
           console.log(`${$.name} API请求失败，请检查网路重试`)
         } else {
-          //console.log(data)
+          // console.log(data)
           data = JSON.parse(data);
           if (data.resultCode === 0) {
             if (data.resultData.code === '000') {
@@ -361,8 +363,10 @@ function doMission(task, functionId) {
     "channelLv":"scljticon",
     "apiVersion":"4.0.0",
     "others":{
-      "taskCode":'JTPD-new',
       "missionId":task['missionId'],
+      "taskCode":'JTPD-new',
+      "token":"",
+      "userOpenId":""
     }
   });
   const options = taskUrl(functionId, body, 'jrm');

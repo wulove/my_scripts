@@ -73,7 +73,9 @@ function queryMission() {
     "channel":"default",
     "apiVersion":"4.0.0",
     "others":{
-      "taskCode":"TTJT-weixin"
+      "taskCode":"TTJT-weixin",
+      "token":"",
+      "userOpenId":""
     }
   })
   const options = taskUrl('channelQueryCenterMissionList', body, 'jrm');
@@ -150,8 +152,10 @@ function doMission(mission, functionId) {
     "channelLv":"",
     "apiVersion":"4.0.0",
     "others":{
-      "taskCode":'TTJT-weixin',
       "missionId":mission['missionId'],
+      "taskCode":'TTJT-weixin',
+      "token":"",
+      "userOpenId":""
     }
   });
   const options = taskUrl(functionId, body, 'jrm');
