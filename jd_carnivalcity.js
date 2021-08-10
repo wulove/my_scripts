@@ -40,7 +40,7 @@ if ($.isNode()) {
 } else {
   cookiesArr = [$.getdata('CookieJD'), $.getdata('CookieJD2'), ...jsonParse($.getdata('CookiesJD') || "[]").map(item => item.cookie)].filter(item => !!item);
 }
-let inviteCodes = [];
+let inviteCodes = ['34d3ba23-161d-4cbc-90fc-2af36b6302e7','57e78366-1f51-4a1b-8410-4c7eb9253879'];
 const JD_API_HOST = 'https://api.m.jd.com/api';
 const activeEndTime = '2021/08/29 00:00:00+08:00';//活动结束时间
 let nowTime = new Date().getTime() + new Date().getTimezoneOffset()*60*1000 + 8*60*60*1000;
@@ -86,6 +86,29 @@ let nowTime = new Date().getTime() + new Date().getTimezoneOffset()*60*1000 + 8*
       await JD818();
     }
   }
+  for (let i = 0; i < cookiesArr.length; i++) {
+    if (cookiesArr[i]) {
+      cookie = cookiesArr[i];
+      $.canHelp = true;//能否助力
+      $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1])
+      if ((cookiesArr && cookiesArr.length >= 1) && $.canHelp) {
+        console.log(`\n先自己账号内部相互邀请助力\n`);
+        for (let item of $.temp) {
+          console.log(`\n${$.UserName} 去参助力 ${item}`);
+          const helpRes = await toHelp(item.trim());
+          if (helpRes.data.status === 5) {
+            console.log(`助力机会已耗尽，跳出助力`);
+            $.canHelp = false;
+            break;
+          }
+        }
+      }
+      if ($.canHelp) {
+        console.log(`\n\n如果有剩余助力机会，则给作者以及随机码助力`)
+        await doHelp();
+      }
+    }
+  }
   if (allMessage) {
     //NODE端,默认每月一日运行进行推送通知一次
     if ($.isNode()) {
@@ -111,7 +134,7 @@ async function JD818() {
     await doHotProducttask();//做热销产品任务
     await doBrandTask();//做品牌手机任务
     await doBrowseshopTask();//逛好货街，做任务
-    // await doHelp();
+    //await doHelp();
     await myRank();//领取往期排名奖励
     await getListRank();
     await getListIntegral();
@@ -477,7 +500,7 @@ function saveJbean(date) {
 }
 async function doHelp() {
   console.log(`\n开始助力好友`);
-  for (let item of $.newShareCodes) {
+  for (let item of inviteCodes) {
     if (!item) continue;
     const helpRes = await toHelp(item.trim());
     if (helpRes.data.status === 5) {
