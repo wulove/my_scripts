@@ -42,7 +42,7 @@ if ($.isNode()) {
 const JD_API_HOST = `https://api.m.jd.com/client.action`;
 message = ""
 $.Authorization = []
-$.inviter = ['199984', '210366', '210656', '210889', '211148', '211347']
+$.inviter = ['400481', '400464']
 !(async () => {
     if (!cookiesArr[0]) {
         $.msg($.name, '【提示】请先获取cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/', {
