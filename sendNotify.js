@@ -1,7 +1,5 @@
-/*
- Last Modified time: 2021-4-3 16:00:54
- */
 /**
+ * @Last Modified time: 2021-5-1 15:00:54
  * sendNotify 推送通知功能
  * @param text 通知头
  * @param desp 通知体
@@ -9,9 +7,19 @@
  * @param author 作者仓库等信息  例：`本脚本免费使用 By：xxx`
  * @returns {Promise<unknown>}
  */
-const querystring = require("querystring");
+
+const querystring = require('querystring');
 const $ = new Env();
-const timeout = 15000;//超时时间(单位毫秒)
+const timeout = 15000; //超时时间(单位毫秒)
+// =======================================go-cqhttp通知设置区域===========================================
+//gobot_url 填写请求地址http://127.0.0.1/send_private_msg
+//gobot_token 填写在go-cqhttp文件设置的访问密钥
+//gobot_qq 填写推送到个人QQ或者QQ群号
+//go-cqhttp相关API https://docs.go-cqhttp.org/api
+let GOBOT_URL = ''; // 推送到个人QQ: http://127.0.0.1/send_private_msg  群：http://127.0.0.1/send_group_msg 
+let GOBOT_TOKEN = ''; //访问密钥
+let GOBOT_QQ = ''; // 如果GOBOT_URL设置 /send_private_msg 则需要填入 user_id=个人QQ 相反如果是 /send_group_msg 则需要填入 group_id=QQ群
+
 // =======================================微信server酱通知设置区域===========================================
 //此处填你申请的SCKEY.
 //(环境变量名 PUSH_KEY)
@@ -22,7 +30,8 @@ let SCKEY = '';
 let BARK_PUSH = '';
 //BARK app推送铃声,铃声列表去APP查看复制填写
 let BARK_SOUND = '';
-
+//BARK app推送消息的分组, 默认为"QingLong"
+let BARK_GROUP = 'jd_scripts';
 
 // =======================================telegram机器人通知设置区域===========================================
 //此处填你telegram bot 的Token，telegram机器人通知推送必填项.例如：1077xxx4424:AAFjv0FcqxxxxxxgEMGfi22B4yh15R5uw
@@ -32,11 +41,11 @@ let TG_BOT_TOKEN = '';
 //(环境变量名 TG_USER_ID)
 let TG_USER_ID = '';
 //tg推送HTTP代理设置(不懂可忽略,telegram机器人通知推送功能中非必填)
-let TG_PROXY_HOST = '';//例如:127.0.0.1(环境变量名:TG_PROXY_HOST)
-let TG_PROXY_PORT = '';//例如:1080(环境变量名:TG_PROXY_PORT)
-let TG_PROXY_AUTH = '';//tg代理配置认证参数
+let TG_PROXY_HOST = ''; //例如:127.0.0.1(环境变量名:TG_PROXY_HOST)
+let TG_PROXY_PORT = ''; //例如:1080(环境变量名:TG_PROXY_PORT)
+let TG_PROXY_AUTH = ''; //tg代理配置认证参数
 //Telegram api自建的反向代理地址(不懂可忽略,telegram机器人通知推送功能中非必填),默认tg官方api(环境变量名:TG_API_HOST)
-let TG_API_HOST = 'api.telegram.org'
+let TG_API_HOST = 'api.telegram.org';
 // =======================================钉钉机器人通知设置区域===========================================
 //此处填你钉钉 bot 的webhook，例如：5a544165465465645d0f31dca676e7bd07415asdasd
 //(环境变量名 DD_BOT_TOKEN)
@@ -73,6 +82,16 @@ let PUSH_PLUS_TOKEN = '';
 let PUSH_PLUS_USER = '';
 
 //==========================云端环境变量的判断与接收=========================
+if (process.env.GOBOT_URL) {
+  GOBOT_URL = process.env.GOBOT_URL;
+}
+if (process.env.GOBOT_TOKEN) {
+  GOBOT_TOKEN = process.env.GOBOT_TOKEN;
+}
+if (process.env.GOBOT_QQ) {
+  GOBOT_QQ = process.env.GOBOT_QQ;
+}
+
 if (process.env.PUSH_KEY) {
   SCKEY = process.env.PUSH_KEY;
 }
@@ -89,12 +108,15 @@ if (process.env.QQ_MODE) {
 if (process.env.BARK_PUSH) {
   if(process.env.BARK_PUSH.indexOf('https') > -1 || process.env.BARK_PUSH.indexOf('http') > -1) {
     //兼容BARK自建用户
-    BARK_PUSH = process.env.BARK_PUSH
+    BARK_PUSH = process.env.BARK_PUSH;
   } else {
     BARK_PUSH = `https://api.day.app/${process.env.BARK_PUSH}`
   }
   if (process.env.BARK_SOUND) {
-    BARK_SOUND = process.env.BARK_SOUND
+    BARK_SOUND = process.env.BARK_SOUND;
+  }
+  if (process.env.BARK_GROUP) {
+    BARK_GROUP = process.env.BARK_GROUP;
   }
 } else {
   if(BARK_PUSH && BARK_PUSH.indexOf('https') === -1 && BARK_PUSH.indexOf('http') === -1) {
@@ -129,7 +151,7 @@ if (process.env.QYWX_AM) {
 }
 
 if (process.env.IGOT_PUSH_KEY) {
-  IGOT_PUSH_KEY = process.env.IGOT_PUSH_KEY
+  IGOT_PUSH_KEY = process.env.IGOT_PUSH_KEY;
 }
 
 if (process.env.PUSH_PLUS_TOKEN) {
@@ -163,9 +185,52 @@ async function sendNotify(text, desp, params = {}, author = '') {
     ddBotNotify(text, desp),//钉钉机器人
     qywxBotNotify(text, desp), //企业微信机器人
     qywxamNotify(text, desp), //企业微信应用消息推送
-    iGotNotify(text, desp, params),//iGot
-    //CoolPush(text, desp)//QQ酷推
-  ])
+    iGotNotify(text, desp, params), //iGot
+    gobotNotify(text, desp),//go-cqhttp
+  ]);
+}
+
+function gobotNotify(text, desp, time = 2100) {
+  return new Promise((resolve) => {
+    if (GOBOT_URL) {
+      const options = {
+        url: `${GOBOT_URL}?access_token=${GOBOT_TOKEN}&${GOBOT_QQ}`,
+        json: {message:`${text}\n${desp}`},
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        timeout,
+      };
+      setTimeout(() => {
+        $.post(options, (err, resp, data) => {
+          try {
+            if (err) {
+              console.log('发送go-cqhttp通知调用API失败！！\n');
+              console.log(err);
+            } else {
+              data = JSON.parse(data);
+              if (data.retcode === 0) {
+                console.log('go-cqhttp发送通知消息成功🎉\n');
+              } else if (data.retcode === 100) {
+                console.log(`go-cqhttp发送通知消息异常: ${data.errmsg}\n`);
+              } else {
+                console.log(
+                  `go-cqhttp发送通知消息异常\n${JSON.stringify(data)}`,
+                );
+              }
+            }
+          } catch (e) {
+            $.logErr(e, resp);
+          } finally {
+            resolve(data);
+          }
+        });
+      }, time);
+    } else {
+      console.log('\n\n您未提供GOBOT的GOBOT_URL和GOBOT_TOKEN和GOBOT_QQ，取消GOBOT推送消息通知🚫\n');
+      resolve();
+    }
+  });
 }
 
 function serverNotify(text, desp, time = 2100) {
@@ -531,7 +596,7 @@ function qywxamNotify(text, desp) {
               textcard: {
                 title: `${text}`,
                 description: `${desp}`,
-                url: 'https://github.com/lxk0301/jd_scripts',
+                url: '',
                 btntxt: '更多'
               }
             }
