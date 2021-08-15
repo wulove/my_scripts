@@ -50,8 +50,6 @@ let allMessage = '';
     return;
   }
   await requireConfig()
-  // await getAuthorShareCode();
-  // await getAuthorShareCode2();
   for (let i = 0; i < cookiesArr.length; i++) {
     if (cookiesArr[i]) {
       cookie = cookiesArr[i];
@@ -88,7 +86,7 @@ async function jdCash() {
   $.signMoney = 0;
   await index()
   await shareCodesFormat()
-  await helpFriends()
+  // await helpFriends()
   await getReward()
   await getReward('2');
   $.exchangeBeanNum = 0;
