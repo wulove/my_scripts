@@ -1,5 +1,7 @@
 ## 自用，勿fork
 
+青龙面板：ql repo https://github.com/wulove/my_scripts.git "jd_|jx_|getJDCookie" "activity|backUp|hundun" "^jd[^_]|USER|sendNotify|utils"
+
 ## Special statement:
 
 * Any unlocking and decryption analysis scripts involved in the Script project released by this warehouse are only used for testing, learning and research, and are forbidden to be used for commercial purposes. Their legality, accuracy, completeness and effectiveness cannot be guaranteed. Please make your own judgment based on the situation. .
