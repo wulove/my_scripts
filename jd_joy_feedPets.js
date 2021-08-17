@@ -21,8 +21,8 @@ cron "15 0-23/1 * * *" script-path=jd_joy_feedPets.js,tag=京东宠汪汪喂食
 京东宠汪汪喂食 = type=cron,script-path=jd_joy_feedPets.js, cronexpr="15 0-23/1 * * *", timeout=3600, enable=true
 */
 const $ = new Env('宠汪汪🐕喂食');
-const zooFaker = require('./JDJRValidator_Pure');
-$.get = zooFaker.injectToRequest($.get.bind($));
+const zooFaker = require('./utils/JDJRValidator_Pure');
+$.get = zooFaker.injectToRequest2($.get.bind($));
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
@@ -104,8 +104,8 @@ function feedPets(feedNum) {
     if (FEED_NUM === 0) { console.log(`跳出喂食`);resolve();return }
     console.log(`实际的喂食数量::${feedNum}g\n`);
     let opt = {
-      url: `//jdjoy.jd.com/common/pet/feed?feedCount=${feedNum}&reqSource=h5&invokeKey=qRKHmL4sna8ZOP9F`,
-      // url: "//draw.jdfcloud.com/common/pet/getPetTaskConfig?reqSource=h5&invokeKey=qRKHmL4sna8ZOP9F",
+      url: `//jdjoy.jd.com/common/pet/feed?feedCount=${feedNum}&reqSource=h5&invokeKey=ztmFUCxcPMNyUq0P`,
+      // url: "//draw.jdfcloud.com/common/pet/getPetTaskConfig?reqSource=h5&invokeKey=ztmFUCxcPMNyUq0P",
       method: "GET",
       data: {},
       credentials: "include",
@@ -173,8 +173,8 @@ function feedPets(feedNum) {
 function ThreeMeals() {
   return new Promise(resolve => {
     let opt = {
-      url: "//jdjoy.jd.com/common/pet/getFood?taskType=ThreeMeals&reqSource=h5&invokeKey=qRKHmL4sna8ZOP9F",
-      // url: "//draw.jdfcloud.com/common/pet/getPetTaskConfig?reqSource=h5&invokeKey=qRKHmL4sna8ZOP9F",
+      url: "//jdjoy.jd.com/common/pet/getFood?taskType=ThreeMeals&reqSource=h5&invokeKey=ztmFUCxcPMNyUq0P",
+      // url: "//draw.jdfcloud.com/common/pet/getPetTaskConfig?reqSource=h5&invokeKey=ztmFUCxcPMNyUq0P",
       method: "GET",
       data: {},
       credentials: "include",
