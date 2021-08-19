@@ -187,27 +187,6 @@ function requireConfig() {
     // console.log(`jdFruitShareArr账号长度::${jxncShareCodeArr.length}`)
     $.log(`您提供了${jxncShareCodeArr.length}个账号的京喜农场助力码`);
 
-    try {
-      let options = {
-        "url": `https://cdn.jsdelivr.net/gh/Aaron-lv/updateTeam@master/shareCodes/jxnc.txt`,
-        "headers": {
-          "Accept": "application/json,text/plain, */*",
-          "Content-Type": "application/x-www-form-urlencoded",
-          "Accept-Encoding": "gzip, deflate, br",
-          "Accept-Language": "zh-cn",
-          "Connection": "keep-alive",
-          "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 11_1_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36"
-        },
-        "timeout": 10000,
-      }
-      $.get(options, (err, resp, data) => { // 初始化内置变量
-        if (!err) {
-          shareCode = data;
-        }
-      });
-    } catch (e) {
-      // 获取内置助力码失败
-    }
     resolve()
   })
 }
@@ -317,21 +296,6 @@ async function jdJXNC() {
         await submitInviteId($.UserName);
         await $.wait(500);
         let next = await helpFriends();
-        if (next) {
-          while ($.helpNum < $.maxHelpNum) {
-            $.helpNum++;
-            assistUserShareCodeJson = await getAssistUser();
-            if (assistUserShareCodeJson) {
-              await $.wait(500);
-              next = await helpShareCode(assistUserShareCodeJson['smp'], assistUserShareCodeJson['active'], assistUserShareCodeJson['joinnum']);
-              if (next) {
-                await $.wait(1000);
-                continue;
-              }
-            }
-            break;
-          }
-        }
       }
     }
   }
@@ -518,41 +482,6 @@ function submitInviteId(userName) {
     } catch (e) {
       // $.logErr(e, resp);
       resolve();
-    }
-  });
-}
-
-function getAssistUser() {
-  return new Promise(resolve => {
-    try {
-      $.get({
-        url: `https://api.ninesix.cc/api/jx-nc?active=${$.info.active}`,
-        timeout: 10000
-      }, async (err, resp, _data) => {
-        try {
-          const {code, data: {value, extra = {}} = {}} = JSON.parse(_data);
-          if (value && extra.active) { //  && extra.joinnum 截止 2021-01-22 16:39:09 API 线上还未部署新的 joinnum 参数代码，暂时默认 1 兼容
-            let shareCodeJson = {
-              'smp': value,
-              'active': extra.active,
-              'joinnum': extra.joinnum || 1
-            };
-            $.log(`获取随机助力码成功 ` + JSON.stringify(shareCodeJson));
-            resolve(shareCodeJson);
-            return;
-          } else {
-            $.log(`获取随机助力码失败 ${code}`);
-          }
-        } catch (e) {
-          // $.logErr(e, resp);
-          $.log('获取随机助力码失败 API 返回异常');
-        } finally {
-          resolve(false);
-        }
-      });
-    } catch (e) {
-      // $.logErr(e, resp);
-      resolve(false);
     }
   });
 }
