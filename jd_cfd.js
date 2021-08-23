@@ -1148,7 +1148,10 @@ function helpByStage(shareCodes) {
           } else if (data.iRet === 2229 || data.sErrMsg === '助力失败啦~') {
             console.log(`助力失败：您的账号或被助力的账号可能已黑，请联系客服`)
             // $.canHelp = false
-          } else {
+          } else if (data.iRet === 2190 || data.sErrMsg === '达到助力上限') {
+            console.log(`助力失败：${data.sErrMsg}`)
+            $.delcode = true
+          } else{
             console.log(`助力失败：${data.sErrMsg}`)
           }
         }
