@@ -138,7 +138,7 @@ function doLuckDrawEntrance() {
         } else {
           if (data) {
             data = JSON.parse(data);
-            if (data.code === '0' && data['busiCode'] === '0') {
+            if (data.code === '0' && data.busiCode === '0') {
               if (data.result.luckyDrawData.actId) {
                 if (data.result.luckyDrawData.redPacketId) {
                   console.log(`券后9.9抽奖获得【红包】：${data.result.luckyDrawData.quota}元`);
@@ -214,12 +214,12 @@ async function red() {
   $.hasSendNumber = 0;
   $.assistants = 0;
   $.waitOpenTimes = 0;
-  if ($.h5activityIndex && $.h5activityIndex.data && $.h5activityIndex.data['result']) {
-    const rewards = $.h5activityIndex['data']['result']['rewards'] || [];
-    $.hasSendNumber = $.h5activityIndex['data']['result']['hasSendNumber'];
-    if ($.h5activityIndex['data']['result']['redpacketConfigFillRewardInfo']) {
-      for (let key of Object.keys($.h5activityIndex['data']['result']['redpacketConfigFillRewardInfo'])) {
-        let vo = $.h5activityIndex['data']['result']['redpacketConfigFillRewardInfo'][key]
+  if ($.h5activityIndex && $.h5activityIndex.data && $.h5activityIndex.data.result) {
+    const rewards = $.h5activityIndex.data.result.rewards || [];
+    $.hasSendNumber = $.h5activityIndex.data.result.hasSendNumber;
+    if ($.h5activityIndex.data.result.redpacketConfigFillRewardInfo) {
+      for (let key of Object.keys($.h5activityIndex.data.result.redpacketConfigFillRewardInfo)) {
+        let vo = $.h5activityIndex.data.result.redpacketConfigFillRewardInfo[key]
         $.assistants += vo.hasAssistNum
         if (vo.packetStatus === 1) {
           $.waitOpenTimes += 1
@@ -227,14 +227,14 @@ async function red() {
       }
     }
   }
-  if ($.h5activityIndex && $.h5activityIndex.data && $.h5activityIndex.data['biz_code'] === 10002) {
+  if ($.h5activityIndex && $.h5activityIndex.data && $.h5activityIndex.data.biz_code === 10002) {
     //可发起拆红包活动
     await h5launch();
-  } else if ($.h5activityIndex && $.h5activityIndex.data && $.h5activityIndex.data['biz_code'] === 20001) {
+  } else if ($.h5activityIndex && $.h5activityIndex.data && ($.h5activityIndex.data.biz_code === 20001)) {
     //20001:红包活动正在进行，可拆
-    const redPacketId = $.h5activityIndex['data']['result']['redpacketInfo']['id'];
+    const redPacketId = $.h5activityIndex.data.result.redpacketInfo.id;
     if (redPacketId) $.redPacketId.push(redPacketId);
-    console.log(`\n\n当前待拆红包ID:${$.h5activityIndex['data']['result']['redpacketInfo']['id']}，进度：再邀${$.h5activityIndex['data']['result']['redpacketConfigFillRewardInfo'][$.hasSendNumber]['requireAssistNum'] - $.h5activityIndex['data']['result']['redpacketConfigFillRewardInfo'][$.hasSendNumber]['hasAssistNum']}个好友，开第${$.hasSendNumber + 1}个红包。当前已拆红包：${$.hasSendNumber}个，剩余${$.h5activityIndex['data']['result']['remainRedpacketNumber']}个红包待开，已有${$.assistants}好友助力\n\n`)
+    console.log(`\n\n当前待拆红包ID:${$.h5activityIndex.data.result.redpacketInfo.id}，进度：再邀${$.h5activityIndex.data.result.redpacketConfigFillRewardInfo[$.hasSendNumber].requireAssistNum - $.h5activityIndex.data.result.redpacketConfigFillRewardInfo[$.hasSendNumber].hasAssistNum}个好友，开第${$.hasSendNumber + 1}个红包。当前已拆红包：${$.hasSendNumber}个，剩余${$.h5activityIndex.data.result.remainRedpacketNumber}个红包待开，已有${$.assistants}好友助力\n\n`)
     console.log(`当前可拆红包个数：${$.waitOpenTimes}`)
     if ($.waitOpenTimes > 0) {
       for (let i = 0; i < $.waitOpenTimes; i++) {
@@ -242,8 +242,8 @@ async function red() {
         await $.wait(500);
       }
     }
-  } else if ($.h5activityIndex && $.h5activityIndex.data && $.h5activityIndex.data['biz_code'] === 20002) {
-    console.log(`\n${$.h5activityIndex.data['biz_msg']}\n`);
+  } else if ($.h5activityIndex && $.h5activityIndex.data && $.h5activityIndex.data.biz_code === 20002) {
+    console.log(`\n${$.h5activityIndex.data.biz_msg}\n`);
   }
 }
 //获取任务列表API
@@ -392,11 +392,12 @@ function jinli_h5assist(redPacketId) {
           console.log(JSON.stringify(err));
         } else {
           data = JSON.parse(data);
-          if (data && data.data && data.data['biz_code'] === 0) {
+          if (data && data.data && data.data.biz_code === 0) {
             // status ,0:助力成功，1:不能重复助力，3:助力次数耗尽，8:不能为自己助力
-            console.log(`助力结果：${data['data']['result']['statusDesc']}`)
-            if (data['data']['result']['status'] === 3) $.canHelp = false;
-            if (data['data']['result']['status'] === 9) $.canHelp = false;
+            console.log(`助力结果：${data.data.result.statusDesc}`)
+            if (data.data.result.status === 2) $.max = true;
+            if (data.data.result.status === 3) $.canHelp = false;
+            if (data.data.result.status === 9) $.canHelp = false;
           } else {
             console.log(`助力异常：${JSON.stringify(data)}`);
           }
@@ -420,8 +421,8 @@ function h5receiveRedpacketAll() {
           console.log(JSON.stringify(err));
         } else {
           data = JSON.parse(data);
-          if (data && data.data && data.data['biz_code'] === 0) {
-            console.log(`拆红包获得：${data['data']['result']['discount']}元`)
+          if (data && data.data && data.data.biz_code === 0) {
+            console.log(`拆红包获得：${data.data.result.discount}元`)
           } else {
             console.log(`领红包失败：${JSON.stringify(data)}`)
           }
@@ -446,12 +447,12 @@ function h5launch() {
           console.log(JSON.stringify(err));
         } else {
           data = JSON.parse(data);
-          if (data && data.data && data.data['biz_code'] === 0) {
-            if (data['data']['result']['redPacketId']) {
-              console.log(`\n\n发起助力红包 成功：红包ID ${data['data']['result']['redPacketId']}`)
-              $.redPacketId.push(data['data']['result']['redPacketId']);
+          if (data && data.data && data.data.biz_code === 0) {
+            if (data.data.result.redPacketId) {
+              console.log(`\n\n发起助力红包 成功：红包ID ${data.data.result.redPacketId}`)
+              $.redPacketId.push(data.data.result.redPacketId);
             } else {
-              console.log(`\n\n发起助力红包 失败：${data['data']['result']['statusDesc']}`)
+              console.log(`\n\n发起助力红包 失败：${data.data.result.statusDesc}`)
             }
           } else {
             console.log(`发起助力红包 失败：${JSON.stringify(data)}`)
@@ -478,10 +479,10 @@ function h5activityIndex() {
           data = JSON.parse(data);
           $.h5activityIndex = data;
           $.discount = 0;
-          if ($.h5activityIndex && $.h5activityIndex.data && $.h5activityIndex.data['result']) {
-            const rewards = $.h5activityIndex['data']['result']['rewards'] || [];
+          if ($.h5activityIndex && $.h5activityIndex.data && $.h5activityIndex.data.result) {
+            const rewards = $.h5activityIndex.data.result.rewards || [];
             for (let item of rewards) {
-              $.discount += item['packetSum'];
+              $.discount += item.packetSum;
             }
             if ($.discount) $.discount = $.discount.toFixed(2);
           }
