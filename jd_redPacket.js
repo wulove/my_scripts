@@ -8,25 +8,24 @@ Last Modified time: 2021-05-19 16:27:18
 ================QuantumultX==================
 [task_local]
 #京东全民开红包
-1 1,2,23 * * * jd_redPacket.js, tag=京东全民开红包, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jd_redPacket.png, enabled=true
+1 1,2,23 * * * https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_redPacket.js, tag=京东全民开红包, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jd_redPacket.png, enabled=true
 ===================Loon==============
 [Script]
-cron "1 1,2,23 * * *" script-path=jd_redPacket.js, tag=京东全民开红包
+cron "1 1,2,23 * * *" script-path=https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_redPacket.js, tag=京东全民开红包
 ===============Surge===============
 [Script]
-京东全民开红包 = type=cron,cronexp="1 1,2,23 * * *",wake-system=1,timeout=3600,script-path=jd_redPacket.js
+京东全民开红包 = type=cron,cronexp="1 1,2,23 * * *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_redPacket.js
 ====================================小火箭=============================
-京东全民开红包 = type=cron,script-path=jd_redPacket.js, cronexpr="1 1,2,23 * * *", timeout=3600, enable=true
+京东全民开红包 = type=cron,script-path=https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_redPacket.js, cronexpr="1 1,2,23 * * *", timeout=3600, enable=true
  */
 const $ = new Env('京东全民开红包');
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
-
 //IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [], cookie = '';
+let isLoginInfo = {}
 $.redPacketId = [];
-
 if ($.isNode()) {
   Object.keys(jdCookieNode).forEach((item) => {
     cookiesArr.push(jdCookieNode[item])
@@ -51,6 +50,7 @@ const JD_API_HOST = 'https://api.m.jd.com/api';
       $.isLogin = true;
       $.nickName = '';
       await TotalBean();
+      isLoginInfo[$.UserName] = $.isLogin
       console.log(`\n****开始【京东账号${$.index}】${$.nickName || $.UserName}****\n`);
       if (!$.isLogin) {
         $.msg($.name, `【提示】cookie已失效`, `京东账号${$.index} ${$.nickName || $.UserName}\n请重新登录获取\nhttps://bean.m.jd.com/bean/signIndex.action`, {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
@@ -65,20 +65,24 @@ const JD_API_HOST = 'https://api.m.jd.com/api';
       await showMsg();
     }
   }
-  for (let v = 0; v < cookiesArr.length; v++) {
-    cookie = cookiesArr[v];
-    $.index = v + 1;
+  for (let i = 0; i < cookiesArr.length; i++) {
+    cookie = cookiesArr[i];
+    $.index = i + 1;
     $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1]);
     $.canHelp = true;
     $.redPacketId = [...new Set($.redPacketId)];
+    if (!isLoginInfo[$.UserName]) continue
     if (cookiesArr && cookiesArr.length >= 2) {
       console.log(`\n\n自己账号内部互助`);
-      for (let item of $.redPacketId) {
-        console.log(`账号 ${$.index} ${$.UserName} 开始给 ${item} 进行助力`)
-        await jinli_h5assist(item);
-        if (!$.canHelp) {
-          console.log(`次数已用完或活动火爆，跳出助力`)
-          break
+      for (let j = 0; j < $.redPacketId.length && $.canHelp; j++) {
+        console.log(`账号 ${$.index} ${$.UserName} 开始给 ${$.redPacketId[j]} 进行助力`)
+        $.max = false;
+        await jinli_h5assist($.redPacketId[j]);
+        await $.wait(2000)
+        if ($.max) {
+          $.redPacketId.splice(j, 1)
+          j--
+          continue
         }
       }
     }
@@ -564,6 +568,39 @@ function getCcTaskList(functionId, body, type = '1') {
     })
   })
 }
+function getAuthorShareCode(url) {
+  return new Promise(resolve => {
+    const options = {
+      url: `${url}?${new Date()}`, "timeout": 10000, headers: {
+        "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1 Edg/87.0.4280.88"
+      }
+    };
+    if ($.isNode() && process.env.TG_PROXY_HOST && process.env.TG_PROXY_PORT) {
+      const tunnel = require("tunnel");
+      const agent = {
+        https: tunnel.httpsOverHttp({
+          proxy: {
+            host: process.env.TG_PROXY_HOST,
+            port: process.env.TG_PROXY_PORT * 1
+          }
+        })
+      }
+      Object.assign(options, { agent })
+    }
+    $.get(options, async (err, resp, data) => {
+      try {
+        if (err) {
+        } else {
+          if (data) data = JSON.parse(data)
+        }
+      } catch (e) {
+        // $.logErr(e, resp)
+      } finally {
+        resolve(data);
+      }
+    })
+  })
+}
 
 function taskUrl(functionId, body = {}) {
   return {
@@ -584,7 +621,6 @@ function taskUrl(functionId, body = {}) {
     }
   }
 }
-
 
 function TotalBean() {
   return new Promise(async resolve => {
