@@ -222,7 +222,7 @@ function redRainId(url) {
 }
 
 function rraUrl() {
-  let url = 'https://raw.githubusercontent.com/wulove/my_scripts/master/lxk0301_live_redrain.json'
+  let url = 'https://raw.githubusercontent.com/wulove/my_scripts/master/jd_live_redrain.json'
   if($.isNode() && process.env.JD_RRA_URL){
     url = process.env.JD_RRA_URL
   }else if($.getdata('jdRRAUrl')){
