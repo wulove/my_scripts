@@ -658,7 +658,7 @@ function userInfo() {
                 $.get({
                   url: `https://cdn.nz.lu/api/runTimes?activityId=jxfactory&sharecode=${data.user.encryptPin}`,
                   headers: {
-                    'Host': 'api.sharecode.ga'
+                    'Host': 'api.jdsharecode.xyz'
                   },
                   timeout: 10000
                 }, (err, resp, data) => {
@@ -1375,7 +1375,7 @@ function readShareCode() {
   console.log(`开始`)
   return new Promise(async resolve => {
     /* $.get({
-      url: `https://api.sharecode.ga/api/jxfactory/${randomCount}`,
+      url: `https://api.jdsharecode.xyz/api/jxfactory/${randomCount}`,
       'timeout': 10000
     }, (err, resp, data) => {
       try {

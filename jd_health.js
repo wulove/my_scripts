@@ -146,7 +146,7 @@ function getTaskDetail(taskId = '') {
                   $.get({
                     url: `https://cdn.nz.lu/api/runTimes?activityId=health&sharecode=${data?.data?.result?.taskVos[0].assistTaskDetailVo.taskToken}`,
                     headers: {
-                      'Host': 'api.sharecode.ga'
+                      'Host': 'api.jdsharecode.xyz'
                     },
                     timeout: 10000
                   }, (err, resp, data) => {

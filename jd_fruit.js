@@ -94,7 +94,7 @@ async function jdFruit() {
       $.get({
         url: `https://cdn.nz.lu/api/runTimes?activityId=farm&sharecode=${$.farmInfo.farmUserPro.shareCode}`,
         headers: {
-          'Host': 'api.sharecode.ga'
+          'Host': 'api.jdsharecode.xyz'
         },
         timeout: 10000
       }, (err, resp, data) => {
