@@ -146,7 +146,7 @@ async function joyReward() {
         // }
         let giftSaleInfos = 'beanConfigs0';
         const time = (new Date().getUTCHours() + 8) % 24;
-        if (time >= 23 && time < 7) {
+        if (time >= 23 || time < 7) {
           giftSaleInfos = 'beanConfigs0';
           $.Num = 0
           rewardNum = 500
