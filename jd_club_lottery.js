@@ -80,7 +80,7 @@ const JD_API_HOST = 'https://api.m.jd.com/client.action';
         continue
       }
       await clubLottery();
-      await showMsg();
+     // await showMsg();
     }
   }
   for (let v = 0; v < cookiesArr.length; v++) {
@@ -150,7 +150,7 @@ async function clubLottery() {
     await shakeSign();//京东会员签到
     await superShakeBean();//京东APP首页超级摇一摇
     await superbrandShakeBean();//京东APP首页超级品牌日
-    await mofang();//小魔方
+    // await mofang();//小魔方
   } catch (e) {
     $.logErr(e)
   }
