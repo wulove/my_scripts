@@ -16,7 +16,6 @@ const activityList = [
   {"actid":"f1f1d34436ec4909aa7903f64205e283","endTime":1633622400000},
   {"actid": "7377aba024114ddfa25bad00948a8722", "endTime": 1632931200000},
   {"actid":"b6bd7155cefe443aae1e5a74383008f2","endTime":1635695999000},
-  {"actid":"3651af1ff7194fb3b37235dd15538d58","endTime":1632067199000},
   {"actid":"2bfa9b34365140f8a51293043ca2821f","endTime":1633017599000},
   {"actid":"3ae867cd253f42b1992ae90598b7549a","endTime":1632931200000},
   {"actid":"2d2280b86b394cc09d436feecb4e5d3b","endTime":1632931200000},
@@ -25,7 +24,6 @@ const activityList = [
   {"actid":"86eab05c547d4d28829d269e2a5c4f1e","endTime":1633017599000},
   {"actid":"73086c4fed7746e1b911a776d2e8662e","endTime":1633017599000},
   {"actid":"179e156d768240db84393751fc9c427b","endTime":1633017599000},
-  {"actid":"fa3c9189473141c0aec883301452e562","endTime":1633017599000},
   {"actid":"bed695cfc40941c0a641eba935f9601e","endTime":1633017599000},
   {"actid":"1f110dbf3c024de4ba2b919bf65fc83b","endTime":1633017599000},
 ];
