@@ -8,7 +8,7 @@
 1 18,20 * * * https://raw.githubusercontent.com/Aaron-lv/JavaScript/master/Task/jd_super_mh.js, tag=超级直播间盲盒抽京豆, enabled=true
 ==============Loon==============
 [Script]
-cron "10 0 18,20 * * *" script-path=https://raw.githubusercontent.com/Aaron-lv/JavaScript/master/Task/jd_super_mh.js,tag=超级直播间盲盒抽京豆
+cron "1 18,20 * * *" script-path=https://raw.githubusercontent.com/Aaron-lv/JavaScript/master/Task/jd_super_mh.js,tag=超级直播间盲盒抽京豆
 ================Surge===============
 超级直播间盲盒抽京豆 = type=cron,cronexp="1 18,20 * * *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/Aaron-lv/JavaScript/master/Task/jd_super_mh.js
 ===============小火箭==========
@@ -128,7 +128,7 @@ function mhId(url) {
 }
 
 function mhUrl() {
-    let url = 'http://qyuyful8s.hb-bkt.clouddn.com/jd-half-mh.json'
+    let url = 'http://r0a79r6l0.hb-bkt.clouddn.com/jd-half-mh.json'
     if ($.isNode() && process.env.JD_MH_URL) {
         url = process.env.JD_MH_URL
     } else if ($.getdata('jdMHUrl')) {
