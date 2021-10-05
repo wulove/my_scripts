@@ -1,5 +1,5 @@
 /*
-柠檬伊利养牛记
+伊利养牛记
 
 如果提示没有养牛 自己手动进去养一只
 活动入口：伊利京东自营旗舰店->伊利牛奶
@@ -10,7 +10,7 @@ https://lzdz-isv.isvjcloud.com/dingzhi/yili/yangniu/activity/5070687?activityId=
 #柠檬伊利养牛记
 cron 38 5,18 * * * https://raw.githubusercontent.com/panghu999/panghu/jd_ylyn.js, tag=柠檬伊利养牛记, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
 */
-const $ = new Env('柠檬伊利养牛记');
+const $ = new Env('京东伊利养牛记');
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 const randomCount = $.isNode() ? 20 : 5;
