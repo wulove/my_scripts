@@ -3,7 +3,7 @@
 
 如果提示没有养牛 自己手动进去养一只
 活动入口：伊利京东自营旗舰店->伊利牛奶
-https://lzdz-isv.isvjcloud.com/dingzhi/yili/yangniu/activity/5070687?activityId=dz2103100001340201&shareUuid=bd93957c016242f6a51194d35449432c&adsource=ziying&shareuserid4minipg=u/cWHIy7/x3Ij+HjfbnnePkaL5GGqMTUc8u/otw2E+a7Ak3lgFoFQlZmf45w8Jzw&shopid=1000013402&lng=114.062604&lat=29.541501&sid=6e9bfee3838075a72533536815d8f3ew&un_area=4_48201_54794_0
+https://lzdz-isv.isvjcloud.com/dingzhi/yili/yangniu/activity/5070687?activityId=dz2103100001340201&shareUuid=aaa1a3d5033e4e6bbf856341d57bdba3&adsource=ziying&shareuserid4minipg=u/cWHIy7/x3Ij+HjfbnnePkaL5GGqMTUc8u/otw2E+a7Ak3lgFoFQlZmf45w8Jzw&shopid=1000013402&lng=114.062604&lat=29.541501&sid=6e9bfee3838075a72533536815d8f3ew&un_area=4_48201_54794_0
 
 
 [task_local]
@@ -32,7 +32,7 @@ if ($.isNode()) {
 
 const JD_API_HOST = `https://api.m.jd.com/client.action`;
 message = ""
-$.shareuuid = "bd93957c016242f6a51194d35449432c" //
+$.shareuuid = "aaa1a3d5033e4e6bbf856341d57bdba3" //
     !(async () => {
         if (!cookiesArr[0]) {
             $.msg($.name, '【提示】请先获取cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/', {
@@ -108,7 +108,7 @@ $.shareuuid = "bd93957c016242f6a51194d35449432c" //
 function genToken() {
     let config = {
         url: 'https://api.m.jd.com/client.action?functionId=genToken&clientVersion=10.0.4&build=88641&client=android&d_brand=OPPO&d_model=PCAM00&osVersion=10&screen=2208*1080&partner=oppo&oaid=&openudid=7049442d7e415232&eid=eidAfb0d81231cs3I4yd3GgLRjqcx9qFEcJEmyOMn1BwD8wvLt/pM7ENipVIQXuRiDyQ0FYw2aud9+AhtGqo1Zhp0TsLEgoKZvAWkaXhApgim9hlEyRB&sdkVersion=29&lang=zh_CN&uuid=7049442d7e415232&aid=7049442d7e415232&area=4_48201_54794_0&networkType=wifi&wifiBssid=774de7601b5cddf9aad1ae30f3a3dfc0&uts=0f31TVRjBSsqndu4%2FjgUPz6uymy50MQJ3DxdOrbYUybTe3dL1fv5SZqA7LxGNRtzSOx8fh0f3M1MbIvt421AKNKOpCPfGQrrVUodx%2Fkyzv10ruE8Nej2sOUKwb8tCv2kUQ1xlvckMf%2F%2BQlbGZpk3SF6y3AMv848PpSuaIzc4Wef2Q%2FEVdfQwC5mHEU9bM129HM13EJuyirzz6m2X3KkBMA%3D%3D&uemps=0-0&st=1626585864591&sign=b8c73932c27934ace61d09b492e47cd1&sv=101',
-        body: 'body=%7B%22action%22%3A%22to%22%2C%22to%22%3A%22https%253A%252F%252Flzdz-isv.isvjcloud.com%252Fdingzhi%252Fyili%252Fyangniu%252Factivity%252F5070687%253FactivityId%253Ddz2103100001340201%2526shareUuid%253Dbd93957c016242f6a51194d35449432c%2526adsource%253Dziying%2526shareuserid4minipg%253Du%252FcWHIy7%252Fx3Ij%252BHjfbnnePkaL5GGqMTUc8u%252Fotw2E%252Ba7Ak3lgFoFQlZmf45w8Jzw%2526shopid%253D1000013402%22%7D&',
+        body: 'body=%7B%22action%22%3A%22to%22%2C%22to%22%3A%22https%253A%252F%252Flzdz-isv.isvjcloud.com%252Fdingzhi%252Fyili%252Fyangniu%252Factivity%252F5070687%253FactivityId%253Ddz2103100001340201%2526shareUuid%253Daaa1a3d5033e4e6bbf856341d57bdba3%2526adsource%253Dziying%2526shareuserid4minipg%253Du%252FcWHIy7%252Fx3Ij%252BHjfbnnePkaL5GGqMTUc8u%252Fotw2E%252Ba7Ak3lgFoFQlZmf45w8Jzw%2526shopid%253D1000013402%22%7D&',
         headers: {
             'Host': 'api.m.jd.com',
             'accept': '*/*',
@@ -178,7 +178,7 @@ function getToken2() {
 //抄的书店的 不过不加好像也能进去
 function getActCk() {
     return new Promise(resolve => {
-        $.get(taskUrl("/dingzhi/yili/yangniu/activity", `activityId=dz2103100001340201&shareUuid=bd93957c016242f6a51194d35449432c&adsource=ziying&shareuserid4minipg=u/cWHIy7/x3Ij+HjfbnnePkaL5GGqMTUc8u/otw2E+a7Ak3lgFoFQlZmf45w8Jzw&shopid=1000013402&lng=114.062541&lat=29.541254&sid=eec1865d9c44c1070f3b5e6718c9ee1w&un_area=4_48201_54794_0`), (err, resp, data) => {
+        $.get(taskUrl("/dingzhi/yili/yangniu/activity", `activityId=dz2103100001340201&shareUuid=aaa1a3d5033e4e6bbf856341d57bdba3&adsource=ziying&shareuserid4minipg=u/cWHIy7/x3Ij+HjfbnnePkaL5GGqMTUc8u/otw2E+a7Ak3lgFoFQlZmf45w8Jzw&shopid=1000013402&lng=114.062541&lat=29.541254&sid=eec1865d9c44c1070f3b5e6718c9ee1w&un_area=4_48201_54794_0`), (err, resp, data) => {
             try {
                 if (err) {
                     console.log(`${$.name} API请求失败，请检查网路重试`)
