@@ -16,7 +16,7 @@ var Key = ''; //该参数已废弃; 仅用于下游脚本的兼容, 请使用jso
 
 var DualKey = ''; //该参数已废弃; 仅用于下游脚本的兼容, 请使用json串数据  ↓
 
-var OtherKey = ``; //无限账号Cookie json串数据, 请严格按照json格式填写, 具体格式请看以下样例:
+var OtherKey = `[{"cookie":"pt_key=AAJhTdgiADC8W_6HsGDhVy_HKu123OFOsh9dxeeHBHtqMzc0iA0Wnh3KJEVFI0YoxnOY26nAVFE; pt_pin=jd_rtrqrVNXHIXE;","jrBody":""}]`; //无限账号Cookie json串数据, 请严格按照json格式填写, 具体格式请看以下样例:
 
 
 var LogDetails = false; //是否开启响应日志, true则开启
@@ -640,7 +640,7 @@ function JDUserSignPre1(s, key, title, acData, ask) {
   }).then(data => {
     disable(key, title, 2)
     if (typeof(data) == "object") return JDUserSign1(s, key, title, encodeURIComponent(JSON.stringify(data)));
-    if (typeof(data) == "number") return JDUserSign2(s, key, title, data);
+    if (typeof(data) == "number") return JDUserSign2(s, key, title, data, acData);
     if (typeof(data) == "string") return JDUserSignPre1(s, key, title, acData, data);
   }, () => disable(key, title, 2))
 }
@@ -697,7 +697,7 @@ function JDUserSignPre2(s, key, title, acData) {
   }).then(data => {
     disable(key, title, 2)
     if (typeof(data) == "object") return JDUserSign1(s, key, title, encodeURIComponent(`{${data}}`));
-    if (typeof(data) == "number") return JDUserSign2(s, key, title, data)
+    if (typeof(data) == "number") return JDUserSign2(s, key, title, data, acData)
     if (typeof(data) == "string") return JDUserSignPre1(s, key, title, acData, data)
   }, () => disable(key, title, 2))
 }
@@ -751,7 +751,7 @@ function JDUserSign1(s, key, title, body) {
   });
 }
 
-async function JDUserSign2(s, key, title, tid) {
+async function JDUserSign2(s, key, title, tid, acData) {
   await new Promise(resolve => {
     let lkt = new Date().getTime()
     let lks = md5('' + 'JL1VTNRadM68cIMQ' + lkt).toString()
@@ -769,7 +769,7 @@ async function JDUserSign2(s, key, title, tid) {
           if (data.success && data.data) {
             data = data.data
             if (!data.hasSign) {
-              let ss = await Faker.getBody(`https://prodev.m.jd.com/mall/active/${tid}/index.html`)
+              let ss = await Faker.getBody(`https://prodev.m.jd.com/mall/active/${acData}/index.html`)
               fp = ss.fp
               await getEid(ss, title)
             }
