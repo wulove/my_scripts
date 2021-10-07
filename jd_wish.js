@@ -156,7 +156,7 @@ async function healthyDay_getHomeData(type = true) {
                         await harmony_collectScore({"appId":appId,"taskToken":followShopVo.taskToken,"taskId":vo.taskId,"actionType":"0"})
                       }
                     }
-                  } else if (vo.taskType === 8) {
+                  } else if (vo.taskType === 8 || vo.taskType === 15) {
                     for (let key of Object.keys(vo.productInfoVos)) {
                       let productInfoVos = vo.productInfoVos[key]
                       if (productInfoVos.status !== 2) {
@@ -166,12 +166,12 @@ async function healthyDay_getHomeData(type = true) {
                         await harmony_collectScore({"appId":appId,"taskToken":productInfoVos.taskToken,"taskId":vo.taskId,"actionType":"0"})
                       }
                     }
-                  } else if (vo.taskType === 9 || vo.taskType === 26) {
+                  } else if (vo.taskType === 3 || vo.taskType === 9 ||vo.taskType === 26) {
                     for (let key of Object.keys(vo.shoppingActivityVos)) {
                       let shoppingActivityVos = vo.shoppingActivityVos[key]
                       if (shoppingActivityVos.status !== 2) {
                         console.log(`【${shoppingActivityVos.title}】${vo.subTitleName}`)
-                        if (vo.taskType === 9) {
+                        if (vo.taskType === 3 || vo.taskType === 9) {
                           await harmony_collectScore({"appId":appId,"taskToken":shoppingActivityVos.taskToken,"taskId":vo.taskId,"actionType":"1"})
                           await $.wait(vo.waitDuration * 1000)
                         }
@@ -187,6 +187,8 @@ async function healthyDay_getHomeData(type = true) {
                         "use": $.UserName
                       })
                     }
+                  } else {
+                      console.error(vo.taskType)
                   }
                 } else {
                   console.log(`【${vo.taskName}】已完成\n`)
