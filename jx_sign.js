@@ -128,7 +128,7 @@ if ($.isNode()) {
             await helpSignhb($.shareCodes[j].smp)
             await $.wait(2000)
             if (!$.black) $.shareCodes[j].num++
-            break
+            //break
           }
         }
       } else {
@@ -203,7 +203,7 @@ function signhb(type = 1) {
                 if (vo.istoday === 1) {
                   if (vo.status === 1 && data.todaysign === 1) {
                     console.log(`今日已签到`)
-                    $.canHelp = false
+                    //$.canHelp = false
                   } else {
                     console.log(`今日未签到`)
                   }
