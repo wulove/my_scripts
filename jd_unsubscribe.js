@@ -118,6 +118,9 @@ async function unsubscribeGoods() {
   let followGoods = await getFollowGoods();
   if (followGoods.iRet === '0') {
     if (followGoods.totalNum > 0) {
+      followGoods['data'].sort(function (a, b) {
+        return b.favTime - a.favTime;
+      });
       for (let item of followGoods['data']) {
         console.log(`是否匹配：：${item.commTitle.indexOf(stopGoods.replace(/\ufffc|\s*/g, ''))}`);
         if (stopGoods && item.commTitle.indexOf(stopGoods.replace(/\ufffc|\s*/g, '')) > -1) {
