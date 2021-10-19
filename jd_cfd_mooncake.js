@@ -37,7 +37,7 @@ $.notifyTime = $.getdata("cfd_notifyTime");
 $.result = [];
 $.shareCodes = [];
 let cookiesArr = [], cookie = '', token = '';
-let UA, UAInfo = {}, num
+let UA, UAInfo = {};
 let nowTimes;
 const randomCount = $.isNode() ? 20 : 3;
 if ($.isNode()) {
@@ -51,8 +51,6 @@ if ($.isNode()) {
 }
 $.appId = 10028;
 !(async () => {
-  $.strMyShareIds = ['A67E6E6B3CB7C5750B1DD735227B48B26BEC85401262266999A7D7C9CC97D3DE','A67E6E6B3CB7C5750B1DD735227B48B247CFE28CB63E9B5910A73CBBBB89D63B']
-  await requireConfig();
   if (!cookiesArr[0]) {
     $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
     return;
@@ -82,18 +80,17 @@ $.appId = 10028;
       $.allTask = []
       $.info = {}
       token = await getJxToken()
-      await shareCodesFormat()
       await cfd();
       await $.wait(2000);
     }
   }
-  $.newShareCodes = [...new Set([...$.shareCodes, ...$.newShareCodes])]
+  $.strMyShareIds = ['A67E6E6B3CB7C5750B1DD735227B48B26BEC85401262266999A7D7C9CC97D3DE','A67E6E6B3CB7C5750B1DD735227B48B247CFE28CB63E9B5910A73CBBBB89D63B']
+  $.newShareCodes = [...new Set([...$.shareCodes, ...$.strMyShareIds])]
   for (let i = 0; i < cookiesArr.length; i++) {
     cookie = cookiesArr[i];
     $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1])
     $.canHelp = true
     UA = UAInfo[$.UserName]
-    num = 0
     if ($.newShareCodes && $.newShareCodes.length) {
       console.log(`\n开始互助\n`);
       for (let j = 0; j < $.newShareCodes.length && $.canHelp; j++) {
@@ -198,7 +195,7 @@ async function composePearlState(type) {
                   let beacon = data.PearlList[0]
                   data.PearlList.shift()
                   let beaconType = beacon.type
-                  let num = Math.ceil(Math.random() * 12 + 8)
+                  let num = Math.ceil(Math.random() * 12 + 12)
                   console.log(`合成月饼：模拟操作${num}次`)
                   for (let v = 0; v < num; v++) {
                     console.log(`模拟操作进度：${v + 1}/${num}`)
@@ -395,16 +392,18 @@ function helpByStage(shareCodes) {
           data = JSON.parse(data);
           if (data.iRet === 0 || data.sErrMsg === 'success') {
             console.log(`助力成功：获得${data.GuestPrizeInfo.strPrizeName}`)
-          } else if (data.iRet === 2232 || data.sErrMsg === '今日助力次数达到上限，明天再来帮忙吧~') {
+          } else if (data.iRet === 2235 || data.sErrMsg === '今日助力次数达到上限，明天再来帮忙吧~') {
             console.log(`助力失败：${data.sErrMsg}`)
             $.canHelp = false
+          } else if (data.iRet === 2232 || data.sErrMsg === '分享链接已过期') {
+            console.log(`助力失败：${data.sErrMsg}`)
+            $.delcode = true
           } else if (data.iRet === 9999 || data.sErrMsg === '您还没有登录，请先登录哦~') {
             console.log(`助力失败：${data.sErrMsg}`)
             $.canHelp = false
           } else if (data.iRet === 2229 || data.sErrMsg === '助力失败啦~') {
-            console.log(`助力失败：您的账号或被助力的账号可能已黑，请联系客服`)
-            num++
-            if (num === 5) $.canHelp = false
+            console.log(`助力失败：您的账号已黑`)
+            $.canHelp = false
           } else if (data.iRet === 2190 || data.sErrMsg === '达到助力上限') {
             console.log(`助力失败：${data.sErrMsg}`)
             $.delcode = true
@@ -424,7 +423,7 @@ function helpByStage(shareCodes) {
 // 获取用户信息
 function getUserInfo(showInvite = true) {
   return new Promise(async (resolve) => {
-    $.get(taskUrl(`user/QueryUserInfo`, `ddwTaskId=&strShareId=&strMarkList=${escape('guider_step,collect_coin_auth,guider_medal,guider_over_flag,build_food_full,build_sea_full,build_shop_full,build_fun_full,medal_guider_show,guide_guider_show,guide_receive_vistor,daily_task,guider_daily_task')}&strPgUUNum=${token['farm_jstoken']}&strPgtimestamp=${token['timestamp']}&strPhoneID=${token['phoneid']}`), (err, resp, data) => {
+    $.get(taskUrl(`user/QueryUserInfo`, `ddwTaskId=&strShareId=&strMarkList=${escape('guider_step,collect_coin_auth,guider_medal,guider_over_flag,build_food_full,build_sea_full,build_shop_full,build_fun_full,medal_guider_show,guide_guider_show,guide_receive_vistor,daily_task,guider_daily_task')}&strPgUUNum=${token['farm_jstoken']}&strPgtimestamp=${token['timestamp']}&strPhoneID=${token['phoneid']}`), async (err, resp, data) => {
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
@@ -441,12 +440,12 @@ function getUserInfo(showInvite = true) {
             Business = {},
           } = data;
           if (showInvite) {
-            console.log(`\n获取用户信息：${sErrMsg}\n${$.showLog ? data : ""}`);
+            console.log(`获取用户信息：${sErrMsg}\n${$.showLog ? data : ""}`);
             console.log(`\n当前等级:${dwLandLvl},金币:${ddwCoinBalance},财富值:${ddwRichBalance},连续营业天数:${Business.dwBussDayNum},离线收益:${Business.ddwCoin}\n`)
           }
           if (showInvite && strMyShareId) {
-            console.log(`财富岛好友互助码每次运行都变化,旧的可继续使用`);
-            console.log(`\n【京东账号${$.index}（${$.UserName}）的${$.name}好友互助码】${strMyShareId}\n\n`);
+            console.log(`财富岛好友互助码每次运行都变化,旧的当天有效`);
+            console.log(`\n【京东账号${$.index}（${$.UserName}）的${$.name}好友互助码】${strMyShareId}\n`);
             $.shareCodes.push(strMyShareId)
           }
           $.info = {
@@ -590,53 +589,6 @@ function showMsg() {
     }
     resolve();
   });
-}
-
-//格式化助力码
-function shareCodesFormat() {
-  return new Promise(async resolve => {
-    // console.log(`第${$.index}个京东账号的助力码:::${$.shareCodesArr[$.index - 1]}`)
-    $.newShareCodes = [];
-    if ($.shareCodesArr[$.index - 1]) {
-      $.newShareCodes = $.shareCodesArr[$.index - 1].split('@');
-    } else {
-      console.log(`由于您第${$.index}个京东账号未提供shareCode,将采纳本脚本自带的助力码\n`)
-      // const tempIndex = $.index > inviteCodes.length ? (inviteCodes.length - 1) : ($.index - 1);
-      $.newShareCodes = [...$.strMyShareIds];
-    }
-    /*const readShareCodeRes = await readShareCode();
-    if (readShareCodeRes && readShareCodeRes.code === 200) {
-      $.newShareCodes = [...new Set([...$.newShareCodes, ...$.strMyShareIds, ...(readShareCodeRes.data || [])])];
-    }*/
-    console.log(`第${$.index}个京东账号将要助力的好友${JSON.stringify($.newShareCodes)}`)
-    resolve();
-  })
-}
-function requireConfig() {
-  return new Promise(resolve => {
-    console.log(`开始获取${$.name}配置文件\n`);
-    let shareCodes = [];
-    if ($.isNode() && process.env.JDCFD_SHARECODES) {
-      if (process.env.JDCFD_SHARECODES.indexOf('\n') > -1) {
-        shareCodes = process.env.JDCFD_SHARECODES.split('\n');
-      } else {
-        shareCodes = process.env.JDCFD_SHARECODES.split('&');
-      }
-    }
-    $.shareCodesArr = [];
-    if ($.isNode()) {
-      Object.keys(shareCodes).forEach((item) => {
-        if (shareCodes[item]) {
-          $.shareCodesArr.push(shareCodes[item])
-        }
-      })
-    } else {
-      if ($.getdata('jd_jxCFD')) $.shareCodesArr = $.getdata('jd_jxCFD').split('\n').filter(item => !!item);
-      console.log(`\nBoxJs设置的京喜财富岛邀请码:${$.getdata('jd_jxCFD')}\n`);
-    }
-    console.log(`您提供了${$.shareCodesArr.length}个账号的${$.name}助力码\n`);
-    resolve()
-  })
 }
 
 function TotalBean() {
