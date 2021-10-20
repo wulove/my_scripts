@@ -49,7 +49,7 @@ let inviteCodes = [
   if (exchangeFlag) {
     console.log(`脚本自动抽奖`)
   } else {
-    console.log(`脚本不会自动抽奖，建议活动快结束开启，默认关闭(在6.2日自动开启抽奖),如需自动抽奖请设置环境变量  JD_CITY_EXCHANGE 为true`);
+    console.log(`脚本不会自动抽奖，建议活动快结束开启，默认关闭,\n如需自动抽奖请设置环境变量  JD_CITY_EXCHANGE 为true\n第一次跑一次然后查看自己的互助码后添加环境变量\n请添加环境变量export CITY_SHARECODES=code1&code2`);
   }
   for (let i = 0; i < cookiesArr.length; i++) {
     if (cookiesArr[i]) {
@@ -87,6 +87,7 @@ let inviteCodes = [
           // 助力次数耗尽 || 黑号
           break
         }
+        await $.wait(1000)
       }
       await getInviteInfo();//雇佣
       if (exchangeFlag) {
