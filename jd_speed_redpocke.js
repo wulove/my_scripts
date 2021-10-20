@@ -18,7 +18,8 @@ const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 
-const linkId = '9wdf1YTT2L59Vr-meKskLA';
+const linkIdArr = ["9wdf1YTT2L59Vr-meKskLA", "7ya6o83WSbNhrbYJqsMfFA"];
+let linkId;
 const signLinkId = '9WA12jYGulArzWS7vcrwhw';
 
 
@@ -55,7 +56,10 @@ if ($.isNode()) {
         }
         continue
       }
-      await jsRedPacket()
+        for (let j = 0; j < linkIdArr.length; j++) {
+            linkId = linkIdArr[j]
+            await jsRedPacket()
+        }
     }
   }
 })()
