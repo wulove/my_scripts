@@ -25,10 +25,13 @@ let message = '', allMessage = '';
 //IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [], cookie = '';
 const JD_API_HOST = 'https://api.m.jd.com/client.action';
-let appIdArr = ['1E1NXxq0'];
-let appNameArr = ['众筹许愿池'];
+let appIdArr = ['1E1NXxq0','1FV1VwKc'];
+let appNameArr = ['众筹许愿池','惊喜大作战'];
 let appId, appName;
-$.shareCode = [];
+$.shareCode = [
+    {code:'T016aEzIlJOJLepV9qJVCTJQmq67yR55awQ',use:'author1',appId:'1E1NXxq0'},{code:'T0205KkcAlpbtBaxXnKM7Z9_CTJQmq67yR55awQ',use:'author2',appId:'1E1NXxq0'},
+    {code:'T016aEzIlJOJLepV9qJVDzxSnKS7zB55awQ',use:'author1',appId:'1FV1VwKc'},{code:'T0205KkcAlpbtBaxXnKM7Z9_DzxSnKS7zB55awQ',use:'author2',appId:'1FV1VwKc'},
+];
 if ($.isNode()) {
   Object.keys(jdCookieNode).forEach((item) => {
     cookiesArr.push(jdCookieNode[item])
