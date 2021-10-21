@@ -7,11 +7,11 @@
 ============Quantumultx===============
 [task_local]
 #预售福利机
-5 0,8 * * * jd_ys.js, tag=预售福利机, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
+5 0,8,20 * * * jd_ys.js, tag=预售福利机, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
 
 ================Loon==============
 [Script]
-cron "5 0,2 * * *" script-path=jd_ys.js,tag=预售福利机
+cron "5 0,8,20 * * *" script-path=jd_ys.js,tag=预售福利机
 
 ===============Surge=================
 预售福利机 = type=cron,cronexp="5 0,2 * * *",wake-system=1,timeout=3600,script-path=jd_ys.js
