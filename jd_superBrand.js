@@ -25,11 +25,10 @@ cron "30 11 * * *" script-path=https://raw.githubusercontent.com/Wenmoux/scripts
 const $ = new Env('特物Z|万物皆可国创');
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
-const randomCount = $.isNode() ? 20 : 5;
 const Opencardtw= $.isNode() ? (process.env.Opencardtw?process.env.Opencardtw:false):false
 const notify = $.isNode() ? require('./sendNotify') : '';
 let merge = {}
-let codeList = []
+let codeList = ['S5KkcAlpbtBaxXnKM7Z9_', 'SaEzIlJOJLepV9qJV']
 //IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [],
     cookie = '';
@@ -51,10 +50,6 @@ const JD_API_HOST = `https://api.m.jd.com/client.action`;
         });
         return;
     }
-    const signeid = "zFayjeUTzZWJGwv2rVNWY4DNAQw"
-    const signactid = 1000021
-    const signenpid = "uK2fYitTgioETuevoY88bGEts3U"
-    const signdataeid = "47E6skJcyZx7GSUFXyomLgF1FLCA"
     for (let i = 0; i < cookiesArr.length; i++) {
         cookie = cookiesArr[i];
         if (cookie) {
