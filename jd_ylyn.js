@@ -7,16 +7,13 @@ https://lzdz-isv.isvjcloud.com/dingzhi/yili/yangniu/activity/5070687?activityId=
 
 
 [task_local]
-#柠檬伊利养牛记
-cron 38 5,18 * * * https://raw.githubusercontent.com/panghu999/panghu/jd_ylyn.js, tag=柠檬伊利养牛记, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
+#伊利养牛记
+cron 38 5,18 * * * jd_ylyn.js, tag=伊利养牛记, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
 */
 const $ = new Env('京东伊利养牛记');
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
-const randomCount = $.isNode() ? 20 : 5;
 const notify = $.isNode() ? require('./sendNotify') : '';
-let merge = {}
-let codeList = []
 Exchange = $.isNode() ? (process.env.Cowexchange ? process.env.Cowexchange : false) : ($.getdata("Cowexchange") ? $.getdata("Cowexchange") : false);
 //IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [],
@@ -32,7 +29,7 @@ if ($.isNode()) {
 
 const JD_API_HOST = `https://api.m.jd.com/client.action`;
 message = ""
-$.shareuuid = "aaa1a3d5033e4e6bbf856341d57bdba3" //
+$.shareuuid = ["0a8c1f9a93884f2a824e8263be0cc504","aaa1a3d5033e4e6bbf856341d57bdba3"][Math.floor((Math.random()*2))]
     !(async () => {
         if (!cookiesArr[0]) {
             $.msg($.name, '【提示】请先获取cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/', {
@@ -365,7 +362,7 @@ function getUid() {
                           
                            }
                             $.shareuuid = data.data.actorUuid
-                            console.log(`\n【京东账号${$.index}（${$.UserName}）的${$.name}\n好友互助码】${$.shareuuid}\n`);
+                            console.log(`\n【京东账号${$.index}（${$.UserName}）的${$.name}好友互助码】：${$.shareuuid}\n`);
                             
                             
                         }
