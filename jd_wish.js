@@ -31,6 +31,7 @@ let appId, appName;
 $.shareCode = [
     {code:'T016aEzIlJOJLepV9qJVCTJQmq67yR55awQ',use:'author1',appId:'1E1NXxq0'},{code:'T0205KkcAlpbtBaxXnKM7Z9_CTJQmq67yR55awQ',use:'author2',appId:'1E1NXxq0'},
     {code:'T016aEzIlJOJLepV9qJVDzxSnKS7zB55awQ',use:'author1',appId:'1FV1VwKc'},{code:'T0205KkcAlpbtBaxXnKM7Z9_DzxSnKS7zB55awQ',use:'author2',appId:'1FV1VwKc'},
+    {code:'T016aEzIlJOJLepV9qJVDjVRmaW7xR55awQ',use:'author1',appId:'1FFRWxaY'},{code:'T0205KkcAlpbtBaxXnKM7Z9_DjVRmaW7xR55awQ',use:'author2',appId:'1FFRWxaY'},
 ];
 if ($.isNode()) {
   Object.keys(jdCookieNode).forEach((item) => {
