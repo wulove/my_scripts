@@ -297,7 +297,7 @@ async function getInfo1(cookie) {
 }
 
 const navigator = {
-  userAgent: require("./USER_AGENTS").USER_AGENT,
+  userAgent: $.isNode() ? require("./USER_AGENTS").USER_AGENT : $.UA,
   plugins: { length: 0 },
   language: "zh-CN",
 };
