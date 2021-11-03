@@ -1,6 +1,6 @@
 /*
 京喜签到
-cron 20 1,8 * * * jx_sign.js
+cron 20 1,8,20 * * * jx_sign.js
 更新时间：2021-7-31
 活动入口：京喜APP-我的-京喜签到
 
@@ -9,11 +9,11 @@ cron 20 1,8 * * * jx_sign.js
 ============Quantumultx===============
 [task_local]
 #京喜签到
-20 1,8 * * * https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jx_sign.js, tag=京喜签到, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jxcfd.png, enabled=true
+20 1,8,20 * * * https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jx_sign.js, tag=京喜签到, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jxcfd.png, enabled=true
 
 ================Loon==============
 [Script]
-cron "20 1,8 * * *" script-path=https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jx_sign.js,tag=京喜签到
+cron "20 1,8,20 * * *" script-path=https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jx_sign.js,tag=京喜签到
 
 ===============Surge=================
 京喜签到 = type=cron,cronexp="20 1,8 * * *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jx_sign.js
