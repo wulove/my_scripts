@@ -11,6 +11,7 @@ const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 const notify = $.isNode() ? require('./sendNotify') : '';
 let cookiesArr = [];
 const activityList = [
+    {"actid": "d68fd77329e347f2ba19ae65c1f8fa71", "endTime": 1638374400000}
 ];
 if ($.isNode()) {
   Object.keys(jdCookieNode).forEach((item) => {
