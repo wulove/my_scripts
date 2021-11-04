@@ -127,17 +127,19 @@ async function algorithm() {
               wantProduct = $.isNode() ? (process.env.FACTORAY_WANTPRODUCT_NAME ? process.env.FACTORAY_WANTPRODUCT_NAME : wantProduct) : ($.getdata('FACTORAY_WANTPRODUCT_NAME') ? $.getdata('FACTORAY_WANTPRODUCT_NAME') : wantProduct);
               if (data.data.result.factoryInfo) {
                 let { totalScore, useScore, produceScore, remainScore, couponCount, name } = data.data.result.factoryInfo
+                totalScore = totalScore * 1, useScore = useScore * 1, produceScore = produceScore * 1, remainScore = remainScore * 1, couponCount = couponCount *1;
                 console.log(`\n已选商品：${name}`);
                 console.log(`当前已投入电量/所需电量：${useScore}/${totalScore}`);
                 console.log(`已选商品剩余量：${couponCount}`);
-                console.log(`当前总电量：${remainScore * 1 + useScore * 1}`);
-                console.log(`当前完成度：${((remainScore * 1 + useScore * 1)/(totalScore * 1)).toFixed(2) * 100}%\n`);
+                console.log(`当前总电量：${remainScore + useScore}`);
+                console.log(`当前蓄电池电量：${remainScore}`);
+                console.log(`当前完成度：${((remainScore + useScore)/totalScore).toFixed(2) * 100}%\n`);
                 message += `京东账号${$.index} ${$.nickName}\n`;
                 message += `已选商品：${name}\n`;
                 message += `当前已投入电量/所需电量：${useScore}/${totalScore}\n`;
                 message += `已选商品剩余量：${couponCount}\n`;
-                message += `当前总电量：${remainScore * 1 + useScore * 1}\n`;
-                message += `当前完成度：${((remainScore * 1 + useScore * 1)/(totalScore * 1)).toFixed(2) * 100}%\n`;
+                message += `当前总电量：${remainScore + useScore}\n`;
+                message += `当前完成度：${((remainScore + useScore)/totalScore).toFixed(2) * 100}%\n`;
                 if (wantProduct) {
                   console.log(`BoxJs或环境变量提供的心仪商品：${wantProduct}\n`);
                   await jdfactory_getProductList(true);
@@ -153,7 +155,7 @@ async function algorithm() {
                     }
                   }
                   // console.log(`\n您心仪商品${name}\n当前数量为：${couponCount}\n兑换所需电量为：${totalScore}\n您当前总电量为：${remainScore * 1 + useScore * 1}\n`);
-                  if (wantProductSkuId && ((remainScore * 1 + useScore * 1) >= (totalScore * 1 + 100000))) {
+                  if (wantProductSkuId && ((remainScore + useScore) >= (totalScore + 100000))) {
                     console.log(`\n提供的心仪商品${name}目前数量：${couponCount}，且当前总电量为：${remainScore * 1 + useScore * 1}，【满足】兑换此商品所需总电量：${totalScore + 100000}`);
                     console.log(`请去活动页面更换成心仪商品并手动投入电量兑换\n`);
                     $.msg($.name, '', `京东账号${$.index}${$.nickName}\n您提供的心仪商品${name}目前数量：${couponCount}\n当前总电量为：${remainScore * 1 + useScore * 1}\n【满足】兑换此商品所需总电量：${totalScore}\n请点击弹窗直达活动页面\n更换成心仪商品并手动投入电量兑换`, {'open-url': 'openjd://virtual?params=%7B%20%22category%22:%20%22jump%22,%20%22des%22:%20%22m%22,%20%22url%22:%20%22https://h5.m.jd.com/babelDiy/Zeus/2uSsV2wHEkySvompfjB43nuKkcHp/index.html%22%20%7D'});
@@ -163,12 +165,23 @@ async function algorithm() {
                   }
                 } else {
                   console.log(`BoxJs或环境变量暂未提供心仪商品\n如需兑换心仪商品，请提供心仪商品名称，否则满足条件后会为您兑换当前所选商品：${name}\n`);
-                  if (((remainScore * 1 + useScore * 1) >= totalScore * 1 + 100000) && (couponCount * 1 > 0)) {
+                  if (((remainScore + useScore) >= totalScore + 100000) && (couponCount > 0)) {
                     console.log(`\n所选商品${name}目前数量：${couponCount}，且当前总电量为：${remainScore * 1 + useScore * 1}，【满足】兑换此商品所需总电量：${totalScore}`);
                     console.log(`BoxJs或环境变量暂未提供心仪商品，下面为您目前选的${name} 发送提示通知\n`);
                     // await jdfactory_addEnergy();
                     $.msg($.name, '', `京东账号${$.index}${$.nickName}\n您所选商品${name}目前数量：${couponCount}\n当前总电量为：${remainScore * 1 + useScore * 1}\n【满足】兑换此商品所需总电量：${totalScore}\n请点击弹窗直达活动页面查看`, {'open-url': 'openjd://virtual?params=%7B%20%22category%22:%20%22jump%22,%20%22des%22:%20%22m%22,%20%22url%22:%20%22https://h5.m.jd.com/babelDiy/Zeus/2uSsV2wHEkySvompfjB43nuKkcHp/index.html%22%20%7D'});
                     if ($.isNode()) await notify.sendNotify(`${$.name} - 账号${$.index} - ${$.nickName}`, `【京东账号${$.index}】${$.nickName}\n所选商品${name}目前数量：${couponCount}\n当前总电量为：${remainScore * 1 + useScore * 1}\n【满足】兑换此商品所需总电量：${totalScore}\n请速去活动页面查看`);
+                  } else if (remainScore >= (totalScore - useScore)) {
+                    for (let i = 0; i <= ((totalScore - useScore) / 100000); i++) {
+                      await jdfactory_addEnergy();
+                      await $.wait(10 * 1000);
+                    }
+                  } else if (remainScore == 30 * 100000) {
+                    console.log(`蓄电池已满（已达${30 * 100000}），先投入一半的电量\n`)
+                    for (let i = 0; i < 15; i++) {
+                      await jdfactory_addEnergy();
+                      await $.wait(10 * 1000);
+                    }
                   } else {
                     console.log(`\n所选商品${name}目前数量：${couponCount}，且当前总电量为：${remainScore * 1 + useScore * 1}，【不满足】兑换此商品所需总电量：${totalScore}`)
                     console.log(`故不一次性投入电力，一直放到蓄电池累计\n`);
