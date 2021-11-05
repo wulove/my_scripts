@@ -85,7 +85,7 @@ if ($.isNode()) {
         $.index = i + 1;
         console.log(`\n******开始【京东账号${$.index}】${$.nickName || $.UserName}助力模块*********\n`);
         await zy()
-        await formatcode()
+        //await formatcode()
     }
 
 })()
@@ -331,7 +331,7 @@ async function readShareCodes(){
 }
 
 async function formatcode(){
-    await readShareCodes();
+    //await readShareCodes();
     var newsharecodes = [];
     var arr = CodeArr
     var count = arr.length;
