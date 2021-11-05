@@ -62,7 +62,7 @@ const JD_API_HOST = 'https://api.m.jd.com/api';
       await main();
     }
   }
-  /*console.log(`\n\n内部互助 【赚京豆(微信小程序)-瓜分京豆】活动(优先内部账号互助(需内部cookie数量大于${$.assistNum || 4}个)，如有剩余助力次数则给作者lxk0301和随机团助力)\n`)
+  console.log(`\n\n内部互助 【赚京豆(微信小程序)-瓜分京豆】活动(优先内部账号互助(需内部cookie数量大于${$.assistNum || 4}个)，如有剩余助力次数则给作者lxk0301和随机团助力)\n`)
   for (let i = 0; i < cookiesArr.length; i++) {
     $.canHelp = true
     if (cookiesArr[i]) {
@@ -77,7 +77,7 @@ const JD_API_HOST = 'https://api.m.jd.com/api';
           await $.wait(200)
         }
       }
-      /!*if ($.canHelp) {
+      /*if ($.canHelp) {
         $.authorTuanList = [...$.authorTuanList, ...($.body1 || [])];
         if ($.authorTuanList.length) console.log(`开始账号内部互助 赚京豆-瓜分京豆 活动，如有剩余则给作者lxk0301和随机团助力`)
         for (let j = 0; j < $.authorTuanList.length; ++j) {
@@ -86,9 +86,9 @@ const JD_API_HOST = 'https://api.m.jd.com/api';
           if(!$.canHelp) break
           await $.wait(200)
         }
-      }*!/
+      }*/
     }
-  }*/
+  }
 })()
     .catch((e) => {
       $.log('', `❌ ${$.name}, 失败! 原因: ${e}!`, '')
@@ -106,9 +106,9 @@ function showMsg() {
 async function main() {
   try {
     // await userSignIn();//赚京豆-签到领京豆
-    await vvipTask();//赚京豆-加速领京豆
-    // await distributeBeanActivity();//赚京豆-瓜分京豆
-    // await showMsg();
+    // await vvipTask();//赚京豆-加速领京豆
+    await distributeBeanActivity();//赚京豆-瓜分京豆
+    await showMsg();
   } catch (e) {
     $.logErr(e)
   }
