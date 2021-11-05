@@ -121,15 +121,15 @@ async function drawUserTask() {
         }
     }
 
-    res = await api('active/LuckyTwistUserInfo', 'sceneval', {})
-    let surplusTimes = res.data.surplusTimes
-    console.log('剩余抽奖次数', surplusTimes)
-    for (let j = 0; j < surplusTimes && coin >= 10; j++) {
-        res = await api('active/LuckyTwistDraw', 'active,activedesc,sceneval', { active: 'rwjs_fk1111', activedesc: encodeURIComponent('幸运扭蛋机抽奖') })
-        console.log('抽奖成功', res.data.prize[0].prizename)
-        coin -= 10
-        await $.wait(5000)
-    }
+    //  res = await api('active/LuckyTwistUserInfo', 'sceneval', {})
+    //  let surplusTimes = res.data.surplusTimes
+    //  console.log('剩余抽奖次数', surplusTimes)
+    //  for (let j = 0; j < surplusTimes && coin >= 10; j++) {
+    //      res = await api('active/LuckyTwistDraw', 'active,activedesc,sceneval', { active: 'rwjs_fk1111', activedesc: encodeURIComponent('幸运扭蛋机抽奖') })
+    //      console.log('抽奖成功', res.data.prize[0].prizename)
+    //      coin -= 10
+    //      await $.wait(5000)
+    //  }
     await $.wait(2000)
 }
 
