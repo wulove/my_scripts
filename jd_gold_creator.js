@@ -108,7 +108,7 @@ async function goldRank() {
                                 console.log("点亮勋章\n")
                                 await goldCenterDoTask(1);
                             }
-                            if (data.result.medalNum == 5 && data.result.bingDone == 0) {
+                            if (data.result.medalNum == 5 && data.result.bingoDone == 0) {
                                 console.log("五大勋章全部点亮抽取金榜盲盒\n")
                                 await goldCenterDoTask(2);
                             }
