@@ -3,8 +3,7 @@
  Author：zxx
  Date：2021-11-2
 先内部助力，有剩余助力作者
- cron 1 0,9,19,23 * * * zx_nnfls.js
- 一天要跑2次
+ cron 1 0,9,19,23 * * * https://raw.githubusercontent.com/ZXX2021/jd-scripts/main/jd_nnfls.js
  */
 const $ = new Env('牛牛福利');
 const notify = $.isNode() ? require('./sendNotify') : '';
@@ -46,7 +45,7 @@ if ($.isNode()) {
             continue
         }
         res = await UserSignNew();
-        await drawUserTask();
+        // await drawUserTask();
     }
 
     if (shareCodes.length > 0) {
@@ -65,7 +64,7 @@ if ($.isNode()) {
             await $.wait(1000);
         }
     }
-    console.log(`再次抽奖\n`);
+    console.log(`\===执行任务抽奖===\n`);
     for (let i = 0; i < cookiesArr.length; i++) {
         $.cookie = cookiesArr[i];
         $.UserName = decodeURIComponent($.cookie.match(/pt_pin=([^; ]+)(?=;?)/) && $.cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1]);
@@ -81,12 +80,31 @@ async function help(sharecode) {
     res = await api('sign/helpSign', 'flag,sceneval,token', { flag: 0, token: sharecode })
     await $.wait(3000)
     res = await api('sign/helpSign', 'flag,sceneval,token', { flag: 1, token: sharecode })
-    console.log('助力结果', res.errMsg)
-    if (res.errMsg === 'help day limit') {
-        $.canHelp = false;
-        return;
+    if (res) {
+        switch (res.retCode) {
+            case 30014:
+                console.log('不能助力自己');
+                break;
+            case 30010:
+                console.log('助力已满！');
+                break;
+            case 30011:
+                console.log('助力次数已用完！');
+                $.canHelp = false;
+                break;
+            case 30009:
+                console.log('已助力过！');
+                break;
+            case 0:
+                console.log('助力成功');
+                break;
+            default:
+                console.log('助力结果' + res.errMsg);
+                break;
+        }
+    } else {
+        console.log('助力失败！');
     }
-
     await $.wait(2000)
 }
 
@@ -121,15 +139,24 @@ async function drawUserTask() {
         }
     }
 
-    //  res = await api('active/LuckyTwistUserInfo', 'sceneval', {})
-    //  let surplusTimes = res.data.surplusTimes
-    //  console.log('剩余抽奖次数', surplusTimes)
-    //  for (let j = 0; j < surplusTimes && coin >= 10; j++) {
-    //      res = await api('active/LuckyTwistDraw', 'active,activedesc,sceneval', { active: 'rwjs_fk1111', activedesc: encodeURIComponent('幸运扭蛋机抽奖') })
-    //      console.log('抽奖成功', res.data.prize[0].prizename)
-    //      coin -= 10
-    //      await $.wait(5000)
-    //  }
+    res = await api('active/LuckyTwistUserInfo', 'sceneval', {})
+    let surplusTimes = res.data.surplusTimes
+    console.log('剩余抽奖次数', surplusTimes)
+    for (let j = 0; j < surplusTimes && coin >= 10; j++) {
+        res = await api('active/LuckyTwistDraw', 'active,activedesc,sceneval', { active: 'rwjs_fk1111', activedesc: encodeURIComponent('幸运扭蛋机抽奖') })
+        if (res) {
+            if (res.retCode == 0) {
+                console.log('抽奖成功', res.data && res.data.prize ? res.data.prize[0].prizename : "")
+            } else {
+                console.log('抽奖失败', res.errMsg ? res.errMsg : "")
+            }
+
+        } else {
+            console.log('抽奖失败，返回数据为空')
+        }
+        coin -= 10
+        await $.wait(5000)
+    }
     await $.wait(2000)
 }
 
@@ -202,7 +229,7 @@ function getJxmcUrlData(url, name) {
 
 async function api(fn, stk, params) {
     let url = `https://m.jingxi.com/pgcenter`;
-    url = await decrypturl(`${url}/${fn}?sceneval=2&_stk=sceneval&_ste=1&_=${Date.now()}&sceneval=2`, stk, params, 10012)
+    url = await decrypturl(`${url}/${fn}?sceneval=2&_stk=active,activedesc,sceneval&_ste=1&_=${Date.now()}&sceneval=2`, stk, params, 10012)
     let myRequest = taskUrl(url);
     return new Promise(async resolve => {
         let rv = "";
