@@ -11,10 +11,16 @@ import requests
 import time
 import random
 import re
+import sys
 
 
 def gettimestamp():
     return str(int(time.time() * 1000))
+
+
+def printf(text):
+    print(text)
+    sys.stdout.flush()
 
 
 def randomstr(num):
@@ -89,7 +95,7 @@ def getTaskList(ck, shopId, venderId, miniAppId):
     url = "https://api.m.jd.com/client.action"
     body = 'functionId=jm_marketing_maininfo&body={"shopId":"%s","venderId":"%s","miniAppId":"%s"}&t=%s&appid=shop_view&clientVersion=10.0.0&client=wh5&uuid=%s' % (
         shopId, venderId, miniAppId, gettimestamp(), randomstr(16))
-    # print(body)
+    # printf(body)
     headers = getheader(ck, miniAppId)
     r = requests.post(url, headers=headers, data=body).json()
     return r["data"]["project"]["viewTaskVOS"]
@@ -104,18 +110,18 @@ def TaskType8(ck, shopId, venderId, miniAppId, taskId, token):
     headers = getheader(ck, miniAppId)
     r = requests.post(url, headers=headers, data=body)
     if r.json()["code"] == 200:
-        print('开始做逛一逛“热爱环游记”互动任务，休息10秒')
+        printf('开始做逛一逛“热爱环游记”互动任务，休息10秒')
         time.sleep(10)
         body = 'functionId=jm_task_process&body={"shopId":"%s","venderId":"%s","miniAppId":"%s","taskId":%s,"token":"%s","opType":2}&t=%s&appid=shop_view&clientVersion=10.0.0&client=wh5&uuid=%s' % (
             shopId, venderId, miniAppId, taskId, token, gettimestamp(), randomstr(16))
         r = requests.post(url, headers=headers, data=body)
         if r.json()["code"] == 810:
-            print("任务已完成")
+            printf("任务已完成")
         else:
-            print("任务完成失败")
+            printf("任务完成失败")
     else:
-        print(r.text)
-        print('做逛一逛“热爱环游记”互动任务失败')
+        printf(r.text)
+        printf('做逛一逛“热爱环游记”互动任务失败')
 
 
 # 逛逛店铺
@@ -127,18 +133,18 @@ def TaskType4(ck, shopId, venderId, miniAppId, taskId, token):
     headers = getheader(ck, miniAppId)
     r = requests.post(url, headers=headers, data=body)
     if r.json()["code"] == 200:
-        print('开始做逛逛店铺任务，休息6秒')
+        printf('开始做逛逛店铺任务，休息6秒')
         time.sleep(6)
         body = 'functionId=jm_task_process&body={"shopId":"%s","venderId":"%s","miniAppId":"%s","taskId":%s,"token":"%s","opType":2}&t=%s&appid=shop_view&clientVersion=10.0.0&client=wh5&uuid=%s' % (
             shopId, venderId, miniAppId, taskId, token, gettimestamp(), randomstr(16))
         r = requests.post(url, headers=headers, data=body)
         if r.json()["code"] == 810:
-            print("任务已完成")
+            printf("任务已完成")
         else:
-            print("任务完成失败")
+            printf("任务完成失败")
     else:
-        print(r.text)
-        print('做逛一逛“逛逛店铺”互动任务失败')
+        printf(r.text)
+        printf('做逛一逛“逛逛店铺”互动任务失败')
 
 
 # 加购商品
@@ -150,7 +156,7 @@ def TaskType5(ck, shopId, venderId, miniAppId, taskId, token, times):
     headers = getheader(ck, miniAppId)
     r = requests.post(url, headers=headers, data=body)
     if r.json()["code"] == 200:
-        print("开始做加购商品任务")
+        printf("开始做加购商品任务")
         skuList = r.json()["data"]["skuList"]
         for i in range(times):
             time.sleep(5)
@@ -159,19 +165,19 @@ def TaskType5(ck, shopId, venderId, miniAppId, taskId, token, times):
             # headers["Host"] = "mapi.m.jd.com"
             # r = requests.post(url, headers=headers, data="")
             # if r.json()["errId"] == "0":
-            #     print("加购 %s 成功" % skuList[i]["name"])
+            #     printf("加购 %s 成功" % skuList[i]["name"])
             #     headers["Host"] = "api.m.jd.com"
             body = 'functionId=jm_task_process&body={"shopId":"%s","venderId":"%s","miniAppId":"%s","taskId":%s,"token":"%s","opType":2,"referSource":%s}&t=%s&appid=shop_view&clientVersion=10.0.0&client=wh5&uuid=%s' % (
                 shopId, venderId, miniAppId, taskId, token, skuList[i]["skuId"], gettimestamp(), randomstr(16))
             r = requests.post(url, headers=headers, data=body)
             if r.json()["code"] == 810:
-                print("任务已完成")
+                printf("任务已完成")
             else:
-                print("任务完成失败")
+                printf("任务完成失败")
             # else:
-            #     print("加购失败")
+            #     printf("加购失败")
     else:
-        print("做加购商品任务失败")
+        printf("做加购商品任务失败")
 
 
 # 看看好物
@@ -182,9 +188,9 @@ def TaskType3(ck, shopId, venderId, miniAppId, taskId, token, times):
         shopId, venderId, miniAppId, taskId, gettimestamp(), randomstr(16))
     headers = getheader(ck, miniAppId)
     r = requests.post(url, headers=headers, data=body)
-    # print(r.text)
+    # printf(r.text)
     if r.json()["code"] == 200:
-        print("开始做看看好物任务")
+        printf("开始做看看好物任务")
         skuList = r.json()["data"]["skuList"]
         body = 'functionId=jm_task_process&body={"shopId":"%s","venderId":"%s","miniAppId":"%s","taskId":%s,"token":"%s","opType":1,"referSource":%s}&t=%s&appid=shop_view&clientVersion=10.0.0&client=wh5&uuid=%s' % (
             shopId, venderId, miniAppId, taskId, token, skuList[1]["skuId"], gettimestamp(), randomstr(16))
@@ -192,19 +198,19 @@ def TaskType3(ck, shopId, venderId, miniAppId, taskId, token, times):
         if r.json()["code"] == 200:
             for i in range(times):
                 time.sleep(5)
-                print("正在浏览 %s ，等待6秒" % skuList[i]["name"])
+                printf("正在浏览 %s ，等待6秒" % skuList[i]["name"])
                 time.sleep(6)
                 body = 'functionId=jm_task_process&body={"shopId":"%s","venderId":"%s","miniAppId":"%s","taskId":%s,"token":"%s","opType":2,"referSource":%s}&t=%s&appid=shop_view&clientVersion=10.0.0&client=wh5&uuid=%s' % (
                     shopId, venderId, miniAppId, taskId, token, skuList[i]["skuId"], gettimestamp(), randomstr(16))
                 r = requests.post(url, headers=headers, data=body)
                 if r.json()["code"] == 810:
-                    print("任务已完成")
+                    printf("任务已完成")
                 else:
-                    print("任务完成失败")
+                    printf("任务完成失败")
         else:
-            print("浏览失败")
+            printf("浏览失败")
     else:
-        print("做看看好物任务失败")
+        printf("做看看好物任务失败")
 
 
 def TaskType1(ck, shopId, venderId, miniAppId, taskId, token):
@@ -215,17 +221,17 @@ def TaskType1(ck, shopId, venderId, miniAppId, taskId, token):
             shopId, venderId, miniAppId, taskId, token, gettimestamp(), randomstr(16))
         r = requests.post(url, headers=headers, data=body)
         if r.json()["code"] == 810:
-            print("抽奖结果：", r.json()["data"]["awardVO"]["name"], r.json()["data"]["awardVO"]["discount"])
+            printf("抽奖结果：", r.json()["data"]["awardVO"]["name"], r.json()["data"]["awardVO"]["discount"])
         elif r.json()["code"] == 804:
-            print("没有抽奖机会，跳出")
+            printf("没有抽奖机会，跳出")
             break
         elif r.json()["code"] == 814:
-            print("当天活动参与总次数达到上限，跳出")
+            printf("当天活动参与总次数达到上限，跳出")
             global limited
             limited = 1
             break
         else:
-            print("抽奖失败")
+            printf("抽奖失败")
         time.sleep(5)
 
 
@@ -236,28 +242,33 @@ def followShop(ck, shopId):
         shopId, gettimestamp(), randomstr(16))
     headers = getheader(ck, miniAppId)
     r = requests.post(url, headers=headers, data=body)
-    # print(r.text)
+    # printf(r.text)
     if r.json()["msg"] == "关注成功":
-        print("关注店铺成功")
+        printf("关注店铺成功")
     else:
-        print("关注店铺失败")
+        printf("关注店铺失败")
 
 
 if __name__ == '__main__':
-    cks = os.environ["JD_COOKIE"].split("&")
+    try:
+        cks = os.environ["JD_COOKIE"].split("&")
+    except:
+        f = open("/jd/config/config.sh", "r", encoding='utf-8')
+        cks = re.findall(r'Cookie[0-9]*="(pt_key=.*?;pt_pin=.*?;)"', f.read())
+        f.close()
     for ck in cks:
         limited = 0
         ptpin = re.findall(r"pt_pin=(.*?);", ck)[0]
-        print("--------开始京东账号", ptpin, "--------")
+        printf("--------开始京东账号" + ptpin + "--------")
         shoplist = getShops(ck)
         for shop in shoplist:
             try:
-                if limited!=1:
-                    print("开始执行%s" % shop["name"])
+                if limited != 1:
+                    printf("开始执行%s" % shop["name"])
                     shopId, venderId, miniAppId = getShopInfo(ck, shop["link"])
                     followShop(ck, shopId)
                     tasks = getTaskList(ck, shopId, venderId, miniAppId)
-                    # print(tasks)
+                    # printf(tasks)
                     for i in tasks:
                         if i["finishCount"] == 0:
                             if i["type"] == 8:
@@ -272,4 +283,4 @@ if __name__ == '__main__':
                         if i["type"] == 1:
                             TaskType1(ck, shopId, venderId, miniAppId, i["id"], i["token"])
             except:
-                print("发生异常错误")
+                printf("发生异常错误")
