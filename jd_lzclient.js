@@ -1,3 +1,4 @@
+
 /*
 https://lzkj-isv.isvjcloud.com/lzclient/12345/cjwx/common/entry.html?activityId=xxxx
 
@@ -8,7 +9,7 @@ const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 const notify = $.isNode() ? require('./sendNotify') : '';
 let cookiesArr = [], cookie = '', message = '';
 let activityIdList = [
-    "",
+    "9af3e6ed1d024522bd25237b1730f1e7",
 ]
 let lz_cookie = {}
 
@@ -38,7 +39,7 @@ if ($.isNode()) {
         $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', { "open-url": "https://bean.m.jd.com/bean/signIndex.action" });
         return;
     }
-     activityIdList = await getActivityIdList('https://gitee.com/KingRan521/JD-Scripts/raw/master/shareCodes/lzclient.json')
+     //activityIdList = await getActivityIdList('https://gitee.com/KingRan521/JD-Scripts/raw/master/shareCodes/lzclient.json')
     for(let a in activityIdList){
         activityId = activityIdList[a];
         console.log("开起第 "+ a +" 个活动，活动id："+activityId)
@@ -100,7 +101,7 @@ async function pandaDraw() {
     await task('wxCommonInfo/initActInfo', `activityId=${$.activityId}`, 1)
     await $.wait(500)
     await task('customer/getSimpleActInfoVo', `activityId=${$.activityId}`, 1)
-    await $.wait(500)
+    /*await $.wait(500)
     if ($.token) {
         await getMyPing();
         if ($.secretPin) {
@@ -120,7 +121,7 @@ async function pandaDraw() {
         }
     } else {
         $.log("没有成功获取到用户鉴权信息")
-    }
+    }*/
 }
 
 function task(function_id, body, isCommon = 0) {
@@ -150,6 +151,7 @@ function task(function_id, body, isCommon = 0) {
                                     $.venderId = data.data.venderId;
                                     $.shopId = data.data.shopId;
                                     $.activityType = data.data.activityType;
+                                    console.log(`活动店铺url：https://mall.jd.com/index-${$.shopId}.html`)
                                     break;
                                 case 'wxDrawActivity/activityContent':
                                     $.activityContent = data.data;
