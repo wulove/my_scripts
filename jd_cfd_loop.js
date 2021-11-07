@@ -83,18 +83,6 @@ if ($.isNode()) {
 
 async function cfd() {
   try {
-    /*const beginInfo = await getUserInfo();
-    if (beginInfo.LeadInfo.dwLeadType === 2) {
-      console.log(`还未开通活动，请先开通\n`)
-      return
-    }
-    if ($.info.buildInfo.dwTodaySpeedPeople !== 500) {
-      await $.wait(3000)
-      await speedUp()
-    } else {
-      console.log(`热气球接客已达上限，跳过执行\n`)
-    }
-    await $.wait(3000)*/
     await queryshell()
   } catch (e) {
     $.logErr(e)
@@ -246,35 +234,6 @@ async function pickshell(body) {
   })
 }
 
-// 热气球接客
-async function speedUp() {
-    let strBuildIndexArr = ['food', 'sea', 'shop', 'fun']
-    let strBuildIndex = strBuildIndexArr[Math.floor((Math.random() * strBuildIndexArr.length))]
-    return new Promise(async (resolve) => {
-        $.get(taskUrl(`user/SpeedUp`, `strBuildIndex=${strBuildIndex}`), async (err, resp, data) => {
-            try {
-                if (err) {
-                    console.log(`${JSON.stringify(err)}`)
-                    console.log(`${$.name} SpeedUp API请求失败，请检查网路重试`)
-                } else {
-                    data = JSON.parse(data);
-                    if (data.iRet === 0) {
-                        console.log(`热气球接客成功：已接待 ${data.dwTodaySpeedPeople} 人\n`)
-                    } else if (data.iRet === 2027 || data.sErrMsg === '今天接待人数已达上限啦~') {
-                        console.log(`热气球接客失败：${data.sErrMsg}\n`)
-                    } else {
-                        console.log(`热气球接客失败：${data.sErrMsg}\n`)
-                    }
-                }
-            } catch (e) {
-                $.logErr(e, resp);
-            } finally {
-                resolve();
-            }
-        })
-    })
-}
-
 function taskUrl(function_path, body = '', dwEnv = 7) {
   let url = `${JD_API_HOST}jxbfd/${function_path}?strZone=jxbfd&bizCode=jxbfd&source=jxbfd&dwEnv=${dwEnv}&_cfd_t=${Date.now()}&ptag=7155.9.47${body ? `&${body}` : ''}`;
   url += `&_stk=${getStk(url)}`;
@@ -291,6 +250,10 @@ function taskUrl(function_path, body = '', dwEnv = 7) {
       "Cookie": cookie
     }
   };
+}
+function getStk(url) {
+  let arr = url.split('&').map(x => x.replace(/.*\?/, "").replace(/=.*/, ""))
+  return encodeURIComponent(arr.filter(x => x).sort().join(','))
 }
 function randomString(e) {
   e = e || 32;
