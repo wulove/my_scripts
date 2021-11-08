@@ -2,7 +2,7 @@
 金榜创造营
 活动入口：https://h5.m.jd.com/babelDiy/Zeus/2H5Ng86mUJLXToEo57qWkJkjFPxw/index.html
 活动时间：2021-05-21至2021-12-31
-脚本更新时间：2021-05-28 14:20
+脚本更新时间：2021-11-01
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 ===================quantumultx================
 [task_local]
@@ -79,8 +79,8 @@ const JD_API_HOST = 'https://api.m.jd.com/client.action';
 async function main() {
   try {
     // await signForRedBag();//签到领红包
-      //京东金榜
-      await goldRank();
+    //京东金榜
+    await goldRank();
     await goldCreatorTab();//获取顶部主题
     await getDetail();
     await goldCreatorPublish();
@@ -91,64 +91,64 @@ async function main() {
 }
 
 async function goldRank() {
-    return new Promise(resolve => {
-        const body = {};
-        const options = taskUrl('goldCenterHead', body);
-        $.get(options, async (err, resp, data) => {
-            try {
-                if (err) {
-                    console.log(`${JSON.stringify(err)}`)
-                    console.log(`${$.name} goldCenterDoTask API请求失败，请检查网路重试`)
-                } else {
-                    //console.log('goldCenterHead', data)
-                    if (safeGet(data)) {
-                        data = JSON.parse(data);
-                        if (data.code == '0') {
-                            if (data.result.taskDone == 0) {
-                                console.log("点亮勋章\n")
-                                await goldCenterDoTask(1);
-                            }
-                            if (data.result.medalNum == 5 && data.result.bingoDone == 0) {
-                                console.log("五大勋章全部点亮抽取金榜盲盒\n")
-                                await goldCenterDoTask(2);
-                            }
-                        }
-                    }
-                }
-            } catch (e) {
-                $.logErr(e, resp)
-            } finally {
-                resolve();
+  return new Promise(resolve => {
+    const body = {};
+    const options = taskUrl('goldCenterHead', body);
+    $.get(options, async (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} goldCenterDoTask API请求失败，请检查网路重试`)
+        } else {
+          //console.log('goldCenterHead', data)
+          if (safeGet(data)) {
+            data = JSON.parse(data);
+            if (data.code == '0') {
+              if (data.result.taskDone == 0) {
+                console.log("点亮勋章\n")
+                await goldCenterDoTask(1);
+              }
+              if (data.result.medalNum == 5 && data.result.bingoDone == 0) {
+                console.log("五大勋章全部点亮抽取金榜盲盒\n")
+                await goldCenterDoTask(2);
+              }
             }
-        })
-    });
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve();
+      }
+    })
+  });
 }
 
-async function goldCenterDoTask(type= 1) {
-    return new Promise(resolve => {
-       const body = {"type": type};
-       const options = taskUrl('goldCenterDoTask', body);
-        $.post(options, async (err, resp, data) => {
-            try {
-                if (err) {
-                    console.log(`${JSON.stringify(err)}`)
-                    console.log(`${$.name} goldCenterDoTask API请求失败，请检查网路重试`)
-                } else {
-                    //console.log('goldCenterDoTask', data)
-                    if (safeGet(data)) {
-                        data = JSON.parse(data);
-                        if (data.code == '0') {
-                            console.log(`成功，获得 ${data.result.lotteryScore}京豆\n`);
-                        }
-                    }
-                }
-            } catch (e) {
-                $.logErr(e, resp)
-            } finally {
-                resolve();
+async function goldCenterDoTask(type = 1) {
+  return new Promise(resolve => {
+    const body = {"type": type};
+    const options = taskUrl('goldCenterDoTask', body);
+    $.post(options, async (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} goldCenterDoTask API请求失败，请检查网路重试`)
+        } else {
+          //console.log('goldCenterDoTask', data)
+          if (safeGet(data)) {
+            data = JSON.parse(data);
+            if (data.code == '0') {
+              console.log(`成功，获得 ${data.result.lotteryScore}京豆\n`);
             }
-        })
-    });
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve();
+      }
+    })
+  });
 }
 
 async function signForRedBag() {

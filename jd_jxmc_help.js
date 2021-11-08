@@ -48,10 +48,6 @@ if ($.isNode()) {
     $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', { "open-url": "https://bean.m.jd.com/bean/signIndex.action" });
     return;
   }
-  console.log('京喜牧场\n' +
-    '更新时间：2021-11-7\n' +
-    '活动入口：京喜APP-我的-京喜牧场\n' +
-    '温馨提示：请先手动完成【新手指导任务】再运行脚本')
   for (let i = 0; i < cookiesArr.length; i++) {
     $.index = i + 1;
     $.cookie = cookiesArr[i];
