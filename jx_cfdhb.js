@@ -64,7 +64,7 @@ console.log(`去兑换${ddwPaperMoney / 1000}元红包`)
       for (let cookie of $.cookieArr) {  
         $.log(`\n=======================================\n开始【账号：${$.UserName}】 ${new Date().Format("s.S")}`)
         for (let j=0; j<5; j++)
-          cashOut(cookie)
+           await cashOut(cookie)
       }
     }
 })()
