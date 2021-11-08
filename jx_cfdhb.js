@@ -37,6 +37,20 @@ Date.prototype.Format = function (fmt) { //author: meizz
   return fmt;
 }
 
+let ddwPaperMoney, dwLvl;
+const duArr = {
+  '111000': 2,
+  '100000': 3,
+  '11000': 4,
+  '1000': 5,
+  '500': 6,
+}
+
+if (!process.env.JX_MONEY) {
+  return;
+}
+ddwPaperMoney = process.env.JX_MONEY, dwLvl = duArr[ddwPaperMoney];
+
 !(async () => {
     for (let cookie of $.cookieArr) {
         $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1])
@@ -60,7 +74,7 @@ function cashOut(ac) {
         $.get(
             taskUrl(
                 `user/ExchangePrize`,
-                `ddwPaperMoney=111000&&strPoolName=jxcfd2_exchange_hb_202111&strPgtimestamp=undefined&strPhoneID=undefined&strPgUUNum=undefined`,
+                `ddwPaperMoney=111000&strPoolName=jxcfd2_exchange_hb_202111&strPgtimestamp=undefined&strPhoneID=undefined&strPgUUNum=undefined&dwLvl=2`,
                 ac
             ),
             async (err, resp, data) => {
@@ -88,7 +102,7 @@ function sleep(timeout) {
 
 function taskUrl(function_path, body, ck) {
     return {
-        url: `${JD_API_HOST}jxbfd/${function_path}?strZone=jxbfd&bizCode=jxbfd&source=jxbfd&dwEnv=7&_cfd_t=${Date.now()}&ptag=7155.9.47&dwType=3&dwLvl=2&${body}&_stk=_cfd_t%2CbizCode%2CddwPaperMoney%2CdwEnv%2CdwLvl%2CdwType%2Cptag%2Csource%2CstrPoolName%2CstrZone&_ste=1&h5st=20210714194505287%3B0008312373818162%3B10032%3Btk01wef211d4ea8nVnBKbkI2YWMyLsdfUxEgOgzh%2BGXmysR3jrvoYsR5UiQmQXKDaskgnKcEhmAqe%2BhVC5n3FVHFTTjE%3B30385d4f25fc9cb5170507d9d9648abe6d396d055b3f891d622eb37671cf288c&_=${Date.now()}&sceneval=2&g_login_type=1&g_ty=ls`,
+        url: `${JD_API_HOST}jxbfd/${function_path}?strZone=jxbfd&bizCode=jxbfd&source=jxbfd&dwEnv=7&_cfd_t=${Date.now()}&ptag=7155.9.47&dwType=3&${body}&_stk=_cfd_t%2CbizCode%2CddwPaperMoney%2CdwEnv%2CdwLvl%2CdwType%2Cptag%2Csource%2CstrPoolName%2CstrZone&_ste=1&h5st=20210714194505287%3B0008312373818162%3B10032%3Btk01wef211d4ea8nVnBKbkI2YWMyLsdfUxEgOgzh%2BGXmysR3jrvoYsR5UiQmQXKDaskgnKcEhmAqe%2BhVC5n3FVHFTTjE%3B30385d4f25fc9cb5170507d9d9648abe6d396d055b3f891d622eb37671cf288c&_=${Date.now()}&sceneval=2&g_login_type=1&g_ty=ls`,
         headers: {
             Cookie: ck,
             Accept: "*/*",
