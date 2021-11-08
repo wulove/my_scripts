@@ -62,8 +62,9 @@ console.log(`去兑换${ddwPaperMoney / 1000}元红包`)
       console.log(`等待时间 ${sleeptime / 1000}`);
       await sleep(sleeptime)
       for (let cookie of $.cookieArr) {  
-        $.log(`\n=======================================\n开始【账号：${$.UserName}】`)
-        await cashOut(cookie)
+        $.log(`\n=======================================\n开始【账号：${$.UserName}】 ${new Date().Format("s.S")}`)
+        for (let j=0; j<5; j++)
+          cashOut(cookie)
       }
     }
 })()
