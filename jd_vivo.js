@@ -198,7 +198,7 @@ function takePostRequest(type) {
             break;
         case 'insxintiao':
             url= 'https://lzdz1-isv.isvjd.com/dingzhi/vivo/iqoojieyapa/insxintiao';
-            body = `pin=${encodeURIComponent(pin)}&activityId=${activityID}&playerId=39`;
+            body = `pin=${encodeURIComponent(pin)}&activityId=${activityID}&playerId=37`;
             break;
         case 'draw':
             url= 'https://lzdz1-isv.isvjd.com/dingzhi/vivo/iqoojieyapa/draw';
