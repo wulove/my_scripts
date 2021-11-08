@@ -1,7 +1,7 @@
 /**
  *
  Name:财富岛红包 (修改自https://gayhub.lensu.workers.dev/pxylen/dog_jd/master/jx_cfdtx.js)
- cron "59 * * * *"
+ * cron "59 * * * *"
  *  111元红包：ddwPaperMoney=111000, dwLvl=2
  *  100元红包：ddwPaperMoney=100000, dwLvl=3
  *  11元红包：ddwPaperMoney=11000, dwLvl=4
@@ -11,6 +11,7 @@
 
 const $ = new Env("财富岛红包");
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
+const notify = $.isNode() ? require('./sendNotify') : '';
 const JD_API_HOST = "https://m.jingxi.com/";
 $.cookieArr = [];
 if ($.isNode()) {
@@ -83,8 +84,10 @@ function cashOut(ac) {
                         $.logErr(`❌ 账号${ac.no} API请求失败，请检查网络后重试\n data: ${JSON.stringify(err, null, 2)}`);
                     } else {
                       console.log('兑换结果：', data)
-                        let sErrMsg = $.toObj(data);
-                        console.log(`红包提现结果：${sErrMsg.sErrMsg}`)
+                      data = $.toObj(data);
+                      if (data.iRet === 0) {
+                        await notify.sendNotify(`${$.name}`, `账号：${$.UserName} 兑换 ${ddwPaperMoney / 1000}元红包成功`)
+                      }
                     }
                 } catch (e) {
                     $.logErr(`======== 账号 ${ac.no} ========\nerror:${e}\ndata: ${resp && resp.body}`)
