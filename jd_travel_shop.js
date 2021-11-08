@@ -1,7 +1,7 @@
 /*
 双11环游记大富翁
-cron 0 8 1-11 11 * https://raw.githubusercontent.com/star261/jd/main/scripts/jd_travel_shop.js
-脚本跑起来时间比较久，没有卡开，有加购
+cron 0 2 1-11 11 * https://raw.githubusercontent.com/star261/jd/main/scripts/jd_travel_shop.js
+脚本跑起来时间比较久，没有卡开，有加购了
 * */
 const $ = new Env('双11环游记大富翁');
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
@@ -64,7 +64,6 @@ async function main(cookie) {
     if(qryCompositeMaterials && qryCompositeMaterials.feedBottomData0 && qryCompositeMaterials.feedBottomData0.list){
         await $.wait(2000);
         let shopList = qryCompositeMaterials.feedBottomData0.list;
-        console.log('shop num', shopList.length)
         let thisBody = {};
         for (let i = 0; i < shopList.length && !max; i++) {
             let oneShop = shopList[i];
@@ -165,9 +164,9 @@ async function main(cookie) {
                     console.log(JSON.stringify(finishInfo)+'\n');
                     await $.wait(2000);
                 }
-                // thisBody = `{"shopId":"${shopId}","venderId":"${venderId}","miniAppId":"${appId}"}`;
-                // let taskGoods = await takeRequest('',`functionId=jm_hidden_tryDoTask&body=${encodeURIComponent(thisBody)}&t=${Date.now()}&eid=&appid=shop_view&clientVersion=10.0.0&client=wh5&uuid=8888`,cookie);
-                // console.log(JSON.stringify(taskGoods));
+                thisBody = `{"shopId":"${shopId}","venderId":"${venderId}","miniAppId":"${appId}"}`;
+                let taskGoods = await takeRequest('',`functionId=jm_hidden_tryDoTask&body=${encodeURIComponent(thisBody)}&t=${Date.now()}&eid=&appid=shop_view&clientVersion=10.0.0&client=wh5&uuid=8888`,cookie);
+                console.log(JSON.stringify(taskGoods));
             }
         }
     }else{
