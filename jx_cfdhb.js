@@ -53,18 +53,18 @@ if (!process.env.JX_MONEY) {
 ddwPaperMoney = process.env.JX_MONEY, dwLvl = duArr[ddwPaperMoney];
 console.log(`去兑换${ddwPaperMoney / 1000}元红包`)
 !(async () => {
-    for (let cookie of $.cookieArr) {
-        $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1])
-      let nowtime = new Date().Format("s.S")
-      let starttime = $.isNode() ? (process.env.SM_STARTTIME ? process.env.SM_STARTTIME * 1 : 60) : ($.getdata('SM_STARTTIME') ? $.getdata('SM_STARTTIME') * 1 : 60);
-      if (nowtime < 59) {
-        let sleeptime = (starttime - nowtime) * 1000;
-        console.log(starttime, nowtime)
-        console.log(`等待时间 ${sleeptime / 1000}`);
-        await sleep(sleeptime)
-      }
+    $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1])
+    let nowtime = new Date().Format("s.S")
+    let starttime = $.isNode() ? (process.env.CFD_STARTTIME ? process.env.CFD_STARTTIME * 1 : 60) : ($.getdata('CFD_STARTTIME') ? $.getdata('CFD_STARTTIME') * 1 : 60);
+    if (nowtime < 59) {
+      let sleeptime = (starttime - nowtime) * 1000;
+      console.log(starttime, nowtime)
+      console.log(`等待时间 ${sleeptime / 1000}`);
+      await sleep(sleeptime)
+      for (let cookie of $.cookieArr) {  
         $.log(`\n=======================================\n开始【账号：${$.UserName}】`)
         await cashOut(cookie)
+      }
     }
 })()
     .catch((e) => $.logErr(e))
