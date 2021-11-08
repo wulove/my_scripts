@@ -50,7 +50,7 @@ if (!process.env.JX_MONEY) {
   return;
 }
 ddwPaperMoney = process.env.JX_MONEY, dwLvl = duArr[ddwPaperMoney];
-
+console.log(`去兑换${ddwPaperMoney / 1000}元红包`)
 !(async () => {
     for (let cookie of $.cookieArr) {
         $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1])
