@@ -53,7 +53,6 @@ if (!process.env.JX_MONEY) {
 ddwPaperMoney = process.env.JX_MONEY, dwLvl = duArr[ddwPaperMoney];
 console.log(`去兑换${ddwPaperMoney / 1000}元红包`)
 !(async () => {
-    $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1])
     let nowtime = new Date().Format("s.S")
     let starttime = $.isNode() ? (process.env.CFD_STARTTIME ? process.env.CFD_STARTTIME * 1 : 60) : ($.getdata('CFD_STARTTIME') ? $.getdata('CFD_STARTTIME') * 1 : 60);
     if (nowtime < 59) {
@@ -62,6 +61,7 @@ console.log(`去兑换${ddwPaperMoney / 1000}元红包`)
       console.log(`等待时间 ${sleeptime / 1000}`);
       await sleep(sleeptime)
       for (let cookie of $.cookieArr) {  
+        $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1])
         $.log(`\n=======================================\n开始【账号：${$.UserName}】 ${new Date().Format("s.S")}`)
         for (let j=0; j<5; j++)
            await cashOut(cookie)
