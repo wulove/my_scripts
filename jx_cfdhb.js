@@ -74,7 +74,7 @@ function cashOut(ac) {
         $.get(
             taskUrl(
                 `user/ExchangePrize`,
-                `ddwPaperMoney=111000&strPoolName=jxcfd2_exchange_hb_202111&strPgtimestamp=undefined&strPhoneID=undefined&strPgUUNum=undefined&dwLvl=2`,
+                `ddwPaperMoney=${ddwPaperMoney}&strPoolName=jxcfd2_exchange_hb_202111&strPgtimestamp=undefined&strPhoneID=undefined&strPgUUNum=undefined&dwLvl=${dwLvl}`,
                 ac
             ),
             async (err, resp, data) => {
