@@ -60,13 +60,13 @@ console.log(`去兑换${ddwPaperMoney / 1000}元红包`)
       console.log(starttime, nowtime)
       console.log(`等待时间 ${sleeptime / 1000}`);
       await sleep(sleeptime)
-      for (let cookie of $.cookieArr) {  
-        $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1])
-        $.log(`\n=======================================\n开始【账号：${$.UserName}】 ${new Date().Format("s.S")}`)
-        for (let j=0; j<5; j++) {
+      for (let j=0; j<5; j++) {
+        for (let cookie of $.cookieArr) {
+          $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1])
+          $.log(`\n=======================================\n开始【账号：${$.UserName}】 ${new Date().Format("s.S")}`)
            await cashOut(cookie)
-           await $.wait(100)
         }
+        await $.wait(100)
       }
     }
 })()
