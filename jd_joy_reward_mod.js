@@ -7,6 +7,7 @@ const jd_helpers = require('./utils/JDHelpers.js');
 const jd_env = require('./utils/JDEnv.js');
 const $ = jd_env.env('宠汪汪积分兑换有就换版');
 const zooFaker = require('./utils/JDJRValidator_Pure');
+const MD5 = require('crypto-js/md5');
 // $.get = zooFaker.injectToRequest2($.get.bind($));
 // $.post = zooFaker.injectToRequest2($.post.bind($));
 let allMessage = '';
@@ -318,7 +319,7 @@ function getExchangeRewards() {
   };
   return new Promise((resolve) => {
     let lkt = new Date().getTime();
-    let lks = $.md5(config.invokeKey + lkt).toString();
+    let lks = MD5(config.invokeKey + lkt).toString();
     const option = {
       url: 'https:' + taroRequest(opt)['url'] + $.validate,
       headers: {
@@ -380,7 +381,7 @@ function exchange(saleInfoId, orderSource) {
   };
   return new Promise((resolve) => {
     let lkt = new Date().getTime();
-    let lks = $.md5(config.invokeKey + lkt).toString();
+    let lks = MD5(config.invokeKey + lkt).toString();
     const option = {
       url: 'https:' + taroRequest(opt)['url'] + $.validate,
       body: `${JSON.stringify(body)}`,
