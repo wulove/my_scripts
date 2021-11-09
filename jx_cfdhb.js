@@ -46,7 +46,6 @@ const duArr = {
   '1000': 5,
   '500': 6,
 }
-
 if (!process.env.JX_MONEY) {
   return;
 }
@@ -60,14 +59,10 @@ console.log(`去兑换${ddwPaperMoney / 1000}元红包`)
       console.log(starttime, nowtime)
       console.log(`等待时间 ${sleeptime / 1000}`);
       await sleep(sleeptime)
-      for (let j=0; j<5; j++) {
-        for (let cookie of $.cookieArr) {
-          $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1])
-          $.log(`\n=======================================\n开始【账号：${$.UserName}】 ${new Date().Format("s.S")}`)
-          await cashOut(cookie)
-        }
-        await $.wait(100)
-      }
+      await Promise.all([
+        cashOut($.cookieArr[0]),
+        cashOut($.cookieArr[1])
+      ]);
     }
 })()
     .catch((e) => $.logErr(e))
@@ -86,6 +81,8 @@ function cashOut(ac) {
                     if (err) {
                         $.logErr(`❌ 账号${ac.no} API请求失败，请检查网络后重试\n data: ${JSON.stringify(err, null, 2)}`);
                     } else {
+                      $.UserName = decodeURIComponent(ac.match(/pt_pin=([^; ]+)(?=;?)/) && ac.match(/pt_pin=([^; ]+)(?=;?)/)[1])
+                      $.log(`\n=======================================\n开始【账号：${$.UserName}】 ${new Date().Format("s.S")}`)
                       console.log('兑换结果：', data)
                       data = $.toObj(data);
                       if (data.iRet === 0) {
