@@ -66,6 +66,7 @@ console.log(`去兑换${ddwPaperMoney / 1000}元红包`)
         for (let j=0; j<5; j++) {
            await cashOut(cookie)
            await $.await(100)
+        }
       }
     }
 })()
