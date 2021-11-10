@@ -63,6 +63,18 @@ console.log(`去兑换${ddwPaperMoney / 1000}元红包`)
         cashOut($.cookieArr[0], 11000, 4),
         cashOut($.cookieArr[1], 100000, 3)
       ]);
+      if (new Date().getHours() == 20) {
+          await Promise.all([
+              cashOut($.cookieArr[0], 1000, 5),
+              cashOut($.cookieArr[1], 1000, 5),
+          ]);
+      }
+      if (new Date().getHours() == 23) {
+          await Promise.all([
+              cashOut($.cookieArr[0], 500, 6),
+              cashOut($.cookieArr[1], 500, 6),
+          ]);
+      }
     }
 })()
     .catch((e) => $.logErr(e))
