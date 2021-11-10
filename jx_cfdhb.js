@@ -60,15 +60,15 @@ console.log(`去兑换${ddwPaperMoney / 1000}元红包`)
       console.log(`等待时间 ${sleeptime / 1000}`);
       await sleep(sleeptime)
       await Promise.all([
-        cashOut($.cookieArr[0]),
-        cashOut($.cookieArr[1])
+        cashOut($.cookieArr[0], 11000, 4),
+        cashOut($.cookieArr[1], 100000, 3)
       ]);
     }
 })()
     .catch((e) => $.logErr(e))
     .finally(() => $.done());
 
-function cashOut(ac) {
+function cashOut(ac, ddwPaperMoney, dwLvl) {
     return new Promise(async (resolve) => {
         $.get(
             taskUrl(
