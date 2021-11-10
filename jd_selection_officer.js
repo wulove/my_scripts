@@ -36,9 +36,11 @@ let invitelist = [
     $.cookie = cookiesArr[i];
     $.isLogin = true;
     $.nickName = '';
+    $.skuIds = [];
     $.UserName = decodeURIComponent($.cookie.match(/pt_pin=([^; ]+)(?=;?)/) && $.cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1]);
     console.log(`\n*****开始【京东账号${$.index}】${$.nickName || $.UserName}*****\n`);
     await main();
+    await $.clearShoppingCart();
   }
   if (message) {
     message += `活动路径：APP-美妆馆-右侧浮窗`;
@@ -177,6 +179,7 @@ async function doTask() {
       let subList = $.oneTask.info;
       for (let j = 0; j < subList.length; j++) {
         $.subListInfo = subList[j];
+        console.log($.subListInfo);
         console.log(`任务：${subList[j].title},去执行`);
         await takePostRequest('add_product');
         await $.wait(1000);
