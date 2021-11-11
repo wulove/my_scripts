@@ -62,7 +62,7 @@ console.log(`去兑换${ddwPaperMoney / 1000}元红包`)
       await sleep(sleeptime)
         console.log(`执行时间：${new Date().Format("hh:mm:ss.S")}`)
       await Promise.all([
-        cashOut($.cookieArr[1], 11000, 4),
+        cashOut($.cookieArr[1], 111000, 2),
         cashOut($.cookieArr[1], 100000, 3)
       ]);
       if (new Date().getHours() == 20) {
