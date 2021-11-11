@@ -71,7 +71,7 @@ console.log(`去兑换${ddwPaperMoney / 1000}元红包`)
               cashOut($.cookieArr[1], 1000, 5),
           ]);
       }
-      if (new Date().getHours() == 23) {
+      if (new Date().getHours() == 22) {
           await Promise.all([
               cashOut($.cookieArr[0], 500, 6),
               cashOut($.cookieArr[1], 500, 6),
