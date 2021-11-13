@@ -91,7 +91,7 @@ $.shareuuid = ['af61ae9a5e7a45ca8caccf74bbd93d30', 'cf66a522daf945f2a0f4a3a33a38
                     if (task.taskid == "interact") {
                         for (l = 0; l < 20 - task.curNum; l++) {
                             await dotask(task.taskid, task.params)
-                            await $.wait(8000)
+                            await $.wait(5000)
                         }
                     } else if (task.taskid == "scansku") {
                         await getproduct()
@@ -105,24 +105,28 @@ $.shareuuid = ['af61ae9a5e7a45ca8caccf74bbd93d30', 'cf66a522daf945f2a0f4a3a33a38
                         }
                     } else {
                         await dotask(task.taskid, task.params)
-                        await $.wait(8000)
+                        await $.wait(5000)
                     }
                 }
                 await getinfo()
-                await $.wait(5000)
-                let th = $.isNode() ? (process.env.CowKeep ? process.env.CowKeep : 1000000) : ($.getdata("CowKeep") ? $.getdata("CowKeep") : 1000000)
+                await $.wait(3000)
+                if ($.score < 50000) {
+                let th = $.isNode() ? (process.env.CowKeep ? process.env.CowKeep : 100) : ($.getdata("CowKeep") ? $.getdata("CowKeep") : 100)
                 th = Math.max(100,th)
                 console.log(`【准备喂食,当前设置食物>${th}则喂食物,可通过设置环境变量CowKeep进行更改,需要大于100】`)
                 let boundry = 100
                 while($.foodNum >= th && boundry--) {
                     await feed()
-                    await $.wait(5000)
+                    await $.wait(3000)
                     // await getinfo2()
                     // await $.wait(3000)
                 }
+            } else {
+                console.log(`\n【已升至最高等级，无需喂食，攒饲料兑换奖品吧】\n`)
+            }
                 for (k = 0; k < $.drawchance; k++) {
                     await draw()
-                    await $.wait(10000)
+                    await $.wait(2000)
                 }
                 let exchanges = Math.floor($.foodNum / 3000)
                 console.log(`可兑换 ${exchanges} 次 50京🐶`)
