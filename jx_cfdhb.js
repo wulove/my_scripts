@@ -43,8 +43,9 @@ const duArr = {
   '111000': 2,
   '100000': 3,
   '11000': 4,
-  '1000': 5,
-  '500': 6,
+  '1000': 10,
+  '500': 11,
+    '200': 7
 }
 process.env.JX_MONEY = '100000'
 if (!process.env.JX_MONEY) {
@@ -62,20 +63,20 @@ console.log(`去兑换${ddwPaperMoney / 1000}元红包`)
       await sleep(sleeptime)
         console.log(`执行时间：${new Date().Format("hh:mm:ss.S")}`)
       await Promise.all([
-        cashOut($.cookieArr[1], 100000, 3)
+        cashOut($.cookieArr[1], 100000)
       ]);
-      if (new Date().getHours() == 16) {
-          await $.wait(1000)
+        await $.wait(1000)
+        if (new Date().getHours() == 17) {
           await Promise.all([
-              cashOut($.cookieArr[0], 1000, 5),
-              cashOut($.cookieArr[1], 1000, 5),
+              cashOut($.cookieArr[0], 1000),
+              cashOut($.cookieArr[1], 1000),
           ]);
       }
-      if (new Date().getHours() == 18) {
-          await $.wait(1000)
-          await Promise.all([
-              cashOut($.cookieArr[0], 500, 6),
-              cashOut($.cookieArr[1], 500, 6),
+        await $.wait(1000)
+        if (new Date().getHours() == 18) {
+            await Promise.all([
+              cashOut($.cookieArr[0], 500),
+              cashOut($.cookieArr[1], 500),
           ]);
       }
     }
@@ -83,7 +84,8 @@ console.log(`去兑换${ddwPaperMoney / 1000}元红包`)
     .catch((e) => $.logErr(e))
     .finally(() => $.done());
 
-function cashOut(ac, ddwPaperMoney, dwLvl) {
+function cashOut(ac, ddwPaperMoney) {
+    let dwLvl = duArr[ddwPaperMoney];
     return new Promise(async (resolve) => {
         $.UserName = decodeURIComponent(ac.match(/pt_pin=([^; ]+)(?=;?)/) && ac.match(/pt_pin=([^; ]+)(?=;?)/)[1])
         $.log(`\n========================================\n开始【账号：${$.UserName}】兑换${ddwPaperMoney / 1000}元红包 时间：${new Date().Format("hh:mm:ss.S")}`)
