@@ -38,7 +38,6 @@ let jdNotify = true;//是否关闭通知，false打开通知推送，true关闭�
 let cookiesArr = [], cookie = '', message;
 let UA, UAInfo = {}, isLoginInfo = {};
 $.shareCodes = [[{use:'恋你莲我',smp:'7a3c29871e087342d38603bb81738544',num:0,max:false},{use:'jd_rtrqrVNXHIXE',smp:'bf45dbbf13be83c1ea2c691023d6135b',num:0,max:false}][Math.floor((Math.random()*2))]];
-console.log($.shareCodes)
 $.blackInfo = {}
 $.appId = 10028;
 if ($.isNode()) {
