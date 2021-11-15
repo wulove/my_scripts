@@ -47,7 +47,6 @@ const duArr = {
   '500': 11,
     '200': 7
 }
-process.env.JX_MONEY = '100000'
 if (!process.env.JX_MONEY) {
   return;
 }
