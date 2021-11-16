@@ -48,9 +48,9 @@ const duArr = {
     '500': 11,
     '200': 7
 }
-/*if (!process.env.JX_MONEY) {
+if (!process.env.JX_MONEY) {
   return;
-}*/
+}
 ddwPaperMoney = process.env.JX_MONEY, dwLvl = duArr[ddwPaperMoney];
 console.log(`去兑换${ddwPaperMoney / 1000}元红包`)
 !(async () => {
