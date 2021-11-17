@@ -129,26 +129,26 @@ function queryTasks(info = true) {
 async function doTasks() {
   for (let task of $.willingTask) {
     if (task.doLink) {
-      let params = url.parse(task.doLink, true, true);
-      if (params.query && params.query.readTime) {
+      if (task.doLink.indexOf('readTime=') !== -1) {
         console.log(`\n开始领取 【${task.taskName}】任务`);
+        const readTime = parseInt(task.doLink.substr(task.doLink.indexOf('readTime=') + 9));
         if (task.state === -1) {
           await doTask(task, "receiveTask")
           await $.wait(100)
         }
-        await queryMissionReceiveAfterStatus(params.query.missionId);
-        await $.wait(params.query.readTime * 1000);
-        await finishReadMission(params.query.missionId, params.query.readTime);
+        await queryMissionReceiveAfterStatus(task.taskId);
+        await $.wait(readTime * 1000);
+        await finishReadMission(task.taskId, readTime);
         await $.wait(200);
         console.log('预计获得：', task.taskName, task.awards[0].awardNum)
         await doTask(task, "sendAward")
-      } else if (params.query && params.query.juid) {
+      } else if (task.doLink.indexOf('juid=') !== -1) {
         console.log(`\n开始领取 【${task['name']}】任务`)
         await doTask(task, "channelReceiveCenterMission")
         const juid = task.doLink.match(/juid=(.*)/)[1]
         await getJumpInfo(juid);
         await $.wait(1000)
-        console.log('预计获得：', task.name, task.amount)
+        console.log('预计获得：', task.taskName, task.amount)
         await doTask(task, "channelAwardCenterMission")
       }
     }
