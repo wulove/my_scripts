@@ -32,7 +32,7 @@ if ($.isNode()) {
 } else {
   cookiesArr = [$.getdata("CookieJD"), $.getdata("CookieJD2"), ...$.toObj($.getdata("CookiesJD") || "[]").map((item) => item.cookie)].filter((item) => !!item);
 }
-$.packetIdArr = [];
+$.packetIdArr = [{"strUserPin":"sV8LRWSEpE5Bs_qdQeHZARk9iqHlHgjUfFJpfmCxoZFtfG2UnaZjSNm0gR2CSLuQ","userName":"恋你莲我"},{"strUserPin":"sV8LRWSEpE5Bs_qdQeHZAdS0vIcvWofboEtULyKPVVPbcYgra5qKiOAtvLTX64Ce","userName":"jd_rtrqrVNXHIXE"}];
 $.activeId = '525597';
 const BASE_URL = 'https://m.jingxi.com/cubeactive/steprewardv3'
 !(async () => {
@@ -51,7 +51,7 @@ const BASE_URL = 'https://m.jingxi.com/cubeactive/steprewardv3'
     res = await getAuthorShareCode('https://cdn.jsdelivr.net/gh/Aaron-lv/updateTeam@master/shareCodes/jxhb.json')
   }
   if (res && res.activeId) $.activeId = res.activeId;
-  $.authorMyShareIds = ['LJD9tXHjqNMZIgN4ckZRxBk9iqHlHgjUfFJpfmCxoZFtfG2UnaZjSNm0gR2CSLuQ','LJD9tXHjqNMZIgN4ckZRxNS0vIcvWofboEtULyKPVVPbcYgra5qKiOAtvLTX64Ce'];
+  $.authorMyShareIds = [];
   //开启红包,获取互助码
   for (let i = 0; i < cookiesArr.length; i++) {
     cookie = cookiesArr[i];
