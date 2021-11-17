@@ -2,7 +2,6 @@
 京东极速版红包、签到提现
 欧皇3个微信现金，支持自动提现
 支持签到提现活动
-活动时间：2021-6-1至2021-6-30
 活动地址：https://prodev.m.jd.com/jdlite/active/31U4T6S4PbcK83HyLPioeCWrD63j/index.html
 活动入口：京东极速版app-领红包，签到提现
 已支持IOS双京东账号,Node.js支持N个京东账号
@@ -11,14 +10,13 @@
 #京东极速版红包
 cron "15 0,22 * * *" script-path=jd_speed_redpocke.js,tag=京东极速版红包
 */
-
 const $ = new Env('京东极速版红包');
 
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 
-const linkIdArr = ["9wdf1YTT2L59Vr-meKskLA", "7ya6o83WSbNhrbYJqsMfFA"];
+const linkIdArr = ["7ya6o83WSbNhrbYJqsMfFA"];
 let linkId;
 const signLinkId = '9WA12jYGulArzWS7vcrwhw';
 
