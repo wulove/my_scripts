@@ -112,7 +112,7 @@ async function pandaDraw() {
       await $.wait(500)
       await task('wxActionCommon/followShop', `userId=${$.venderId}&buyerNick=${encodeURIComponent($.secretPin)}&activityId=${$.activityId}&activityType=${$.activityType}`, 1);
       await $.wait(500)
-      if (!$.drawTimes) {
+      if ($.drawTimes) {
         console.log(`去抽奖`)
         await task('wxDrawActivity/start', `activityId=${$.activityId}&pin=${encodeURIComponent($.secretPin)}`, 1);
         await $.wait(500)
@@ -159,7 +159,7 @@ function task(function_id, body, isCommon = 0) {
                   // console.log($.activityContent)
                   break;
                 case 'wxDrawActivity/getGiveContent':
-                  if(data.data.day.hasOwnProperty("giveTimes")) {
+                  if(data.data && data.data.day.hasOwnProperty("giveTimes")) {
                     $.drawTimes = data.data.day.giveTimes;
                     console.log("抽奖次数: " + data.data.day.giveTimes);
                   } else {
