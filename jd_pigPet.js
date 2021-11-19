@@ -2,21 +2,20 @@
 *
 京东金融养猪猪
 活动入口：京东金融养猪猪，
-脚本更新地址：https://github.com/zero205/JD_tencent_scf
 加了个邀新助力，不过应该没啥用。邀请码变量：PIGPETSHARECODES，变量仅支持单账号邀请码
 已支持IOS双京东账号,Node.js支持N个京东账号
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 ============Quantumultx===============
 [task_local]
 京东金融养猪猪
-12 0-23/6 * * * https://raw.githubusercontent.com/zero205/JD_tencent_scf/main/jd_pigPet.js, tag=京东金融养猪猪, enabled=true
+12 0-23/6 * * * jd_pigPet.js, tag=京东金融养猪猪, enabled=true
 ================Loon==============
 [Script]
-cron "12 0-23/6 * * *" script-path=https://raw.githubusercontent.com/zero205/JD_tencent_scf/main/jd_pigPet.js,tag=摇钱树助力
+cron "12 0-23/6 * * *" script-path=jd_pigPet.js,tag=摇钱树助力
 ===============Surge=================
-京东金融养猪猪 = type=cron,cronexp="12 0-23/6 * * *",wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/zero205/JD_tencent_scf/main/jd_pigPet.js
+京东金融养猪猪 = type=cron,cronexp="12 0-23/6 * * *",wake-system=1,timeout=20,script-path=jd_pigPet.js
 ============小火箭=========
-京东金融养猪猪 = type=cron,script-path=https://raw.githubusercontent.com/zero205/JD_tencent_scf/main/jd_pigPet.js, cronexpr="12 0-23/6 * * *", timeout=3600, enable=true
+京东金融养猪猪 = type=cron,script-path=jd_pigPet.js, cronexpr="12 0-23/6 * * *", timeout=3600, enable=true
 *
 */
 const $ = new Env('金融养猪');
@@ -44,7 +43,7 @@ if ($.isNode()) {
         $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', { "open-url": "https://bean.m.jd.com/bean/signIndex.action" });
         return;
     }
-    console.log(`\n【原作者：LXK大佬】\n\nBy：zero205\n添加：邀请新用户，大转盘助力，抢粮食\n修改：优化日志输出，自动喂食\n\n默认不抢粮食（成功机率小），需要的请添加变量JD_PIGPET_PK，值填true\n`);
+    console.log(`\n添加：邀请新用户，大转盘助力，抢粮食\n修改：优化日志输出，自动喂食\n\n默认不抢粮食（成功机率小），需要的请添加变量JD_PIGPET_PK，值填true\n`);
     for (let i = 0; i < cookiesArr.length; i++) {
         if (cookiesArr[i]) {
             cookie = cookiesArr[i];
@@ -187,8 +186,8 @@ function pigPetUserBag() {
                                             let i = 50
                                             console.log(`\n每次运行最多喂食50次`)
                                             do {
-                                                console.log(`\n10秒后开始喂食${item.goodsName}，当前数量为${item.count}g`)
-                                                await $.wait(10000);
+                                                console.log(`\n16秒后开始喂食${item.goodsName}，当前数量为${item.count}g`)
+                                                await $.wait(16000);
                                                 await pigPetAddFood(item.sku);
                                                 if ($.finish) break
                                                 item.count = item.count - 20
