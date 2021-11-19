@@ -65,13 +65,12 @@ async function main() {
   try {
     await queryTasks();
     await doTasks();
-    await queryTasks(false);
 
   } catch (e) {
     $.logErr(e)
   }
 }
-function queryTasks(info = true) {
+function queryTasks() {
   $.taskData = [];
   const body = JSON.stringify({
     "channelSource": "JRAPP6.0",
@@ -93,23 +92,14 @@ function queryTasks(info = true) {
           data = JSON.parse(data);
           if (data.resultCode === 0) {
             if (data.resultData.resBusiCode === 0) {
-              if (info) {
-                console.log('互动任务获取成功')
-                $.taskData = data.resultData.resBusiData;
-                // 过滤不做的任务
-                $.taskData = $.taskData.filter(t => !ignoreTaskIdArr.includes(t.taskId));
-                $.willingTask = $.taskData.filter(t => (t.state === 0 || t.state === -1)) || [];//未完成任务
-                $.recevieTask = $.taskData.filter(t => t.state === 1) || [];
-                const doneTask = $.taskData.filter(t => t.state === -2);
-                console.log(`\n总任务数：${$.taskData.length}，未完成任务：${$.willingTask.length}，已完成任务：${doneTask.length}\n`);
-              } else {
-                if ($.recevieTask && $.recevieTask.length) {
-                  for (let task of $.recevieTask) {
-                    console.log('预计获得：', task.taskName, task.awards[0].awardNum)
-                    await doTask(task, "sendAward")
-                  }
-                }
-              }
+              console.log('互动任务获取成功')
+              $.taskData = data.resultData.resBusiData;
+              // 过滤不做的任务
+              $.taskData = $.taskData.filter(t => !ignoreTaskIdArr.includes(t.taskId));
+              $.willingTask = $.taskData.filter(t => (t.state === 0 || t.state === -1)) || [];//未完成任务
+              $.recevieTask = $.taskData.filter(t => t.state === 1) || [];
+              const doneTask = $.taskData.filter(t => t.state === -2);
+              console.log(`\n总任务数：${$.taskData.length}，未完成任务：${$.willingTask.length}，已完成任务：${doneTask.length}\n`);
             } else {
               console.log('获取互动任务失败', data.resultData.resBusiMsg)
             }
@@ -127,29 +117,38 @@ function queryTasks(info = true) {
 }
 
 async function doTasks() {
-  for (let task of $.willingTask) {
-    if (task.doLink) {
-      if (task.doLink.indexOf('readTime=') !== -1) {
-        console.log(`\n开始领取 【${task.taskName}】任务`);
-        const readTime = parseInt(task.doLink.substr(task.doLink.indexOf('readTime=') + 9));
-        if (task.state === -1) {
-          await doTask(task, "receiveTask")
-          await $.wait(100)
+  for (let task of $.taskData) {
+    if (task.state === -2) {
+      console.log(`任务${task.taskName}已完成`)
+    } else if (task.state === 1) {
+      console.log(`任务${task.taskName}开始领取奖励`)
+      console.log('预计获得：', task.taskName, task.awards[0].awardNum)
+      await doTask(task, "sendAward");
+      await $.wait(1000);
+    } else if (task.state === 0 || task.state === -1) {
+      if (task.doLink) {
+        if (task.doLink.indexOf('readTime=') !== -1) {
+          console.log(`\n开始领取 【${task.taskName}】任务`);
+          const readTime = parseInt(task.doLink.substr(task.doLink.indexOf('readTime=') + 9));
+          if (task.state === -1) {
+            await doTask(task, "receiveTask")
+            await $.wait(100)
+          }
+          await queryMissionReceiveAfterStatus(task.taskId);
+          await $.wait(readTime * 1000);
+          await finishReadMission(task.taskId, readTime);
+          await $.wait(200);
+          console.log('预计获得：', task.taskName, task.awards[0].awardNum)
+          await doTask(task, "sendAward")
+        } else if (task.doLink.indexOf('juid=') !== -1) {
+          console.log(`\n开始领取 【${task['name']}】任务`)
+          await doTask(task, "channelReceiveCenterMission")
+          const juid = task.doLink.match(/juid=(.*)/)[1]
+          await getJumpInfo(juid);
+          await $.wait(1000)
+          console.log('预计获得：', task.taskName, task.amount)
+          await doTask(task, "channelAwardCenterMission")
         }
-        await queryMissionReceiveAfterStatus(task.taskId);
-        await $.wait(readTime * 1000);
-        await finishReadMission(task.taskId, readTime);
-        await $.wait(200);
-        console.log('预计获得：', task.taskName, task.awards[0].awardNum)
-        await doTask(task, "sendAward")
-      } else if (task.doLink.indexOf('juid=') !== -1) {
-        console.log(`\n开始领取 【${task['name']}】任务`)
-        await doTask(task, "channelReceiveCenterMission")
-        const juid = task.doLink.match(/juid=(.*)/)[1]
-        await getJumpInfo(juid);
-        await $.wait(1000)
-        console.log('预计获得：', task.taskName, task.amount)
-        await doTask(task, "channelAwardCenterMission")
       }
     }
   }
