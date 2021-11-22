@@ -131,7 +131,7 @@ async function getUrls(options) {
         console.log('请求失败：' + e)
     }
 
-    console.log("判断卡住节点4：" + data)
+    //console.log("判断卡住节点4：" + data)
     const pattern = /skuItemUrl":"(.*?)\?/g
     const items = data.matchAll(pattern)
 
@@ -145,7 +145,7 @@ async function getUrls(options) {
         console.log("购物车为空")
     }
 
-    // console.log(urls)
+    console.log(urls)
     return urls.slice(0, 30)  // 返回30个商品链接
 }
 
