@@ -189,7 +189,7 @@ async function changeLinks(urls) {
                 request: 10000
             }
         }).json();
-        // console.log(data)  // 返回接口结果
+        console.log('返回接口',data)  // 返回接口结果
         await $.wait(parseInt(Math.random() * 500, 10))
         try {
             finalUrls.push(data.skuInfos[0].skuUrl)
