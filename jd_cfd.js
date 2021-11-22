@@ -175,12 +175,6 @@ async function cfd() {
       await $.wait(2000)
     }
 
-    //合成珍珠
-    // if (nowTimes.getHours() >= 5) {
-    //   await $.wait(2000)
-    //   await composeGameState()
-    // }
-
     //接待贵宾
     console.log(`接待贵宾`)
     if ($.info.StoryInfo.StoryList) {
@@ -246,10 +240,6 @@ async function cfd() {
     //倒垃圾
     await $.wait(2000)
     await queryRubbishInfo()
-
-    //雇导游
-    // await $.wait(2000);
-    // await employTourGuideInfo();
 
     console.log(`\n做任务`)
     //牛牛任务
@@ -388,124 +378,6 @@ function TreasureHunt(strIndex) {
       }
     })
   })
-}
-
-// 合成珍珠
-async function composeGameState(type = true) {
-    return new Promise(async (resolve) => {
-        $.get(taskUrl(`user/ComposeGameState`, `dwFirst=1`), async (err, resp, data) => {
-            try {
-                if (err) {
-                    console.log(`${JSON.stringify(err)}`)
-                    console.log(`${$.name} ComposeGameState API请求失败，请检查网路重试`)
-                } else {
-                    data = JSON.parse(data.replace(/\n/g, "").match(new RegExp(/jsonpCBK.?\((.*);*\)/))[1]);
-                    if (type) {
-                        console.log(`合成珍珠`)
-                        if (data.iRet === 0) {
-                            if (data.dwCurProgress < data.stagelist[data.stagelist.length - 1].dwCurStageEndCnt && data.strDT) {
-                                let count = data.stagelist[data.stagelist.length - 1].dwCurStageEndCnt
-                                console.log(`当前已合成${data.dwCurProgress}颗珍珠，还需合成珍珠${count - data.dwCurProgress}颗\n`)
-                                for (let j = data.dwCurProgress; j < count; j++) {
-                                    let num = Math.ceil(Math.random() * 12 + 12)
-                                    console.log(`合成珍珠：模拟操作${num}次`)
-                                    for (let v = 0; v < num; v++) {
-                                        console.log(`模拟操作进度：${v + 1}/${num}`)
-                                        await $.wait(2000)
-                                        await realTmReport(data.strMyShareId)
-                                    }
-                                    let res = await composeGameAddProcess(data.strDT)
-                                    if (res.iRet === 0) {
-                                        console.log(`\n合成珍珠成功：${j + 1}/${count}\n`)
-                                    } else {
-                                        console.log(`\n合成珍珠失败：${data.sErrMsg}\n`)
-                                    }
-                                }
-                                let composeGameStateRes = await composeGameState(false)
-                                console.log("合成珍珠领奖")
-                                for (let key of Object.keys(composeGameStateRes.stagelist)) {
-                                    let vo = composeGameStateRes.stagelist[key]
-                                    if (vo.dwIsAward == 0 && composeGameStateRes.dwCurProgress >= vo.dwCurStageEndCnt) {
-                                        await $.wait(2000)
-                                        await composeGameAward(vo.dwCurStageEndCnt)
-                                    }
-                                }
-                            } else {
-                                console.log(`今日已完成\n`)
-                            }
-                        }
-                    }
-                }
-            } catch (e) {
-                $.logErr(e, resp);
-            } finally {
-                resolve(data);
-            }
-        })
-    })
-}
-function realTmReport(strMyShareId) {
-    return new Promise((resolve) => {
-        $.get(taskUrl(`user/RealTmReport`, `dwIdentityType=0&strBussKey=composegame&strMyShareId=${strMyShareId}&ddwCount=5`), (err, resp, data) => {
-            try {
-                if (err) {
-                    console.log(`${JSON.stringify(err)}`)
-                    console.log(`${$.name} RealTmReport API请求失败，请检查网路重试`)
-                } else {
-                    data = JSON.parse(data.replace(/\n/g, "").match(new RegExp(/jsonpCBK.?\((.*);*\)/))[1]);
-                }
-            } catch (e) {
-                $.logErr(e, resp);
-            } finally {
-                resolve();
-            }
-        })
-    })
-}
-function composeGameAddProcess(strDT) {
-    return new Promise((resolve) => {
-        $.get(taskUrl(`user/ComposeGameAddProcess`, `strBT=${strDT}`), (err, resp, data) => {
-            try {
-                if (err) {
-                    console.log(`${JSON.stringify(err)}`)
-                    console.log(`${$.name} ComposeGameAddProcess API请求失败，请检查网路重试`)
-                } else {
-                    data = JSON.parse(data);
-                }
-            } catch (e) {
-                $.logErr(e, resp);
-            } finally {
-                resolve(data);
-            }
-        })
-    })
-}
-function composeGameAward(dwCurStageEndCnt) {
-    return new Promise((resolve) => {
-        $.get(taskUrl(`user/ComposeGameAward`, `dwCurStageEndCnt=${dwCurStageEndCnt}`), (err, resp, data) => {
-            try {
-                if (err) {
-                    console.log(`${JSON.stringify(err)}`)
-                    console.log(`${$.name} ComposeGameAward API请求失败，请检查网路重试`)
-                } else {
-                    data = JSON.parse(data.replace(/\n/g, "").match(new RegExp(/jsonpCBK.?\((.*);*\)/))[1]);
-                    if (data.iRet === 0) {
-                        if (data.dwPrizeType === 0) {
-                            console.log(`合成珍珠领奖成功：获得${data.ddwCoin}金币`)
-                        } else if (data.dwPrizeType === 1) {
-                            console.log(`合成珍珠领奖成功：获得${data.ddwMoney}财富\n`)
-                        }
-                    } else {
-                        console.log(`合成珍珠领奖失败：${data.sErrMsg}\n`)
-                    }
-                }
-            } catch (e) {
-                $.logErr(e, resp);
-            } finally {
-                resolve(data);
-            }
-        })
-    })
 }
 
 // 接待贵宾
@@ -1038,90 +910,6 @@ function awardActTask(function_path, taskInfo = '') {
   })
 }
 
-// 导游
-async function employTourGuideInfo() {
-  return new Promise(async (resolve) => {
-    $.get(taskUrl(`user/EmployTourGuideInfo`), async (err, resp, data) => {
-      try {
-        if (err) {
-          console.log(`${JSON.stringify(err)}`)
-          console.log(`${$.name} EmployTourGuideInfo API请求失败，请检查网路重试`)
-        } else {
-          data = JSON.parse(data.replace(/\n/g, "").match(new RegExp(/jsonpCBK.?\((.*);*\)/))[1]);
-          console.log(`雇导游`)
-          let minProductCoin = data.TourGuideList[0].ddwProductCoin
-          for(let key of Object.keys(data.TourGuideList)) {
-            let vo = data.TourGuideList[key]
-            if (vo.ddwProductCoin < minProductCoin) {
-              minProductCoin = vo.ddwProductCoin
-            }
-          }
-          for(let key of Object.keys(data.TourGuideList)) {
-            let vo = data.TourGuideList[key]
-            let buildNmae;
-            switch(vo.strBuildIndex) {
-              case 'food':
-                buildNmae = '京喜美食城'
-                break
-              case 'sea':
-                buildNmae = '京喜旅馆'
-                break
-              case 'shop':
-                buildNmae = '京喜商店'
-                break
-              case 'fun':
-                buildNmae = '京喜游乐场'
-              default:
-                break
-            }
-            if(vo.ddwRemainTm === 0 && vo.ddwProductCoin !== minProductCoin) {
-              let dwIsFree;
-              if(vo.dwFreeMin !== 0) {
-                dwIsFree = 1
-              } else {
-                dwIsFree = 0
-              }
-              console.log(`【${buildNmae}】雇佣费用：${vo.ddwCostCoin}金币 增加收益：${vo.ddwProductCoin}金币`)
-              const body = `strBuildIndex=${vo.strBuildIndex}&dwIsFree=${dwIsFree}&ddwConsumeCoin=${vo.ddwCostCoin}`
-              await employTourGuide(body, buildNmae)
-            } else if (vo.ddwProductCoin !== minProductCoin) {
-              console.log(`【${buildNmae}】无可雇佣导游`)
-            }
-            await $.wait(2000)
-          }
-        }
-      } catch (e) {
-        $.logErr(e, resp);
-      } finally {
-        resolve();
-      }
-    })
-  })
-}
-function employTourGuide(body, buildNmae) {
-  return new Promise(async (resolve) => {
-    $.get(taskUrl(`user/EmployTourGuide`, body), (err, resp, data) => {
-      try {
-        if (err) {
-          console.log(`${JSON.stringify(err)}`)
-          console.log(`${$.name} EmployTourGuide API请求失败，请检查网路重试`)
-        } else {
-          data = JSON.parse(data);
-          if (data.iRet === 0) {
-            console.log(`【${buildNmae}】雇佣导游成功`)
-          } else {
-            console.log(`【${buildNmae}】雇佣导游失败：${data.sErrMsg}`)
-          }
-        }
-      } catch (e) {
-        $.logErr(e, resp);
-      } finally {
-        resolve();
-      }
-    })
-  })
-}
-
 // 升级建筑
 async function getBuildInfo(body, buildList, type = true) {
   let twobody = body
@@ -1296,6 +1084,7 @@ function getUserInfo(showInvite = true) {
           console.log(`${$.name} QueryUserInfo API请求失败，请检查网路重试`)
         } else {
           data = JSON.parse(data.replace(/\n/g, "").match(new RegExp(/jsonpCBK.?\((.*);*\)/))[1]);
+          $.showPp = data?.AreaAddr?.dwIsSHowPp ?? 0
           const {
             buildInfo = {},
             ddwRichBalance,
@@ -1385,7 +1174,7 @@ function getTaskList(taskType) {
   return new Promise(async (resolve) => {
     switch (taskType){
       case 0: //日常任务
-        $.get(taskListUrl("GetUserTaskStatusList"), async (err, resp, data) => {
+        $.get(taskListUrl("GetUserTaskStatusList", `taskId=0&showAreaTaskFlag=${$.showPp}`), async (err, resp, data) => {
           try {
             if (err) {
               console.log(`${JSON.stringify(err)}`)
@@ -1440,17 +1229,17 @@ function browserTask(taskType) {
     switch (taskType) {
       case 0://日常任务
         for (let i = 0; i < $.allTask.length; i++) {
-          const start = $.allTask[i].completedTimes, end = $.allTask[i].targetTimes
+          const start = $.allTask[i].completedTimes, end = $.allTask[i].targetTimes, bizCode = $.allTask[i]?.bizCode ?? "jxbfd"
           const taskinfo = $.allTask[i];
           console.log(`开始第${i + 1}个【📆日常任务】${taskinfo.taskName}\n`);
           for (let i = start; i < end; i++) {
             //做任务
             console.log(`【📆日常任务】${taskinfo.taskName} 进度：${i + 1}/${end}`)
-            await doTask(taskinfo.taskId);
+            await doTask(taskinfo.taskId, null, bizCode);
             await $.wait(2000);
           }
           //领取奖励
-          await awardTask(0, taskinfo);
+          await awardTask(0, taskinfo, bizCode);
         }
         break;
       case 1://成就任务
@@ -1474,11 +1263,12 @@ function browserTask(taskType) {
 }
 
 //做任务
-function doTask(taskId, type = 1) {
+function doTask(taskId, type = 1, bizCodeXx) {
   return new Promise(async (resolve) => {
     let bizCode = `jxbfd`;
     if (type === 2) bizCode = `jxbfddch`;
     if (type === 3) bizCode = `jxbfdprop`;
+    if (bizCodeXx) bizCode = bizCodeXx 
     $.get(taskListUrl(`DoTask`, `taskId=${taskId}`, bizCode), (err, resp, data) => {
       try {
         if (err) {
@@ -1497,13 +1287,13 @@ function doTask(taskId, type = 1) {
 }
 
 //领取奖励
-function awardTask(taskType, taskinfo) {
+function awardTask(taskType, taskinfo, bizCode = "jxbfd") {
   return new Promise((resolve) => {
     const {taskId, taskName} = taskinfo;
     const {ddwTaskId, strTaskName} = taskinfo;
     switch (taskType) {
       case 0://日常任务
-        $.get(taskListUrl(`Award`, `taskId=${taskId}`), (err, resp, data) => {
+        $.get(taskListUrl(`Award`, `taskId=${taskId}`, bizCode), (err, resp, data) => {
           try {
             if (err) {
               console.log(`${JSON.stringify(err)}`)
