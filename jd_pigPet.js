@@ -193,6 +193,7 @@ function pigPetUserBag() {
                                                 item.count = item.count - 20
                                                 i--
                                             } while (item.count >= 20 && i > 0)
+                                            if ($.finish) break
                                         }
                                     }
                                 } else {
