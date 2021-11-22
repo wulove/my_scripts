@@ -152,7 +152,7 @@ async function getUrls(options) {
 // 将提取的购物车列表进行转链
 async function changeLinks(urls) {
     const appKey = 'c7b016073c4d96ace3a288e22c1b8eb0'
-    const appSecret = '988daee9c35444eebf18539e5203512e'
+    const appSecret = 'f9a6e25e3a5047f68e515a8a714d6b8b'
     const unionId = 2012372002  // 联盟id
     const positionId = 3004050007  // 推广位id
     let timestamp = (new Date()).valueOf()
