@@ -109,6 +109,7 @@ async function dpqd() {
     await getActivityInfo(token[j], vender)
     await signCollectGift(token[j], vender, activityId)
     await taskUrl(token[j], vender)
+    await $.wait(2000 + Math.floor(Math.random()*1000))
   }
 }
 
