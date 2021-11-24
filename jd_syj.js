@@ -66,8 +66,32 @@ const JD_API_HOST = 'https://api.m.jd.com/api';
         if ($.tuanList.length) console.log(`开始账号内部互助 赚京豆-瓜分京豆 活动，优先内部账号互助`)
         for (let j = 0; j < $.tuanList.length; ++j) {
           console.log(`账号 ${$.UserName} 开始给 【${$.tuanList[j]['assistedPinEncrypted']}】助力`)
+          $.ok = false
           await helpFriendTuan($.tuanList[j])
-          if(!$.canHelp) break
+          if (!$.canHelp) break
+          if ($.ok) {
+            var tempCookie = cookie
+            cookie = $.tuanList[j].cookie
+            $.tuan = ''
+            $.hasOpen = false;
+            $.assistStatus = 0;
+            await getUserTuanInfo()
+            if (!$.tuan && ($.assistStatus === 3 || $.assistStatus === 2 || $.assistStatus === 0) && $.canStartNewAssist) {
+              console.log(`准备再次开团`)
+              await openTuan()
+              if ($.hasOpen) await getUserTuanInfo()
+            }
+            if ($.tuan && $.tuan.hasOwnProperty('assistedPinEncrypted') && $.assistStatus !== 3) {
+              $.tuanList[j] = $.tuan
+              j--
+            } else {
+              $.tuanList.splice(j, 1)
+              i--
+              break
+            }
+            cookie = tempCookie
+            continue
+          }
           await $.wait(200)
         }
       }
@@ -586,10 +610,16 @@ function helpFriendTuan(body) {
             } else {
               if (data.resultCode === '9200008') console.log('助力结果：不能助力自己\n')
               else if (data.resultCode === '9200011') console.log('助力结果：已经助力过\n')
-              else if (data.resultCode === '2400205') console.log('助力结果：团已满\n')
-              else if (data.resultCode === '2400203') {console.log('助力结果：助力次数已耗尽\n');$.canHelp = false}
-              else if (data.resultCode === '9000000') {console.log('助力结果：活动火爆，跳出\n');$.canHelp = false}
-              else console.log(`助力结果：未知错误\n${JSON.stringify(data)}\n\n`)
+              else if (data.resultCode === '2400205') {
+                $.ok = true
+                console.log('助力结果：团已满\n')
+              } else if (data.resultCode === '2400203') {
+                console.log('助力结果：助力次数已耗尽\n');
+                $.canHelp = false
+              } else if (data.resultCode === '9000000') {
+                console.log('助力结果：活动火爆，跳出\n');
+                $.canHelp = false
+              } else console.log(`助力结果：未知错误\n${JSON.stringify(data)}\n\n`)
             }
           }
         }
@@ -628,7 +658,8 @@ function getUserTuanInfo() {
                   "activityIdEncrypted": data.data.id,
                   "assistStartRecordId": data.data.assistStartRecordId,
                   "assistedPinEncrypted": data.data.encPin,
-                  "channel": "FISSION_BEAN"
+                  "channel": "FISSION_BEAN",
+                  "cookie": cookie,
                 }
               }
               $.tuanActId = data.data.id;
