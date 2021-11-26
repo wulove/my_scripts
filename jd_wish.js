@@ -25,12 +25,11 @@ let message = '', allMessage = '';
 //IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [], cookie = '';
 const JD_API_HOST = 'https://api.m.jd.com/client.action';
-let appIdArr = ['1E1NXxq0', '1FFRWxaY', '1FFVQyqw', '1FFdSxqw'];
-let appNameArr = ['众筹许愿池', '荣耀钞能力', '1111点心动', '焕新带电生活'];
+let appIdArr = ['1E1NXxq0', '1FFVQyqw'];
+let appNameArr = ['众筹许愿池', '1111点心动'];
 let appId, appName;
 $.shareCode = [
   {code:'T016aEzIlJOJLepV9qJVCTJQmq67yR55awQ',use:'恋你莲我',appId:'1E1NXxq0'},{code:'T0205KkcAlpbtBaxXnKM7Z9_CTJQmq67yR55awQ',use:'jd_rtrqrVNXHIXE',appId:'1E1NXxq0'},
-  {code:'T016aEzIlJOJLepV9qJVDjVRmaW7xR55awQ',use:'恋你莲我',appId:'1FFRWxaY'},{code:'T0205KkcAlpbtBaxXnKM7Z9_DjVRmaW7xR55awQ',use:'jd_rtrqrVNXHIXE',appId:'1FFRWxaY'},
   {code:'T016aEzIlJOJLepV9qJVDjRXlq-7zx55awQ',use:'恋你莲我',appId:'1FFVQyqw'},{code:'T0205KkcAlpbtBaxXnKM7Z9_DjRXlq-7zx55awQ',use:'jd_rtrqrVNXHIXE',appId:'1FFVQyqw'},
 
 ];
