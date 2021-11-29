@@ -44,7 +44,7 @@ const duArr = {
     '111000': 2,
     '100000': 3,
     '11000': 4,
-    '1000': 10,
+    '1000': 3,
     '500': 11,
     '200': 7
 }
@@ -65,14 +65,14 @@ console.log(`去兑换${ddwPaperMoney / 1000}元红包`)
         await Promise.all([
             cashOut($.cookieArr[1], 100000)
         ]);
-        if (new Date().getHours() == 10) {
+        if (new Date().getHours() >= 10) {
             await $.wait(10000)
             await Promise.all([
                 cashOut($.cookieArr[0], 1000),
                 cashOut($.cookieArr[1], 1000),
             ]);
         }
-        if (new Date().getHours() == 12) {
+        if (new Date().getHours() >= 12) {
             await $.wait(10000)
             await Promise.all([
                 cashOut($.cookieArr[0], 500),
@@ -80,7 +80,7 @@ console.log(`去兑换${ddwPaperMoney / 1000}元红包`)
             ]);
         }
 
-        if (new Date().getHours() == 23) {
+        if (new Date().getHours() == 20) {
             await $.wait(10000)
             await Promise.all([
                 cashOut($.cookieArr[0], 200),
