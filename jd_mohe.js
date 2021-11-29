@@ -68,6 +68,7 @@ $.shareId = [];
       await Promise.all([
         task0()
       ])
+      $.taskList_limit = 0
       await taskList();
       console.log(`当前小时数为：` + new Date().getHours())
       // UTC时间，小时数为16的时候对应北京时间0点
@@ -227,6 +228,7 @@ function getCoin() {
 }
 
 async function taskList() {
+  $.taskList_limit++
   return new Promise(async (resolve) => {
     const body = {"apiMapping": "/active/taskList"}
     $.post(taskurl(body), async (err, resp, data) => {
@@ -264,8 +266,12 @@ async function taskList() {
             console.log('\n\n----taskList的任务全部做完了---\n\n')
             console.log(`分享好友助力 ${task5.finishNum}/${task5.totalNum}\n\n`)
           } else {
-            console.log(`请继续等待,正在做任务,不要退出哦`)
-            await taskList();
+            if ($.taskList_limit >= 15){
+              console.log('触发死循环保护,结束')
+            } else {
+              console.log(`请继续等待,正在做任务,不要退出哦`)
+              await taskList();
+            }
           }
         }
       } catch (e) {
