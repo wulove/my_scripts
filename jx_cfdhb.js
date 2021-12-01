@@ -62,31 +62,29 @@ console.log(`去兑换${ddwPaperMoney / 1000}元红包`)
         console.log(`等待时间 ${sleeptime / 1000}`);
         await sleep(sleeptime)
         console.log(`执行时间：${new Date().Format("hh:mm:ss.S")}`)
-        await Promise.all([
+        /*await Promise.all([
             cashOut($.cookieArr[1], 100000)
-        ]);
-        /*if (new Date().getHours() >= 10) {
-            // await $.wait(10000)
+        ]);*/
+        if (new Date().getHours() >= 10) {
             await Promise.all([
                 cashOut($.cookieArr[0], 1000),
                 cashOut($.cookieArr[1], 1000),
             ]);
         }
         if (new Date().getHours() >= 12) {
-            await $.wait(10000)
+            $.wait(10000)
             await Promise.all([
                 cashOut($.cookieArr[0], 500),
                 cashOut($.cookieArr[1], 500),
             ]);
-        }*/
+        }
 
-        if (new Date().getHours() == 20) {
-            await $.wait(10000)
+        /*if (new Date().getHours() == 20) {
             await Promise.all([
                 cashOut($.cookieArr[0], 200),
                 cashOut($.cookieArr[1], 200),
             ]);
-        }
+        }*/
     }
 })()
     .catch((e) => $.logErr(e))
