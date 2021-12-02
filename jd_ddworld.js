@@ -1,23 +1,12 @@
 /*
-东东世界
-
-已支持IOS双京东账号,Node.js支持N个京东账号
-脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
-============Quantumultx===============
-[task_local]
-#东东世界
-15 3,9 * * * https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_ddworld.js, tag=东东世界, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
-
-================Loon==============
-[Script]
-cron "15 3,9 * * *" script-path=https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_ddworld.js,tag=东东世界
-
-===============Surge=================
-东东世界 = type=cron,cronexp="15 3,9 * * *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_ddworld.js
-
-============小火箭=========
-东东世界 = type=cron,script-path=https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_ddworld.js, cronexpr="15 3,9 * * *", timeout=3600, enable=true
-*/
+* 活动地址:https://ddsj-dz.isvjcloud.com/dd-world/load_app/load_app.html
+*
+* 环境变量：兑换京豆变量：DDEXCHANGE，默认999
+* DDEXCHANGE="999"京豆从多到少兑换，先兑换1000，1000兑换完后兑换500
+* DDEXCHANGE="6"只兑换1000京豆
+* DDEXCHANGE="5"只兑换500京豆
+* DDEXCHANGE="1"只兑换200京豆
+* */
 const $ = new Env('东东世界');
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
