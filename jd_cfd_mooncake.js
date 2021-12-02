@@ -84,7 +84,7 @@ if ($.isNode()) {
       await $.wait(2000);
     }
   }
-  $.strMyShareIds = ['A67E6E6B3CB7C5750B1DD735227B48B26BEC85401262266999A7D7C9CC97D3DE','A67E6E6B3CB7C5750B1DD735227B48B247CFE28CB63E9B5910A73CBBBB89D63B']
+  $.strMyShareIds = []
   $.newShareCodes = [...new Set([...$.shareCodes, ...$.strMyShareIds])]
   for (let i = 0; i < cookiesArr.length; i++) {
     cookie = cookiesArr[i];
