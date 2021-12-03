@@ -35,7 +35,7 @@ $.showLog = $.getdata("cfd_showLog") ? $.getdata("cfd_showLog") === "true" : fal
 let cookiesArr = [], cookie = '', token = '';
 let UA, UAInfo = {};
 $.appId = 10032;
-if (!process.env.JD_CFD_HELP) {
+if (!process.env.JD_CFD_AUTOHELP) {
     return;
 }
 if ($.isNode()) {
