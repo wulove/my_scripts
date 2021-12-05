@@ -6,7 +6,7 @@ const pipelineAsync = promisify(stream.pipeline);
 const zlib = require('zlib');
 const vm = require('vm');
 const PNG = require('png-js');
-let UA = `jdapp;iPhone;10.1.6;14.6;${randomString(40)};network/wifi;model/iPhone12,1;addressid/4199175193;appBuild/167874;jdSupportDarkMode/0;Mozilla/5.0 (iPhone; CPU iPhone OS 14_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1`;
+let UA = `jdapp;iPhone;10.1.0;14.3;${randomString(40)};network/wifi;model/iPhone12,1;addressid/4199175193;appBuild/167774;jdSupportDarkMode/0;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1`;
 const validatorCount = process.env.JDJR_validator_Count ? process.env.JDJR_validator_Count : 100
 
 function randomString(e) {
