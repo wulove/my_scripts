@@ -111,7 +111,7 @@ async function pigPetLottery() {
     if ($.currentCount > 0) {
         for (let i = 0; i < $.currentCount; i++) {
             await pigPetLotteryPlay();
-            await $.wait(6000)
+            await $.wait(6000 + Math.floor(Math.random()*2000))
         }
     }
 }
@@ -322,7 +322,7 @@ function pigPetOpenBox() {
                                 } else {
                                     console.log(`开宝箱暂无奖励\n`)
                                 }
-                                await $.wait(2000);
+                                await $.wait(2000 + Math.floor(Math.random()*800));
                                 await pigPetOpenBox();
                             } else if (data.resultData.resultCode === 420) {
                                 console.log(`开宝箱失败:${data.resultData.resultMsg}\n`)
@@ -410,7 +410,7 @@ function pigPetRank() {
                                     if ($.friends[i].status === 1) {
                                         $.friendId = $.friends[i].uid
                                         console.log(`去抢夺【${$.friends[i].nickName}】的食物`)
-                                        await $.wait(2000)
+                                        await $.wait(2000 + Math.floor(Math.random()*500))
                                         await pigPetFriendIndex($.friendId)
                                     }
                                 }
@@ -449,7 +449,7 @@ function pigPetFriendIndex(friendId) {
                         if (data.resultCode === 0) {
                             if (data.resultData.resultCode === 0) {
                                 await pigPetRobFood($.friendId)
-                                await $.wait(3000)
+                                await $.wait(3000 + Math.floor(Math.random()*1000))
                             } else {
                                 console.log(`进入好友猪窝失败：${JSON.stringify(data)}`)
                             }
@@ -647,7 +647,7 @@ async function missions() {
                 await pigPetDoMission(item.mid);
             } else {
                 await pigPetDoMission(item.mid);
-                await $.wait(1000)
+                await $.wait(1000 + Math.floor(Math.random()*400))
                 let parse
                 if (item.url) {
                     parse = url.parse(item.url, true, true)
@@ -656,11 +656,11 @@ async function missions() {
                 }
                 if (parse.query && parse.query.readTime) {
                     await queryMissionReceiveAfterStatus(parse.query.missionId);
-                    await $.wait(parse.query.readTime * 1000)
+                    await $.wait(parse.query.readTime * 1000 + Math.floor(Math.random()*1000))
                     await finishReadMission(parse.query.missionId, parse.query.readTime);
                 } else if (parse.query && parse.query.juid) {
                     await getJumpInfo(parse.query.juid)
-                    await $.wait(4000)
+                    await $.wait(4000 + Math.floor(Math.random()*1000))
                 }
             }
         }

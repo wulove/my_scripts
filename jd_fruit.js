@@ -1432,7 +1432,7 @@ function request(function_id, body = {}, timeout = 1000){
           resolve(data);
         }
       })
-    }, timeout)
+    }, timeout + Math.floor(Math.random()*500))
   })
 }
 function safeGet(data) {

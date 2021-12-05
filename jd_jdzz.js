@@ -96,7 +96,7 @@ async function jdWish() {
         await doTask({ "itemId": task['itemId'], "taskId": task['taskId'], "taskItem": {}, "actionType": 0, "taskToken": task['taskToken'], "mpVersion": "3.4.0" })
       else
         await doTask({ "taskId": task['taskId'], "taskItem": {}, "actionType": 0, "taskToken": task['taskToken'], "mpVersion": "3.4.0" })
-      await $.wait(3000)
+      await $.wait(3000 + Math.floor(Math.random()*1000))
     }
   }
   await getTaskList();

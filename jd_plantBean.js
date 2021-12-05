@@ -700,7 +700,7 @@ function TotalBean() {
 }
 function request(function_id, body = {}){
   return new Promise(async resolve => {
-    await $.wait(2000);
+    await $.wait(2000 + Math.floor(Math.random()*500));
     $.post(taskUrl(function_id, body), (err, resp, data) => {
       try {
         if (err) {

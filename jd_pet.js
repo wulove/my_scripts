@@ -572,7 +572,7 @@ function TotalBean() {
 }
 // 请求
 async function request(function_id, body = {}) {
-  await $.wait(3000); //歇口气儿, 不然会报操作频繁
+  await $.wait(3000 + Math.floor(Math.random()*1000)); //歇口气儿, 不然会报操作频繁
   return new Promise((resolve, reject) => {
     $.post(taskUrl(function_id, body), (err, resp, data) => {
       try {

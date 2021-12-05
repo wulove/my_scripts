@@ -169,7 +169,7 @@ async function doTasks() {
       });
       if (taskID.length > 0) console.log(`开始做浏览页面任务`)
       for (let i = 0; i < new Array(taskTime).fill('').length; i++) {
-        await $.wait(1000);
+        await $.wait(1000 + Math.floor(Math.random()*200));
         await doTask('browseTask', taskID[i]);
       }
     }
@@ -189,7 +189,7 @@ async function doTasks() {
       });
       console.log(`开始做关注店铺任务`)
       for (let i = 0; i < new Array(taskTime).fill('').length; i++) {
-        await $.wait(1000);
+        await $.wait(1000 + Math.floor(Math.random()*200));
         await doTask('attentionTask', taskID[i].toString());
       }
     }
@@ -212,7 +212,7 @@ async function shaking() {
   }
   for (let i = 0; i < new Array($.freeTimes).fill('').length; i++) {
     console.log(`开始 【摇京豆】 摇奖`)
-    await $.wait(1000);
+    await $.wait(1000 + Math.floor(Math.random()*500));
     const shakeBeanRes = await shakeBean();
     if (shakeBeanRes.success) {
       console.log(`剩余摇奖次数：${shakeBeanRes.data.luckyBox.freeTimes}`)

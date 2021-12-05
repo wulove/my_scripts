@@ -164,7 +164,7 @@ function getTaskList() {
                         "completionFlag": true
                       }
                       await doTask(body)
-                      await $.wait(1000)
+                      await $.wait(1000 + Math.floor(Math.random()*500))
                     }
                   } else if (vo['assignmentType'] === 3) {
                     for (let i = vo['completionCnt']; i < vo['assignmentTimesLimit']; ++i) {
@@ -176,7 +176,7 @@ function getTaskList() {
                         "completionFlag": ""
                       }
                       await doTask(body)
-                      await $.wait(1000)
+                      await $.wait(1000 + Math.floor(Math.random()*500))
                     }
                   }
                 }

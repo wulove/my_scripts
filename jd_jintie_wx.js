@@ -58,9 +58,9 @@ async function main() {
   try {
     await queryAvailableSubsidyAmount();
     await queryMission();
-    await $.wait(1000);
+    await $.wait(1000 + Math.floor(Math.random() * 500));
     await doTask();
-    await $.wait(1000);
+    await $.wait(1000 + Math.floor(Math.random() * 500));
     await queryAvailableSubsidyAmount();
   } catch (e) {
     $.logErr(e)
@@ -124,13 +124,13 @@ async function doTask() {
       /*await doMission(task, 'seeVideoMission');
       await $.wait(10000);*/
       await doMission(task, 'channelFinishSelfTask');
-      await $.wait(1000);
+      await $.wait(1000 + Math.floor(Math.random()*200));
       await doMission(task, 'channelRewardSelfTask');
     } else {
       await doMission(task, 'channelReceiveCenterMission');
-      await $.wait(1000);
+      await $.wait(1000 + Math.floor(Math.random()*200));
       await doMission(task, 'channelDoCenterMissionReport');
-      await $.wait(1000);
+      await $.wait(1000 + Math.floor(Math.random()*200));
       await doMission(task, 'channelAwardCenterMission');
     }
   }
