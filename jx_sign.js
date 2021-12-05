@@ -74,7 +74,7 @@ if ($.isNode()) {
       if (i === 0) console.log(`\n正在收集助力码请等待\n`)
       if (!isLoginInfo[$.UserName]) continue
       await signhb(1)
-      await $.wait(500)
+      await $.wait(500 + Math.floor(Math.random()*200))
     }
   }
   for (let i = 0; i < cookiesArr.length; i++) {
@@ -142,7 +142,7 @@ if ($.isNode()) {
           console.log("开始做红包任务")
           for (let j = 0; j < $.commonlist.length; j++) {
             await dotask($.commonlist[j]);
-            await $.wait(2000);
+            await $.wait(2000 + Math.floor(Math.random()*500));
           }
         } else {
           console.log("红包任务已完成")
@@ -150,7 +150,7 @@ if ($.isNode()) {
         if ($.bxNum && $.bxNum.length) {
           for (let j = 0; j < $.bxNum[0].bxNum; j++) {
             await bxdraw()
-            await $.wait(2000)
+            await $.wait(2000 + Math.floor(Math.random()*500))
           }
         }
         await doubleSign()
