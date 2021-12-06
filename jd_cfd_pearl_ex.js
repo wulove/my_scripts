@@ -105,6 +105,7 @@ async function perl_auto() {
     }
     // console.debug('prizes:',prizes)
     await wait()
+    console.log(`请求兑换API时间 ${(new Date()).Format("yyyy-MM-dd hh:mm:ss | S")}`)
     for (let i = 0; i < prizes.length; i++) {
       const prize = prizes[i]
       console.log('兑换面额:', prize.strPrizeName || '随机红包')
