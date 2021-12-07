@@ -76,7 +76,7 @@ $.shareCodes = [];
         console.log(`账号${$.UserName} 去助力 ${$.newShareCodes[j]}`)
         $.delcode = false;
         await jdsplit_collectScore($.newShareCodes[j], 6, null)
-        await $.wait(2000)
+        await $.wait(2000 + Math.floor(Math.random()*1000))
         if ($.delcode) {
           $.newShareCodes.splice(j, 1)
           j--
@@ -116,7 +116,7 @@ async function doTask() {
         for (let task of item.productInfoVos) {
           if (task.status === 1) {
             await jdsplit_collectScore(task.taskToken,item.taskId,task.itemId,1);
-            await $.wait(4000)
+            await $.wait(4000 + Math.floor(Math.random()*2000))
             await jdsplit_collectScore(task.taskToken,item.taskId,task.itemId,0);
           }
         }
@@ -133,7 +133,7 @@ async function doTask() {
         for (let task of item.shoppingActivityVos) {
           if (task.status === 1) {
             await jdsplit_collectScore(task.taskToken,item.taskId,task.itemId,1);
-            await $.wait(4000)
+            await $.wait(4000 + Math.floor(Math.random()*2000))
             await jdsplit_collectScore(task.taskToken,item.taskId,task.itemId,0);
           }
         }
@@ -253,7 +253,7 @@ function jdsplit_getTaskDetail() {
               if (data.data.result.userInfo.lotteryNum > 0) {
                 for (let i = data.data.result.userInfo.lotteryNum; i > 0; i--) {
                   await jdsplit_getLottery('')
-                  await $.wait(1000)
+                  await $.wait(1000 + Math.floor(Math.random()*400))
                 }
               }
             } else {
@@ -289,39 +289,6 @@ function taskPostUrl(function_id, body = {}) {
       "Cookie": cookie
     }
   }
-}
-
-function getAuthorShareCode(url) {
-  return new Promise(async resolve => {
-    const options = {
-      url: `${url}?${new Date()}`, "timeout": 10000, headers: {
-        "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1 Edg/87.0.4280.88"
-      }
-    };
-    if ($.isNode() && process.env.TG_PROXY_HOST && process.env.TG_PROXY_PORT) {
-      const tunnel = require("tunnel");
-      const agent = {
-        https: tunnel.httpsOverHttp({
-          proxy: {
-            host: process.env.TG_PROXY_HOST,
-            port: process.env.TG_PROXY_PORT * 1
-          }
-        })
-      }
-      Object.assign(options, { agent })
-    }
-    $.get(options, async (err, resp, data) => {
-      try {
-        resolve(JSON.parse(data))
-      } catch (e) {
-        // $.logErr(e, resp)
-      } finally {
-        resolve();
-      }
-    })
-    await $.wait(10000)
-    resolve();
-  })
 }
 
 function TotalBean() {
