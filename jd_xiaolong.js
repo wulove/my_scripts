@@ -1,5 +1,5 @@
 /*
-10 1,21 * * * jd_xiaolong.js
+cron 18 0,21 * * * jd_xiaolong.js
 */
 const $ = new Env('骁龙');
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
