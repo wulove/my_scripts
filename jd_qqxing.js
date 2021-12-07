@@ -27,7 +27,7 @@ if ($.isNode()) {
 
 const JD_API_HOST = `https://api.m.jd.com/client.action`;
 message = ""
-$.shareuuid = [''];
+$.shareuuid = ['af61ae9a5e7a45ca8caccf74bbd93d30'];
     !(async () => {
         if (!cookiesArr[0]) {
             $.msg($.name, '【提示】请先获取cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/', {
@@ -399,7 +399,7 @@ function getUid() {
                            if(data.data.openCardStatus !=3){
                            console.log("当前未开卡,无法助力和兑换奖励哦")
                            }                           
-                            // $.shareuuid = data.data.uid                            
+                            $.shareuuid = data.data.uid
                             console.log(`\n【京东账号${$.index}（${$.UserName}）的${$.name}好友互助码】${$.shareuuid}\n`);
                         }
                       }
