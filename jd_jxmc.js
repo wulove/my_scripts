@@ -101,7 +101,7 @@ if ($.isNode()) {
     }
     token = await getJxToken()
     await pasture();
-    await $.wait(2000);
+    await $.wait(2000 + Math.floor(Math.random()*500));
   }
   await shareCodesFormat()
   for (let i = 0; i < cookiesArr.length; i++) {
@@ -118,7 +118,7 @@ if ($.isNode()) {
         $.delcode = false
         $.code = $.newShareCodes[j];
         await takeGetRequest('help');
-        await $.wait(2000);
+        await $.wait(2000 + Math.floor(Math.random()*500));
         if ($.delcode) {
           $.newShareCodes.splice(j, 1)
           j--
@@ -159,7 +159,7 @@ async function pasture() {
         await takeGetRequest('DoMainTask');
         for (let i = 0; i < 20; i++) {
           if ($.DoMainTask.maintaskId !== "pause") {
-            await $.wait(2000)
+            await $.wait(2000 + Math.floor(Math.random()*500))
             $.currentStep = $.DoMainTask?.finishedtaskId
             $.step = $.DoMainTask.maintaskId
             await takeGetRequest('DoMainTask');
@@ -184,7 +184,7 @@ async function pasture() {
           } else {
             await uploadShareCode($.homeInfo.sharekey)
             $.inviteCodeList.push($.homeInfo.sharekey);
-            await $.wait(2000)
+            await $.wait(2000 + Math.floor(Math.random()*500))
           }
         }
       }
@@ -200,7 +200,7 @@ async function pasture() {
             $.cardType = vo.cardtype
             for (let i = vo.currnum; i >= vo.neednum; i -= vo.neednum) {
               console.log(`${cardinfo[vo.cardtype]}卡片已满${vo.neednum}张，去兑换...`)
-              await $.wait(5000)
+              await $.wait(5000 + Math.floor(Math.random()*1000))
               await takeGetRequest("Combine")
             }
           }
@@ -209,7 +209,7 @@ async function pasture() {
         if ($.GetCardInfo.times !== 0) {
           console.log(`开始抽奖`)
           for (let i = $.GetCardInfo.times; i > 0; i--) {
-            await $.wait(2000)
+            await $.wait(2000 + Math.floor(Math.random()*500))
             await takeGetRequest('DrawCard');
           }
           console.log('')
@@ -240,44 +240,44 @@ async function pasture() {
         if ($.onepetInfo.cangetborn === 1) {
           console.log(`开始收鸡蛋`);
           await takeGetRequest('GetEgg');
-          await $.wait(1000);
+          await $.wait(1000 + Math.floor(Math.random()*500));
         }
       }
       $.crowInfo = $.homeInfo.cow;
     }
     $.GetVisitBackInfo = {};
-    await $.wait(2000);
+    await $.wait(2000 + Math.floor(Math.random()*500));
     await takeGetRequest('GetVisitBackInfo');
     if ($.GetVisitBackInfo.iscandraw === 1) {
-      await $.wait(2000);
+      await $.wait(2000 + Math.floor(Math.random()*500));
       await takeGetRequest('GetVisitBackCabbage');
     }
-    await $.wait(2000);
+    await $.wait(2000 + Math.floor(Math.random()*500));
     $.GetSignInfo = {};
     await takeGetRequest('GetSignInfo');
     if (JSON.stringify($.GetSignInfo) !== '{}' && $.GetSignInfo.signlist) {
       let signList = $.GetSignInfo.signlist;
       for (let j = 0; j < signList.length; j++) {
         if (signList[j].fortoday && !signList[j].hasdone) {
-          await $.wait(2000);
+          await $.wait(2000 + Math.floor(Math.random()*500));
           console.log(`\n去签到`);
           await takeGetRequest('GetSignReward');
         }
       }
     }
-    await $.wait(2000);
+    await $.wait(2000 + Math.floor(Math.random()*500));
     if ($.crowInfo.lastgettime) {
       console.log('\n收奶牛金币');
       await takeGetRequest('cow');
-      await $.wait(2000);
+      await $.wait(2000 + Math.floor(Math.random()*500));
     }
-    await $.wait(2000);
+    await $.wait(2000 + Math.floor(Math.random()*500));
     await takeGetRequest('GetUserLoveInfo');
     if ($.GetUserLoveInfo) {
       for (let key of Object.keys($.GetUserLoveInfo)) {
         let vo = $.GetUserLoveInfo[key]
         if (vo.drawstatus === 1) {
-          await $.wait(2000);
+          await $.wait(2000 + Math.floor(Math.random()*500));
           $.lovevalue = vo.lovevalue;
           await takeGetRequest('DrawLoveHongBao');
         }
@@ -291,9 +291,9 @@ async function pasture() {
         $.dateType = j;
       }
       await takeGetRequest('GetUserTaskStatusList');
-      await $.wait(2000);
+      await $.wait(2000 + Math.floor(Math.random()*500));
       await doTask(j);
-      await $.wait(2000);
+      await $.wait(2000 + Math.floor(Math.random()*500));
       if (j === 2) {
         //割草
         console.log(`\n开始进行割草`);
@@ -302,12 +302,12 @@ async function pasture() {
           $.mowingInfo = {};
           console.log(`开始第${i + 1}次割草`);
           await takeGetRequest('mowing');
-          await $.wait(2000);
+          await $.wait(2000 + Math.floor(Math.random()*500));
           if ($.mowingInfo.surprise === true) {
             //除草礼盒
             console.log(`领取除草礼盒`);
             await takeGetRequest('GetSelfResult');
-            await $.wait(3000);
+            await $.wait(3000 + Math.floor(Math.random()*500));
           }
         }
 
@@ -317,7 +317,7 @@ async function pasture() {
         for (let i = 0; i < 30 && $.runFlag; i++) {
           console.log(`开始第${i + 1}次横扫鸡腿`);
           await takeGetRequest('jump');
-          await $.wait(2000);
+          await $.wait(2000 + Math.floor(Math.random()*500));
         }
       }
     }
@@ -325,9 +325,9 @@ async function pasture() {
       $.taskList = [], $.dateType = `2`, $.source = `jxmc_zanaixin`, $.bizCode = `jxmc_zanaixin`;
       for (let j = 2; j >= 0; j--) {
         await takeGetRequest('GetUserTaskStatusList');
-        await $.wait(2000);
+        await $.wait(2000 + Math.floor(Math.random()*500));
         await doTask(j);
-        await $.wait(2000);
+        await $.wait(2000 + Math.floor(Math.random()*500));
       }
     }
 
@@ -348,10 +348,10 @@ async function pasture() {
         for (let j = 0; j < canBuyTimes && j < 4; j++) {
           console.log(`第${j + 1}次购买白菜`);
           await takeGetRequest('buy');
-          await $.wait(2000);
+          await $.wait(2000 + Math.floor(Math.random()*500));
         }
         await takeGetRequest('GetHomePageInfo');
-        await $.wait(2000);
+        await $.wait(2000 + Math.floor(Math.random()*500));
       } else {
         console.log(`现有白菜${materialNumber},大于400颗,不进行购买`);
       }
@@ -371,16 +371,16 @@ async function pasture() {
           $.pause = false;
           console.log(`开始第${k + 1}次喂白菜`);
           await takeGetRequest('feed');
-          await $.wait(4000);
+          await $.wait(4000 + Math.floor(Math.random()*500));
           if ($.pause) {
             await takeGetRequest('GetHomePageInfo');
-            await $.wait(1000);
+            await $.wait(1000 + Math.floor(Math.random()*500));
             for (let n = 0; n < $.homeInfo.petinfo.length; n++) {
               $.onepetInfo = $.homeInfo.petinfo[n];
               if ($.onepetInfo.cangetborn === 1) {
                 console.log(`开始收鸡蛋`);
                 await takeGetRequest('GetEgg');
-                await $.wait(1000);
+                await $.wait(1000 + Math.floor(Math.random()*500));
               }
             }
           }
@@ -424,7 +424,7 @@ async function doTask(j) {
       if ($.oneTask.awardStatus === 2 && $.oneTask.completedTimes === $.oneTask.targetTimes) {
         console.log(`完成任务：${$.oneTask.taskName}`);
         await takeGetRequest('Award');
-        await $.wait(2000);
+        await $.wait(2000 + Math.floor(Math.random()*500));
       }
     } else {//每日任务
       if ($.oneTask.awardStatus === 1) {
@@ -435,7 +435,7 @@ async function doTask(j) {
         if ($.oneTask.awardStatus === 2 && $.oneTask.completedTimes === $.oneTask.targetTimes) {
           console.log(`完成任务：${$.oneTask.taskName}`);
           await takeGetRequest('Award');
-          await $.wait(2000);
+          await $.wait(2000 + Math.floor(Math.random()*500));
         } else if (j === 0) {
           console.log(`任务：${$.oneTask.taskName},未完成`);
         }
@@ -443,19 +443,19 @@ async function doTask(j) {
         if (Number($.oneTask.completedTimes) > 0 && $.oneTask.completedTimes === $.oneTask.targetTimes) {
           console.log(`完成任务：${$.oneTask.taskName}`);
           await takeGetRequest('Award');
-          await $.wait(2000);
+          await $.wait(2000 + Math.floor(Math.random()*500));
         }
         for (let j = Number($.oneTask.completedTimes); j < Number($.oneTask.configTargetTimes); j++) {
           console.log(`去做任务：${$.oneTask.description}`);
           await takeGetRequest('DoTask');
-          await $.wait(6000);
+          await $.wait(6000 + Math.floor(Math.random()*1000));
           console.log(`完成任务：${$.oneTask.description}`);
           await takeGetRequest('Award');
         }
       } else if ($.oneTask.awardStatus === 2 && $.oneTask.completedTimes === $.oneTask.targetTimes) {
         console.log(`完成任务：${$.oneTask.taskName}`);
         await takeGetRequest('Award');
-        await $.wait(2000);
+        await $.wait(2000 + Math.floor(Math.random()*500));
       }
     }
   }
