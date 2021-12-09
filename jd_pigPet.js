@@ -71,7 +71,7 @@ if ($.isNode()) {
         if ($.shareCodes && $.shareCodes.length) {
             for (let item of $.shareCodes) {
                 await pigPetLotteryHelpFriend(item)
-                await $.wait(1000)
+                await $.wait(1000 + Math.floor(Math.random()*500))
                 // if (!$.canRun) break
             }
         }
@@ -187,7 +187,7 @@ function pigPetUserBag() {
                                             console.log(`\n每次运行最多喂食50次`)
                                             do {
                                                 console.log(`\n16秒后开始喂食${item.goodsName}，当前数量为${item.count}g`)
-                                                await $.wait(16000);
+                                                await $.wait(16000 + Math.floor(Math.random()*5000));
                                                 await pigPetAddFood(item.sku);
                                                 if ($.finish) break
                                                 item.count = item.count - 20
