@@ -177,7 +177,7 @@ async function taskList() {
                 if (task.taskInfo.status === 0) {
                   if (task.taskType >= 1000) {
                     await doTask(task.taskType)
-                    await $.wait(1000)
+                    await $.wait(2000 + Math.floor(Math.random()*1000))
                   } else {
                     $.canStartNewItem = true
                     while ($.canStartNewItem) {
@@ -246,7 +246,7 @@ async function queryJoy() {
               if (data.data.taskBubbles)
                 for (let task of data.data.taskBubbles) {
                   await rewardTask(task.id, task.activeType)
-                  await $.wait(500)
+                  await $.wait(1000 + Math.floor(Math.random()*500))
                 }
             }
           }
@@ -345,7 +345,7 @@ async function startItem(activeId, activeType) {
                 if (activeType !== 3)
                   videoBrowsing = activeType === 1 ? 5 : 10
                 console.log(`【${taskCompletionProgress + 1}/${taskCompletionLimit}】浏览商品任务记录成功，等待${videoBrowsing}秒`)
-                await $.wait(videoBrowsing * 1000)
+                await $.wait(videoBrowsing * 1000 + Math.floor(Math.random()*1000))
                 await endItem(data.data.uuid, activeType, activeId, activeType === 3 ? videoBrowsing : "")
               } else {
                 console.log(`${$.taskName}任务已达上限`)

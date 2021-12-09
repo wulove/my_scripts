@@ -91,7 +91,7 @@ async function missions() {
     if (item.workStatus === 1) {
       console.log(`\n【${item.workName}】任务已做完,开始领取奖励`)
       await getAwardFromMc(item.mid);
-      await $.wait(1000 + Math.floor(Math.random()*200))
+      await $.wait(1000 + Math.floor(Math.random()*400))
     } else if (item.workStatus === 2) {
       console.log(`\n${item.workName}已完成`)
     } else if (item.workStatus === -1) {
@@ -107,9 +107,9 @@ async function missions() {
       }
       if (parse.query && parse.query.readTime) {
         await queryMissionReceiveAfterStatus(parse.query.missionId);
-        await $.wait(parse.query.readTime * 1000 + Math.floor(Math.random()*200))
+        await $.wait(parse.query.readTime * 1000 + Math.floor(Math.random()*1000))
         await finishReadMission(parse.query.missionId, parse.query.readTime);
-        await $.wait(1000 + Math.floor(Math.random()*200))
+        await $.wait(1000 + Math.floor(Math.random()*400))
         await getAwardFromMc(parse.query.missionId);
       } else if (parse.query && parse.query.juid) {
         await getJumpInfo(parse.query.juid)
