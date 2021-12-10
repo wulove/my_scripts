@@ -109,7 +109,7 @@ async function signRun() {
     }else{
       errorNum++;
     }
-    await $.wait(1000)
+    await $.wait(3000 + Math.floor(Math.random()*1000))
   }
 }
 
