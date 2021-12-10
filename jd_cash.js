@@ -157,25 +157,25 @@ async function appindex(info=false) {
                   for (let i = task.doTimes; i < task.times; ++i) {
                     console.log(`去做${task.name}任务 ${i+1}/${task.times}`)
                     await appdoTask(task.type, task.jump.params.skuId)
-                    await $.wait(5000)
+                    await $.wait(5000 + Math.floor(Math.random()*1000))
                   }
                 } else if (task.type === 2) {
                   for (let i = task.doTimes; i < task.times; ++i) {
                     console.log(`去做${task.name}任务 ${i+1}/${task.times}`)
                     await appdoTask(task.type, task.jump.params.shopId)
-                    await $.wait(5000)
+                    await $.wait(5000 + Math.floor(Math.random()*1000))
                   }
                 } else if (task.type === 30) {
                   for (let i = task.doTimes; i < task.times; ++i) {
                     console.log(`去做${task.name}任务 ${i+1}/${task.times}`)
                     await appdoTask(task.type, task.jump.params.path)
-                    await $.wait(5000)
+                    await $.wait(5000 + Math.floor(Math.random()*1000))
                   }
                 } else if (task.type === 16 || task.type===3 || task.type===5 || task.type===17 || task.type===21) {
                   for (let i = task.doTimes; i < task.times; ++i) {
                     console.log(`去做${task.name}任务 ${i+1}/${task.times}`)
                     await appdoTask(task.type, task.jump.params.url)
-                    await $.wait(5000)
+                    await $.wait(5000 + Math.floor(Math.random()*1000))
                   }
                 }
               }
@@ -206,25 +206,25 @@ function index() {
                   for (let i = task.doTimes; i < task.times; ++i) {
                     console.log(`去做${task.name}任务 ${i+1}/${task.times}`)
                     await doTask(task.type, task.jump.params.skuId)
-                    await $.wait(5000)
+                    await $.wait(5000 + Math.floor(Math.random()*1000))
                   }
                 } else if (task.type === 2) {
                   for (let i = task.doTimes; i < task.times; ++i) {
                     console.log(`去做${task.name}任务 ${i+1}/${task.times}`)
                     await doTask(task.type, task.jump.params.shopId)
-                    await $.wait(5000)
+                    await $.wait(5000 + Math.floor(Math.random()*1000))
                   }
                 } else if (task.type === 31) {
                   for (let i = task.doTimes; i < task.times; ++i) {
                     console.log(`去做${task.name}任务 ${i+1}/${task.times}`)
                     await doTask(task.type, task.jump.params.path)
-                    await $.wait(5000)
+                    await $.wait(5000 + Math.floor(Math.random()*1000))
                   }
                 } else if ([16,3,5,17,21,31,33].includes(task.type)) {
                   for (let i = task.doTimes; i < task.times; ++i) {
                     console.log(`去做${task.name}任务 ${i+1}/${task.times}`)
                     await doTask(task.type, task.jump.params.url)
-                    await $.wait(5000)
+                    await $.wait(5000 + Math.floor(Math.random()*1000))
                   }
                 }
                 else {
