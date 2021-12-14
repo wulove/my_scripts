@@ -97,7 +97,7 @@ if ($.isNode()) {
         console.log(`账号${$.UserName} 去助力 ${$.newShareCodes[j]}`)
         $.delcode = false
         await helpByStage($.newShareCodes[j])
-        await $.wait(2000)
+        await $.wait(2000 + Math.floor(Math.random()*500))
         if ($.delcode) {
           $.newShareCodes.splice(j, 1)
           j--
@@ -120,7 +120,7 @@ async function cfd() {
     if (beginInfo.LeadInfo.dwLeadType === 2) {
       console.log(`还未开通活动，尝试初始化`)
       await noviceTask()
-      await $.wait(2000)
+      await $.wait(2000 + Math.floor(Math.random()*500))
       beginInfo = await getUserInfo(false);
       if (beginInfo.LeadInfo.dwLeadType !== 2) {
         console.log(`初始化成功\n`)
@@ -131,11 +131,11 @@ async function cfd() {
     }
 
     //抽奖
-    await $.wait(2000)
+    await $.wait(2000 + Math.floor(Math.random()*500))
     await composePearlState(4)
 
     //助力奖励
-    await $.wait(2000)
+    await $.wait(2000 + Math.floor(Math.random()*500))
     await composePearlState(2)
 
     //合成月饼
@@ -144,7 +144,7 @@ async function cfd() {
     console.log(`合成月饼运行次数为：${count}\n`)
     let num = 0
     do {
-      await $.wait(2000)
+      await $.wait(2000 + Math.floor(Math.random()*400))
       await composePearlState(3)
       num++
     } while (!$.stop && num < count)
@@ -181,7 +181,7 @@ async function composePearlState(type) {
                 if (helpNum.length !== 0) {
                   for (let j = 0; j < helpNum.length; j++) {
                     await pearlHelpDraw(data.ddwSeasonStartTm, helpNum[j])
-                    await $.wait(2000)
+                    await $.wait(2000 + Math.floor(Math.random()*400))
                     data = await composePearlState(1)
                   }
                 } else {
@@ -205,7 +205,7 @@ async function composePearlState(type) {
                     let beaconType = beacon.type
                     if (v % div === 0){
                       await realTmReport(data.strMyShareId)
-                      await $.wait(5000)
+                      await $.wait(5000 + Math.floor(Math.random()*500))
                     }
                     if (beacon.rbf) {
                       let size = 1
@@ -243,7 +243,7 @@ async function composePearlState(type) {
               if (data.iRet === 0) {
                 if (data.dayDrawInfo.dwIsDraw === 0) {
                   let strToken = (await getPearlDailyReward()).strToken
-                  await $.wait(2000)
+                  await $.wait(2000 + Math.floor(Math.random()*500))
                   await pearlDailyDraw(data.ddwSeasonStartTm, strToken)
                 } else {
                   console.log(`无抽奖次数\n`)
