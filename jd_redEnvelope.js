@@ -4,7 +4,7 @@
 */
 const $ = new Env("暖暖红包");
 const jdCookieNode = $.isNode() ? require("./jdCookie.js") : "";
-let cookiesArr = [];
+let cookiesArr = [], cookie;
 if ($.isNode()) {
   Object.keys(jdCookieNode).forEach((item) => {
     cookiesArr.push(jdCookieNode[item]);
@@ -74,10 +74,10 @@ async function main() {
     let arr = getBody($.UA, $.url2);
     await getEid(arr);
     console.log(`$.actId:` + $.actId);
-    await getcouponUrl()
-    if ($.eid) {
-      await getCoupons("");
-    }
+    // await getcouponUrl()
+    // if ($.eid) {
+    //   await getCoupons("");
+    // }
     await $.wait(2000);
   }
 }
