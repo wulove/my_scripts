@@ -79,7 +79,7 @@ async function jsRedPacket() {
     }
     await redPacketList()
 
-    console.log("===================签到提现===================")
+    /*console.log("===================签到提现===================")
     await $.wait(5000 + Math.floor(Math.random()*500))
     await sign();
     // 默认加速
@@ -88,7 +88,7 @@ async function jsRedPacket() {
       await speedUp()
       await $.wait(2000)
     }
-    await signList()
+    await signList()*/
 
     await showMsg()
   } catch (e) {
