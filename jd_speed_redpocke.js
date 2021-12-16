@@ -57,6 +57,7 @@ if ($.isNode()) {
         for (let j = 0; j < linkIdArr.length; j++) {
             linkId = linkIdArr[j]
             await jsRedPacket()
+            await $.wait(30 * 1000)
         }
     }
   }
@@ -74,20 +75,20 @@ async function jsRedPacket() {
     console.log("===================领红包===================")
     for (let i = 0; i < 3; ++i) {
       await redPacket()
-      await $.wait(2000)
+      await $.wait(2000 + Math.floor(Math.random()*500))
     }
     await redPacketList()
 
-    /*console.log("===================签到提现===================")
-
+    console.log("===================签到提现===================")
+    await $.wait(5000 + Math.floor(Math.random()*500))
     await sign();
     // 默认加速
-    $.speedUp = $.isNode() ? (process.env.JS_SIGN_SPEED_UP ? process.env.JS_SIGN_SPEED_UP === 'true' : true) : true
+     $.speedUp = $.isNode() ? (process.env.JS_SIGN_SPEED_UP ? process.env.JS_SIGN_SPEED_UP === 'true' : true) : true
     while($.speedUp) {
       await speedUp()
       await $.wait(2000)
     }
-    await signList()*/
+    await signList()
 
     await showMsg()
   } catch (e) {
