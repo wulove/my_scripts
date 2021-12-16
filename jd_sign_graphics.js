@@ -1,5 +1,5 @@
 /* 
-14 10 * * * jd_sign_graphics.js
+cron 14 10 * * * https://raw.githubusercontent.com/smiek2121/scripts/master/jd_sign_graphics.js
 只支持nodejs环境
 需要安装依赖 
 npm i png-js 或者 npm i png-js -S
@@ -9,7 +9,7 @@ npm i png-js 或者 npm i png-js -S
 修改域名 https://jdjoy.jd.com 可以改成ip https://49.7.27.236
 */
 
-const validator = require('./JDJRValidator_Pure.js');
+const validator = require('./JDJRValidator_Smiek.js');
 const Faker=require('./sign_graphics_validate.js') 
 
 const $ = new Env('京东签到图形验证');
@@ -52,9 +52,9 @@ const turnTableId = [
   { "name": "京东商城-母婴", "id": 458, "url": "https://prodev.m.jd.com/mall/active/3BbAVGQPDd6vTyHYjmAutXrKAos6/index.html" },
   { "name": "京东商城-数码", "id": 347, "url": "https://prodev.m.jd.com/mall/active/4SWjnZSCTHPYjE5T7j35rxxuMTb6/index.html" },
   { "name": "PLUS会员定制", "id": 1265, "url": "https://prodev.m.jd.com/mall/active/N9MpLQdxZgiczZaMx2SzmSfZSvF/index.html" },
-  // { "name": "京东商城-童装", "id": 511, "url": "https://prodev.m.jd.com/mall/active/3Af6mZNcf5m795T8dtDVfDwWVNhJ/index.html" },
-  // { "name": "京东商城-内衣", "id": 1071, "url": "https://prodev.m.jd.com/mall/active/4PgpL1xqPSW1sVXCJ3xopDbB1f69/index.html" },
-  // { "name": "京东超市", "id": 1204, "url": "https://pro.m.jd.com/mall/active/QPwDgLSops2bcsYqQ57hENGrjgj/index.html" },
+  { "name": "京东商城-童装", "id": 511, "url": "https://prodev.m.jd.com/mall/active/3Af6mZNcf5m795T8dtDVfDwWVNhJ/index.html" },
+  { "name": "京东商城-内衣", "id": 1071, "url": "https://prodev.m.jd.com/mall/active/4PgpL1xqPSW1sVXCJ3xopDbB1f69/index.html" },
+  { "name": "京东超市", "id": 1204, "url": "https://pro.m.jd.com/mall/active/QPwDgLSops2bcsYqQ57hENGrjgj/index.html" },
 ]
 
 !(async () => {
@@ -136,7 +136,7 @@ function Login(i) {
                 $.appId = 'b342e';
                 await requestAlgo();
                 await Sign(i,1)
-                let time = Math.random() * 5000 + 10000
+                let time = Math.random() * 5000 + 15000
                 console.log(`等待${(time/1000).toFixed(3)}秒`)
                 await $.wait(parseInt(time, 10))
               } else if (data.hasSign === true) {
