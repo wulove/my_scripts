@@ -409,9 +409,12 @@ function pigPetRank() {
                                 for (let i = 0; i < $.friends.length; i++) {
                                     if ($.friends[i].status === 1) {
                                         $.friendId = $.friends[i].uid
-                                        console.log(`去抢夺【${$.friends[i].nickName}】的食物`)
-                                        await $.wait(2000 + Math.floor(Math.random()*500))
-                                        await pigPetFriendIndex($.friendId)
+                                        $.name = $.friends[i].nickName
+                                        if (!['恋你莲我', '大橙橘'].includes($.name)) { //放过孩子吧TT
+                                            console.log(`去抢夺【${$.friends[i].nickName}】的食物`)
+                                            await $.wait(2000 + Math.floor(Math.random() * 500))
+                                            await pigPetFriendIndex($.friendId)
+                                        }
                                     }
                                 }
                             } else {
