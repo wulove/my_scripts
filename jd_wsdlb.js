@@ -2,16 +2,16 @@
 
 [task_local]
 入口 极速版 赚金币 种水果
-#柠檬我是大老板农场
+#极速版我是大老板农场
 export dlbtz="true" //通知打开
 
 export dlbtz="false" //通知关闭
 
-5 0-23/6 * * * http://nm66.top/jd_wsdlb.js, tag=柠檬我是大老板农场, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
+5 0-23/6 * * * jd_wsdlb.js, tag=极速版我是大老板农场, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
 */
 
 
-const $ = new Env('柠檬我是大老板农场');
+const $ = new Env('极速版我是大老板农场');
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
@@ -20,14 +20,14 @@ const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 let cookiesArr = [], cookie = '', message;
 let allMessage = '';
 let dlbtz = false; //通知开关
-if ($.isNode() && process.env.dlbtz) {
+if (process.env.dlbtz) {
   dlbtz = process.env.dlbtz;
 }
 if ($.isNode()) {
   Object.keys(jdCookieNode).forEach((item) => {
     cookiesArr.push(jdCookieNode[item])
   })
-  if ($.isNode() && process.env.JD_DEBUG && process.env.JD_DEBUG === 'false') console.log = () => {};
+  if (process.env.JD_DEBUG && process.env.JD_DEBUG === 'false') console.log = () => {};
 } else {
   cookiesArr = [$.getdata('CookieJD'), $.getdata('CookieJD2'), ...jsonParse($.getdata('CookiesJD') || "[]").map(item => item.cookie)].filter(item => !!item);
 }
@@ -85,7 +85,7 @@ async function jdFruit() {
 if ($.info.data.firstJoinFlag === true) {
  $.log("您忘了种植新的水果，快打开极速版种植吧")
 if(dlbtz == true){
- allMessage += `京东账号${$.index}-${$.nickName || $.UserName}\n您忘了种植新的水果,内侧入口为：\nhttp://a8pck.cn/VbjDm${$.index !== cookiesArr.length ? '\n\n' : '\n\n'}`;}
+ allMessage += `京东账号${$.index}-${$.nickName || $.UserName}\n您忘了种植新的水果,内侧入口为：\n极速版-百元生活费-赚金币-下拉-水果免费领${$.index !== cookiesArr.length ? '\n\n' : '\n\n'}`;}
 }else if ($.info.data.firstJoinFlag === false) {
     
         console.log(`\n当前种植水果：${$.info.data.plantInfo[0].cropName}\n当前阶段: ${$.info.data.plantInfo[0].nowStep}\n当前下一阶段还需要浇水：${$.info.data.plantInfo[0].upgradeWateringNum}次`)
