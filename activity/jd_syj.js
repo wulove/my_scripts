@@ -1,13 +1,7 @@
 /*
- * @Author: lxk0301 https://gitee.com/lxk0301
- * @Date: 2020-11-27 09:19:21
- * @Last Modified by: lxk0301
- * @Last Modified time: 2021-5-21 17:58:02
- */
-/*
 赚京豆脚本，一：做任务 天天领京豆(加速领京豆)、三：赚京豆-瓜分京豆
 活动入口：赚京豆(微信小程序)-赚京豆-签到领京豆
-更新地址：https://gitee.com/lxk0301/jd_scripts/raw/master/jd_syj.js
+更新地址：jd_syj.js
 已支持IOS双京东账号, Node.js支持N个京东账号
 脚本兼容: QuantumultX, Surge, Loon, 小火箭，JSBox, Node.js
 
@@ -72,8 +66,32 @@ const JD_API_HOST = 'https://api.m.jd.com/api';
         if ($.tuanList.length) console.log(`开始账号内部互助 赚京豆-瓜分京豆 活动，优先内部账号互助`)
         for (let j = 0; j < $.tuanList.length; ++j) {
           console.log(`账号 ${$.UserName} 开始给 【${$.tuanList[j]['assistedPinEncrypted']}】助力`)
+          $.ok = false
           await helpFriendTuan($.tuanList[j])
-          if(!$.canHelp) break
+          if (!$.canHelp) break
+          if ($.ok) {
+            var tempCookie = cookie
+            cookie = $.tuanList[j].cookie
+            $.tuan = ''
+            $.hasOpen = false;
+            $.assistStatus = 0;
+            await getUserTuanInfo()
+            if (!$.tuan && ($.assistStatus === 3 || $.assistStatus === 2 || $.assistStatus === 0) && $.canStartNewAssist) {
+              console.log(`准备再次开团`)
+              await openTuan()
+              if ($.hasOpen) await getUserTuanInfo()
+            }
+            if ($.tuan && $.tuan.hasOwnProperty('assistedPinEncrypted') && $.assistStatus !== 3) {
+              $.tuanList[j] = $.tuan
+              j--
+            } else {
+              $.tuanList.splice(j, 1)
+              i--
+              break
+            }
+            cookie = tempCookie
+            continue
+          }
           await $.wait(200)
         }
       }
@@ -545,7 +563,7 @@ async function distributeBeanActivity() {
     }
     if ($.tuan && $.tuan.hasOwnProperty('assistedPinEncrypted') && $.assistStatus !== 3) {
       $.tuanList.push($.tuan);
-      const code = Object.assign($.tuan, {"time": Date.now()});
+      /*const code = Object.assign($.tuan, {"time": Date.now()});
       $.http.post({
         url: `http://go.chiang.fun/autocommit`,
         headers: { "Content-Type": "application/json" },
@@ -565,7 +583,7 @@ async function distributeBeanActivity() {
             console.log(`【赚京豆-瓜分京豆】邀请码提交异常:${e}`)
           }
         }
-      }).catch((e) => console.log(`【赚京豆-瓜分京豆】邀请码提交异常:${e}`));
+      }).catch((e) => console.log(`【赚京豆-瓜分京豆】邀请码提交异常:${e}`));*/
     }
   } catch (e) {
     $.logErr(e);
@@ -592,10 +610,16 @@ function helpFriendTuan(body) {
             } else {
               if (data.resultCode === '9200008') console.log('助力结果：不能助力自己\n')
               else if (data.resultCode === '9200011') console.log('助力结果：已经助力过\n')
-              else if (data.resultCode === '2400205') console.log('助力结果：团已满\n')
-              else if (data.resultCode === '2400203') {console.log('助力结果：助力次数已耗尽\n');$.canHelp = false}
-              else if (data.resultCode === '9000000') {console.log('助力结果：活动火爆，跳出\n');$.canHelp = false}
-              else console.log(`助力结果：未知错误\n${JSON.stringify(data)}\n\n`)
+              else if (data.resultCode === '2400205') {
+                $.ok = true
+                console.log('助力结果：团已满\n')
+              } else if (data.resultCode === '2400203') {
+                console.log('助力结果：助力次数已耗尽\n');
+                $.canHelp = false
+              } else if (data.resultCode === '9000000') {
+                console.log('助力结果：活动火爆，跳出\n');
+                $.canHelp = false
+              } else console.log(`助力结果：未知错误\n${JSON.stringify(data)}\n\n`)
             }
           }
         }
@@ -634,7 +658,8 @@ function getUserTuanInfo() {
                   "activityIdEncrypted": data.data.id,
                   "assistStartRecordId": data.data.assistStartRecordId,
                   "assistedPinEncrypted": data.data.encPin,
-                  "channel": "FISSION_BEAN"
+                  "channel": "FISSION_BEAN",
+                  "cookie": cookie,
                 }
               }
               $.tuanActId = data.data.id;
@@ -722,9 +747,9 @@ function taskTuanUrl(function_id, body = {}) {
 function TotalBean() {
   return new Promise(async resolve => {
     const options = {
-      url: "https://me-api.jd.com/user_new/info/GetJDUserInfoUnion",
+      url: "https://wq.jd.com/user_new/info/GetJDUserInfoUnion?sceneval=2",
       headers: {
-        Host: "me-api.jd.com",
+        Host: "wq.jd.com",
         Accept: "*/*",
         Connection: "keep-alive",
         Cookie: cookie,
@@ -741,15 +766,15 @@ function TotalBean() {
         } else {
           if (data) {
             data = JSON.parse(data);
-            if (data['retcode'] === "1001") {
+            if (data['retcode'] === 1001) {
               $.isLogin = false; //cookie过期
               return;
             }
-            if (data['retcode'] === "0" && data.data && data.data.hasOwnProperty("userInfo")) {
+            if (data['retcode'] === 0 && data.data && data.data.hasOwnProperty("userInfo")) {
               $.nickName = data.data.userInfo.baseInfo.nickname;
             }
           } else {
-            $.log('京东服务器返回空数据');
+            console.log('京东服务器返回空数据');
           }
         }
       } catch (e) {
