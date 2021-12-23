@@ -645,6 +645,8 @@ function userInfo() {
                 console.log(`当前电力：${data.user.electric}`)
                 console.log(`当前等级：${data.user.currentLevel}`)
                 console.log(`\n【京东账号${$.index}（${$.UserName}）的${$.name}好友互助码】${data.user.encryptPin}`);
+                $.myInviteCode = data.user.encryptPin;
+                await submitCode();
                 console.log(`已投入电力：${production.investedElectric}`);
                 console.log(`所需电力：${production.needElectric}`);
                 console.log(`生产进度：${((production.investedElectric / production.needElectric) * 100).toFixed(2)}%`);
@@ -1377,6 +1379,34 @@ function readShareCode() {
     })
     await $.wait(10000);*/
     resolve({"code":200,"data":inviteCodes})
+  })
+}
+//提交互助码
+function submitCode() {
+  return new Promise(async resolve => {
+    $.get({url: `http://www.helpu.cf/jdcodes/submit.php?code=${$.myInviteCode}&type=jxfactory`, timeout: 10000}, (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+        } else {
+          if (data) {
+            data = JSON.parse(data);
+            if (data.code === 200) {
+              console.log(`🏭京喜工厂-互助码提交成功！🏭`);
+            }else if (data.code === 300) {
+              console.log(`🏭京喜工厂-互助码已提交！🏭`);
+            }
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve(data || {"code":500});
+      }
+    })
+    await $.wait(10000);
+    resolve({"code":500})
   })
 }
 //格式化助力码

@@ -118,7 +118,7 @@ async function jdPet() {
         return
       }
       console.log(`\n【京东账号${$.index}（${$.UserName}）的${$.name}好友互助码】${$.petInfo.shareCode}\n`);
-
+      await submitCode();
       await taskInit();
       if ($.taskInit.resultCode === '9999' || !$.taskInit.result) {
         console.log('初始化任务异常, 请稍后再试');
@@ -469,6 +469,34 @@ function readShareCode() {
     })
     await $.wait(10000);*/
     resolve({"code":200,"data":shareCodes})
+  })
+}
+//提交互助码
+function submitCode() {
+  return new Promise(async resolve => {
+    $.get({url: `http://www.helpu.cf/jdcodes/submit.php?code=${$.petInfo.shareCode}&type=pet`, timeout: 10000}, (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} submitCode API请求失败，请检查网路重试`)
+        } else {
+          if (data) {
+            data = JSON.parse(data);
+            if (data.code === 200) {
+              console.log(`🐶东东萌宠-互助码提交成功！🐶`);
+            } else if (data.code === 300) {
+              console.log(`🐶东东萌宠-互助码已提交！🐶`);
+            }
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve(data || {"code":500})
+      }
+    })
+    await $.wait(10000);
+    resolve({"code":500})
   })
 }
 function shareCodesFormat() {
