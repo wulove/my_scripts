@@ -255,6 +255,9 @@ function dealReturn(type, data) {
             }else if (data.code === '0' && data.data.bizCode === '108'){
                 $.canHelp = false;
                 console.log(`助力次数已用完`);
+            } else if (data.code === '0' && data.data.bizCode === '109') {
+                $.canHelp = false;
+                console.log(`不能自己给自己助力`);
             }else if (data.code === '0' && data.data.bizCode === '103'){
                 console.log(`助力已满`);
                 $.codeInfo.time = 3;
