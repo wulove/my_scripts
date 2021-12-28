@@ -61,6 +61,7 @@ const JD_API_HOST = 'https://api.m.jd.com/client.action';
       uuid = randomString(40)
       await jdMofang()
       hotInfo[$.UserName] = $.hot
+      $.wait(3000)
     }
   }
 })()
@@ -99,7 +100,7 @@ async function getInteractionInfo(type = true) {
                     for (let id of $.sku2) {
                       $.complete = false
                       await executeNewInteractionTask(vo.taskId, id)
-                      await $.wait(2000)
+                      await $.wait(2000 + Math.floor(Math.random() * 1000))
                       if ($.complete) break
                     }
                   }
@@ -108,7 +109,7 @@ async function getInteractionInfo(type = true) {
                     for (let id of $.sku) {
                       $.complete = false
                       await executeNewInteractionTask(vo.taskId, id)
-                      await $.wait(2000)
+                      await $.wait(2000 + Math.floor(Math.random() * 1000))
                       if ($.complete) break
                     }
                   }
@@ -117,7 +118,7 @@ async function getInteractionInfo(type = true) {
                     for (let id2 of $.adv) {
                       $.complete = false
                       await executeNewInteractionTask(vo.taskId, id2)
-                      await $.wait(2000)
+                      await $.wait(2000 + Math.floor(Math.random() * 1000))
                       if ($.complete) break
                     }
                   }
@@ -331,23 +332,6 @@ function taskPostUrl(functionId, body = {}) {
   }
 }
 
-
-function taskSignUrl(url, body) {
-  return {
-    url,
-    body: `body=${escape(body)}`,
-    headers: {
-      'Cookie': cookie,
-      'Host': 'api.m.jd.com',
-      'Connection': 'keep-alive',
-      'Content-Type': 'application/x-www-form-urlencoded',
-      'Referer': '',
-      'User-Agent': 'JD4iPhone/167774 (iPhone; iOS 14.7.1; Scale/3.00)',
-      'Accept-Language': 'zh-Hans-CN;q=1',
-      'Accept-Encoding': 'gzip, deflate, br',
-    }
-  }
-}
 function randomString(e) {
   let t = "abcdef0123456789"
   if (e === 16) t = "abcdefghijklmnopqrstuvwxyz0123456789"
@@ -356,43 +340,6 @@ function randomString(e) {
   for (let i = 0; i < e; i++)
     n += t.charAt(Math.floor(Math.random() * a));
   return n
-}
-
-function getSign(functionid, body, uuid) {
-  return new Promise(async resolve => {
-    let data = {
-      "functionId": functionid,
-      "body": body,
-      "uuid": uuid,
-      "client": "apple",
-      "clientVersion": "10.1.0"
-    }
-    let HostArr = ['jdsign.cf', 'signer.nz.lu']
-    let Host = HostArr[Math.floor((Math.random() * HostArr.length))]
-    let options = {
-      url: `https://cdn.nz.lu/ddo`,
-      body: JSON.stringify(data),
-      headers: {
-        Host,
-        "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1 Edg/87.0.4280.88"
-      },
-      timeout: 30 * 1000
-    }
-    $.post(options, (err, resp, data) => {
-      try {
-        if (err) {
-          console.log(`${JSON.stringify(err)}`)
-          console.log(`${$.name} getSign API请求失败，请检查网路重试`)
-        } else {
-
-        }
-      } catch (e) {
-        $.logErr(e, resp)
-      } finally {
-        resolve(data);
-      }
-    })
-  })
 }
 
 function TotalBean() {
