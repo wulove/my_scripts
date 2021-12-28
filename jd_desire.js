@@ -131,7 +131,7 @@ function getTaskList(flag = false) {
                         $.hasDone = false;
                         break;
                       }
-                      await $.wait(1000)
+                      await $.wait(1000 + Math.floor(Math.random() * 500))
                     }
                   }
                   if (vo.taskGroupList && vo.taskGroupList.length) {
@@ -139,10 +139,10 @@ function getTaskList(flag = false) {
                       console.log(`\n去完成 【${vo.taskName}】 任务`)
                       await doTask(vo.taskId, bo)
                       if ($.hasDone) break
-                      await $.wait(1000)
+                      await $.wait(1000 + Math.floor(Math.random() * 500))
                     }
                   }
-                  await $.wait(1000)
+                  await $.wait(1000 + Math.floor(Math.random() * 500))
                 }
               } else {
                 $.canDone = false

@@ -61,7 +61,7 @@ const JD_API_HOST = 'https://api.m.jd.com/client.action';
       uuid = randomString(40)
       await jdMofang()
       hotInfo[$.UserName] = $.hot
-      $.wait(3000)
+      await $.wait(3000)
     }
   }
 })()
