@@ -5,14 +5,14 @@
 ==============Quantumult X==============
 [task_local]
 #半点京豆雨
-30 20-23/1 * * * https://raw.githubusercontent.com/msechen/jdrain/main/jd_live_redrain.js, tag=半点京豆雨, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
+31 18-23/1 * * * https://raw.githubusercontent.com/KingRan/JDJB/main/jd_live_redrain.js, tag=半点京豆雨, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
 ==============Loon==============
 [Script]
-cron "30 20-23/1 * * *" script-path=https://raw.githubusercontent.com/msechen/jdrain/main/jd_redrain_half.js,tag=半点京豆雨
+cron "31 18-23/1 * * *" script-path=https://raw.githubusercontent.com/KingRan/JDJB/main/jd_redrain_half.js,tag=半点京豆雨
 ================Surge===============
-半点京豆雨 = type=cron,cronexp="30 20-23/1 * * *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/msechen/jdrain/main/jd_redrain_half.js
+半点京豆雨 = type=cron,cronexp="31 18-23/1 * * *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/KingRan/JDJB/main/jd_redrain_half.js
 ===============小火箭==========
-半点京豆雨 = type=cron,script-path=https://raw.githubusercontent.com/msechen/jdrain/main/jd_redrain_half.js, cronexpr="30 20-23/1 * * *", timeout=3600, enable=true
+半点京豆雨 = type=cron,script-path=https://raw.githubusercontent.com/KingRan/JDJB/main/jd_redrain_half.js, cronexpr="31 18-23/1 * * *", timeout=3600, enable=true
 */
 const $ = new Env('半点京豆雨');
 let allMessage = '', id = '';
@@ -21,10 +21,12 @@ const notify = $.isNode() ? require('./sendNotify') : '';
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 //IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [], cookie = '', message;
+let jd_redrain_half_url =  '';
 if ($.isNode()) {
   Object.keys(jdCookieNode).forEach((item) => {
     cookiesArr.push(jdCookieNode[item])
   })
+  if (process.env.jd_redrain_half_url) jd_redrain_half_url = process.env.jd_redrain_half_url
   if (process.env.JD_DEBUG && process.env.JD_DEBUG === 'false') console.log = () => { };
   if (JSON.stringify(process.env).indexOf('GITHUB') > -1) process.exit(0)
 } else {
@@ -39,7 +41,11 @@ const JD_API_HOST = 'https://api.m.jd.com/api';
   let hour = (new Date().getUTCHours() + 8) % 24;
   $.log(`\n正在远程获取${hour}点30分京豆雨ID\n`);
   await $.wait(1000);
-  let redIds = await getRedRainIds();
+  let redIds = await getRedRainIds(jd_redrain_half_url);
+  if (!redIds) {
+    await $.wait(1000)
+    redIds = await getRedRainIds('https://gitee.com/KingRan521/JD-Scripts/raw/master/shareCodes/redrain_half.json')
+  }
   if (!redIds.length) {
     $.log(`\n今日龙王🐲出差，天气晴朗☀️，改日再来～\n`);
     return;
@@ -134,7 +140,7 @@ function taskUrl(function_id, body = {}) {
   }
 }
 
-function getRedRainIds(url = "https://gitee.com/msewb/jdrain/raw/master/redrain_half.json") {
+function getRedRainIds(url) {
   return new Promise(async resolve => {
     const options = {
       url: `${url}?${new Date()}`, "timeout": 10000, headers: {
@@ -171,40 +177,45 @@ function getRedRainIds(url = "https://gitee.com/msewb/jdrain/raw/master/redrain_
 }
 
 function TotalBean() {
-  return new Promise(resolve => {
+  return new Promise(async resolve => {
     const options = {
-      url: "https://me-api.jd.com/user_new/info/GetJDUserInfoUnion",
-      headers: {
-        "Host": "me-api.jd.com",
-        "Accept": "*/*",
-        "User-Agent": "ScriptableWidgetExtension/185 CFNetwork/1312 Darwin/21.0.0",
-        "Accept-Language": "zh-CN,zh-Hans;q=0.9",
+      "url": `https://wq.jd.com/user/info/QueryJDUserInfo?sceneval=2`,
+      "headers": {
+        "Accept": "application/json,text/plain, */*",
+        "Content-Type": "application/x-www-form-urlencoded",
         "Accept-Encoding": "gzip, deflate, br",
-        "Cookie": cookie
+        "Accept-Language": "zh-cn",
+        "Connection": "keep-alive",
+        "Cookie": cookie,
+        "Referer": "https://wqs.jd.com/my/jingdou/my.shtml?sceneval=2",
+        "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1")
       }
     }
-    $.get(options, (err, resp, data) => {
+    $.post(options, (err, resp, data) => {
       try {
         if (err) {
-          $.logErr(err)
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
         } else {
           if (data) {
             data = JSON.parse(data);
-            if (data['retcode'] === "1001") {
+            if (data['retcode'] === 13) {
               $.isLogin = false; //cookie过期
-              return;
+              return
             }
-            if (data['retcode'] === "0" && data.data && data.data.hasOwnProperty("userInfo")) {
-              $.nickName = data.data.userInfo.baseInfo.nickname;
+            if (data['retcode'] === 0) {
+              $.nickName = (data['base'] && data['base'].nickname) || $.UserName;
+            } else {
+              $.nickName = $.UserName
             }
           } else {
-            console.log('京东服务器返回空数据');
+            console.log(`京东服务器返回空数据`)
           }
         }
       } catch (e) {
         $.logErr(e, resp)
       } finally {
-        resolve()
+        resolve();
       }
     })
   })
