@@ -46,9 +46,6 @@ if ($.isNode()) {
                 continue
             }
             await main();
-            if (i != cookiesArr.length) {
-                await $.wait(5000)
-            }
         }
     }
 })().catch((e) => { $.log('', `❌ ${$.name}, 失败! 原因: ${e}!`, '') }).finally(() => { $.done(); })
