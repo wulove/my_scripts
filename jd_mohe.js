@@ -218,8 +218,8 @@ function getCoin() {
 }
 
 async function taskList() {
+    $.taskList_limit++
     return new Promise(async (resolve) => {
-        $.taskList_limit++
         const body = {"apiMapping":"/active/taskList"}
         $.post(taskurl(body), async (err, resp, data) => {
             try {
