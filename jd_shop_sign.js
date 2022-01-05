@@ -27,6 +27,7 @@ let activityId = ''
 let vender = ''
 let num = 0
 const token = [
+    "2B2FC4F571881A8A0FD0AA5AD117DAEF",
     "39415200CB5E286A4DB604A54C901A13",
     "F831C64B8D2EF803C66A2A18D5224208",
 
