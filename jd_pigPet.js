@@ -560,7 +560,8 @@ function pigPetLotteryPlay() {
             "channelLV": "juheye",
             "riskDeviceParam": "{}",
             "validation": "",
-            "type": 0
+            "t":Date.now(),
+            "type": 0,
         }
         $.post(taskUrl('pigPetLotteryPlay', body), (err, resp, data) => {
             try {
