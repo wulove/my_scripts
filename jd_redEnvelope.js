@@ -1,6 +1,6 @@
 /*
 京享红包
-0 0,20,21 * * * jd_redEnvelope.js
+cron 0 0,20,21 * * * jd_redEnvelope.js
 添加环境变量FLCODE 如需自己返利，请填写该变量（https://u.jd.com/后面的英文）
 */
 const $ = new Env("京享红包");
