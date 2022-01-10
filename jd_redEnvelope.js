@@ -16,7 +16,7 @@ if ($.isNode()) {
   cookiesArr = [$.getdata("CookieJD"), $.getdata("CookieJD2"), ...$.toObj($.getdata("CookiesJD") || "[]").map((item) => item.cookie)].filter((item) => !!item);
 }
 let cookie = "";
-$.shareCode = "ZAaOZ";
+$.shareCode = "";
 !(async () => {
   if (!cookiesArr[0]) {
     $.msg($.name, "【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取", "https://bean.m.jd.com/bean/signIndex.action", { "open-url": "https://bean.m.jd.com/bean/signIndex.action" });
@@ -54,7 +54,7 @@ async function main() {
   $.UA = `jdapp;iPhone;10.2.0;13.1.2;${randomString(40)};M/5.0;network/wifi;ADID/;model/iPhone8,1;addressid/2308460622;appBuild/167853;jdSupportDarkMode/0;Mozilla/5.0 (iPhone; CPU iPhone OS 13_1_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1;`;
   $.max = false;
   $.hotFlag = false;
-  const flCodeArr = ['SdiP4s0', 'Sdipcax'];
+  const flCodeArr = ['SLqLM8F', 'SdQedSh', 'StQRVRy'];
   let flCode = flCodeArr[Math.floor(Math.random() * flCodeArr.length)];
   let FLCODE = $.isNode() ? process.env.JD_FLCODE ? process.env.JD_FLCODE : '' : $.getdata("JD_FLCODE") ? $.getdata("JD_FLCODE") : ''
   if (FLCODE) {
@@ -83,7 +83,7 @@ async function main() {
       $.hotFlag = true;
       break;
     }
-    $.actId = ($.url2.match(/mall\/active\/([^/]+)\/index\.html/) && $.url2.match(/mall\/active\/([^/]+)\/index\.html/)[1]) || "2GdKXzvywVytLvcJTk2K3pLtDEHq";
+    $.actId = ($.url2.match(/mall\/active\/([^/]+)\/index\.html/) && $.url2.match(/mall\/active\/([^/]+)\/index\.html/)[1]) || "2ymJw5ginBqRefn1sfiXLm8Yo7Ln";
     let arr = getBody($.UA, $.url2);
     await getEid(arr);
     console.log(`$.actId:` + $.actId);
