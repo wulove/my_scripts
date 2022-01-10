@@ -14,7 +14,7 @@ if ($.isNode()) {
 } else {
   cookiesArr = [$.getdata("CookieJD"), $.getdata("CookieJD2"), ...$.toObj($.getdata("CookiesJD") || "[]").map((item) => item.cookie)].filter((item) => !!item);
 }
-let codeLsit = ['nChuYws', 'nCmmiqg']
+let codeLsit = ['SdiP4s0', 'Sdipcax']
 $.code = codeLsit[random(0, codeLsit.length)];
 !(async () => {
   if (!cookiesArr[0]) {
