@@ -1,7 +1,7 @@
 /**
  特务Z，默认选择左边战队
  脚本没有自动开卡，会尝试领取开卡奖励
- cron 13 11,16, 20 * * * https://raw.githubusercontent.com/star261/jd/main/scripts/jd_productZ4Brand.js
+1 2,11,14,20 * * * jd_superBrand.js
  一天要跑2次
  */
 const $ = new Env('特务Z');
@@ -51,7 +51,7 @@ if ($.isNode()) {
         }catch (e) {
             console.log(JSON.stringify(e));
         }
-        await $.wait(1000);
+        await $.wait(1000 + Math.floor(Math.random()*500));
     }
     if($.allInvite.length > 0 ){
         console.log(`\n开始脚本内互助\n`);
@@ -68,13 +68,13 @@ if ($.isNode()) {
         for (let j = 0; j < $.allInvite.length && $.canHelp; j++) {
             $.codeInfo = $.allInvite[j];
             $.code = $.codeInfo.code;
-            if($.UserName ===  $.codeInfo.userName || $.codeInfo.time === 3){
+            if($.UserName ===  $.codeInfo.userName || $.codeInfo.time === 999){
                 continue;
             }
             $.encryptAssignmentId = $.codeInfo.encryptAssignmentId;
             console.log(`\n${$.UserName},去助力:${$.code}`);
             await takeRequest('help');
-            await $.wait(1000);
+            await $.wait(1000 + Math.floor(Math.random()*500));
         }
     }
 })().catch((e) => {$.log('', `❌ ${$.name}, 失败! 原因: ${e}!`, '')}).finally(() => {$.done();})
@@ -101,10 +101,19 @@ async function main() {
     }else{
         console.log(`已加入战队`);
     }
+    if($.activityInfo.activityPkInfo.userTeamName === $.activityInfo.activityPkInfo.winTeamName && $.activityInfo.activityPkInfo.divideStatus === 0){
+        console.log(`去瓜分`);
+        await takeRequest('superBrandTaskLottery',{"source":"pk","activityId":$.activityId,"encryptProjectId":$.encryptProjectId,"encryptAssignmentId":"2v8f6JzBBTjrvzwZbYztuV9MVWv7","tag":"divide"});
+        return ;
+    }
+    if($.activityInfo.activityPkInfo.divideStatus === 1){
+        console.log(`已瓜分`);
+        return ;
+    }
     if($.activityInfo.activityPkInfo.userTeamStatus !== 0 && $.activityInfo.activityPkInfo.userTeamStatus !== 1){
         return ;
     }
-    await $.wait(3000+ Math.floor(Math.random()*5000));
+    await $.wait(3000 + Math.floor(Math.random()*1500));
     await doTask();
 
 }
@@ -132,13 +141,13 @@ async function doTask(){
                     }
                     console.log(`任务：${$.runInfo.title || $.runInfo.shopName || $.runInfo.itemId},去执行`);
                     await takeRequest('superBrandDoTask');
-                    await $.wait(1000+ Math.floor(Math.random()*500));
+                    await $.wait(1000 + Math.floor(Math.random()*500));
                 }
             }else{
                 $.runInfo = {'itemId':null};
                 await takeRequest('superBrandDoTask');
             }
-            await $.wait(1000+ Math.floor(Math.random()*500));
+            await $.wait(1000 + Math.floor(Math.random()*500));
             $.runFlag = true;
         }else if($.oneTask.assignmentType === 2){
             console.log(`助力码：${$.oneTask.ext.assistTaskDetail.itemId}`);
@@ -161,7 +170,7 @@ async function doTask(){
                     let itemId = signList[j].itemId;
                     $.runInfo = {'itemId':itemId};
                     await takeRequest('superBrandDoTask');
-                    await $.wait(3000+ Math.floor(Math.random()*1500));
+                    await $.wait(3000 + Math.floor(Math.random()*1500));
                 }
             }
             //}
@@ -276,7 +285,7 @@ function dealReturn(type, data) {
                 console.log(`助力次数已用完`);
             }else if (data.code === '0' && data.data.bizCode === '103'){
                 console.log(`助力已满`);
-                $.codeInfo.time = 3;
+                $.codeInfo.time = 999;
             }else if (data.code === '0' && data.data.bizCode === '2001'){
                 $.canHelp = false;
                 console.log(`黑号`);
