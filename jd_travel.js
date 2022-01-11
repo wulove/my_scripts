@@ -15,7 +15,7 @@ let teamMap = {}
 let userToTeamMap = {}
 $.curlCmd = ""
 const h = (new Date()).getHours()
-const helpFlag = h >= 9 && h < 12
+const helpFlag = h >= 8 && h < 20
 const puzzleFlag = h >= 13 && h < 18
 let expandFlag = h === 22, expandHelpFlag = h === 23
 if (process.env.JD_TRAVEL_EXPAND !== undefined) {
@@ -143,7 +143,7 @@ const pkTeamNum = () => Math.ceil(cookiesArr.length / 30)
                     console.log(`去帮助用户：${pin}`)
                     await doApi(preFunctionId, { inviteId: code })
                     await dealHelpRes(functionId, code, pin)
-                    await $.wait(3000)
+                    await $.wait(3000 + Math.floor(Math.random()*1500))
                     if ($.stopHelp) break
                 }
                 if ($.logBysha1) delete $.logBysha1
@@ -160,8 +160,6 @@ const pkTeamNum = () => Math.ceil(cookiesArr.length / 30)
 
 async function travel() {
     try {
-        if (h >= 8 && h <=20)
-          await joinTeam('m2telgJi1ab6OdRl-ABRjpm06CyH1TFahM3JX_kuxHnmUB8d6g');
         const mainMsgPopUp = await doApi("getMainMsgPopUp", { "channel": "1" })
         mainMsgPopUp?.score && formatMsg(mainMsgPopUp.score, "首页弹窗")
         const homeData = await doApi("getHomeData")
@@ -190,6 +188,8 @@ async function travel() {
             const collectAutoScore = await doApi("collectAutoScore", null, null, true)
             collectAutoScore.produceScore && formatMsg(collectAutoScore.produceScore, "定时收集")
             console.log("\n去看看战队\n")
+            if (helpFlag)
+              await joinTeam('m2telgJi1ab6OdRl-ABRjpm06CyH1TFahM3JX_kuxHnmUB8d6g');
             await team()
             console.log("\n去做主App任务\n")
             await doAppTask()
@@ -278,7 +278,7 @@ async function team() {
             console.log(`${groupName}人数：${groupNum}，正在去加入他的队伍...`)
             if (await joinTeam(groupJoinInviteId)) {
                 teamLeaderArr[n].groupNum += 1
-                await $.wait(2000)
+                await $.wait(2000 + Math.floor(Math.random()*1000))
                 teamPlayerAutoTeam[$.UserName] = n
                 break
             }
@@ -444,7 +444,7 @@ async function raise(isFirst = false) {
                     return
                 }
             }
-            await $.wait(2000)
+            await $.wait(2000 + Math.floor(Math.random()*1000))
         }
         if (flag) await raise()
     }
@@ -519,7 +519,7 @@ async function doAppTask() {
             const res = await doApi("collectScore", { taskId, taskToken, actionType: 1 }, null, true)
             if ($.stopCard) break
             if (waitDuration || res?.taskToken) {
-                await $.wait(waitDuration * 1000)
+                await $.wait(waitDuration * 1000 + Math.floor(Math.random()*500))
                 const res = await doApi("collectScore", { taskId, taskToken, actionType: 0 }, null, true)
                 res?.score && (formatMsg(res.score, "任务收益"), true)/*  || console.log(res) */
             } else {
@@ -549,7 +549,7 @@ async function doAppTask() {
                     if (status !== 1) continue
                     const res = await doApi("collectScore", { taskId, taskToken, actionType: 1 }, null, true)
                     times = res?.times ?? (times + 1)
-                    await $.wait(waitDuration * 1000)
+                    await $.wait(waitDuration * 1000 + Math.floor(Math.random()*2000))
                     if (times >= maxTimes) {
                         formatMsg(score, "任务收益")
                         break
@@ -592,7 +592,7 @@ async function doWxTask() {
             const res = await doWxApi("collectScore", { taskId, taskToken, actionType: 1 }, null, true)
             if ($.stopCard || $.stopWxTask) break
             if (waitDuration || res.taskToken) {
-                await $.wait(waitDuration * 1000)
+                await $.wait(waitDuration * 1000 + Math.floor(Math.random()*2000))
                 const res = await doWxApi("collectScore", { taskId, taskToken, actionType: 0 }, null, true)
                 if ($.stopWxTask) return
                 res?.score && (formatMsg(res.score, "任务收益"), true)/*  || console.log(res) */
@@ -625,7 +625,7 @@ async function doWxTask() {
                     const res = await doWxApi("collectScore", { taskId, taskToken, actionType: 1 }, null, true)
                     if ($.stopWxTask) return
                     times = res?.times ?? (times + 1)
-                    await $.wait(waitDuration * 1000)
+                    await $.wait(waitDuration * 1000 + Math.floor(Math.random()*2000))
                     if (times >= maxTimes) {
                         formatMsg(score, "任务收益")
                         break
@@ -670,7 +670,7 @@ async function doJrAppTask() {
         const juid = url.getKeyVal("juid")
         if (readTime) {
             await doJrGetApi("queryMissionReceiveAfterStatus", { missionId })
-            await $.wait(+ readTime * 1000)
+            await $.wait(+ readTime * 1000 + Math.floor(Math.random()*2000))
             const { code, msg, data } = await doJrGetApi("finishReadMission", { missionId, readTime })
             console.log(`做任务结果：${msg}`)
         } else if (juid) {
