@@ -2,7 +2,7 @@
 小鸽有礼 - 每日抽奖
 活动入口：京东首页搜索 边玩边赚
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
-cron "21 8,19 * * *" jd_daily_lottery.js
+cron "21 1,19 * * *" jd_daily_lottery.js
 */
 const $ = new Env('小鸽有礼-每日抽奖');
 const notify = $.isNode() ? require('./sendNotify') : '';
