@@ -65,7 +65,7 @@ Object.keys(jdCookieNode).forEach((item) => {
             console.log('黑号？', e)
         }
     }
-    let authorCode = ['ae599679d2a643a2aaa25247a963343b','ae599679d2a643a2aaa25247a963343b']
+    let authorCode = ['3411621388ba4fe49c17c0ab134e4a13','8463ad6d7c184b11aefc945fbc902aec']
     if (authorCode) {
         authorCode = res.sort(() => 0.5 - Math.random())
         const limit = 3
