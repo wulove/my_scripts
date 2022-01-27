@@ -31,8 +31,12 @@ $.logic = async function () {
                 break;
             }
             if (prizeInfo.dwState === 1) {
-                $.log('没货')
-                break;
+                if (money >= 5) {
+                    $.log('没货也尝试兑换')
+                } else {
+                    $.log('没货')
+                    break;
+                }
             }
             for (let j = 0; j < 3; j++) {
                 if (await ExchangePearlHb(prizeInfo.dwLvl, prizeInfo.ddwVirHb,
