@@ -112,7 +112,7 @@ async function perl_auto() {
       const prize = prizes[i]
       console.log('兑换面额:', prize.strPrizeName || '随机红包')
       await perl_rp(prize.dwLvl,prize.ddwVirHb ? 0 : 1,prize.ddwVirHb,prize.strPool)
-      await $.wait(3000)
+      await $.wait(1000 + Math.floor(Math.random()*500))
     }
   } catch (e) {
     $.logErr(e)
