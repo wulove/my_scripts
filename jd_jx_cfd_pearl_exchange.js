@@ -39,7 +39,7 @@ $.logic = async function () {
                     prizeInfo.strPool)) {
                     break;
                 }
-                await $.wait(1950, 2100)
+                await $.wait(500, 1100)
             }
         }
     }
