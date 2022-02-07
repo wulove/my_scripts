@@ -19,7 +19,7 @@ if ($.isNode()) {
 } else {
   cookiesArr = [$.getdata('CookieJD'), $.getdata('CookieJD2'), ...jsonParse($.getdata('CookiesJD') || "[]").map(item => item.cookie)].filter(item => !!item);
 }
-$.appId = 10032;
+$.appId = "92a36";
 !(async () => {
 console.log(`\n兑换红包环境变量：export ddwVirHb='1' 请自行设置兑换金额\n`);	
 console.log(`默认红包余额大于0.2元就参与兑换\n`);	
@@ -255,7 +255,7 @@ async function requestAlgo() {
       'Accept-Language': 'zh-CN,zh;q=0.9,zh-TW;q=0.8,en;q=0.7'
     },
     'body': JSON.stringify({
-      "version": "1.0",
+      "version": "3.0",
       "fp": $.fingerprint,
       "appId": $.appId.toString(),
       "timestamp": Date.now(),
@@ -277,12 +277,12 @@ async function requestAlgo() {
               $.token = data.data.result.tk;
               let enCryptMethodJDString = data.data.result.algo;
               if (enCryptMethodJDString) $.enCryptMethodJD = new Function(`return ${enCryptMethodJDString}`)();
-              console.log(`获取签名参数成功！`)
-              console.log(`fp: ${$.fingerprint}`)
-              console.log(`token: ${$.token}`)
-              console.log(`enCryptMethodJD: ${enCryptMethodJDString}`)
+              // console.log(`获取签名参数成功！`)
+              // console.log(`fp: ${$.fingerprint}`)
+              // console.log(`token: ${$.token}`)
+              // console.log(`enCryptMethodJD: ${enCryptMethodJDString}`)
             } else {
-              console.log(`fp: ${$.fingerprint}`)
+              // console.log(`fp: ${$.fingerprint}`)
               console.log('request_algo 签名参数API请求失败:')
             }
           } else {
@@ -318,7 +318,7 @@ function decrypt(time, stk, type, url) {
     const hash2 = $.CryptoJS.HmacSHA256(st, hash1.toString()).toString($.CryptoJS.enc.Hex);
     // console.log(`\nst:${st}`)
     // console.log(`h5st:${["".concat(timestamp.toString()), "".concat(fingerprint.toString()), "".concat($.appId.toString()), "".concat(token), "".concat(hash2)].join(";")}\n`)
-    return encodeURIComponent(["".concat(timestamp.toString()), "".concat($.fingerprint.toString()), "".concat($.appId.toString()), "".concat($.token), "".concat(hash2)].join(";"))
+    return encodeURIComponent(["".concat(timestamp.toString()), "".concat($.fingerprint.toString()), "".concat($.appId.toString()), "".concat($.token), "".concat(hash2), "".concat("3.0"), "".concat(time)].join(";"))
   } else {
     return '20210318144213808;8277529360925161;10001;tk01w952a1b73a8nU0luMGtBanZTHCgj0KFVwDa4n5pJ95T/5bxO/m54p4MtgVEwKNev1u/BUjrpWAUMZPW0Kz2RWP8v;86054c036fe3bf0991bd9a9da1a8d44dd130c6508602215e50bb1e385326779d'
   }
