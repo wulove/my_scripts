@@ -1,18 +1,18 @@
-//42 9,22 * * * jd_sign.js
+//48 9,22 * * * jd_sign.js
 /*
 [task_local]
 京东签到
-42 9,22 * * * jd_sign.js, tag=京东签到, enabled=true
+48 9,22 * * * jd_sign.js, tag=京东签到, enabled=true
 ================Loon==============
 [Script]
-cron "42 9,22 * * *" script-path=jd_sign.js,tag=京东签到
+cron "48 9,22 * * *" script-path=jd_sign.js,tag=京东签到
 */
 const {Env} = require('./utils/magic');
 const $ = new Env('M京东签到')
 $.logic = async function () {
     await signBeanIndex()
     await $.wait(3000, 5000)
-    await cgame();
+    //await cgame();
 }
 $.run({filename: __filename, wait: [1000, 2000], random: true})
 .catch(reason => console.log(reason))
@@ -44,7 +44,7 @@ async function cgame() {
         'Accept-Encoding': 'gzip, deflate, br',
         'Content-Type': 'application/json',
         'Origin': 'https://pro.m.jd.com',
-        'ActivityId': 'a54e9a0a1b6044189753e7eba51aab19',
+        'ActivityId': '7c51826be9f241c1ad9733df34d242c5',
         'Host': 'cgame-stadium.jd.com',
         'Referer': 'https://pro.m.jd.com/mall/active/dj6us2JJRLMMBb4iDaSK4wxvBMt/index.html',
         'Accept-Language': 'zh-cn',
