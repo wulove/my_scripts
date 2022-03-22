@@ -260,19 +260,21 @@ async function doTask() {
         await shopTaskList();
         const { data } = $.shopTaskListRes;
         let goodShopListARR = [], moreShopListARR = [], shopList = [];
+        if (!data.goodShopList) {
+          data.goodShopList = [];
+        }
+        if (!data.moreShopList) {
+          data.moreShopList = [];
+        }
         const { goodShopList, moreShopList } = data;
-        if (goodShopList) {
-          for (let i of goodShopList) {
-            if (i.taskState === '2') {
-              goodShopListARR.push(i);
-            }
+        for (let i of goodShopList) {
+          if (i.taskState === '2') {
+            goodShopListARR.push(i);
           }
         }
-        if (moreShopList) {
-          for (let j of moreShopList) {
-            if (j.taskState === '2') {
-              moreShopListARR.push(j);
-            }
+        for (let j of moreShopList) {
+          if (j.taskState === '2') {
+            moreShopListARR.push(j);
           }
         }
         shopList = goodShopListARR.concat(moreShopListARR);
