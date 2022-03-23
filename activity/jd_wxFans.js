@@ -11,7 +11,15 @@ const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 const notify = $.isNode() ? require('./sendNotify') : '';
 let cookiesArr = [];
 const activityList = [
-  {"actid": "ccf0f3f72931455da945ddf383bf6432","endTime":1638201600000}
+    {'id':'5d38f64903df46709852a4950f87a95f','endTime':1646841598000},//2022-02-21---2022-03-09 九阳易电通拼购专卖店
+    {'id':'027ba51d1ee44a3eb9dddfb06ee4f9e6','endTime':1646063999000},//2022-02-10---2022-02-28 blueriver蓝河官方自营旗舰店
+    {'id':'42df4494bd1e4d8b87f867887eb0bc9a','endTime':1645977600000},//2022-02-10---2022-02-28 小米京东自营旗舰店
+    {'id':'2a00758adec643e680bb2eaa490a483c','endTime':1645631999000},//2022-02-08---2022-02-23 西部数据京东自营旗舰店
+    {'id':'2a00758adec643e680bb2eaa490a483c','endTime':1645631999000},//2022-02-08---2022-02-23 西部数据京东自营旗舰店
+    {'id':'dc08625c66a342a7b884b7a0e981edd8','endTime':1646063999000},//2022-02-01---2022-02-28 Origins悦木之源京东自营官方旗舰店
+    {'id':'145efa9da8d74d4784f284a10f3f13c2','endTime':1646063999000},//2022-02-01---2022-02-28 戴·可·思（Dexter）母婴京东自营旗舰店
+    {'id':'21c655646f2342bda3d0f1dd668a51d4','endTime':1645977600000},//2022-02-10---2022-02-28 博世生活电器官方旗舰店
+    {'id':'d8594388e5454a568e49592f90c2bf5b','endTime':1646063999000},//2022-02-15---2022-02-28 美的京东自营官方旗舰店
 ];
 if ($.isNode()) {
   Object.keys(jdCookieNode).forEach((item) => {
