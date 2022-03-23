@@ -101,10 +101,14 @@ async function goldRank() {
           console.log(`${JSON.stringify(err)}`)
           console.log(`${$.name} goldCenterDoTask API请求失败，请检查网路重试`)
         } else {
-          //console.log('goldCenterHead', data)
+          console.log('goldCenterHead', data)
           if (safeGet(data)) {
             data = JSON.parse(data);
             if (data.code == '0') {
+              if (data.result.subCode == '-2') {
+                console.log(data.result.msg)
+                return
+              }
               if (data.result.taskDone == 0) {
                 console.log("点亮勋章\n")
                 await goldCenterDoTask(1);
@@ -197,7 +201,7 @@ async function getDetail() {
   for (let item of $.subTitleInfos) {
     console.log(`\n开始给【${item['longTitle']}】主题下的商品进行投票`);
     await goldCreatorDetail(item['matGrpId'], item['subTitleId'], item['taskId'], item['batchId']);
-    await $.wait(2000 + Math.floor(Math.random()*1000));
+    await $.wait(3000 + Math.floor(Math.random()*1000));
   }
 }
 function goldCreatorTab() {

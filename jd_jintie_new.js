@@ -333,20 +333,21 @@ async function doTask() {
     if (task.doLink.indexOf('readTime=') !== -1) {
       console.log(`\n开始领取 【${task['name']}】任务`);
       await doMission(task, "channelReceiveCenterMission")
-      await $.wait(200 + Math.floor(Math.random()*100))
+      await $.wait(1000 + Math.floor(Math.random()*500))
       await queryMissionReceiveAfterStatus(task['missionId']);
       const readTime = parseInt(task.doLink.substr(task.doLink.indexOf('readTime=') + 9));
-      await $.wait(1000 * readTime + Math.floor(Math.random()*400))
+      await $.wait(1000 * readTime + Math.floor(Math.random()*1000))
       await finishReadMission(task['missionId'], readTime);
-      await $.wait(200 + Math.floor(Math.random()*200));
+      await $.wait(1000 + Math.floor(Math.random()*500));
       console.log('预计获得：', task.name, task.amount)
       await doMission(task, "channelAwardCenterMission")
     } else if (task.doLink.indexOf('juid=') !== -1) {
       console.log(`\n开始领取 【${task['name']}】任务`)
       await doMission(task, "channelReceiveCenterMission")
+      await $.wait(1000 + Math.floor(Math.random()*500))
       const juid = task.doLink.match(/juid=(.*)/)[1]
       await getJumpInfo(juid);
-      await $.wait(1000 + Math.floor(Math.random()*400))
+      await $.wait(2000 + Math.floor(Math.random()*500))
       console.log('预计获得：', task.name, task.amount)
       await doMission(task, "channelAwardCenterMission")
     }

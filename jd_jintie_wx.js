@@ -124,13 +124,13 @@ async function doTask() {
       /*await doMission(task, 'seeVideoMission');
       await $.wait(10000);*/
       await doMission(task, 'channelFinishSelfTask');
-      await $.wait(1000 + Math.floor(Math.random()*200));
+      await $.wait(1000 + Math.floor(Math.random()*500));
       await doMission(task, 'channelRewardSelfTask');
     } else {
       await doMission(task, 'channelReceiveCenterMission');
-      await $.wait(1000 + Math.floor(Math.random()*200));
+      await $.wait(1000 + Math.floor(Math.random()*500));
       await doMission(task, 'channelDoCenterMissionReport');
-      await $.wait(1000 + Math.floor(Math.random()*200));
+      await $.wait(1000 + Math.floor(Math.random()*500));
       await doMission(task, 'channelAwardCenterMission');
     }
   }
