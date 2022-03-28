@@ -41,7 +41,7 @@ let wait = ms => new Promise(resolve => setTimeout(resolve, ms));
   }
   await wait(100)
   for (let j = 0; j < randomCount; ++j)
-    for (let i = 0;  i < 7; i++) {
+    for (let i = 0;  i < cookiesArr.length; i++) {
       if (cookiesArr[i]) {
         cookie = cookiesArr[i];
         $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1])
