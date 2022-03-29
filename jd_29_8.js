@@ -50,7 +50,18 @@ let wait = ms => new Promise(resolve => setTimeout(resolve, ms));
         $.isLogin = true;
         $.nickName = '';
         message = '';
-        await qiang();
+        let t = moment().format("ss.SSS")
+        if (t > 59.8) {
+          for (let k=0; k < 6; k++) {
+            qiang();
+          }
+        } else if (t > 1 && t < 57) {
+          console.log(moment().format("YYYY-MM-DD HH:mm:ss.SSS") + "结束运行");
+          return;
+        } else {
+          await qiang();
+        }
+
       }
     }
 })()
