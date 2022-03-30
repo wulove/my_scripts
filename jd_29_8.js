@@ -39,7 +39,7 @@ let wait = ms => new Promise(resolve => setTimeout(resolve, ms));
     $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', { "open-url": "https://bean.m.jd.com/bean/signIndex.action" });
     return;
   }
-  await wait(100)
+   wait(100)
   for (let j = 0; j < randomCount; ++j)
     for (let i = 0;  i < cookiesArr.length; i++) {
       if (cookiesArr[i]) {
@@ -54,6 +54,7 @@ let wait = ms => new Promise(resolve => setTimeout(resolve, ms));
         if (t > 5959.8) {
           for (let k=0; k < 6; k++) {
             qiang();
+            await $.wait(10 + Math.random() * 10)
           }
         } else if (t > 1 && t < 5957) {
           console.log(moment().format("YYYY-MM-DD HH:mm:ss.SSS") + "结束运行");
