@@ -51,7 +51,7 @@ let wait = ms => new Promise(resolve => setTimeout(resolve, ms));
         $.nickName = '';
         message = '';
         let t = moment().format("mmss.SSS")
-        if (t > 5959.900) {
+        if (t > 5959.800) {
           console.log("开始连续执行")
           for (let k=0; k < 6; k++) {
             qiang();
