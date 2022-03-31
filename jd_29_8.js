@@ -53,10 +53,10 @@ let wait = ms => new Promise(resolve => setTimeout(resolve, ms));
         let t = moment().format("mmss.SSS")
         if (t > 5959.800) {
           console.log("开始连续执行")
-          for (let k=0; k < 6; k++) {
+          for (let k=0; k < 3; k++) {
             qiang();
-            // await $.wait(10 + Math.random() * 10)
           }
+          await $.wait(10 + Math.random() * 10)
         } else if (t > 1 && t < 5957) {
           console.log(moment().format("YYYY-MM-DD HH:mm:ss.SSS") + "结束运行");
           return;
