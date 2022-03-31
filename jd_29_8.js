@@ -51,10 +51,13 @@ let wait = ms => new Promise(resolve => setTimeout(resolve, ms));
         $.nickName = '';
         message = '';
         let t = moment().format("mmss.SSS")
-        if (t > 5959.800) {
+        if (t > 5959.850) {
           console.log("开始连续执行")
-          qiang();
-          await $.wait(10 + Math.random() * 10)
+          await Promise.all([
+              qiang(),
+              qiang(),
+              qiang(),
+          ]);
         } else if (t > 1 && t < 5957) {
           console.log(moment().format("YYYY-MM-DD HH:mm:ss.SSS") + "结束运行");
           return;
