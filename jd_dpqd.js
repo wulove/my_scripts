@@ -3,14 +3,14 @@
 ============Quantumultx===============
 [task_local]
 #店铺签到
-15 2,14 * * * https://raw.githubusercontent.com/KingRan/JDJB/main/jd_shop_sign.js, tag=店铺签到, enabled=true
+15 2,14 * * * https://raw.githubusercontent.com/KingRan/KR/main/jd_shop_sign.js, tag=店铺签到, enabled=true
 ===========Loon============
 [Script]
-cron "15 2,14 * * *" script-path=https://raw.githubusercontent.com/KingRan/JDJB/main/jd_shop_sign.js,tag=店铺签到
+cron "15 2,14 * * *" script-path=https://raw.githubusercontent.com/KingRan/KR/main/jd_shop_sign.js,tag=店铺签到
 ============Surge=============
-店铺签到 = type=cron,cronexp="15 2,14 * * *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/KingRan/JDJB/main/jd_shop_sign.js
+店铺签到 = type=cron,cronexp="15 2,14 * * *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/KingRan/KR/main/jd_shop_sign.js
 ===========小火箭========
-店铺签到 = type=cron,script-path=https://raw.githubusercontent.com/KingRan/JDJB/main/jd_shop_sign.jss, cronexpr="15 2,14 * * *", timeout=3600, enable=true
+店铺签到 = type=cron,script-path=https://raw.githubusercontent.com/KingRan/KR/main/jd_shop_sign.jss, cronexpr="15 2,14 * * *", timeout=3600, enable=true
 */
 const $ = new Env('店铺签到');
 const notify = $.isNode() ? require('./sendNotify') : '';
@@ -25,17 +25,16 @@ let vender=''
 let num=0
 let shopname=''
 const token = [
-  "F5A2B73513506C7E5E1C7E6DCD6C3F95",
+  "FEACDDFEABE7E6F5F52E32E79ACB0126",
   "113946C00C676DD5141D46EF6194E281",
-  "B6D45CBE79819E9EFE01E875B034AE02",
-  "5C7C5EB47593FAFA562F2876249DF657",
-  "06531DBAB0102421286EF4248F7D0098",
+  "DFBDE9D4A0EF038284396FDA8535D20C",
+  "4BF0331BCB845ABC79145753E605E9C3",
   "4D2B15A6118690BB26031B4F9CB7C8F2",
   "F28F320D6ACF02CFBF9F2718D76DDCDF",
   "D3A2F5DBC71205B3F7FB393D085A9C6C",
   "490047103854B8B5E17D3D76C2C65D1D",
-  "27A88D6FC1C01776EE3941D7E6957641",
-  "734DCFA4A578505A421F4689012DC75A"
+  "734DCFA4A578505A421F4689012DC75A",
+  "833857BA916CBE17638A463C3DBAD4BB"
 ]
 
 if ($.isNode()) {
