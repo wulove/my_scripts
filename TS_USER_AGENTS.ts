@@ -115,7 +115,7 @@ async function requireConfig(check: boolean = false): Promise<string[]> {
       }
     }
   }
-  console.log(`共${cookiesArr.length}个京东账号 \n`)
+  console.log(`共${cookiesArr.length}个京东账号\n`)
   return cookiesArr
 }
 
