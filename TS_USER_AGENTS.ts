@@ -175,7 +175,7 @@ async function requestAlgo(appId: number = 10032) {
       if (enCryptMethodJDString) enCryptMethodJD = new Function(`return ${enCryptMethodJDString}`)()
     } else {
       console.log(`fp: ${fingerprint}`)
-      console.log('request_algo 签名参数API请求失败:')
+      console.log('request_algo 签名参数API请求失败: ')
     }
     resolve()
   })
