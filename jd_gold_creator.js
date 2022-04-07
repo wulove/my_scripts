@@ -80,8 +80,8 @@ async function main() {
   try {
     // await signForRedBag();//签到领红包
     //京东金榜
-    await goldRank();
-    await $.wait(5000)
+    // await goldRank();
+    // await $.wait(5000)
     await goldCreatorTab();//获取顶部主题
     await getDetail();
     await goldCreatorPublish();
