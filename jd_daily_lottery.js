@@ -11,7 +11,7 @@ let activityType = '';
 let activityCode = '';
 const activityInfoList = [
   {'activityType':'WonderfulLuckDrawApi','activityCode':'1410048365793640448','title':'小哥有礼'},
-  {'activityType':'luckdraw','activityCode':'1493527662965030912','title':'每日转盘'}
+  // {'activityType':'luckdraw','activityCode':'1493527662965030912','title':'每日转盘'}
 ];
 $.helpCodeList = [];
 //IOS等用户直接用NobyDa的jd cookie
