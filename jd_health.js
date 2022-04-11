@@ -7,11 +7,17 @@
 ===================quantumultx================
 [task_local]
 #东东健康社区
-13 1,6,22 * * * https://raw.githubusercontent.com/KingRan/JDJB/main/jd_health.js, tag=东东健康社区, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
+13 1,6,22 * * * https://raw.githubusercontent.com/KingRan/KR/main/jd_health.js, tag=东东健康社区, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
 
 =====================Loon================
 [Script]
-cron "13 1,6,22 * * *" script-path=jd_health.js, tag=东东健康社区
+cron "13 1,6,22 * * *" script-path=https://raw.githubusercontent.com/KingRan/KR/main/jd_health.js, tag=东东健康社区
+
+====================Surge================
+东东健康社区 = type=cron,cronexp="13 1,6,22 * * *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/KingRan/KR/main/jd_health.js
+
+============小火箭=========
+东东健康社区 = type=cron,script-path=https://raw.githubusercontent.com/KingRan/KR/main/jd_health.js, cronexpr="13 1,6,22 * * *", timeout=3600, enable=true
  */
 const $ = new Env("东东健康社区");
 const jdCookieNode = $.isNode() ? require("./jdCookie.js") : "";
@@ -55,7 +61,6 @@ const JD_API_HOST = "https://api.m.jd.com/";
 			console.log(`\n******开始【京东账号${$.index}】${$.UserName}*********\n`);
 			await main()
 			await showMsg()
-      await $.wait(5600)
 		}
 	}
 	if ($.isNode() && allMessage) {
@@ -80,33 +85,20 @@ async function main() {
       $.canDo = false
       await getTaskDetail()
       if(!$.canDo) break
-      await $.wait(1000 + Math.floor(Math.random() * 500))
+      await $.wait(1000)
     }
     await collectScore()
-    await helpFriends();
     await getTaskDetail(22);
     await getTaskDetail(-1)
 
     if (reward) {
       await getCommodities()
     }
+	await exchanges()
 
   } catch (e) {
     $.logErr(e)
 	}
-}
-
-async function helpFriends() {
-  for (let code of $.newShareCodes) {
-    if (!code) continue;
-    console.log(`去助力好友${code}`);
-    let res = await doTask(code, 6);
-    if ([108, -1001].includes(res?.data?.bizCode)) {
-      console.log(`助力次数已满，跳出`);
-      break;
-    }
-    await $.wait(1000 + Math.floor(Math.random() * 500));
-  }
 }
 
 function showMsg() {
@@ -153,11 +145,11 @@ function getTaskDetail(taskId = '') {
                     await doTask(oc(() => vo.simpleRecordInfoVo.taskToken), oc(() => vo.taskId))
                   } else if (vo.taskType === 8) {
                     await doTask(oc(() => vo.productInfoVos[i].taskToken), oc(() => vo.taskId), 1)
-                    await $.wait(1000 * 10 + Math.floor(Math.random() * 4000))
+                    await $.wait(1000 * 10)
                     await doTask(oc(() => vo.productInfoVos[i].taskToken), oc(() => vo.taskId), 0)
                   } else if (vo.taskType === 9) {
                     await doTask(oc(() => vo.shoppingActivityVos[0].taskToken), oc(() => vo.taskId), 1)
-                    await $.wait(1000 * 10 + Math.floor(Math.random() * 4000))
+                    await $.wait(1000 * 10)
                     await doTask(oc(() => vo.shoppingActivityVos[0].taskToken), oc(() => vo.taskId), 0)
                   } else if (vo.taskType === 10) {
                     await doTask(oc(() => vo.threeMealInfoVos[0].taskToken), oc(() => vo.taskId))
@@ -172,7 +164,7 @@ function getTaskDetail(taskId = '') {
                       }
                     }
                   }
-                  await $.wait(2000 + Math.floor(Math.random() * 1000))
+                  await $.wait(2000)
                 }
               }
             }
@@ -183,6 +175,29 @@ function getTaskDetail(taskId = '') {
           resolve()
         }
       })
+  })
+}
+
+function exchanges(commodityType, commodityId) {
+  return new Promise(resolve => {
+    const options = taskUrl('jdhealth_doLottery', {"taskId":1})
+    $.post(options, (err, resp, data) => {
+      try {
+        if (safeGet(data)) {
+          data = $.toObj(data)
+          if (data.data.bizCode === 0 || data.data.bizMsg === "success") {
+            $.score = data.data.result.jingBeanNum
+            console.log(`领取${data.data.result.jingBeanNum}京豆成功`)
+          } else {
+            console.log(data.data.bizMsg)
+          }
+        }
+      } catch (e) {
+        console.log(e)
+      } finally {
+        resolve(data)
+      }
+    })
   })
 }
 
@@ -198,7 +213,7 @@ async function getCommodities() {
             for (let key of Object.keys(beans)) {
               let vo = beans[key]
               if (vo.title === reward && $.score >= vo.exchangePoints) {
-                await $.wait(1000 + Math.floor(Math.random() * 500))
+                await $.wait(1000)
                 await exchange(vo.type, vo.id)
               }
             }

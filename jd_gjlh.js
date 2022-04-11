@@ -1,14 +1,14 @@
 /*
 [task_local]
-#4月母婴宝贝趴-文具分会场
-30 5 2-13/3 4 * jd_wjcj.js, tag=4月母婴宝贝趴-文具分会场, enabled=true
+#4月京东国际联合活动
+31 1 10-18/3 4 * jd_gjlh.js, tag=4月京东国际联合活动, enabled=true
  */
-const $ = new Env('4月母婴宝贝趴-文具分会场');
+const $ = new Env('4月京东国际联合活动');
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 let jdNotify = true;//是否关闭通知，false打开通知推送，true关闭通知推送
-$.configCode = "2368aa68c7d54a758c271a59c15446e9";
+$.configCode = "0fa7512ffa1742b5a5f29c1c63bd9a6e";
 //IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [], cookie = '', message;
 if ($.isNode()) {
@@ -21,7 +21,7 @@ if ($.isNode()) {
     cookiesArr = [$.getdata('CookieJD'), $.getdata('CookieJD2'), ...jsonParse($.getdata('CookiesJD') || "[]").map(item => item.cookie)].filter(item => !!item);
 }
 !(async () => {
-	console.log('入口下拉：https://prodev.m.jd.com/mall/active/4TNYnd1UBnS5aZivzCsqyFfjdSN7/index.html')
+	console.log('入口下拉：https://prodev.m.jd.com/mall/active/48Ki4bRbQFE4izpBis95dxZJSsTq/index.html')
     if (!cookiesArr[0]) {
         $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', { "open-url": "https://bean.m.jd.com/bean/signIndex.action" });
         return;
