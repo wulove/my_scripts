@@ -79,7 +79,7 @@ function exchange() {
             data = JSON.parse(data);
             console.log(`抢券结果：${JSON.stringify(data)}\n`)
             if ("A1" === data.subCode)  {
-              notify.sendNotify(`${$.name}`, `【京东账号${$.index}】${$.nickName}\n抢到15-8券了`)
+              notify.sendNotify(`${$.name}`, `【京东账号${$.index}】${$.UserName}\n抢到15-8券了`)
             }
           }
         }
