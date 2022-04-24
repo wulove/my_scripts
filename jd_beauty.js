@@ -8,7 +8,6 @@ https://raw.githubusercontent.com/aTenb/jdOpenSharePicker/master/jd_beautyStudy.
  */
 const $ = new Env('美丽研究院');
 const notify = $.isNode() ? require('./sendNotify') : '';
-console.log('已废弃,能不能用随缘!!!')
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 const WebSocket = require('ws');
 const UA = process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)
@@ -61,7 +60,9 @@ const JD_API_HOST = 'https://api.m.jd.com/client.action';
         continue
       }
       await accountCheck();
-      await $.wait(10000)
+      while (!$.hasDone) {
+        await $.wait(3000)
+      }
       if ($.accountCheck) {
         await jdBeauty();
       }
@@ -162,11 +163,17 @@ async function mr() {
       await $.wait(10000);
     }
     console.log(`\n========生产任务相关========\n`)
+    for (let help of helpInfo) {
+      client.send(help);
+    }
+    await $.wait(3000)
     client.send(`{"msg":{"type":"action","args":{},"action":"get_produce_material"}}`)
     await $.wait(20000);
     // 获得正在生产的商品信息
     client.send('{"msg":{"type":"action","args":{},"action":"product_producing"}}')
-    await $.wait(20000);
+    await $.wait(10000);
+    // 获得库存
+    client.send(`{"msg":{"type":"action","args":{},"action":"get_package"}}`)
     // 获得可生成的商品列表
     client.send(`{"msg":{"type":"action","args":{"page":1,"num":10},"action":"product_lists"}}`)
     await $.wait(20000);
@@ -196,7 +203,10 @@ async function mr() {
     $.init = true;
     $.hasDone = true;
     for (let i = 0; i < $.pos.length && i < $.tokens.length; ++i) {
-      $.helpInfo.push(`{"msg":{"type":"action","args":{"inviter_id":"${$.userInfo.id}","position":"${$.pos[i]}","token":"${$.tokens[i]}"},"action":"employee"}}`)
+      client.send(`{"msg":{"type":"action","args":{"inviter_id":"${$.userInfo.id}"},"action":"employee_get_user"}}`);
+      $.helpInfo.push(`{"msg":{"type":"action","args":{"inviter_id":"${$.userInfo.id}","position":"${$.pos[i]}","token":"${$.tokens[i]}"},"action":"employee_v2"}}`)
+      client.send(`{"msg":{"type":"action","args":{"inviter_id":"${$.userInfo.id}","position":"${$.pos[i]}"},"action":"employee_speed_v2"}}`);
+      client.send(`{"msg":{"action":"write","type":"action","args":{"action_type":3,"channel":2,"source_app":2}}}`);
     }
   };
   client.onmessage = async function (e) {
@@ -276,10 +286,12 @@ async function mr() {
             }
             await $.wait(10000);
           }
-          for (let i = $.taskState.meetingplace_view; i < $.taskState.mettingplace_count; ++i) {
-            console.log(`去做第${i + 1}次浏览会场任务`)
-            client.send(`{"msg":{"type":"action","args":{"source":1},"action":"meetingplace_view"}}`)
-            await $.wait(10000);
+          if ($.taskState.meetingplace_view.length <= vo.data.meetingplaces.length) {
+            for (let vc of vo.data.meetingplaces) {
+              console.log(`去做第${vc.name}浏览会场任务`)
+              client.send(`{"msg":{"type":"action","args":{"source":1,"meetingplace_id":${vc.id}},"action":"meetingplace_view"}}`)
+              await $.wait(2500)
+            }
           }
           if ($.taskState.today_answered === 0) {
             console.log(`去做每日问答任务`)
@@ -426,6 +438,7 @@ async function mr() {
                 console.log(`【${product.name}】可生产份数大于0，去生产`)
                 //product_produce 产品研发里的生产
                 client.send(`{"msg":{"type":"action","args":{"product_id":${product.id},"amount":${num}},"action":"product_produce"}}`)
+                client.send(`{"msg":{"type":"action","args":{"product_id":${product.id},"amount":${num}},"action":"once_completion"}}`)
                 await $.wait(10000);
               } else {
                 console.log(msg)
@@ -521,15 +534,15 @@ async function mr() {
         case "get_produce_material":
           $.material = vo.data
           break
-        case "to_employee":
-          console.log(`雇佣助力码【${oc(() => vo.data.token)}】`)
-          if(oc(() => vo.data.token)){
-            $.tokens.push(vo.data.token)
-          }else{
-            console.log(`not exist:${oc(() => vo.data)}`)
-          }
-          break
-        case "employee":
+        //case "to_employee":
+         // console.log(`雇佣助力码【${oc(() => vo.data.token)}】`)
+         // if(oc(() => vo.data.token)){
+         //   $.tokens.push(vo.data.token)
+         // }else{
+         //   console.log(`not exist:${oc(() => vo.data)}`)
+         // }
+         // break
+        case "employee_v2":
           console.log(`${vo.msg}`)
           break
       }
@@ -620,7 +633,7 @@ function getToken() {
       'user-agent': UA,
       'Referer': 'https://xinruimz-isv.isvjcloud.com/logined_jd/',
       'Authorization': 'Bearer undefined',
-      'Cookie': `IsvToken=${$.isvToken};`
+      'Cookie': `IsvToken=${$.token2};`
     }
   }
   return new Promise(resolve => {
