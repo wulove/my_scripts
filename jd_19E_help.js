@@ -2,7 +2,7 @@ const CryptoJS = require("crypto-js");
 const $ = new Env('热爱奇旅互助版');
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
-let cookiesArr = [], cookie = '', message, helpCodeArr = [], helpPinArr = [], wxCookie = "";
+let cookiesArr = [], cookie = '', message, helpCodeArr = [{pin:'pin1',code:'ZXASTT016aEzIlJOJLepV9qJVFjRWn6S7zB55awQ'},{pin:'pin2',code:'ZXASTT0205KkcAlpbtBaxXnKM7Z9_FjRWn6S7zB55awQ'}], helpPinArr = [], wxCookie = "";
 let wxCookieArr = process.env.WXCookie?.split("@") || []
 const teamLeaderArr = [], teamPlayerAutoTeam = {}
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
@@ -126,7 +126,7 @@ const JD_API_HOST = 'https://api.m.jd.com/client.action';
         // cookie = cookie.replace(/joyytoken=\S+?;/, "joyytoken=;") 
         if (teamPlayerAutoTeam.hasOwnProperty($.UserName)) {
             const { groupJoinInviteId, groupNum, groupName } = teamLeaderArr[teamPlayerAutoTeam[$.UserName]]
-            console.log(`${groupName}人数：${groupNum}，正在去加入他的队伍...`)
+            console.log(`${groupName}人数：${groupNum}，正在去加入他的队伍${groupJoinInviteId}...`)
             await joinTeam(groupJoinInviteId)
             teamLeaderArr[teamPlayerAutoTeam[$.UserName]].groupNum += 1
             await $.wait(2000)
