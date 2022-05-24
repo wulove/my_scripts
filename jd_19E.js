@@ -1,7 +1,3 @@
-if (process.env.JD_19E != "true") {
-    console.log('\n默认不运行,设置变量export JD_19E="true"来运行\n')
-    return
-}
 
 /*
 
@@ -58,7 +54,7 @@ $.shareCodesArr = [];
             message = '';
             console.log(`\n******开始【京东账号${$.index}】${$.nickName || $.UserName}*********\n`);
             //   await shareCodesFormat()
-            $.newShareCodes = ['dJ_cL3K07aHJx1oTuBCyCA', '-HoIubtmdF0tb4rKjTSLCEnUAg']
+            $.newShareCodes = ['ZXASTT016aEzIlJOJLepV9qJVFjRWn6S7zB55awQ', 'ZXASTT0205KkcAlpbtBaxXnKM7Z9_FjRWn6S7zB55awQ']
             for (let i = 0; i < $.newShareCodes.length && true; ++i) {
                 console.log(`\n开始助力 【${$.newShareCodes[i]}】`)
                 let res = await getInfo($.newShareCodes[i])
@@ -267,7 +263,7 @@ function promote_sign() {
 }
 
 function promote_raise() {
-    let body = { "ss": { "extraData": { "log": "", "sceneid": "RAhomePageh5" }, "secretp": secretp, "random": randomString(6) } };
+    let body = {"scenceId":4, "ss": { "extraData": { "log": "", "sceneid": "RAhomePageh5" }, "secretp": secretp, "random": randomString(6) } };
     return new Promise((resolve) => {
         $.post(taskPostUrl("promote_raise", body), async(err, resp, data) => {
             try {
