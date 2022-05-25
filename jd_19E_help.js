@@ -117,20 +117,20 @@ const JD_API_HOST = 'https://api.m.jd.com/client.action';
                         $.newHelpCodeArr = $.newHelpCodeArr.filter(x => x.pin !== pin)
                     }
                     console.log(`互助失败，原因：${helpRes?.bizMsg}（${helpRes?.bizCode}）`)
-                    if (![0, -201, -202].includes(helpRes?.bizCode)) break
+                    //if (![0, -201, -202].includes(helpRes?.bizCode)) break
                 }
             }
             helpCodeArr = [...$.newHelpCodeArr]
         //}
         // $.joyytoken = ""
         // cookie = cookie.replace(/joyytoken=\S+?;/, "joyytoken=;") 
-        if (teamPlayerAutoTeam.hasOwnProperty($.UserName)) {
-            const { groupJoinInviteId, groupNum, groupName } = teamLeaderArr[teamPlayerAutoTeam[$.UserName]]
-            console.log(`${groupName}人数：${groupNum}，正在去加入他的队伍${groupJoinInviteId}...`)
-            await joinTeam(groupJoinInviteId)
-            teamLeaderArr[teamPlayerAutoTeam[$.UserName]].groupNum += 1
-            await $.wait(2000)
-        }
+        //if (teamPlayerAutoTeam.hasOwnProperty($.UserName)) {
+        //     const { groupJoinInviteId, groupNum, groupName } = teamLeaderArr[teamPlayerAutoTeam[$.UserName]]
+        //     console.log(`${groupName}人数：${groupNum}，正在去加入他的队伍${groupJoinInviteId}...`)
+            await joinTeam('-HE-pbNo467wxW8iLOJ8khKg6Pt2Q6MKtMrTzeyG1LrZR-vzZA')
+            // teamLeaderArr[teamPlayerAutoTeam[$.UserName]].groupNum += 1
+            // await $.wait(2000)
+        // }
     }
 })()
     .catch((e) => {
