@@ -7,7 +7,7 @@ FLCODE3为FL变量
 * */
 const $ = new Env('会场红包');
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
-let flCode = ['Sdipcax']
+let flCode = ['lCwkjLB', "lMw7Td2", "ltwk41D"]
 flCode = flCode[Math.floor((Math.random() * flCode.length))]
 if ($.isNode() && process.env.FLCODE3) {
     flCode = process.env.FLCODE3
@@ -26,7 +26,7 @@ if ($.isNode()) {
         ...$.toObj($.getdata("CookiesJD") || "[]").map((item) => item.cookie)].filter((item) => !!item);
 }
 let cookie = '';
-$.shareCode = 'ZAaOZ';
+$.shareCode = 'WzdtZ';
 !(async () => {
     if (!cookiesArr[0]) {
         $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
@@ -72,7 +72,7 @@ async function main() {
         if(!$.url1){console.log(`${userName},初始化1失败,可能黑号`);$.hotFlag = true;break;}
         await getInfo2();
         if(!$.url2){console.log(`${userName},初始化2失败,可能黑号`);$.hotFlag = true;break;}
-        $.actId = $.url2.match(/mall\/active\/([^/]+)\/index\.html/) && $.url2.match(/mall\/active\/([^/]+)\/index\.html/)[1] || '2UboZe4RXkJPrpkp6SkpJJgtRmod';
+        $.actId = $.url2.match(/mall\/active\/([^/]+)\/index\.html/) && $.url2.match(/mall\/active\/([^/]+)\/index\.html/)[1] || '31e6keDr2FdaUEVSvNZM2kjD7QVx';
         console.log(`$.actId:`+$.actId)
         let arr = await getBody($.UA,$.url2);
         await getEid(arr)
@@ -163,9 +163,11 @@ function randomString(e) {
     return n
 }
 async function getCoupons(shareCode){
+    let body = { "platform": 4, "unionActId": "31142", "actId": $.actId, "d": $.code, "unionShareId": $.shareCode, "type": 1, "eid": "-1" };
+    let url = `https://api.m.jd.com?functionId=getCoupons&appid=u&_=${Date.now()}&loginType=2&body=${JSON.stringify(body)}&client=apple&clientVersion=8.3.6&h5st=undefined`;
     return new Promise(resolve => {
         let opts = {
-            url: `https://api.m.jd.com/api?functionId=getCoupons&appid=u&_=${Date.now()}&loginType=2&body={%22platform%22:4,%22unionActId%22:%2231137%22,%22actId%22:%22${$.actId}%22,%22d%22:%22${$.code}%22,%22unionShareId%22:%22${shareCode}%22,%22type%22:1,%22eid%22:%22${$.eid}%22}&client=apple&clientVersion=8.3.6&h5st=undefined`,
+            url: url,
             headers: {
                 "Accept-Language": "zh-cn",
                 "Accept-Encoding": "gzip, deflate, br",
