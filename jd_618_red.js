@@ -6,7 +6,7 @@ export CODE618=""
 
 建议禁用，避免其他问题 需要的请填写自己的码子，
 
-cron 0 0,10,20 * * * jd_618_red.js
+cron 2 0,10,20 * * * jd_618_red.js
 
 */
 const $ = new Env('618红包');
