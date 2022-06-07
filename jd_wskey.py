@@ -40,42 +40,6 @@ except Exception as err:  # 异常捕捉
 ver = 20524  # 版本号
 
 
-# def ql_2fa():
-#     ''' Demo
-#     if "WSKEY_TOKEN" in os.environ:
-#     url = 'http://127.0.0.1:{0}/api/user'.format(port)  # 设置 URL地址
-#     try:  # 异常捕捉
-#         res = s.get(url)  # HTTP请求 [GET] 使用 session
-#     except Exception as err:  # 异常捕捉
-#         logger.debug(str(err))  # 调试日志输出
-#     else:  # 判断分支
-#         if res.status_code == 200 and res.json()["code"] == 200:
-#             twoFactorActivated = str(res.json()["data"]["twoFactorActivated"])
-#             if twoFactorActivated == 'true':
-#                 logger.info("青龙 2FA 已开启!")
-#     url = 'http://127.0.0.1:{0}/api/envs?searchValue=WSKEY_Client'.format(port)  # 设置 URL地址
-#     res = s.get(url)
-#     if res.status_code == 200 and res.json()["code"] == 200:
-#         data = res.json()["data"]
-#         if len(data) == 0:
-#             url = 'http://127.0.0.1:{0}/api/apps'
-#             data = json.dumps({
-#                 "name": "wskey",
-#                 "scopes": ["crons", "envs", "configs", "scripts", "logs", "dependencies", "system"]
-#             })
-#             res = s.post(url, data=data)
-#             if res.status_code == 200 and res.json()["code"] == 200:
-#                 logger.info("OpenApi创建成功")
-#                 client_id = res.json()["data"]["client_id"]
-#                 client_secret = res.json()["data"]["client_secret"]
-#                 wskey_value = 'client_id={0}&client_secret={1}'.format(client_id, client_secret)
-#                 data = [{"value": wskey_value, "name": "WSKEY_Client", "remarks": "WSKEY_OpenApi请勿删除"}]
-#                 data = json.dumps(data)  # Json格式化数据
-#                 url = 'http://127.0.0.1:{0}/api/envs'.format(port)  # 设置 URL地址
-#                 s.post(url=url, data=data)  # HTTP[POST]请求 使用session
-#                 logger.info("\nWSKEY_Client变量添加完成\n--------------------\n")  # 标准日志输出
-#     '''
-
 def ttotp(key):
     key = base64.b32decode(key.upper() + '=' * ((8 - len(key)) % 8))
     counter = struct.pack('>Q', int(time.time() / 30))
