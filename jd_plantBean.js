@@ -26,13 +26,13 @@ const $ = new Env('京东种豆得豆');
 //Node.js用户请在jdCookie.js处填写京东ck;
 //ios等软件用户直接用NobyDa的jd cookie
 let jdNotify = true;//是否开启静默运行。默认true开启
-let cookiesArr = [], cookie = '', jdPlantBeanShareArr = [], isBox = false, notify, newShareCodes, option, message, subTitle;
+let cookiesArr = [], cookie = '', isBox = false, notify, option, message, subTitle;
 //京东接口地址
 const JD_API_HOST = 'https://api.m.jd.com/client.action';
 //助力好友分享码(最多3个,否则后面的助力失败)
 //此此内容是IOS用户下载脚本到本地使用，填写互助码的地方，同一京东账号的好友互助码请使用@符号隔开。
 //下面给出两个账号的填写示例（iOS只支持2个京东账号）
-let shareCodes = [
+let newShareCodes = [
   '4vvbjlml6tdfc4ithg6rz56qpyaap4kvcofak2i', 'otcv6vmocc5iix6e4yd2i5hrze5ac3f4ijdgqji', 'gcdr655xfdjq7i5nglyhki2vt7zoetc74i5amxy'
 ]
 let allMessage = ``;
@@ -72,7 +72,7 @@ let lnrun = 0;
       message = '';
       subTitle = '';
       option = {};
-      await shareCodesFormat();
+      // await shareCodesFormat();
       lnrun++;
       await jdPlantBean();
       if(lnrun == 3){
