@@ -245,7 +245,7 @@ async function doTask() {
   if ($.taskList && $.taskList.length > 0) {
     for (let item of $.taskList) {
       if (item.isFinished === 1) {
-        console.log(`${item.taskName} 任务已完成\n`);
+        console.log(`${item.taskName} 任务已完成`);
         continue;
       } else {
         if (item.taskType === 8) {
