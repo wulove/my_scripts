@@ -3,7 +3,7 @@
 活动入口：QQ星儿童牛奶京东自营旗舰店->品牌会员->星系牧场
 [task_local]
 #星系牧场
-1 0-23/4 * * * jd_qqxing.js
+22 4-22/3 * * * jd_qqxing.js
 */
 const $ = new Env('QQ星系牧场');
 //Node.js用户请在jdCookie.js处填写京东ck;
@@ -16,6 +16,13 @@ Exchange = true;
 //IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [],
     cookie = '';
+function oc(fn, defaultVal) {//optioanl chaining
+  try {
+    return fn()
+  } catch (e) {
+    return undefined
+  }
+}
 if ($.isNode()) {
     Object.keys(jdCookieNode).forEach((item) => {
         cookiesArr.push(jdCookieNode[item])
@@ -27,15 +34,18 @@ if ($.isNode()) {
 
 const JD_API_HOST = `https://api.m.jd.com/client.action`;
 message = ""
-$.shareuuid = ['af61ae9a5e7a45ca8caccf74bbd93d30'];
-    !(async () => {
+!(async () => {
+		console.log("活动入口：https://lzdz-isv.isvjcloud.com/dingzhi/qqxing/pasture/activity/5270742?activityId=90121061401\n此活动黑IP严重，仅跑前7账号，需要请自行修改")
         if (!cookiesArr[0]) {
             $.msg($.name, '【提示】请先获取cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/', {
                 "open-url": "https://bean.m.jd.com/"
             });
             return;
         }
-        for (let i = 0; i <cookiesArr.length; i++) {
+		let codeList = ['bf3ffb1c973a49acbac4983ac15162f3','be5c05485b624d69b2bb1acee71ffc87']
+		$.shareUuid = codeList[Math.floor((Math.random()*codeList.length))]
+        //for (let i = 0; i <cookiesArr.length; i++) {
+		for (let i = 0; i < 7; i++) {
             cookie = cookiesArr[i];
             if (cookie) {
                 $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1])
@@ -75,16 +85,18 @@ $.shareuuid = ['af61ae9a5e7a45ca8caccf74bbd93d30'];
                         console.log(task.taskname)
                         if (task.taskid == "interact") {
                             for (l = 0; l < 20 - task.curNum; l++) {
-                                await dotask(task.taskid, task.params)
-                                await $.wait(18000)
+                                console.log('完成任务中....等待5秒....')
+								await dotask(task.taskid, task.params)
+                                await $.wait(5000)
                             }
+						console.log('互动完成')
                         } else if (task.taskid == "scansku") {
                             await getproduct()
                             await writePersonInfo($.vid)
                             await dotask(task.taskid, $.pparam)
 						} else if (task.taskid !== "add2cart") {
                             await dotask(task.taskid, task.params)
-                            await $.wait(18000)
+                            await $.wait(5000)
                         }
                     }
                     await getinfo()
@@ -94,7 +106,7 @@ $.shareuuid = ['af61ae9a5e7a45ca8caccf74bbd93d30'];
                     let exchanges =Math.floor($.foodNum/10000)
                     console.log(`可兑换 ${exchanges} 次 100京🐶`)
                     for(q = 0;q<exchanges && Exchange;q++){
-                    await exchange(16)   //16是100豆，14是50豆，13是20豆
+                    await exchange(14)   //16是100豆，14是50豆，13是20豆
                     }
                     await getinfo()
                     if(!Exchange){console.log("你 默认 不兑换东西,请自行进去活动兑换")}
@@ -108,7 +120,7 @@ $.shareuuid = ['af61ae9a5e7a45ca8caccf74bbd93d30'];
         }
         if (message.length != 0) {
         if ($.isNode()) {
-           await notify.sendNotify("星系牧场", `${message}\n牧场入口：QQ星儿童牛奶京东自营旗舰店->星系牧场\n\n吹水群：https://t.me/wenmouxx`);
+           //await notify.sendNotify("星系牧场", `${message}\n牧场入口：QQ星儿童牛奶京东自营旗舰店->星系牧场\n\n`);
    }  else {
             $.msg($.name, "", '星系牧场' + message)
         }
@@ -121,7 +133,7 @@ $.shareuuid = ['af61ae9a5e7a45ca8caccf74bbd93d30'];
 // 更新cookie 
 
 function updateCookie (resp) {
-    if (!resp?.headers['set-cookie']){
+    if (!oc(() => resp.headers['set-cookie'])){
         return
     }
     let obj = {}
@@ -294,7 +306,7 @@ function getshopid() {
 
 //获取我的pin
 function getMyPin() {
-    let config = taskPostUrl("/customer/getMyPing", `userId=${$.shopid}&token=${encodeURIComponent($.token2)}&fromType=APP`)
+    let config = taskPostUrl("/dingzhi/bd/common/getMyPing", `userId=${$.shopid}&token=${encodeURIComponent($.token2)}&fromType=APP&activityId=90121061401`)
     //   console.log(config)
     return new Promise(resolve => {
         $.post(config, async (err, resp, data) => {
@@ -399,7 +411,7 @@ function getUid() {
                            if(data.data.openCardStatus !=3){
                            console.log("当前未开卡,无法助力和兑换奖励哦")
                            }                           
-                            $.shareuuid = data.data.uid
+                            $.shareuuid = data.data.uid                            
                             console.log(`\n【京东账号${$.index}（${$.UserName}）的${$.name}好友互助码】${$.shareuuid}\n`);
                         }
                       }
@@ -414,13 +426,13 @@ function getUid() {
 
 //获取任务列表
 function getinfo() {
-    let config = taskPostUrl("/dingzhi/qqxing/pasture/myInfo", `activityId=90121061401&pin=${encodeURIComponent($.pin)}&pinImg=${$.pinImg}&nick=${$.nick}&cjyxPin=&cjhyPin=&shareUuid=${$.shareuuid}`)
+    let config = taskPostUrl("/dingzhi/qqxing/pasture/myInfo", `activityId=90121061401&pin=${encodeURIComponent($.pin)}&pinImg=${$.pinImg}&actorUuid=${$.shareuuid}&userUuid=${$.shareuuid}`)
     return new Promise(resolve => {
         $.post(config, async (err, resp, data) => {
             updateCookie(resp)
             try {
                 if (err) {
-                    console.log(`${JSON.stringify(err)}`)
+                    //console.log(`${JSON.stringify(err)}`)
                     console.log(`${$.name} API请求失败，请检查网路重试`)
                 } else {
                     data = JSON.parse(data);
@@ -522,12 +534,12 @@ function exchange(id) {
                 } else {
                     data = JSON.parse(data);
                  //   console.log()
-if(data.result){
-console.log(`兑换 ${data.data.rewardName}成功`)
-$.exchange += 20
-}else{
-console.log(JSON.stringify(data))
-}
+					if(data.result){
+					console.log(`兑换 ${data.data.rewardName}成功`)
+					$.exchange += 20
+					}else{
+                     console.log(data.errorMessage,'\n')
+					}
                 }
             } catch (e) {
                 $.logErr(e, resp)
@@ -608,7 +620,7 @@ function taskUrl(url, body) {
             'Host': 'lzdz-isv.isvjcloud.com',
             'Accept': 'application/json',
             //     'X-Requested-With': 'XMLHttpRequest',
-            'Referer': 'https://lzdz-isv.isvjcloud.com/dingzhi/qqxing/pasture/activity/6318274?activityId=90121061401&shareUuid=15739046ca684e8c8fd303c8a14e889a&adsource=null&shareuserid4minipg=Ej42XlmwUZpSlF8TzjHBW2Sy3WQlSnqzfk0%2FaZMj9YjTmBx5mleHyWG1kOiKkz%2Fk&shopid=undefined&lng=107.146945&lat=33.255267&sid=cad74d1c843bd47422ae20cadf6fe5aw&un_area=8_573_6627_52446',
+            'Referer': 'https://lzdz-isv.isvjcloud.com',
             'user-agent': 'jdapp;android;10.0.4;11;2393039353533623-7383235613364343;network/wifi;model/Redmi K30;addressid/138549750;aid/290955c2782e1c44;oaid/b30cf82cacfa8972;osVer/30;appBuild/88641;partner/xiaomi001;eufv/1;jdSupportDarkMode/0;Mozilla/5.0 (Linux; Android 11; Redmi K30 Build/RKQ1.200826.002; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/77.0.3865.120 MQQBrowser/6.2 TBS/045537 Mobile Safari/537.36',
             'content-type': 'application/x-www-form-urlencoded',
             'Cookie': cookie,
@@ -627,7 +639,7 @@ function taskPostUrl(url, body) {
             'Host': 'lzdz-isv.isvjcloud.com',
             'Accept': 'application/json',
             'X-Requested-With': 'XMLHttpRequest',
-            'Referer': 'https://lzdz-isv.isvjcloud.com/dingzhi/qqxing/pasture/activity/6318274?activityId=90121061401&shareUuid=15739046ca684e8c8fd303c8a14e889a&adsource=null&shareuserid4minipg=Ej42XlmwUZpSlF8TzjHBW2Sy3WQlSnqzfk0%2FaZMj9YjTmBx5mleHyWG1kOiKkz%2Fk&shopid=undefined&lng=107.146945&lat=33.255267&sid=cad74d1c843bd47422ae20cadf6fe5aw&un_area=8_573_6627_52446',
+            'Referer': 'https://lzdz-isv.isvjcloud.com',
             'user-agent': 'jdapp;android;10.0.4;11;2393039353533623-7383235613364343;network/wifi;model/Redmi K30;addressid/138549750;aid/290955c2782e1c44;oaid/b30cf82cacfa8972;osVer/30;appBuild/88641;partner/xiaomi001;eufv/1;jdSupportDarkMode/0;Mozilla/5.0 (Linux; Android 11; Redmi K30 Build/RKQ1.200826.002; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/77.0.3865.120 MQQBrowser/6.2 TBS/045537 Mobile Safari/537.36',
             'content-type': 'application/x-www-form-urlencoded',
             'Cookie': cookie,

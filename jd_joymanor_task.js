@@ -1,24 +1,27 @@
 /*
 
-脚本默认会帮我助力开工位，介意请添加变量HELP_JOYPARK，false为不助力
-export HELP_JOYPARK=""
+只做任务，邀请貌似不行
+
+手动进入活动完成引导，否则领取不了奖励
+
+入口：APP首页下拉-JOY庄园
 
 ============Quantumultx===============
 [task_local]
-#汪汪乐园每日任务
-0 1,7,20 * * * jd_joypark_task.js, tag=汪汪乐园每日任务, img-url=https://raw.githubusercontent.com/tsukasa007/icon/master/jd_joypark_task.png, enabled=true
+#JOY庄园每日任务
+11 1,15 * * * jd_joymanor_task.js, tag=JOY庄园每日任务, img-url=https://raw.githubusercontent.com/tsukasa007/icon/master/jd_joymanor_task.png, enabled=true
 
 ================Loon==============
 [Script]
-cron "0 1,7,20 * * *" script-path=jd_joypark_task.js,tag=汪汪乐园每日任务
+cron "11 1,15 * * *" script-path=jd_joymanor_task.js,tag=JOY庄园每日任务
 
 ===============Surge=================
-汪汪乐园每日任务 = type=cron,cronexp="0 1,7,20 * * *",wake-system=1,timeout=3600,script-path=jd_joypark_task.js
+JOY庄园每日任务 = type=cron,cronexp="11 1,15 * * *",wake-system=1,timeout=3600,script-path=jd_joymanor_task.js
 
 ============小火箭=========
-汪汪乐园每日任务 = type=cron,script-path=jd_joypark_task.js, cronexpr="0 1,7,20 * * *", timeout=3600, enable=true
+JOY庄园每日任务 = type=cron,script-path=jd_joymanor_task.js, cronexpr="11 1,15 * * *", timeout=3600, enable=true
 */
-const $ = new Env('汪汪乐园每日任务');
+const $ = new Env('JOY庄园每日任务');
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 const notify = $.isNode() ? require('./sendNotify') : '';
 //IOS等用户直接用NobyDa的jd cookie
@@ -58,7 +61,7 @@ message = ""
 	  $.UA = `jdapp;iPhone;10.1.4;13.1.2;${randomString(40)};network/wifi;model/iPhone8,1;addressid/2308460611;appBuild/167814;jdSupportDarkMode/0;Mozilla/5.0 (iPhone; CPU iPhone OS 13_1_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1`
 
       console.log(`\n******开始【京东账号${$.index}】${$.nickName || $.UserName}*********\n`);
-      if (!$.isLogin) {
+	  if (!$.isLogin) {
         $.msg($.name, `【提示】cookie已失效`, `京东账号${$.index} ${$.nickName || $.UserName}\n请重新登录获取\nhttps://bean.m.jd.com/bean/signIndex.action`, {
           "open-url": "https://bean.m.jd.com/bean/signIndex.action"
         });
@@ -67,6 +70,14 @@ message = ""
         }
         continue
       }
+	  await getJoyBaseInfo()
+	  await $.wait(1000)
+	  if ($.joyBaseInfo && $.joyBaseInfo.invitePin) {
+		$.log(`${$.name} - ${$.UserName}  助力码: ${$.joyBaseInfo.invitePin}`);
+		$.invitePinTaskList.push($.joyBaseInfo.invitePin);
+	  } else {
+		// $.log(`${$.name} - ${$.UserName}  助力码: null`);
+	  }
       await getTaskList();
 
       // 签到 / 逛会场 / 浏览商品
@@ -195,7 +206,7 @@ message = ""
 function getTaskList() {
   //await $.wait(20)
   return new Promise(resolve => {
-    $.post(taskPostClientActionUrl(`body={"linkId":"LsQNxL7iWDlXUs6cFl-AAg"}&appid=activities_platform`, `apTaskList`), async (err, resp, data) => {
+    $.post(taskPostClientActionUrl(`body={"linkId":"Vr5e5qokLNCRxNmi4VTW4Q"}&appid=activities_platform`, `apTaskList`), async (err, resp, data) => {
       $.log('=== 任务列表 start ===')
       try {
         if (err) {
@@ -226,32 +237,34 @@ function getTaskList() {
  * @returns {Promise<unknown>}
  */
 function getJoyBaseInfo(taskId = '', inviteType = '', inviterPin = '') {
-  //await $.wait(20)
-  return new Promise(resolve => {
-    $.post(taskPostClientActionUrl(`body={"taskId":"${taskId}","inviteType":"${inviteType}","inviterPin":"${inviterPin}","linkId":"LsQNxL7iWDlXUs6cFl-AAg"}&_t=1625480372020&appid=activities_platform`, `joyBaseInfo`), async (err, resp, data) => {
-      try {
-        if (err) {
-          console.log(`${JSON.stringify(err)}`)
-          console.log(`${$.name} API请求失败，请检查网路重试`)
-        } else {
-          data = JSON.parse(data);
-          $.joyBaseInfo = data.data
-        }
-      } catch (e) {
-        $.logErr(e, resp)
-      } finally {
-        //$.log(`resolve start`)
-        resolve(data);
-        //$.log(`resolve end`)
-      }
+    //await $.wait(20)
+    return new Promise(resolve => {
+        $.post(taskPostClientActionUrl(`body={"taskId":"${taskId}","inviteType":"${inviteType}","inviterPin":"${inviterPin}","linkId":"Vr5e5qokLNCRxNmi4VTW4Q"}&appid=activities_platform&t=${Date.now()}&client=activities_platform&h5st=20220509105406529%3B9112909836479988%3B4abce%3Btk02w774b1bbd18nGS0GgF00CXWFenyTPHs%2Bp26eYf9ZmlZVf%2BvEe3Gf0Zd80IGUasS%2FWd%2FoZlsJdtXKnoeXyciIpR1U%3B367214d88c1dbeda0cee50036420f60572854e94d718de89adee91dc59e42668%3B3.0%3B1652064846529&cthr=1`, `joyBaseInfo`), async (err, resp, data) => {
+            try {
+                if (err) {
+                    console.log(`${JSON.stringify(err)}`)
+                    console.log(`${$.name} API请求失败，请检查网路重试`)
+                } else {
+                    data = JSON.parse(data);
+                    $.joyBaseInfo = data.data
+					//console.log(`${JSON.stringify(data)}`)
+                }
+            } catch (e) {
+                $.logErr(e, resp)
+            } finally {
+                //$.log(`resolve start`)
+                resolve(data);
+                //$.log(`resolve end`)
+            }
+        })
     })
-  })
 }
+
 
 function apDoTask(taskId, taskType, itemId = '', appid = 'activities_platform') {
   //await $.wait(20)
   return new Promise(resolve => {
-    $.post(taskPostClientActionUrl(`body={"taskType":"${taskType}","taskId":${taskId},"channel":4,"linkId":"LsQNxL7iWDlXUs6cFl-AAg","itemId":"${itemId}"}&appid=${appid}`, `apDoTask`), async (err, resp, data) => {
+    $.post(taskPostClientActionUrl(`body={"taskType":"${taskType}","taskId":${taskId},"channel":4,"linkId":"Vr5e5qokLNCRxNmi4VTW4Q","itemId":"${itemId}"}&appid=${appid}`, `apDoTask`), async (err, resp, data) => {
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
@@ -270,7 +283,7 @@ function apDoTask(taskId, taskType, itemId = '', appid = 'activities_platform') 
 
 function apDoTask2(taskId, taskType, itemId, appid = 'activities_platform') {
   return new Promise(resolve => {
-    $.post(taskPostClientActionUrl(`body={"taskType":"${taskType}","taskId":${taskId},"linkId":"LsQNxL7iWDlXUs6cFl-AAg","itemId":"${itemId}"}&appid=${appid}`, `apDoTask`), async (err, resp, data) => {
+    $.post(taskPostClientActionUrl(`body={"taskType":"${taskType}","taskId":${taskId},"linkId":"Vr5e5qokLNCRxNmi4VTW4Q","itemId":"${itemId}"}&appid=${appid}`, `apDoTask`), async (err, resp, data) => {
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
@@ -290,7 +303,7 @@ function apDoTask2(taskId, taskType, itemId, appid = 'activities_platform') {
 function apTaskDetail(taskId, taskType) {
   //await $.wait(20)
   return new Promise(resolve => {
-    $.post(taskPostClientActionUrl(`functionId=apTaskDetail&body={"taskType":"${taskType}","taskId":${taskId},"channel":4,"linkId":"LsQNxL7iWDlXUs6cFl-AAg"}&appid=activities_platform`, `apTaskDetail`), async (err, resp, data) => {
+    $.post(taskPostClientActionUrl(`functionId=apTaskDetail&body={"taskType":"${taskType}","taskId":${taskId},"channel":4,"linkId":"Vr5e5qokLNCRxNmi4VTW4Q"}&appid=activities_platform`, `apTaskDetail`), async (err, resp, data) => {
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
@@ -319,7 +332,7 @@ function apTaskDetail(taskId, taskType) {
 function apTaskDrawAward(taskId, taskType) {
   //await $.wait(20)
   return new Promise(resolve => {
-    $.post(taskPostClientActionUrl(`body={"taskType":"${taskType}","taskId":${taskId},"linkId":"LsQNxL7iWDlXUs6cFl-AAg"}&appid=activities_platform`, `apTaskDrawAward`), async (err, resp, data) => {
+    $.post(taskPostClientActionUrl(`body={"taskType":"${taskType}","taskId":${taskId},"linkId":"Vr5e5qokLNCRxNmi4VTW4Q"}&appid=activities_platform`, `apTaskDrawAward`), async (err, resp, data) => {
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
@@ -346,7 +359,7 @@ function taskPostClientActionUrl(body, functionId) {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Host': 'api.m.jd.com',
       'Origin': 'https://joypark.jd.com',
-      'Referer': 'https://joypark.jd.com/?activityId=LsQNxL7iWDlXUs6cFl-AAg&lng=113.387899&lat=22.512678&sid=4d76080a9da10fbb31f5cd43396ed6cw&un_area=19_1657_52093_0',
+      'Referer': 'https://joypark.jd.com/?activityId=Vr5e5qokLNCRxNmi4VTW4Q&lng=113.387899&lat=22.512678&sid=4d76080a9da10fbb31f5cd43396ed6cw&un_area=19_1657_52093_0',
       'Cookie': cookie,
     }
   }

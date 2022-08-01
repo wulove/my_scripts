@@ -48,7 +48,7 @@ if ($.isNode()) {
 			$.nickName = '';
 			$.maxPage = '1';
 			message = '';
-			await TotalBean();
+			//await TotalBean();
 			console.log(`******开始查询【京东账号${$.index}】${$.nickName || $.UserName}*********\n`);
 			if (!$.isLogin) {
 				$.msg($.name, `【提示】cookie已失效`, `京东账号${$.index} ${$.nickName || $.UserName}\n请重新登录获取\nhttps://bean.m.jd.com/bean/signIndex.action`, {
@@ -92,7 +92,7 @@ async function main() {
                     let title = surveyItem.title
                     let subTitle = surveyItem.subTitle
                     let answerUrl = surveyItem.answerUrl
-                    msg += `${index+1}.【${title}】 ${subTitle}\n点击以下链接直达问卷\n${answerUrl}\n`
+                    msg += `${index+1}.【${title}】 ${subTitle}\n<a href="${answerUrl}">点击这里开启问卷</a>\n`
                 }
             }
 			if ($.isNode() && WP_APP_TOKEN_ONE) {

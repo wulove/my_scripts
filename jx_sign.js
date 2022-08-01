@@ -35,7 +35,7 @@ const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 //IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [], cookie = '', message;
 let UA, UAInfo = {}, isLoginInfo = {};
-$.shareCodes = [[{use:'恋你莲我',smp:'7a3c29871e087342d38603bb81738544',num:0,max:false},{use:'jd_rtrqrVNXHIXE',smp:'bf45dbbf13be83c1ea2c691023d6135b',num:0,max:false}][Math.floor((Math.random()*2))]];
+$.shareCodes = [];
 $.blackInfo = {}
 $.appId = "0ac98";
 const JX_FIRST_RUNTASK = $.isNode() ? (process.env.JX_FIRST_RUNTASK && process.env.JX_FIRST_RUNTASK === 'xd' ? '5' : '1000') : ($.getdata('JX_FIRST_RUNTASK') && $.getdata('JX_FIRST_RUNTASK') === 'xd' ? '5' : '1000')
@@ -65,7 +65,7 @@ if ($.isNode()) {
       
       } else {
         if (!isLoginInfo[$.UserName]) {
-          await TotalBean();
+          //await TotalBean();
           isLoginInfo[$.UserName] = $.isLogin
         }
       }
@@ -92,7 +92,7 @@ if ($.isNode()) {
       
       } else {
         if (!isLoginInfo[$.UserName]) {
-          await TotalBean();
+          //await TotalBean();
           isLoginInfo[$.UserName] = $.isLogin
         }
       }
@@ -472,7 +472,7 @@ function taskUrl(functionId, body = '') {
       "User-Agent": UA,
       "Accept-Language": "zh-CN,zh-Hans;q=0.9",
       "Referer": "https://st.jingxi.com/",
-      "Cookie": cookie
+      "Cookie": `cid=4;${cookie}`
     }
   }
 }
@@ -488,7 +488,7 @@ function JDtaskUrl(functionId, body = '') {
       "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1"),
       "Accept-Language": "zh-CN,zh-Hans;q=0.9",
       "Referer": "https://wqs.jd.com/",
-      "Cookie": cookie
+      "Cookie": `cid=4;${cookie}`
     }
   }
 }
