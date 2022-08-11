@@ -13,7 +13,7 @@
 5 6-18/6 * * * jd_fruit.js, tag=东东农场, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jdnc.png, enabled=true
 =========================Loon=============================
 [Script]
-cron "5 6-18/6 * * *" script-path=jd_fruit.js,tag=东东农场
+cron "15 6-18/5 * * *" script-path=jd_fruit.js,tag=东东农场
 
 =========================Surge============================
 东东农场 = type=cron,cronexp="5 6-18/6 * * *",wake-system=1,timeout=3600,script-path=jd_fruit.js
@@ -26,7 +26,7 @@ jd免费水果 搬的https://github.com/liuxiaoyucc/jd-helper/blob/a6f275d978574
 export DO_TEN_WATER_AGAIN="" 默认再次浇水
 
 */
-const $ = new Env('东东农场');
+const $ =  new Env('东东农场');
 let cookiesArr = [], cookie = '', isBox = false, notify, allMessage = '';
 //助力好友分享码(最多3个,否则后面的助力失败),原因:京东农场每人每天只有3次助力机会
 //下面给出两个账号的填写示例（iOS只支持2个京东账号）
