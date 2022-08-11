@@ -11,7 +11,7 @@
 #京东会员-摇京豆
 3 10 1 * * https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_shakeBean.js, tag=京东会员-摇京豆,  enabled=true
 */
-const $ = new Env('京东会员-摇一摇');
+const $ =new Env('京东会员-摇一摇');
 const jdCookieNode = $.isNode() ? require("./jdCookie.js") : "";
 const notify = $.isNode() ? require("./sendNotify") : "";
 let cookiesArr = [], cookie = "", message = '', helpList = [];

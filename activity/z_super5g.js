@@ -32,7 +32,7 @@ cron "5 1,6,11,16,21 * 3-4 * " script-path=https://raw.githubusercontent.com/i-c
 5G超级盲盒 = type=cron,script-path=https://raw.githubusercontent.com/i-chenzhe/qx/main/z_super5g.js, cronexpr="5 1,6,11,16,21 * 3-4 * ", timeout=3600, enable=true
  */
 
-const $ = new Env('5G超级盲盒');
+const $ =new Env('5G超级盲盒');
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 const notify = $.isNode() ? require('./sendNotify') : '';
 let cookiesArr = [], cookie = '', message = '';

@@ -5,7 +5,7 @@
  * @Last Modified time: 2021-3-29 11:52:54
  */
 const querystring = require("querystring");
-const $ = new Env();
+const $ =new Env();
 let config = { ...require('./config.js'),
     ...process.env
 }

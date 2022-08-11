@@ -22,7 +22,7 @@ cron "20 8,12 * * *" script-path=https://gitee.com/lxk0301/jd_scripts/raw/master
 京东压岁钱 = type=cron,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_newYearMoney.js, cronexpr="20 8,12 * * *", timeout=3600, enable=true
  */
 
-const $ = new Env('京东压岁钱');
+const $ =new Env('京东压岁钱');
 
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;

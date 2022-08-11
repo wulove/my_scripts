@@ -21,7 +21,7 @@ JOY庄园每日任务 = type=cron,cronexp="11 1,15 * * *",wake-system=1,timeout=
 ============小火箭=========
 JOY庄园每日任务 = type=cron,script-path=jd_joymanor_task.js, cronexpr="11 1,15 * * *", timeout=3600, enable=true
 */
-const $ = new Env('JOY庄园每日任务');
+const $ =new Env('JOY庄园每日任务');
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 const notify = $.isNode() ? require('./sendNotify') : '';
 //IOS等用户直接用NobyDa的jd cookie

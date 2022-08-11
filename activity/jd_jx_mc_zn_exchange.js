@@ -9,7 +9,7 @@
 cron "59 19 11-30 11 *" script-path=jd_jx_mc_zn_exchange.js,tag=牧场助农兑换
 */
 const {Env} = require('./utils/magic');
-const $ = new Env('M牧场助农兑换');
+const $ =new Env('M牧场助农兑换');
 $.logic = async function () {
     let {goodslist} = await GetLoveGoodsList();
     //红包商品

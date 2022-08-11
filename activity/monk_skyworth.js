@@ -15,7 +15,7 @@ cron "15 08 2-18 4 *" script-path=https://raw.githubusercontent.com/monk-coder/d
 ============小火箭=========
 创维408下班全勤奖 = type=cron,script-path=https://raw.githubusercontent.com/monk-coder/dust/dust/normal/monk_skyworth.js, cronexpr="15 08 2-18 4 *", timeout=3600, enable=true
 */
-const $ = new Env("下班全勤奖");
+const $ =new Env("下班全勤奖");
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 const notify = $.isNode() ? require('./sendNotify') : '';
 const cp = $.isNode() ? require('child_process') : '';

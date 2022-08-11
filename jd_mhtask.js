@@ -5,7 +5,7 @@ export jd_mhurlList=""
 即时任务，无需cron
  */
 
-const $ = new Env('盲盒任务抽京豆');
+const $ =new Env('盲盒任务抽京豆');
 const notify = $.isNode() ? require('./sendNotify') : '';
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;

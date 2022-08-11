@@ -5,7 +5,7 @@
 #星系牧场
 22 4-22/3 * * * jd_qqxing.js
 */
-const $ = new Env('QQ星系牧场');
+const $ =new Env('QQ星系牧场');
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 const randomCount = $.isNode() ? 20 : 5;

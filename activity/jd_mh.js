@@ -26,7 +26,7 @@ cron "1 7 * * *" script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_
 ============小火箭=========
 盲盒抽京豆 = type=cron,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_mh.js, cronexpr="1 8,12,18* * *", timeout=200, enable=true
  */
-const $ = new Env('盲盒抽京豆');
+const $ =new Env('盲盒抽京豆');
 const notify = $.isNode() ? require('../sendNotify') : '';
 const jdCookieNode = $.isNode() ? require('../jdCookie.js') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;

@@ -13,7 +13,7 @@ cron "58 59 7,10,13,15,19 * * *" script-path=https://raw.githubusercontent.com/K
 ============小火箭=========
 极速版抢卷 = type=cron,script-path=https://raw.githubusercontent.com/KingRan/KR/main/jd_10_4.js, cronexpr="58 59 7,10,13,15,19 * * *", timeout=3600, enable=true
  */
-const $ = new Env('抢极速版全品卷10-4');
+const $ =new Env('抢极速版全品卷10-4');
 const moment = require('moment');
 //进容器安装依赖： npm install -g moment
 const notify = $.isNode() ? require('./sendNotify') : '';

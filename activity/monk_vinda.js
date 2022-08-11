@@ -16,7 +16,7 @@ cron "15 08 5-30 4 *" script-path=https://share.r2ray.com/dust/member/monk_vinda
 ============小火箭=========
 “韧”性探索 空降好礼 = type=cron,script-path=https://share.r2ray.com/dust/member/monk_vinda.js.js, cronexpr="15 08 5-30 4 *", timeout=3600, enable=true
 */
-const $ = new Env("Vinda-维达品牌日");
+const $ =new Env("Vinda-维达品牌日");
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 const notify = $.isNode() ? require('./sendNotify') : '';
 const cp = $.isNode() ? require('child_process') : '';

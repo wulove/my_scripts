@@ -9,7 +9,7 @@
  *  0.5元红包：ddwPaperMoney=500, dwLvl=6
  **/
 
-const $ = new Env("财富岛红包");
+const $ =new Env("财富岛红包");
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 const notify = $.isNode() ? require('./sendNotify') : '';
 const JD_API_HOST = "https://m.jingxi.com/";

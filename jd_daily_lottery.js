@@ -8,7 +8,7 @@
 #每日抽奖
 30 9 * 7 * jd_daily_lottery.js, tag=每日抽奖, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
 */
-const $ = new Env('京东快递-每日抽奖');
+const $ =new Env('京东快递-每日抽奖');
 const notify = $.isNode() ? require('./sendNotify') : '';
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 const activityCode = '1545335372043517952';

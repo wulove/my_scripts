@@ -18,7 +18,7 @@ cron "10 10 7-9 4 *" script-path=https://share.r2ray.com/dust/i-chenzhe/z_xmf.js
 ============小火箭=========
 京东小魔方 = type=cron,script-path=https://share.r2ray.com/dust/i-chenzhe/z_xmf.js, cronexpr="10 10 7-9 4 *", timeout=3600, enable=true
 */
-const $ = new Env('京东小魔方');
+const $ =new Env('京东小魔方');
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';

@@ -15,7 +15,7 @@ PandaToken 请前往 https://t.me/pang_da_bot  获取Token
 [Script]
 cron "11 1,20 * * *" script-path=jd_cash_mod.js,tag=签到领现金
  */
-const $ = new Env('签到领现金_Panda');
+const $ =new Env('签到领现金_Panda');
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';

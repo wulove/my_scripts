@@ -11,7 +11,7 @@ AQI-US = type=http-response, pattern=https://weather-data.apple.com/v1/weather/[
 [MITM]
 hostname = weather-data.apple.com
 */
-const $ = new Env('牛逼天气');
+const $ =new Env('牛逼天气');
 aqicnToken = $.getdata('hackl0us_aqi_token');
 
 const AirQualityStandard = {

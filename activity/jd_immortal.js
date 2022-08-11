@@ -25,7 +25,7 @@ cron "20 8,12,22 * * *" script-path=https://gitee.com/lxk0301/jd_scripts/raw/mas
 ============小火箭=========
 京东神仙书院 = type=cron,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_immortal.js, cronexpr="20 8,12,22 * * *", timeout=3600, enable=true
  */
-const $ = new Env('京东神仙书院');
+const $ =new Env('京东神仙书院');
 
 const notify = $.isNode() ? require('../sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;

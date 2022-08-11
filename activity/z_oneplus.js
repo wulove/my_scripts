@@ -26,7 +26,7 @@ cron "11 12 17-30 3 *" script-path=https://raw.githubusercontent.com/i-chenzhe/q
 ============小火箭=========
 一加盲盒 = type=cron,script-path=https://raw.githubusercontent.com/i-chenzhe/qx/main/z_oneplus.js, cronexpr="11 12 17-30 3 *", timeout=3600, enable=true
  */
-const $ = new Env('一加盲盒');
+const $ =new Env('一加盲盒');
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 const notify = $.isNode() ? require('./sendNotify') : '';
 const path = $.isNode() ? require('path') : '';

@@ -21,7 +21,7 @@ cron "3 20 * * *" script-path=https://raw.githubusercontent.com/i-chenzhe/qx/mai
 ============小火箭=========
 摇一摇 = type=cron,script-path=https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_shake.js, cronexpr="3 20 * * *", timeout=3600, enable=true
 */
-const $ = new Env('超级摇一摇');
+const $ =new Env('超级摇一摇');
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 const notify = $.isNode() ? require('./sendNotify') : '';
 let cookiesArr = [], cookie = '';

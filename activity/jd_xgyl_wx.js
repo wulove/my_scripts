@@ -21,7 +21,7 @@ cron "3 0,7 * * *" script-path=jd_xgyl_wx.js, tag=小鸽有礼
 ============小火箭=========
 小鸽有礼 = type=cron,script-path=jd_xgyl_wx.js, cronexpr="3 0,7 * * *", timeout=3600, enable=true
  */
-const $ = new Env('小鸽有礼');
+const $ =new Env('小鸽有礼');
 const notify = $.isNode() ? require('./sendNotify') : '';
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 const activityCode = '1519660363614781440';

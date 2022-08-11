@@ -31,7 +31,7 @@ cron "12 0 19-24 3 * " script-path=https://raw.githubusercontent.com/i-chenzhe/q
 城城分现金 = type=cron,script-path=https://raw.githubusercontent.com/i-chenzhe/qx/main/z_city_cash.js, cronexpr="12 0 19-24 3 * ", timeout=3600, enable=true
  */
 
-const $ = new Env('城城分现金');
+const $ =new Env('城城分现金');
 const jdCookieNode = $.isNode() ? require('../jdCookie.js') : '';
 const notify = $.isNode() ? require('../sendNotify') : '';
 let cookiesArr = [], cookie = '',  message = '';

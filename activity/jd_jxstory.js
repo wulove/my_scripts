@@ -24,7 +24,7 @@ cron "10 7 * * *" script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd
  */
 
 
-const $ = new Env('京喜故事');
+const $ =new Env('京喜故事');
 const JD_API_HOST = 'https://m.jingxi.com';
 
 const notify = $.isNode() ? require('../sendNotify') : '';

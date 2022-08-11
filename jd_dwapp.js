@@ -5,7 +5,7 @@ update：20220530
 cron 33 7 * * * jd_dwapp.js
 */
 
-const $ = new Env('积分换话费');
+const $ =new Env('积分换话费');
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';

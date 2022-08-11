@@ -15,7 +15,7 @@ cron "0 0 * * *" script-path=https://raw.githubusercontent.com/wulove/my_scripts
 天天优惠大乐透 = type=cron,script-path=https://raw.githubusercontent.com/wulove/my_scripts/main/jd_daydlt.js, cronexpr="0 0 * * *", timeout=3600, enable=true
  */
 
-const $ = new Env('天天优惠大乐透');
+const $ =new Env('天天优惠大乐透');
 
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;

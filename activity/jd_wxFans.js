@@ -6,7 +6,7 @@
 cron  "34 5,17 * * *" jd_wxFans.js
 * https://raw.githubusercontent.com/star261/jd/main/scripts/jd_fan.js
 * */
-const $ = new Env('粉丝互动');
+const $ =new Env('粉丝互动');
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 const notify = $.isNode() ? require('./sendNotify') : '';
 let cookiesArr = [];

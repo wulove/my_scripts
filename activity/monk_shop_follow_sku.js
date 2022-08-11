@@ -14,7 +14,7 @@ cron "15 15 * * *" script-path=https://raw.githubusercontent.com/monk-coder/dust
 ============小火箭=========
 关注有礼 = type=cron,script-path=https://raw.githubusercontent.com/monk-coder/dust/dust/normal/monk_shop_follow_sku.js, cronexpr="15 15 * * *", timeout=3600, enable=true
 */
-const $ = new Env('店铺关注有礼');
+const $ =new Env('店铺关注有礼');
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 const notify = $.isNode() ? require('./sendNotify') : '';
 const cp = $.isNode() ? require('child_process') : '';

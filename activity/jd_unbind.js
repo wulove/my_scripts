@@ -15,7 +15,7 @@ cron "55 23 * * 6" script-path=https://raw.githubusercontent.com/LXK9301/jd_scri
 =======小火箭=====
 注销京东会员卡 = type=cron,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_unbind.js, cronexpr="10 23 * * 6", timeout=3600, enable=true
  */
-const $ = new Env('注销京东会员卡');
+const $ =new Env('注销京东会员卡');
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 const notify = $.isNode() ? require('./sendNotify') : '';

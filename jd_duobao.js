@@ -8,7 +8,7 @@
 cron "40,45 23 * * *" script-path=jd_duobao.js,tag=京豆夺宝
 */
 const {Env} = require('./utils/magic');
-const $ = new Env('M京豆夺宝');
+const $ =new Env('M京豆夺宝');
 $.logic = async function () {
     let ex = await queryexpirejingdou();
     if (ex === 0) {

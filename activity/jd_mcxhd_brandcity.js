@@ -22,7 +22,7 @@ cron "30 9,10 1-18 6 *" script-path=https://raw.githubusercontent.com/Wenmoux/sc
 新潮品牌狂欢 = type=cron,script-path=https://raw.githubusercontent.com/Wenmoux/scripts/master/jd/jd_mcxhd_brandcity.js, cronexpr="30 9,10 1-18 6 *", timeout=3600, enable=true
 
  */
-const $ = new Env('新潮品牌狂欢');
+const $ =new Env('新潮品牌狂欢');
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 

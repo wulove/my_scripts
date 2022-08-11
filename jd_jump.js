@@ -17,7 +17,7 @@ cron "1 0,11,21 * * *" script-path=jd_jump.js, tag=跳跳乐瓜分京豆
 ====================================小火箭=============================
 跳跳乐瓜分京豆 = type=cron,script-path=jd_jump.js, cronexpr="1 0,11,21 * * *", timeout=3600, enable=true
 */
-const $ = new Env('跳跳乐瓜分京豆');
+const $ =new Env('跳跳乐瓜分京豆');
 const notify = $.isNode() ? require('./sendNotify') : '';
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 // $.helpCodeList = [];

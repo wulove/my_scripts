@@ -3,7 +3,7 @@
 #京东集魔方
 cron "31 2,8 * * *" script-path=jd_jmf.js,tag=京东集魔方
  */
-const $ = new Env('京东集魔方');
+const $ =new Env('京东集魔方');
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';

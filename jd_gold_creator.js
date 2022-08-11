@@ -19,7 +19,7 @@ cron "13 1,22 * * *" script-path=jd_gold_creator.js, tag=金榜创造营
 ============小火箭=========
 金榜创造营 = type=cron,script-path=jd_gold_creator.js, cronexpr="13 1,22 * * *", timeout=3600, enable=true
  */
-const $ = new Env('金榜创造营');
+const $ =new Env('金榜创造营');
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';

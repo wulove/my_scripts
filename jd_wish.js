@@ -6,7 +6,7 @@ export wish_appNameArrList="众筹许愿池@1111点心动@冰雪闪耀季"
 
 cron请根据活动对应的规则设置
  */
-const $ = new Env('众筹许愿池');
+const $ =new Env('众筹许愿池');
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';

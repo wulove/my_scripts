@@ -18,7 +18,7 @@ cron "10 * * * *" script-path=https://raw.githubusercontent.com/KingRan/JDJB/mai
 ============小火箭=========
 天天提鹅 = type=cron,script-path=https://raw.githubusercontent.com/KingRan/JDJB/main/jd_daily_egg.js, cronexpr="10 * * * *", timeout=3600, enable=true
  */
-const $ = new Env('天天提鹅');
+const $ =new Env('天天提鹅');
 let cookiesArr = [], cookie = '';
 const JD_API_HOST = 'https://ms.jr.jd.com/gw/generic/uc/h5/m';
 const notify = $.isNode() ? require('./sendNotify') : '';

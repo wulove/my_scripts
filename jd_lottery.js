@@ -5,7 +5,7 @@
 
 //变量：export JD_Lottery="id" 多个使用  @  连接
  */
-const $ = new Env('joy抽奖机通用');
+const $ =new Env('joy抽奖机通用');
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';

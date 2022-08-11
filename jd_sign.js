@@ -8,7 +8,7 @@
 cron "48 9,22 * * *" script-path=jd_sign.js,tag=京东签到
 */
 const {Env} = require('./utils/magic');
-const $ = new Env('M京东签到')
+const $ =new Env('M京东签到')
 $.logic = async function () {
     await signBeanIndex()
     await $.wait(3000, 5000)

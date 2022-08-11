@@ -21,7 +21,7 @@ cron "10 0 * * *" script-path=jd_kd.js, tag=京东快递签到
 ============小火箭=========
 京东快递签到 = type=cron,script-path=jd_kd.js, cronexpr="10 0 * * *", timeout=3600, enable=true
  */
-const $ = new Env('京东快递签到');
+const $ =new Env('京东快递签到');
 
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;

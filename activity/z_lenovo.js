@@ -26,7 +26,7 @@ cron "12 15 15-29 3 *" script-path=https://raw.githubusercontent.com/i-chenzhe/q
 ============小火箭=========
 联想集卡活动 = type=cron,script-path=https://raw.githubusercontent.com/i-chenzhe/qx/main/z_lenovo.js, cronexpr="12 15 15-29 3 *", timeout=3600, enable=true
  */
-const $ = new Env('联想集卡活动');
+const $ =new Env('联想集卡活动');
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 const notify = $.isNode() ? require('./sendNotify') : '';
 const path = $.isNode() ? require('path') : '';

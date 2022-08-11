@@ -16,7 +16,7 @@ cron "40 0,9,17 * * *" script-path=https://raw.githubusercontent.com/KingRan/JDJ
 京东饭粒 = type=cron,script-path=https://raw.githubusercontent.com/KingRan/JDJB/main/jd_fanli.js, cronexpr="40 0,9,17 * * *", timeout=3600, enable=true
 */
 
-const $ = new Env('京东饭粒');
+const $ =new Env('京东饭粒');
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 const notify = $.isNode() ? require('./sendNotify') : '';
 let cookiesArr = [], cookie = '', message = '',personMessage='';

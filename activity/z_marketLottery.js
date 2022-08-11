@@ -15,7 +15,7 @@ cron "3 10 * * *" script-path=https://raw.githubusercontent.com/i-chenzhe/qx/mai
 ============小火箭=========
 京东超市-大转盘 = type=cron,script-path=https://raw.githubusercontent.com/i-chenzhe/qx/main/z_marketLottery.js, cronexpr="3 10 * * *", timeout=3600, enable=true
  */
-const $ = new Env('京东超市-大转盘');
+const $ =new Env('京东超市-大转盘');
 const notify = $.isNode() ? require('./sendNotify') : '';
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 let cookiesArr = [], cookie = '';

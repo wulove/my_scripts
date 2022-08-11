@@ -3,7 +3,7 @@
  满160豆需要20人助力，每个用户目前只能助力2次不同的用户。
  cron 20 0 2-15 7 * jd_qjd.js
  */
-const $ = new Env('全民抢京豆');
+const $ =new Env('全民抢京豆');
 
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;

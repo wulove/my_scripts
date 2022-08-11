@@ -23,7 +23,7 @@ cron "0 0,1-22/2 1-31 4-7 *" script-path=https://share.r2ray.com/dust/member/mon
 ============小火箭=========
 有机牧场 = type=cron,script-path=https://share.r2ray.com/dust/member/monk_pasture.js, cronexpr="0 0,1-22/2 1-31 4-7 *", timeout=3600, enable=true
 */
-const $ = new Env('有机牧场');
+const $ =new Env('有机牧场');
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 const notify = $.isNode() ? require('./sendNotify') : '';
 const cp = $.isNode() ? require('child_process') : '';

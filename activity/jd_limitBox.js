@@ -17,7 +17,7 @@ cron "30 7,19 1-18 6 *" script-path=https://raw.githubusercontent.com/Wenmoux/sc
 ============小火箭=========
 618限时盲盒 = type=cron,script-path=https://raw.githubusercontent.com/Wenmoux/scripts/master/jd/jd_limitBox.js, cronexpr="30 7,19 1-18 6 *", timeout=3600, enable=true
  */
-const $ = new Env('618限时盲盒');
+const $ =new Env('618限时盲盒');
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 

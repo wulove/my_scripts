@@ -22,7 +22,7 @@ cron "20 0,16 * * *" script-path=jd_ttpt.js,tag=京东金融天天拼图
 京东金融天天拼图 = type=cron,script-path=jd_ttpt.js, cronexpr="20 0,16 * * *", timeout=3600, enable=true
 *
 */
-const $ = new Env('天天拼图');
+const $ =new Env('天天拼图');
 const url = require('url');
 let cookiesArr = [], cookie = '', allMessage = '';
 const JD_API_HOST = 'https://ms.jr.jd.com/gw/generic/uc/h5/m';

@@ -18,7 +18,7 @@ cron "1 1,2,23 * * *" script-path=https://raw.githubusercontent.com/Aaron-lv/syn
 ====================================小火箭=============================
 京东全民开红包 = type=cron,script-path=https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_redPacket.js, cronexpr="1 1,2,23 * * *", timeout=3600, enable=true
  */
-const $ = new Env('京东全民开红包');
+const $ =new Env('京东全民开红包');
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';

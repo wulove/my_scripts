@@ -21,7 +21,7 @@ cron "5-45/20 * * * *" script-path=jd_health_collect.js, tag=东东健康社区�
 ============小火箭=========
 东东健康社区收集能量 = type=cron,script-path=jd_health_collect.js, cronexpr="5-45/20 * * * *", timeout=3600, enable=true
  */
-const $ = new Env("东东健康社区收集能量收集");
+const $ =new Env("东东健康社区收集能量收集");
 const jdCookieNode = $.isNode() ? require("./jdCookie.js") : "";
 let cookiesArr = [],
   cookie = "",

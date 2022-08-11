@@ -18,7 +18,7 @@ cron "5 1 23-25 3 *" script-path=https://raw.githubusercontent.com/i-chenzhe/qx/
 ============小火箭=========
 答题赢京豆 = type=cron,script-path=https://raw.githubusercontent.com/i-chenzhe/qx/main/z_grassy.js, cronexpr="5 1 23-25 3 *", timeout=3600, enable=true
  */
-const $ = new Env('答题赢京豆');
+const $ =new Env('答题赢京豆');
 const notify = $.isNode() ? require('./sendNotify') : '';
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
