@@ -25,7 +25,7 @@ cron "3 0,10,23 * * *" script-path=https://share.r2ray.com/dust/normal/monk_shop
 ============小火箭=========
 店铺大转盘 = type=cron,script-path=https://share.r2ray.com/dust/normal/monk_shop_lottery.js, cronexpr="3 0,10,23 * * *", timeout=3600, enable=true
 */
-const $ =new Env('店铺大转盘');
+const $ = new Env('店铺大转盘');
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 const notify = $.isNode() ? require('./sendNotify') : '';
 const cp = $.isNode() ? require('child_process') : '';

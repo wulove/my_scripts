@@ -26,7 +26,7 @@ cron "1 7 * * *" script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_
 ============小火箭=========
 京东年货节 = type=cron,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_nh.js, cronexpr="1 7 * * *", timeout=3600, enable=true
  */
-const $ =new Env('京东年货节');
+const $ = new Env('京东年货节');
 
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;

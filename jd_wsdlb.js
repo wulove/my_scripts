@@ -11,7 +11,7 @@ export dlbtz="false" //通知关闭
 */
 
 
-const $ =new Env('极速版我是大老板农场');
+const $ = new Env('极速版我是大老板农场');
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';

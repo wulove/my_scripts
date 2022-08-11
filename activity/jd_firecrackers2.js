@@ -19,7 +19,7 @@ cron "10 8,21 * * *" script-path=https://gitee.com/lxk0301/jd_scripts/raw/master
 ============小火箭=========
 她的节享京豆 = type=cron,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_firecrackers.js, cronexpr="10 8,21 * * *", timeout=3600, enable=true
  */
-const $ =new Env('她的节享京豆');
+const $ = new Env('她的节享京豆');
 const notify = $.isNode() ? require('./sendNotify') : '';
 let notifyBean = 15
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';

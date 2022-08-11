@@ -6,7 +6,7 @@
 cron "21 1,6 * * *" script-path=hjd_speed_sign.js,tag=京东极速版
 */
 
-const $ =new Env('京东极速版');
+const $ = new Env('京东极速版');
 
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;

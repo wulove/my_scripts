@@ -18,7 +18,7 @@ cron "12 0-23/6 * * *" script-path=jd_pigPet.js,tag=摇钱树助力
 京东金融养猪猪 = type=cron,script-path=jd_pigPet.js, cronexpr="12 0-23/6 * * *", timeout=3600, enable=true
 *
 */
-const $ =new Env('金融养猪');
+const $ = new Env('金融养猪');
 const url = require('url');
 let cookiesArr = [], cookie = '', allMessage = '';
 const JD_API_HOST = 'https://ms.jr.jd.com/gw/generic/uc/h5/m';

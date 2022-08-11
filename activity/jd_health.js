@@ -19,7 +19,7 @@ cron "10 0 * * *" script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd
 ============小火箭=========
 健康抽奖机 = type=cron,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_health.js, cronexpr="10 0 * * *", timeout=3600, enable=true
  */
-const $ =new Env('健康抽奖机');
+const $ = new Env('健康抽奖机');
 
 const notify = $.isNode() ? require('../sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;

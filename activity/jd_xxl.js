@@ -24,7 +24,7 @@ cron "0 * * * *" script-path=https://raw.githubusercontent.com/shylocks/Loon/mai
 ============小火箭=========
 东东爱消除 = type=cron,script-path=https://raw.githubusercontent.com/shylocks/Loon/main/jd_xxl.js, cronexpr="0 * * * *", timeout=200, enable=true
  */
-const $ =new Env('东东爱消除');
+const $ = new Env('东东爱消除');
 const notify = $.isNode() ? require('./sendNotify.js') : '';
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 let exchangeName = $.isNode() ? (process.env.EXCHANGE_EC ? process.env.EXCHANGE_EC : '京豆*1888') : ($.getdata('JDEC') ? $.getdata('JDEC') : '京豆*1888')

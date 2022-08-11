@@ -25,7 +25,7 @@ cron "35 8,16,20 * * *" script-path=https://gitee.com/lxk0301/jd_scripts/raw/mas
 京小兑 = type=cron,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_jxd.js, cronexpr="45 8,16,20 * * *", timeout=3600, enable=true
  */
 
-const $ =new Env('京小兑');
+const $ = new Env('京小兑');
 
 const notify = $.isNode() ? require('../sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;

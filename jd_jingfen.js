@@ -12,7 +12,7 @@ const tunnel =require('tunnel')
 const puppeteer = require('puppeteer');
 
 const name = new Env('京东店铺锁y');  // 拉取脚本时定时任务命名
-const $ =new Env('京东店铺锁y');
+const $ = new Env('京东店铺锁y');
 const notify = $.isNode() ? require('./sendNotify') : '';
 
 // 此处从环境变量中读取多个值

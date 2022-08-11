@@ -20,7 +20,7 @@ cron "10 7 * * *" script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd
 ============小火箭=========
 秒杀红包雨 = type=cron,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_ms_redrain.js, cronexpr="10 7 * * *", timeout=3600, enable=true
  */
-const $ =new Env('秒杀红包雨');
+const $ = new Env('秒杀红包雨');
 
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;

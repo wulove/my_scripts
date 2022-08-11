@@ -4,7 +4,7 @@
 运气好每次可得0.3元以上的微信现金(需京东账号绑定到微信)
 cron 17 0,7-23/2 * * * jd_jdtj_winner.js
 */
-const $ =new Env('京东特价--翻翻乐');
+const $ = new Env('京东特价--翻翻乐');
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';

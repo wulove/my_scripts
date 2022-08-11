@@ -8,7 +8,7 @@
  先内部助力，有剩余助力作者
  cron 14 0,9,21 * * * https://raw.githubusercontent.com/ZXX2021/jd-scripts/main/jd_nnfls.js
  */
-const $ =new Env('牛牛福利');
+const $ = new Env('牛牛福利');
 const notify = $.isNode() ? require('./sendNotify') : '';
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 const CryptoJS = $.isNode() ? require('crypto-js') : CryptoJS;

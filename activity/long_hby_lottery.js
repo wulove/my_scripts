@@ -19,7 +19,7 @@
  ============小火箭=========
  618主会场红包雨= type=cron,script-path=https://raw.githubusercontent.com/nianyuguai/longzhuzhu/main/qx/long_hby_lottery.js, cronexpr="1 20 1-18 6 *",timeout=200, enable=true
  */
-const $ =new Env('618主会场红包雨');
+const $ = new Env('618主会场红包雨');
 //Node.js用户请在jdCookie.js处填写京东ck;
 const notify = $.isNode() ? require('./sendNotify') : '';
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';

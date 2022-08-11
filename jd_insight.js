@@ -4,7 +4,7 @@ cron "35 11 * * *" jd_insight.js, tag:京洞察问卷通知
 by ccwav
  */
  
-const $ =new Env('京洞察问卷通知');
+const $ = new Env('京洞察问卷通知');
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';

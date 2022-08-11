@@ -29,7 +29,7 @@ cron "0 0-18/6 * * *" script-path=https://gitee.com/lxk0301/jd_scripts/raw/maste
 ====================Surge================
 京东手机狂欢城 = type=cron,cronexp=0 0-18/6 * * *,wake-system=1,timeout=3600,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_818.js
  */
-const $ =new Env('京东手机狂欢城');
+const $ = new Env('京东手机狂欢城');
 
 const notify = $.isNode() ? require('../sendNotify') : '';
 let jdNotify = false;//是否开启推送互助码

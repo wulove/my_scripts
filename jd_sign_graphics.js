@@ -7,7 +7,7 @@ npm i png-js 或者 npm i png-js -S
 */
 
 const Faker = require('./sign_graphics_validate.js')
-const $ =new Env('京东签到翻牌');
+const $ = new Env('京东签到翻牌');
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';

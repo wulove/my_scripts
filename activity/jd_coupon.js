@@ -20,7 +20,7 @@ cron "0 0 * * *" script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_
 ============小火箭=========
 源头好物红包 = type=cron,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_coupon.js, cronexpr="0 0 * * *", timeout=3600, enable=true
  */
-const $ =new Env('源头好物红包');
+const $ = new Env('源头好物红包');
 
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;

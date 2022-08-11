@@ -6,7 +6,7 @@
 #领金贴
 cron "50 0 * * *" script-path=https://github.com/wulove/my_scripts/raw/master/jd_jin_tie.js,tag=领金贴
  */
-const $ =new Env('领金贴');
+const $ = new Env('领金贴');
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';

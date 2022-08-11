@@ -21,7 +21,7 @@ cron "40 7 * * *" script-path=https://raw.githubusercontent.com/Wenmoux/scripts/
 东东乐园 = type=cron,script-path=https://raw.githubusercontent.com/Wenmoux/scripts/wen/jd/jd_ddnc_farmpark.js, cronexpr="40 7 * * *", timeout=3600, enable=true
 
  */
-const $ =new Env('东东乐园');
+const $ = new Env('东东乐园');
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 

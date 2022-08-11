@@ -19,7 +19,7 @@ cron "12 12 24-26 3 *" script-path=https://raw.githubusercontent.com/i-chenzhe/q
 乘风破浪的姐姐 = type=cron,script-path=https://raw.githubusercontent.com/i-chenzhe/qx/main/z_sister.js, cronexpr="12 12 24-26 3 *", timeout=3600, enable=true
  */
 
-const $ =new Env('乘风破浪的姐姐');
+const $ = new Env('乘风破浪的姐姐');
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 const notify = $.isNode() ? require('./sendNotify') : '';
 const path = $.isNode() ? require('path') : '';

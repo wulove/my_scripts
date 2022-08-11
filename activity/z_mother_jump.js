@@ -18,7 +18,7 @@ cron "5 8,14,20 19-25 5 *" script-path=https://raw.githubusercontent.com/monk-co
 ============小火箭=========
 母婴-跳一跳 = type=cron,script-path=https://raw.githubusercontent.com/monk-coder/dust/dust/i-chenzhe/z_mother_jump.js, cronexpr="5 8,14,20 19-25 5 * ", timeout=3600, enable=true
 */
-const $ =new Env('母婴跳一跳');
+const $ = new Env('母婴跳一跳');
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 const notify = $.isNode() ? require('./sendNotify') : '';
 const path = $.isNode() ? require('path') : '';

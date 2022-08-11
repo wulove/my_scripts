@@ -5,7 +5,7 @@
 # 京东金融领白条券  0点,9点执行（非天天领券要9点开始领，扫码券0点领）
 0 0,9 * * * https://raw.githubusercontent.com/yangtingxiao/QuantumultX/master/scripts/jd/jd_baiTiao.js, tag=京东白条, img-url=https://raw.githubusercontent.com/yangtingxiao/QuantumultX/master/image/baitiao.png, enabled=true
 */
-const $ =new Env('天天领白条券');
+const $ = new Env('天天领白条券');
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 const printDetail = true;        //是否显示出参详情
 let cookieExpire = false;

@@ -16,7 +16,7 @@ cron "0 0-23/1 * * *" script-path=https://raw.githubusercontent.com/Aaron-lv/syn
 ====================================小火箭=============================
 城城领现金 = type=cron,script-path=https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_city.js, cronexpr="0 0-23/1 * * *", timeout=3600, enable=true
  */
-const $ =new Env('城城领现金');
+const $ = new Env('城城领现金');
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';

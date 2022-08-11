@@ -3,7 +3,7 @@
 10 10 * * * jd_shangou.js
  */
 
-const $ =new Env('闪购签到有礼');
+const $ = new Env('闪购签到有礼');
 const notify = $.isNode() ? require('./sendNotify') : '';
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 let jdNotify = true;

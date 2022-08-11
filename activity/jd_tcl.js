@@ -20,7 +20,7 @@ cron "10 1 * * *" script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd
 球队赢好礼 = type=cron,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_tcl.js, cronexpr="10 1 * * *", timeout=3600, enable=true
 */
 
-const $ =new Env("球队赢好礼");
+const $ = new Env("球队赢好礼");
 const notify = $.isNode() ? require("./sendNotify") : "";
 const jdCookieNode = $.isNode() ? require("./jdCookie.js") : "";
 const sck = $.isNode() ? "set-cookie" : "Set-Cookie";

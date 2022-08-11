@@ -11,7 +11,7 @@ Last Modified time: 2021-05-22 8:55:00
 #京东秒秒币
 cron "10 6,21 * * *" script-path=jd_ms.js,tag=京东秒秒币
  */
-const $ =new Env('京东秒秒币');
+const $ = new Env('京东秒秒币');
 
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;

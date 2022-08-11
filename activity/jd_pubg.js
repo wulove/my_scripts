@@ -20,7 +20,7 @@ PUBG = type=cron,cronexp="10 0 * * *",wake-system=1,timeout=3600,script-path=htt
 ============小火箭=========
 PUBG = type=cron,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_pubg.js, cronexpr="10 0 * * *", timeout=3600, enable=true
  */
-const $ =new Env('PUBG');
+const $ = new Env('PUBG');
 !function(n) {
   "use strict";
   function t(n, t) {

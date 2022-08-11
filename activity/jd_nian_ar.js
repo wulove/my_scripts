@@ -20,7 +20,7 @@ cron "0 9 * * *" script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_
 ============小火箭=========
 京东炸年兽AR = type=cron,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_nian_ar.js, cronexpr="0 9 * * *", timeout=3600, enable=true
  */
-const $ =new Env('京东炸年兽AR');
+const $ = new Env('京东炸年兽AR');
 
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;

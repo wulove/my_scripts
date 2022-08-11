@@ -26,7 +26,7 @@ cron "20 7 * * *" script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd
 ============小火箭=========
 京东超级盒子 = type=cron,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_super_box.js, cronexpr="20 7 * * *", timeout=3600, enable=true
 */
-const $ =new Env('京东超级盒子');
+const $ = new Env('京东超级盒子');
 
 const notify = $.isNode() ? require('../sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;

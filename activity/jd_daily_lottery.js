@@ -19,7 +19,7 @@ cron "13 1,22,23 * * *" script-path=https://gitee.com/lxk0301/jd_scripts/raw/mas
 ============小火箭=========
 每日抽奖 = type=cron,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_daily_lottery.js, cronexpr="13 1,22,23 * * *", timeout=3600, enable=true
 */
-const $ =new Env('每日抽奖');
+const $ = new Env('每日抽奖');
 const notify = $.isNode() ? require('./sendNotify') : '';
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 const activityCode = '1386931424925319168';

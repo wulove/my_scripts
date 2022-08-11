@@ -1,4 +1,4 @@
-const $ =new Env('东东电竞经理');
+const $ = new Env('东东电竞经理');
 const notify = $.isNode() ? require('./sendNotify') : '';
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 let cookiesArr = [];

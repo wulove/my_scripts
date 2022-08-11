@@ -20,7 +20,7 @@ cron "0 0,6,12,18 * * *" script-path=https://gitee.com/lxk0301/jd_scripts/raw/ma
 ============小火箭=========
 5G狂欢城 = type=cron,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_5g.js, cronexpr="0 0,6,12,18 * * *", timeout=3600, enable=true
  */
-const $ =new Env('5G狂欢城');
+const $ = new Env('5G狂欢城');
 
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;

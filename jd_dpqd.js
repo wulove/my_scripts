@@ -12,7 +12,7 @@ cron "15 2,14 * * *" script-path=https://raw.githubusercontent.com/KingRan/KR/ma
 ===========小火箭========
 店铺签到 = type=cron,script-path=https://raw.githubusercontent.com/KingRan/KR/main/jd_shop_sign.jss, cronexpr="15 2,14 * * *", timeout=3600, enable=true
 */
-const $ =new Env('店铺签到');
+const $ = new Env('店铺签到');
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';

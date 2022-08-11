@@ -22,7 +22,7 @@ cron "1 7-21/2 * * *" script-path=jd_plantBean.js,tag=京东种豆得豆
 京东种豆得豆 = type=cron,script-path=jd_plantBean.js, cronexpr="1 7-21/2 * * *", timeout=3600, enable=true
 
 */
-const $ =new Env('京东种豆得豆');
+const $ = new Env('京东种豆得豆');
 //Node.js用户请在jdCookie.js处填写京东ck;
 //ios等软件用户直接用NobyDa的jd cookie
 let jdNotify = true;//是否开启静默运行。默认true开启

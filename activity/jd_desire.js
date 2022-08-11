@@ -9,7 +9,7 @@ cron:2 0,11 * * *
 2 0,11 * * * jd_desire.js, tag=集魔方, enabled=true
  */
 
-const $ =new Env('京东集魔方');
+const $ = new Env('京东集魔方');
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';

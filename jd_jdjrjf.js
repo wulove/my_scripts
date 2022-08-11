@@ -6,7 +6,7 @@
 #京东金融赚积分
 cron "50 8 * * *" script-path=https://github.com/wulove/my_scripts/raw/master/jd_jdjrjf.js,tag=京东金融赚积分
  */
-const $ =new Env('京东金融赚积分');
+const $ = new Env('京东金融赚积分');
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';

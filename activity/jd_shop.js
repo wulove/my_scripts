@@ -15,7 +15,7 @@ cron "10 0 * * *" script-path=jd_shop.js,tag=进店领豆
 [Script]
 进店领豆 = type=cron,cronexp="10 0 * * *",wake-system=1,timeout=3600,script-path=jd_shop.js
 */
-const $ =new Env('进店领豆');
+const $ = new Env('进店领豆');
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';

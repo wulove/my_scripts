@@ -26,7 +26,7 @@ cron "33 0,6-23/2 * * *" script-path=https://gitee.com/lxk0301/jd_scripts/raw/ma
 ============小火箭=========
 618动物联萌 = type=cron,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_zoo.js, cronexpr="33 0,6-23/2 * * *", timeout=3600, enable=true
  */
-const $ =new Env('618动物联萌');
+const $ = new Env('618动物联萌');
 const notify = $.isNode() ? require('./sendNotify') : '';
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 const pKHelpFlag = true;//是否PK助力  true 助力，false 不助力

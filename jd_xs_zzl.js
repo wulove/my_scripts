@@ -11,7 +11,7 @@ by:小手冰凉 tg:@chianPLA
 2 6 * * 5 jd_xs_zzl.js, tag=京享周周乐, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
  */
 
-const $ =new Env('京享周周乐');
+const $ = new Env('京享周周乐');
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';

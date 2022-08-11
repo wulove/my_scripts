@@ -4,7 +4,7 @@ cron 53 0,12 * * * jd_babel_sign.js
 入口：主页-秒杀-狂撒三亿京豆
 TG频道：https://t.me/sheeplost
 */
-const $ =new Env('通天塔签到共建');
+const $ = new Env('通天塔签到共建');
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';

@@ -17,7 +17,7 @@ cron "10 10,15 8-9 5 *" script-path=https://raw.githubusercontent.com/monk-coder
 ====================================小火箭=============================
 众筹许愿池 = type=cron,script-path=https://raw.githubusercontent.com/monk-coder/dust/dust/i-chenzhe/z_wish.js, cronexpr="10 10,15 8-9 5 *", timeout=3600, enable=true
 */
-const $ =new Env('众筹许愿池');
+const $ = new Env('众筹许愿池');
 const notify = $.isNode() ? require('./sendNotify') : '';
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 const JD_API_HOST = 'https://api.m.jd.com/client.action/';

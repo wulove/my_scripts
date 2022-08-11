@@ -18,7 +18,7 @@ cron "39 20 * * *" script-path=https://raw.githubusercontent.com/KingRan/JDJB/ma
 ============小火箭=========
 京东保价 = type=cron,script-path=https://raw.githubusercontent.com/KingRan/JDJB/main/jd_price.js, cronexpr="39 20 * * *", timeout=3600, enable=true
  */
-const $ =new Env('京东保价');
+const $ = new Env('京东保价');
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';

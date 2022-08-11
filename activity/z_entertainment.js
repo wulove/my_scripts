@@ -26,7 +26,7 @@ cron "10 10,11 * * 2-5" script-path=https://share.r2ray.com/dust/i-chenzhe/z_ent
 */
 
 
-const $ =new Env('百变大咖秀');
+const $ = new Env('百变大咖秀');
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 const notify = $.isNode() ? require('./sendNotify') : '';
 let cookiesArr = [], cookie = '', originCookie = '', message = '';

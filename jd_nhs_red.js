@@ -5,7 +5,7 @@ cron 0 0,12,20-23 * * * jd_nhs_red.js
 设置NHS_F为false禁用脚本,不受改名字影响
 FLCODE3为FL变量
 * */
-const $ =new Env('会场红包');
+const $ = new Env('会场红包');
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 let flCode = ['lCwkjLB', "lMw7Td2", "ltwk41D"]
 flCode = flCode[Math.floor((Math.random() * flCode.length))]

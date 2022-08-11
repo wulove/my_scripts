@@ -6,7 +6,7 @@
  * 活动入口：京东APP搜索领现金进入
  * 满30提现 目前有3、8、15、30的红包
  */
-const $ =new Env('签到领现金_Windfgg');
+const $ = new Env('签到领现金_Windfgg');
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';

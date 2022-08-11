@@ -22,7 +22,7 @@ cron "5 10 * 3 *" script-path=https://raw.githubusercontent.com/i-chenzhe/qx/mai
 ============小火箭=========
 金口碑奖投票 = type=cron,script-path=https://raw.githubusercontent.com/i-chenzhe/qx/main/z_mgold.js, cronexpr="5 10 * 3 *", timeout=3600, enable=true
  */
-const $ =new Env('金口碑奖投票');
+const $ = new Env('金口碑奖投票');
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 const notify = $.isNode() ? require('./sendNotify') : '';
 let cookiesArr = [], cookie = '', message = '';

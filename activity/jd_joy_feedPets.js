@@ -20,7 +20,7 @@ cron "15 0-23/1 * * *" script-path=https://raw.githubusercontent.com/Aaron-lv/sy
 ===============小火箭==========
 京东宠汪汪喂食 = type=cron,script-path=https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_joy_feedPets.js, cronexpr="15 0-23/1 * * *", timeout=3600, enable=true
 */
-const $ =new Env('宠汪汪🐕喂食');
+const $ = new Env('宠汪汪🐕喂食');
 const zooFaker = require('./utils/JDJRValidator_Pure');
 $.get = zooFaker.injectToRequest2($.get.bind($));
 const notify = $.isNode() ? require('./sendNotify') : '';

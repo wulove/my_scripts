@@ -22,7 +22,7 @@ cron "10 7 * * *" script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd
 ============小火箭=========
 数码加购京豆 = type=cron,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_digital_floor.js, cronexpr="10 7 * * *", timeout=3600, enable=true
  */
-const $ =new Env('数码加购京豆');
+const $ = new Env('数码加购京豆');
 
 const notify = $.isNode() ? require('../sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;

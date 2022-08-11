@@ -24,7 +24,7 @@ crazyJoy任务 = type=cron,script-path=jd_crazy_joy.js, cronexpr="10 9 * * *", t
  */
 
 
-const $ =new Env('crazyJoy任务');
+const $ = new Env('crazyJoy任务');
 const JD_API_HOST = 'https://api.m.jd.com/';
 
 const notify = $.isNode() ? require('./sendNotify') : '';

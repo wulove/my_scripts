@@ -3,7 +3,7 @@
 一次性脚本。请禁用！
 cron 36 2,19 * * * jd_superBrandStar.js
  */
-const $ =new Env('特务之明星送好礼');
+const $ = new Env('特务之明星送好礼');
 const notify = $.isNode() ? require('./sendNotify') : '';
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 let cookiesArr = [];

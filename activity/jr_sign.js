@@ -19,7 +19,7 @@ cron "10 6 * * *" script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jr
 ============小火箭=========
 金融打卡领年终奖 = type=cron,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jr_sign.js, cronexpr="10 6 * * *", timeout=3600, enable=true
  */
-const $ =new Env('金融打卡领年终奖');
+const $ = new Env('金融打卡领年终奖');
 
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;

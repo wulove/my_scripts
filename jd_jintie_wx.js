@@ -6,7 +6,7 @@
 #领金贴
 cron "10 0,12,22 * * *" script-path=https://github.com/wulove/my_scripts/raw/master/jd_jintie_wx.js,tag=金贴小程序
  */
-const $ =new Env('金贴小程序');
+const $ = new Env('金贴小程序');
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';

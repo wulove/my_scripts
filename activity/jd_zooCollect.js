@@ -18,7 +18,7 @@ cron "0-59/30 * * * *" script-path=https://gitee.com/lxk0301/jd_scripts/raw/mast
 ============小火箭=========
 618动物联萌收集金币 = type=cron,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_zooCollect.js, cronexpr="0-59/30 * * * *", timeout=3600, enable=true
  */
-const $ =new Env('618动物联萌收集金币');
+const $ = new Env('618动物联萌收集金币');
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 //IOS等用户直接用NobyDa的jd cookie

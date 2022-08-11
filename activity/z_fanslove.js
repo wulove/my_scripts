@@ -20,7 +20,7 @@ cron "3 10 * * *" script-path=https://raw.githubusercontent.com/i-chenzhe/qx/mai
 粉丝互动 = type=cron,script-path=https://raw.githubusercontent.com/i-chenzhe/qx/main/jd_fanslove.js, cronexpr="3 10 * * *", timeout=3600, enable=true
 */
 
-const $ =new Env('粉丝互动');
+const $ = new Env('粉丝互动');
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 const notify = $.isNode() ? require('./sendNotify') : '';
 let cookiesArr = [], cookie = '', originCookie = '', message = '', allNotify = {};

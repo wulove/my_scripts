@@ -2,7 +2,7 @@
     9.18-10.9 明星小店
     cron 12 19 19-30 9 * https://raw.githubusercontent.com/star261/jd/main/scripts/jd_star_shop.js
  */
-const $ =new Env('明星小店');
+const $ = new Env('明星小店');
 const notify = $.isNode() ? require('./sendNotify') : '';
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 $.inviteCodeList = [];

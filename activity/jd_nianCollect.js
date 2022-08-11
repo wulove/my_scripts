@@ -20,7 +20,7 @@ cron "50 * * * *" script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd
 ============小火箭=========
 京东收🧨 = type=cron,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_nianCollect.js, cronexpr="50 * * * *", timeout=3600, enable=true
  */
-const $ =new Env('京东炸年兽领爆竹🧨');
+const $ = new Env('京东炸年兽领爆竹🧨');
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('../jdCookie.js') : '';
 //IOS等用户直接用NobyDa的jd cookie

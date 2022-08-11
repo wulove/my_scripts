@@ -10,7 +10,7 @@ cron "59 * * * *" script-path=jd_jx_cfd_pearl_exchange.js,tag=财富岛珍珠兑
 */
 // noinspection JSUnresolvedFunction
 const {Env} = require('./utils/magic');
-const $ =new Env('M财富岛珍珠兑换');
+const $ = new Env('M财富岛珍珠兑换');
 let money = process.env.PEARL_MONEY ? process.env.PEARL_MONEY * 1 : 5
 $.logic = async function () {
     const {ddwVirHb, exchangeInfo} = await ExchangePearlState();
