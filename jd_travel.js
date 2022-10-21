@@ -87,7 +87,7 @@ const JD_API_HOST = 'https://api.m.jd.com/client.action';
                 blog_joyytoken: $.blog_joyytoken,
                 secretp: $.secretp
             })
-            joinTeam('-HE-pbNob0skU6bwtR6YOpas4kHbW4TR6Wyo36Tw4F9wV1E2zjo_KTIU5w');
+            joinTeam('-HE-pbNob0skU6bwtR6YOpas4kHbW4TR6eBNCzI5MsbQrpbXp2dXVA');
         }
     }
     //
