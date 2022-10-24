@@ -282,13 +282,13 @@ const window = {};
 const document = {
   location: {
     ancestorOrigins: {},
-    href: "https://prodev.m.jd.com/mall/active/3BbAVGQPDd6vTyHYjmAutXrKAos6/index.html",
+    href: "https://prodev.m.jd.com/mall/active/47iRuTnm2my35mksNKrpUhiXNF2u/index.html",
     origin: "https://prodev.m.jd.com",
     protocol: "https:",
     host: "prodev.m.jd.com",
     hostname: "prodev.m.jd.com",
     port: "",
-    pathname: "/mall/active/3BbAVGQPDd6vTyHYjmAutXrKAos6/index.html",
+    pathname: "/mall/active/47iRuTnm2my35mksNKrpUhiXNF2u/index.html",
     search: "",
     hash: "",
   },

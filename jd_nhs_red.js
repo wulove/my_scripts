@@ -7,7 +7,7 @@ FLCODE3为FL变量
 * */
 const $ = new Env('会场红包');
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
-let flCode = ['lCwkjLB', "lMw7Td2", "ltwk41D"]
+let flCode = ['kwZ4UTp', "kMZkuET", "kLZFiSM"]
 flCode = flCode[Math.floor((Math.random() * flCode.length))]
 if ($.isNode() && process.env.FLCODE3) {
     flCode = process.env.FLCODE3
@@ -306,13 +306,13 @@ const window = {
 const document = {
     location: {
         "ancestorOrigins": {},
-        "href": "https://prodev.m.jd.com/mall/active/3BbAVGQPDd6vTyHYjmAutXrKAos6/index.html",
+        "href": "https://prodev.m.jd.com/mall/active/47iRuTnm2my35mksNKrpUhiXNF2u/index.html",
         "origin": "https://prodev.m.jd.com",
         "protocol": "https:",
         "host": "prodev.m.jd.com",
         "hostname": "prodev.m.jd.com",
         "port": "",
-        "pathname": "/mall/active/3BbAVGQPDd6vTyHYjmAutXrKAos6/index.html",
+        "pathname": "/mall/active/47iRuTnm2my35mksNKrpUhiXNF2u/index.html",
         "search": "",
         "hash": ""
     }
