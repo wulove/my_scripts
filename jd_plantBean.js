@@ -59,7 +59,8 @@ let lnrun = 0;
       $.index = i + 1;
       $.isLogin = true;
       $.nickName = '';
-      await TotalBean();
+      $.UA = require('./USER_AGENTS').UARAM();
+      // await TotalBean();
       console.log(`\n开始【京东账号${$.index}】${$.nickName || $.UserName}\n`);
       if (!$.isLogin) {
         $.msg($.name, `【提示】cookie已失效`, `京东账号${$.index} ${$.nickName || $.UserName}\n请重新登录获取\nhttps://bean.m.jd.com/bean/signIndex.action`, {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
@@ -118,15 +119,22 @@ async function jdPlantBean() {
       subTitle = `【京东昵称】${$.plantBeanIndexResult.data.plantUserInfo.plantNickName}`;
       message += `【上期时间】${roundList[num - 1].dateDesc.replace('上期 ', '')}\n`;
       message += `【上期成长值】${roundList[num - 1].growth}\n`;
+      await $.wait(1000);
       await receiveNutrients();//定时领取营养液
-      await doHelp();//助力
+      await $.wait(2000);
       await doTask();//做日常任务
+      await $.wait(5000);
       // await doEgg();
       await stealFriendWater();
+      await $.wait(2000);
       await doCultureBean();
+      await $.wait(1000);
       await doGetReward();
+      await $.wait(1000);
       await showTaskProcess();
+      await $.wait(1000);
       await plantShareSupportList();
+      await $.wait(1000);
     } else {
       console.log(`种豆得豆-初始失败:  ${JSON.stringify($.plantBeanIndexResult)}`);
     }
@@ -217,6 +225,7 @@ async function stealFriendWater() {
             }
           }
         }
+        await $.wait(1000)
       }
     }
   } else {
@@ -259,6 +268,16 @@ async function doTask() {
             await $.wait(2000);
             await jxdoublesign1('https://wq.jd.com/jxjdsignin/IssueReward?channel=jx_zdddsq&_t=1658021926276&h5st=20220717093846279%3B5548444396555217%3B0f6ed%3Btk02w9b851b9c18nin7CZjR7vNSlwRexAOGWbYAbl85d9DiQJ1SufW8ZQEQ%2FSygreq626CVRO2gT8DwUUTLBXGyK6wam%3Be2d7b6810b3bd1b9d9692d354ecbb582e69afc64df19bd8d6c14632b1a65660c%3B3.0%3B1658021926279&_stk=_t%2Cchannel&sceneval=2&g_login_type=1&g_ty=ajax&appCode=msc588d6d5');
             await $.wait(2000);
+            continue;
+          case 96:
+            // await tjdoublesign(`https://wq.jd.com/tjjdsignin/SignedInfo?channel=jx_zdddsq&_t=${Date.now()}&h5st=20221119212121629%3B7235812274907393%3B0f6ed%3Btk02w6ce01aef18nu1BI7ITY0GRHzGZYm4QAgvUlNI7sDNMkIIRWB5yQBcmGs48B1Kd89giyM6WMEBZoTeyTRE2yi6cO%3B97dcee4e91efeb5f884eb7feb1c8da1ef52ad53a90a0e3a3c74eb38f0136382d%3B3.0%3B1668864081629&_stk=_t%2Cchannel&_=1665408290814&sceneval=2&g_login_type=1&g_ty=ajax&appCode=msc588d6d5`);
+            // await $.wait(2000);
+            // await tjdoublesign(`https://wq.jd.com/tjjdsignin/IssueReward?channel=jx_zdddsq&_t=${Date.now()}&h5st=20221119212121629%3B7235812274907393%3B0f6ed%3Btk02w6ce01aef18nu1BI7ITY0GRHzGZYm4QAgvUlNI7sDNMkIIRWB5yQBcmGs48B1Kd89giyM6WMEBZoTeyTRE2yi6cO%3B97dcee4e91efeb5f884eb7feb1c8da1ef52ad53a90a0e3a3c74eb38f0136382d%3B3.0%3B1668864081629&_stk=_t%2Cchannel&sceneval=2&g_login_type=1&g_ty=ajax&appCode=msc588d6d5`);
+            // await $.wait(1000);
+            // await tjdoublesign(`https://wq.jd.com/tjjdsignin/SignedInfo?channel=jx_zdddsq&_t=${Date.now()}&h5st=20221119212121629%3B7235812274907393%3B0f6ed%3Btk02w6ce01aef18nu1BI7ITY0GRHzGZYm4QAgvUlNI7sDNMkIIRWB5yQBcmGs48B1Kd89giyM6WMEBZoTeyTRE2yi6cO%3B97dcee4e91efeb5f884eb7feb1c8da1ef52ad53a90a0e3a3c74eb38f0136382d%3B3.0%3B1668864081629&_stk=_t%2Cchannel&_=1665408290814&sceneval=2&g_login_type=1&g_ty=ajax&appCode=msc588d6d5`);
+            // await $.wait(1000);
+            continue;
+          case 94:
             continue;
           case 3:
             console.log(`开始做 ${item.taskName}任务`);
@@ -449,7 +468,7 @@ async function receivefruit(){
     "monitor_refer": "plant_receiveNutrientsTask",
     "monitor_source": "plant_app_plant_index",
     "awardType": "92",
-    "version": "9.2.4.1"
+    "version": "9.2.4.2"
   }
   await request('receiveNutrientsTask',body)
 }
@@ -471,7 +490,7 @@ async function dofarm(function_id){
         'Host': 'api.m.jd.com',
         'Accept': '*/*',
         'Connection': 'keep-alive',
-        'User-Agent': 'JD4iPhone/167283 (iPhone;iOS 13.6.1;Scale/3.00)',
+        'User-Agent': $.UA,
         'Accept-Encoding': 'gzip, deflate, br',
         'Referer': 'https://h5.m.jd.com'
       },
@@ -526,6 +545,37 @@ function jxdoublesign1(url){
   })
 }
 //每轮种豆活动获取结束后,自动收取京豆
+//每轮种豆活动获取结束后,自动收取京豆
+function tjdoublesign(url) {
+  let opt = {
+    url,
+    headers: {
+      'Accept': 'application/json',
+      'Referer': 'https://wqs.jd.com/',
+      'User-Agent': $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1"),
+      'Cookie': cookie
+    }
+  }
+  return new Promise(async resolve => {
+    $.get(opt, (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`tjdoublesign 请求失败，请检查网路重试`)
+        } else {
+          if (data) {
+            //data = JSON.parse(data);
+            //console.log(data)
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve(data);
+      }
+    })
+  })
+}
 async function getReward() {
   const body = {
     "roundId": lastRoundId
@@ -697,12 +747,12 @@ function requireConfig() {
 }
 function requestGet(function_id, body = {}) {
   if (!body.version) {
-    body["version"] = "9.2.4.1";
+    body["version"] = "9.2.4.2";
   }
   body["monitor_source"] = "plant_app_plant_index";
   body["monitor_refer"] = "";
   return new Promise(async resolve => {
-    await $.wait(3200);
+    await $.wait(5200);
     const option = {
       url: `${JD_API_HOST}?functionId=${function_id}&body=${escape(JSON.stringify(body))}&appid=ld`,
       headers: {
@@ -710,7 +760,7 @@ function requestGet(function_id, body = {}) {
         'Host': 'api.m.jd.com',
         'Accept': '*/*',
         'Connection': 'keep-alive',
-        'User-Agent': 'JD4iPhone/167283 (iPhone;iOS 13.6.1;Scale/3.00)',
+        'User-Agent': $.UA,
         'Accept-Language': 'zh-Hans-CN;q=1,en-CN;q=0.9',
         'Accept-Encoding': 'gzip, deflate, br',
         'Content-Type': "application/x-www-form-urlencoded"
@@ -787,8 +837,11 @@ function request(function_id, body = {}){
           console.log('\n种豆得豆: API查询请求失败 ‼️‼️')
           console.log(`function_id:${function_id}`)
           $.logErr(err);
+        } else if (data.indexOf('data') > -1) {
+          data = JSON.parse(data);
         } else {
           data = JSON.parse(data);
+          console.log(data.errorMessage)
         }
       } catch (e) {
         $.logErr(e, resp);
@@ -799,18 +852,20 @@ function request(function_id, body = {}){
   })
 }
 function taskUrl(function_id, body) {
-  body["version"] = "9.2.4.1";
+  body["version"] = "9.2.4.2";
   body["monitor_source"] = "plant_app_plant_index";
-  body["monitor_refer"] = "";
+  if (!body["monitor_refer"]) {
+    body["monitor_refer"] = "";
+  }
   return {
     url: JD_API_HOST,
-    body: `functionId=${function_id}&body=${escape(JSON.stringify(body))}&appid=ld&client=apple&area=19_1601_50258_51885&build=167490&clientVersion=9.3.2`,
+    body: `functionId=${function_id}&body=${encodeURIComponent(JSON.stringify(body))}&appid=ld&client=apple&area=19_1601_50258_51885&build=167490&clientVersion=9.3.2`,
     headers: {
       "Cookie": cookie,
-      "Host": "api.m.jd.com",
+      // "Host": "api.m.jd.com",
       "Accept": "*/*",
-      "Connection": "keep-alive",
-      "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1"),
+      // "Connection": "keep-alive",
+      "User-Agent": $.UA,
       "Accept-Language": "zh-Hans-CN;q=1,en-CN;q=0.9",
       "Accept-Encoding": "gzip, deflate, br",
       "Content-Type": "application/x-www-form-urlencoded"
