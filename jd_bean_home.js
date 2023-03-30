@@ -1,27 +1,10 @@
 /*
-领京豆额外奖励&抢京豆
-脚本自带助力码，介意者可将 29行 helpAuthor 变量设置为 false
+领京豆额外奖励
 活动入口：京东APP首页-领京豆
-更新地址：https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_bean_home.js
-已支持IOS双京东账号, Node.js支持N个京东账号
-脚本兼容: QuantumultX, Surge, Loon, 小火箭，JSBox, Node.js
-============Quantumultx===============
-[task_local]
-#领京豆额外奖励
-23 1,12,22 * * * https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_bean_home.js, tag=领京豆额外奖励, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jd_bean_home.png, enabled=true
+cron "25 2,14 * * *" script-path=https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_bean_home.js, tag=领京豆额外奖励
 
-================Loon==============
-[Script]
-cron "23 1,12,22 * * *" script-path=https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_bean_home.js, tag=领京豆额外奖励
-
-===============Surge=================
-领京豆额外奖励 = type=cron,cronexp="23 1,12,22 * * *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_bean_home.js
-
-============小火箭=========
-领京豆额外奖励 = type=cron,script-path=https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_bean_home.js, cronexpr="23 1,12,22 * * *", timeout=3600, enable=true
  */
 const $ = new Env('领京豆额外奖励');
-
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
@@ -65,35 +48,7 @@ const JD_API_HOST = 'https://api.m.jd.com/';
       await jdBeanHome();
     }
   }
-  // for (let i = 0; i < cookiesArr.length; i++) {
-  //   $.index = i + 1;
-  //   if (cookiesArr[i]) {
-  //     cookie = cookiesArr[i];
-  //     $.canHelp = true;
-  //     $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1])
-  //     if ($.newShareCodes.length > 1) {
-  //       console.log(`\n【抢京豆】 ${$.UserName} 去助力排名第一的cookie`);
-  //       // let code = $.newShareCodes[(i + 1) % $.newShareCodes.length]
-  //       // await help(code[0], code[1])
-  //       let code = $.newShareCodes[0];
-  //       if(code[2] && code[2] ===  $.UserName){
-  //         //不助力自己
-  //       } else {
-  //         await help(code[0], code[1]);
-  //       }
-  //     }
-  //     for (let j = 1; j < $.newShareCodes.length && $.canHelp; j++) {
-  //       let code = $.newShareCodes[j];
-  //       if(code[2] && code[2] ===  $.UserName){
-  //         //不助力自己
-  //       } else {
-  //         console.log(`【抢京豆】${$.UserName} 去助力账号 ${j + 1}`);
-  //         await help(code[0], code[1]);
-  //         await $.wait(2000);
-  //       }
-  //     }
-  //   }
-  // }
+
 })()
   .catch((e) => {
     $.log('', `❌ ${$.name}, 失败! 原因: ${e}!`, '')
@@ -105,37 +60,34 @@ const JD_API_HOST = 'https://api.m.jd.com/';
 async function jdBeanHome() {
   try {
     $.doneState = false
-    // for (let i = 0; i < 3; ++i) {
-    //   await doTask2()
-    //   await $.wait(1000)
-    //   if ($.doneState) break
-    // }
+    $.flag = true
     do {
       await doTask2()
       await $.wait(3000)
-    } while (!$.doneState)
+    } while (!$.doneState && $.flag)
+    if($.flag){
     await $.wait(1000)
     await award("feeds")
     await $.wait(1000)
     await getUserInfo()
     await $.wait(1000)
-    await getTaskList();
-    await receiveJd2();
-
-    // await morningGetBean()
-    // await $.wait(1000)
+    //await getTaskList();
+    //await receiveJd2();
+    }
+    //await morningGetBean()
+    await $.wait(1000)
 
     await beanTaskList(1)
     await $.wait(1000)
     await queryCouponInfo()
     $.doneState = false
-    let num = 0
+    let num = 0	
     do {
-      await $.wait(3000)
+      await $.wait(2000)
       await beanTaskList(2)
       num++
-    } while (!$.doneState && num < 5)
-    await $.wait(3000)
+    } while (!$.doneState && num < 5)		
+    await $.wait(2000)
     if ($.doneState) await beanTaskList(3)
 
     await showMsg();
@@ -155,9 +107,9 @@ function morningGetBean() {
         } else {
           if (safeGet(data)) {
             data = JSON.parse(data);
-            if (data.data.awardResultFlag === "1") {
+            if (data.data?.awardResultFlag === "1") {
               console.log(`早起福利领取成功：${data.data.bizMsg}`)
-            } else if (data.data.awardResultFlag === "2") {
+            } else if (data.data?.awardResultFlag === "2") {
               console.log(`早起福利领取失败：${data.data.bizMsg}`)
             } else {
               console.log(`早起福利领取失败：${data.data.bizMsg}`)
@@ -184,13 +136,14 @@ async function beanTaskList(type) {
         } else {
           if (safeGet(data)) {
             data = JSON.parse(data);
+            if(!data.errorMessage){
             switch (type) {
               case 1:
                 console.log(`当前等级:${data.data.curLevel} 下一级可领取:${data.data.nextLevelBeanNum || 0}京豆`)
                 if (data.data.viewAppHome) {
                   if (!data.data.viewAppHome.takenTask) {
                     console.log(`去做[${data.data.viewAppHome.mainTitle}]`)
-                    await beanHomeIconDoTask({"flag": "0", "viewChannel": "myjd"})
+                    await beanHomeIconDoTask({"flag":"0","viewChannel":"myjd"})
                   }
                   await $.wait(2000)
                   if (!data.data.viewAppHome.doneTask) {
@@ -233,6 +186,9 @@ async function beanTaskList(type) {
                 }
               default:
                 break
+            }
+            }else{
+                console.log(data.errorMessage)
             }
           }
         }
@@ -376,8 +332,8 @@ function doTask2() {
       $.post(taskUrl('beanHomeTask', body), (err, resp, data) => {
         try {
           if (err) {
-            console.log(`${JSON.stringify(err)}`)
-            console.log(`doTask2 API请求失败，请检查网路重试`)
+            $.flag = false
+            //console.log(`doTask2 API请求失败，请检查网路重试`)
           } else {
             if (safeGet(data)) {
               data = JSON.parse(data);
@@ -403,13 +359,46 @@ function doTask2() {
     })
 }
 
+function getAuthorShareCode(url) {
+  return new Promise(resolve => {
+    const options = {
+      url: `${url}?${new Date()}`, "timeout": 10000, headers: {
+        "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1 Edg/87.0.4280.88"
+      }
+    };
+    if ($.isNode() && process.env.TG_PROXY_HOST && process.env.TG_PROXY_PORT) {
+      const tunnel = require("tunnel");
+      const agent = {
+        https: tunnel.httpsOverHttp({
+          proxy: {
+            host: process.env.TG_PROXY_HOST,
+            port: process.env.TG_PROXY_PORT * 1
+          }
+        })
+      }
+      Object.assign(options, { agent })
+    }
+    $.get(options, async (err, resp, data) => {
+      try {
+        if (err) {
+        } else {
+          if (data) data = JSON.parse(data)
+        }
+      } catch (e) {
+        // $.logErr(e, resp)
+      } finally {
+        resolve(data);
+      }
+    })
+  })
+}
 function getUserInfo() {
   return new Promise(resolve => {
     $.post(taskUrl('signBeanGroupStageIndex', 'body'), async (err, resp, data) => {
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
-          console.log(`getUserInfo API请求失败，请检查网路重试`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
         } else {
           if (safeGet(data)) {
             data = JSON.parse(data);
@@ -447,7 +436,7 @@ function hitGroup() {
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
-          console.log(`hitGroup API请求失败，请检查网路重试`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
         } else {
           if (safeGet(data)) {
             data = JSON.parse(data);
@@ -529,7 +518,7 @@ function getTaskList() {
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
-          console.log(`getTaskList API请求失败，请检查网路重试`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
         } else {
           if (safeGet(data)) {
             data = JSON.parse(data);
@@ -634,7 +623,7 @@ function receiveJd2() {
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
-          console.log(`receiveJd2 API请求失败，请检查网路重试`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
         } else {
           if (safeGet(data)) {
             data = JSON.parse(data);
@@ -707,40 +696,45 @@ function taskUrl(function_id, body) {
 }
 
 function TotalBean() {
-  return new Promise(resolve => {
+  return new Promise(async resolve => {
     const options = {
-      url: "https://me-api.jd.com/user_new/info/GetJDUserInfoUnion",
-      headers: {
-        "Host": "me-api.jd.com",
-        "Accept": "*/*",
-        "User-Agent": "ScriptableWidgetExtension/185 CFNetwork/1312 Darwin/21.0.0",
-        "Accept-Language": "zh-CN,zh-Hans;q=0.9",
+      "url": `https://wq.jd.com/user/info/QueryJDUserInfo?sceneval=2`,
+      "headers": {
+        "Accept": "application/json,text/plain, */*",
+        "Content-Type": "application/x-www-form-urlencoded",
         "Accept-Encoding": "gzip, deflate, br",
-        "Cookie": cookie
+        "Accept-Language": "zh-cn",
+        "Connection": "keep-alive",
+        "Cookie": cookie,
+        "Referer": "https://wqs.jd.com/my/jingdou/my.shtml?sceneval=2",
+        "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1")
       }
     }
-    $.get(options, (err, resp, data) => {
+    $.post(options, (err, resp, data) => {
       try {
         if (err) {
-          $.logErr(err)
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
         } else {
           if (data) {
             data = JSON.parse(data);
-            if (data['retcode'] === "1001") {
+            if (data['retcode'] === 13) {
               $.isLogin = false; //cookie过期
-              return;
+              return
             }
-            if (data['retcode'] === "0" && data.data && data.data.hasOwnProperty("userInfo")) {
-              $.nickName = data.data.userInfo.baseInfo.nickname;
+            if (data['retcode'] === 0) {
+              $.nickName = (data['base'] && data['base'].nickname) || $.UserName;
+            } else {
+              $.nickName = $.UserName
             }
           } else {
-            console.log('京东服务器返回空数据');
+            console.log(`京东服务器返回空数据`)
           }
         }
       } catch (e) {
         $.logErr(e, resp)
       } finally {
-        resolve()
+        resolve();
       }
     })
   })
